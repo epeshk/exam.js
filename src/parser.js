@@ -21,27 +21,15 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     var result = [];
 
     function isBlockEmpty(obj) {
-        if (obj === null) {
+        if(obj === '{{}}'){
             return true;
         }
-        if (obj.length > 0) {
-            return false;
-        }
-        if (obj.length === 0) {
-            return true;
-        }
-        for (var key in obj) {
-            if (hasOwnProperty.call(obj, key)) {
-                return false;
-            }
-        }
-
-        return true;
+        return false;
     }
 
     syntaxBlocks.forEach(function(block) {
-        if(!isBlockEmpty(block)){
-            
+        if (!isBlockEmpty(block)) {
+
         }
     });
 };
