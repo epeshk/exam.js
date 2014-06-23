@@ -38,7 +38,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
         if (!isBlockEmpty(block)) {
             //do something
         } else {
-            
+            throw new ParsingError('Cannot parse empty block: {{}}'); 
         }
     });
 };
