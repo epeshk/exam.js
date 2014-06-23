@@ -1,6 +1,9 @@
 function Parser(){
     'use strict';
-    var self = this; 
+    if(!(this instanceof Parser)){
+    	return new Parser();
+    }
+    var self = this;
 
     self._blockPattern = /\{\{(.|\n)*?\}\}/g;
 }
