@@ -20,7 +20,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     var self = this;
     var result = [];
 
-    function isEmpty(obj) {
+    function isBlockEmpty(obj) {
         if (obj === null) {
             return true;
         }
@@ -40,6 +40,8 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     }
 
     syntaxBlocks.forEach(function(block) {
-
+        if(!isBlockEmpty(block)){
+            
+        }
     });
 };
