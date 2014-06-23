@@ -1,3 +1,10 @@
+function ParsingError(message){
+    this.message = message || 'Error was ocured while parsing!';
+    this.name = 'ParsingError';
+}
+
+ParsingError.prototype = Error.prototype;
+
 function Parser() {
     'use strict';
     if (!(this instanceof Parser)) {
@@ -29,7 +36,9 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 
     syntaxBlocks.forEach(function(block) {
         if (!isBlockEmpty(block)) {
-
+            //do something
+        } else {
+            
         }
     });
 };
