@@ -9,4 +9,10 @@ describe('Parser', function() {
         var result = parser.parse('Text text {{special}} text text');
         expect(result[0]).toBe('{{special}}');
     });
+
+    it('should create an instance of Parser even Parser was called as a function', function(){
+        var parser1 = Parser();
+        var result = parser1.parse('Text text {{special}} text text');
+        expect(result[0]).toBe('{{special}}');
+    });
 });
