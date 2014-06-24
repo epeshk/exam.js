@@ -83,7 +83,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 Parser.prototype.parse = function(text){
     var self = this;
     if(typeof text !== 'string'){
-        throw new Error('Parser Error: into the parse() method was passed not a string parameter');
+        throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
     }
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
