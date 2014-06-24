@@ -47,7 +47,6 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-
     var result = new List(tmpResult, 0);
     return result;
 };
@@ -64,8 +63,12 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     }
 
     syntaxBlocks.forEach(function(block) {
+        var tmpObj;
         if (!isBlockEmpty(block)) {
-            //do something
+            tmpObj = self._extractList(block);
+            if(tmpObj !== null){
+                result.push(tmpObj);
+            }
         } else {
             throw new ParsingError('Cannot parse empty block: {{}}');
         }
