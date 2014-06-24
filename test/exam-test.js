@@ -66,4 +66,9 @@ describe('Parser', function() {
         expect(result.length).toBe(0);
     });
 
+    it('should throw an error if not a text was passed into parse() method', function(){
+        expect(function(){
+            parser.parse(null);
+        }).toThrow(new Error('Parser Error: into the parse() method was passed not a string parameter'));
+    });
 });
