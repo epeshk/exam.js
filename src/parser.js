@@ -5,6 +5,11 @@ function ParsingError(message){
 
 ParsingError.prototype = Error.prototype;
 
+function List(items, rightAnswerIndex){
+    this.items = items;
+    this.rightAnswerIndex = rightAnswerIndex;
+}
+
 function Parser() {
     'use strict';
     if (!(this instanceof Parser)) {
