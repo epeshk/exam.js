@@ -32,15 +32,21 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
 
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
+    var tmpResult = [];
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
         return result;
     }
-    var tmpResult = [];
-    var content = syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-        tmpResult.push(trim(elem));
-    });
+
+    try {
+        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+            tmpResult.push(trim(elem));
+        });
+    } catch (e) {
+        return null;
+    }
+
 
     var result = new List(tmpResult, 0);
     return result;
