@@ -37,5 +37,15 @@ describe('Parser', function() {
         expect(result.items[1]).toBe('2');
         expect(result.items[2]).toBe('3');
         expect(result.items[3]).toBe('4');
-    })
+    });
+
+    it('should trim elements in list but keep spaces between words in elements', function() {
+        var result = parser._extractList('{{test1 test1, test2 test2,  test3 test3  ,test4 test4}}');
+
+        expect(result.items[0]).toBe('test1 test1');
+        expect(result.items[1]).toBe('test2 test2');
+        expect(result.items[2]).toBe('test3 test3');
+        expect(result.items[3]).toBe('test4 test4');
+    });
+
 });
