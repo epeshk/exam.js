@@ -54,8 +54,14 @@ describe('Parser', function() {
         expect(result.length).toBe(2);
     });
 
-    it('should return empty array if text without syntax blocks was passed into parse() method', function(){
+    it('should return an empty array if text without syntax blocks was passed into parse() method', function(){
         var result = parser.parse('some text');
+
+        expect(result.length).toBe(0);
+    });
+
+    it('should return an empty array if empty text was passed into parse() method', function(){
+        var result = parser.parse('');
 
         expect(result.length).toBe(0);
     });
