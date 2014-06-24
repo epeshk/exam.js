@@ -54,6 +54,9 @@ Parser.prototype._extractList = function(syntaxBlock) {
 Parser.prototype._extractObjects = function(syntaxBlocks) {
     var self = this;
     var result = [];
+    if(syntaxBlocks === null){
+        return result; 
+    }
 
     function isBlockEmpty(obj) {
         if (obj === self._patterns.emptyBlock) {
@@ -80,5 +83,6 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 Parser.prototype.parse = function(text){
     var self = this;
     
-    return self._extractObjects(self._parseSyntaxBlocks(text));
+    var result = self._extractObjects(self._parseSyntaxBlocks(text));
+    return result;
 };

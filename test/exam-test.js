@@ -54,4 +54,10 @@ describe('Parser', function() {
         expect(result.length).toBe(2);
     });
 
+    it('should return empty array if text without syntax blocks was passed into parse() method', function(){
+        var result = parser.parse('some text');
+
+        expect(result.length).toBe(0);
+    });
+
 });
