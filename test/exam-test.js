@@ -48,4 +48,10 @@ describe('Parser', function() {
         expect(result.items[3]).toBe('test4 test4');
     });
 
+    it('should extract List objects from text', function(){
+        var result = parser.parse('some text bla bla bla {{elem1, elem2, elem3}} some else text {{elem1, elem2, elem3}}');
+
+        expect(result.length).toBe(2);
+    });
+
 });

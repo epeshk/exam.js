@@ -76,3 +76,9 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 
     return result;
 };
+
+Parser.prototype.parse = function(text){
+    var self = this;
+    
+    return self._extractObjects(self._parseSyntaxBlocks(text));
+};
