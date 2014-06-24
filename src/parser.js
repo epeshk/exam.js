@@ -53,22 +53,15 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
 
-    function trim(text){
-        var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
-        if(result.indexOf(' ') === 0){
-           result = result.substring(1);
-        }
-        if(result.lastIndexOf(' ') === result.length - 1){
-            result = result.substring(0,result.length - 1);
-        }
-
-        return result; 
+    function trim(text) {
+        var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+        return result;
     }
     var tmpResult = [];
-    var content = syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem){
+    var content = syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
         tmpResult.push(trim(elem));
     });
-    
+
     var result = new List(tmpResult, 0);
     return result;
 };
