@@ -24,9 +24,18 @@ describe('Parser', function() {
         );
     });
 
-    it('should extract List from syntax block with list',function(){
+    it('should extract List from syntax block with list', function() {
         var result = parser._extractList('{{1,2,3,4}}');
 
         expect(result.items.length).toBe(4);
     });
+
+    it('should extract List from syntax block with list and trim all spaces', function() {
+        var result = parser._extractList('{{ 1,   2,    3,    4 }}');
+
+        expect(result.items[0]).toBe('1');
+        expect(result.items[1]).toBe('2');
+        expect(result.items[2]).toBe('3');
+        expect(result.items[3]).toBe('4');
+    })
 });
