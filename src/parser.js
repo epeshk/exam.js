@@ -52,5 +52,8 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
-    var content = syntaxBlock.replace(/(\{|\})+?/g, '');
+    var content = syntaxBlock.replace(/(\{|\}| )+?/g, '');
+    
+    var result = new List(content.split(','),0);
+    return result;
 };
