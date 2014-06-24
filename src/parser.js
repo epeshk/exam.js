@@ -11,13 +11,15 @@ function Parser() {
         return new Parser();
     }
     var self = this;
-
-    self._blockPattern = /\{\{(.|\n)*?\}\}/g;
+    self._patterns  = {
+        blockPattern: /\{\{(.|\n)*?\}\}/g,
+        emptyBlock: '{{}}',
+    };
 }
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
     var self = this;
-    var regexp = new RegExp(self._blockPattern);
+    var regexp = new RegExp(self._patterns.blockPattern);
     var result = text.match(regexp);
 
     return result;
@@ -28,7 +30,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     var result = [];
 
     function isBlockEmpty(obj) {
-        if(obj === '{{}}'){
+        if(obj === self._patterns.emptyBlock){
             return true;
         }
         return false;
