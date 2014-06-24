@@ -41,6 +41,10 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
         return false;
     }
 
+    self._extractList = function(syntaxBlock){
+        var content = syntaxBlock.replace(/(\{|\})+?/g, '');
+    };
+
     syntaxBlocks.forEach(function(block) {
         if (!isBlockEmpty(block)) {
             //do something
