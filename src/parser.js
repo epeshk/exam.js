@@ -1,11 +1,11 @@
-function ParsingError(message){
+function ParsingError(message) {
     this.message = message || 'Error was ocured while parsing!';
     this.name = 'ParsingError';
 }
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex){
+function List(items, rightAnswerIndex) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
 }
@@ -16,7 +16,7 @@ function Parser() {
         return new Parser();
     }
     var self = this;
-    self._patterns  = {
+    self._patterns = {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
     };
@@ -35,21 +35,22 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     var result = [];
 
     function isBlockEmpty(obj) {
-        if(obj === self._patterns.emptyBlock){
+        if (obj === self._patterns.emptyBlock) {
             return true;
         }
         return false;
     }
 
-    self._extractList = function(syntaxBlock){
-        var content = syntaxBlock.replace(/(\{|\})+?/g, '');
-    };
-
     syntaxBlocks.forEach(function(block) {
         if (!isBlockEmpty(block)) {
             //do something
         } else {
-            throw new ParsingError('Cannot parse empty block: {{}}'); 
+            throw new ParsingError('Cannot parse empty block: {{}}');
         }
     });
+};
+
+Parser.prototype._extractList = function(syntaxBlock) {
+    var self = this;
+    var content = syntaxBlock.replace(/(\{|\})+?/g, '');
 };

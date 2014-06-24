@@ -23,4 +23,10 @@ describe('Parser', function() {
             new ParsingError('Cannot parse empty block: {{}}')
         );
     });
+
+    it('should extract List from syntax block with list',function(){
+        var result = parser._extractList('{{1,2,3,4}}');
+
+        expect(result.itmes.length).toBe(4);
+    });
 });
