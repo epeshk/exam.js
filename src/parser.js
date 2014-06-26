@@ -42,6 +42,17 @@ Parser.prototype._indexOfRightAnswer = function(items){
     return result;
 };
 
+Parser.prototype._removeExclamationPoints = function(items){
+    var self = this;
+    var index = self._indexOfRightAnswer(items);
+    var tmpWord = items[index];
+
+    var resultWord = tmpWord.substring(1,tmpWord.length - 1);
+    items[index] = resultWord;
+
+    return items;
+};
+
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
