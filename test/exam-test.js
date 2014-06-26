@@ -77,4 +77,10 @@ describe('Parser', function() {
 
         expect(result).toBe(2);
     });
+
+    it('should creates list object with correct index of answer', function(){
+        var result = parser._extractList('{{test1,test2,!test3!,test4}}');
+
+        expect(result.rightAnswerIndex).toBe(2);
+    });
 });
