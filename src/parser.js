@@ -59,7 +59,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(tmpResult, 0);
+    var result = new List(tmpResult, self._indexOfRightAnswer(tmpResult));
     return result;
 };
 
