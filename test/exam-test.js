@@ -97,4 +97,12 @@ describe('Parser', function() {
         expect(result[1]).toBe('test2');
         expect(result.length).toBe(2);
     });
+
+    it('should parse all syntax blocks and extract List object', function(){
+        var result = parser.parse('bla bla bla {{test1,!test2!}}');
+
+        expect(result.length).toBe(1);
+        expect(result[0].rightAnswerIndex).toBe(1);
+        expect(result[0].items[1]).toBe('test2');
+    });
 });
