@@ -71,4 +71,10 @@ describe('Parser', function() {
             parser.parse(null);
         }).toThrow(new ParsingError('Parser Error: into the parse() method was passed not a string parameter'));
     });
+
+    it('should parse index of right answer in List syntax block', function(){
+        var result = parser._indexOfRightAnswer(['test1','test2','!test3!','test4']);  
+
+        expect(result).toBe(2);
+    });
 });
