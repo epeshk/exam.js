@@ -83,4 +83,10 @@ describe('Parser', function() {
 
         expect(result.rightAnswerIndex).toBe(2);
     });
+
+    it('should removes exclamation points from right answer', function(){
+        var result = parser._removeExclamationPoints(['test1','test2','!test3!','test4']);
+
+        expect(result[2]).toBe('test3');
+    })
 });
