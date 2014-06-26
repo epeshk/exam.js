@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js', '*.html', 'css/*.css'],
-                tasks: ['jshint:dev', 'karma:dev', 'notify:test']
+                tasks: ['jshint:dev', 'jasmine', 'notify:test']
             }
         },
         clean: {
@@ -99,6 +99,15 @@ module.exports = function(grunt) {
                 // LCOV coverage file relevant to every target
                 src: 'coverage/**/*.info'
             }
+        },
+        jasmine: {
+            exam: {
+                src: 'src/**/*.js',
+                options: {
+                    specs: 'test/*test.js',
+                    helpers: 'spec/*Helper.js'
+                }
+            }
         }
     });
 
@@ -110,8 +119,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-coveralls');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
-    grunt.registerTask('test', ['karma:dev']);
+    grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('travis-ci-test', ['jshint', 'karma:travis', 'coveralls']);
     grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
