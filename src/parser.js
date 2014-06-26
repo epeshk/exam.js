@@ -30,6 +30,18 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
     return result;
 };
 
+Parser.prototype._indexOfRightAnswer = function(items){
+    var self = this;
+    var result = -1;
+    items.forEach(function(item){
+        if(item.indexOf('!') === 0 && item.lastIndexOf('!') === item.length - 1){
+            result = items.indexOf(item);
+        }
+    });
+
+    return result;
+};
+
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
