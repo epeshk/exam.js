@@ -105,4 +105,10 @@ describe('Parser', function() {
         expect(result[0].rightAnswerIndex).toBe(1);
         expect(result[0].items[1]).toBe('test2');
     });
+
+    it('should create List that contains syntax block', function(){
+        var result = parser.parse('bla bla {{test1, !test2!}}');
+
+        expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}')
+    });
 });
