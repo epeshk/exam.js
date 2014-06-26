@@ -88,5 +88,13 @@ describe('Parser', function() {
         var result = parser._removeExclamationPoints(['test1','test2','!test3!','test4']);
 
         expect(result[2]).toBe('test3');
-    })
+    });
+
+    it('should returns same array that was passed into the _removeExclamationPoints() method if this array doesn\'t countains a right answer', function(){
+        var result = parser._removeExclamationPoints(['test1','test2']);
+
+        expect(result[0]).toBe('test1');
+        expect(result[1]).toBe('test2');
+        expect(result.length).toBe(2);
+    });
 });

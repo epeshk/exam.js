@@ -43,10 +43,13 @@ Parser.prototype._indexOfRightAnswer = function(items){
 };
 
 Parser.prototype._removeExclamationPoints = function(items){
-    var self = this,
-        index = self._indexOfRightAnswer(items),
-        tmpWord = items[index],
-        result = [];
+    var self = this;
+    var index = self._indexOfRightAnswer(items);
+    if(index === -1){
+        return items;
+    }
+    var tmpWord = items[index];
+    var result = [];
 
     var resultWord = tmpWord.substring(1,tmpWord.length - 1);
     items.forEach(function(item){
@@ -77,7 +80,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(tmpResult, self._indexOfRightAnswer(tmpResult));
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult));
     return result;
 };
 
