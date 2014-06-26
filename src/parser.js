@@ -5,9 +5,10 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex) {
+function List(items, rightAnswerIndex, syntaxBlock) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
+    this.syntaxBlock = syntaxBlock;
 }
 
 function Parser() {
@@ -80,7 +81,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult));
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock);
     return result;
 };
 
