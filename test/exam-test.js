@@ -5,16 +5,19 @@ describe('Parser', function() {
         parser = new Parser();
     });
 
-    it('should parse spesial blocks from text', function() {
-        var result = parser._parseSyntaxBlocks('Text text {{special}} text text');
-        expect(result[0]).toBe('{{special}}');
+    describe('_parseSyntaxBlocks()', function() {
+        it('should parse spesial blocks from text', function() {
+            var result = parser._parseSyntaxBlocks('Text text {{special}} text text');
+            expect(result[0]).toBe('{{special}}');
+        });
+
+        it('should create an instance of Parser even Parser was called as a function', function() {
+            var parser1 = Parser();
+            var result = parser1._parseSyntaxBlocks('Text text {{special}} text text');
+            expect(result[0]).toBe('{{special}}');
+        });
     });
 
-    it('should create an instance of Parser even Parser was called as a function', function() {
-        var parser1 = Parser();
-        var result = parser1._parseSyntaxBlocks('Text text {{special}} text text');
-        expect(result[0]).toBe('{{special}}');
-    });
 
     it('should throw an error if try to extract object from empty special block', function() {
         expect(function() {
@@ -48,57 +51,57 @@ describe('Parser', function() {
         expect(result.items[3]).toBe('test4 test4');
     });
 
-    it('should extract List objects from text', function(){
+    it('should extract List objects from text', function() {
         var result = parser.parse('some text bla bla bla {{elem1, elem2, elem3}} some else text {{elem1, elem2, elem3}}');
 
         expect(result.length).toBe(2);
     });
 
-    it('should return an empty array if text without syntax blocks was passed into parse() method', function(){
+    it('should return an empty array if text without syntax blocks was passed into parse() method', function() {
         var result = parser.parse('some text');
 
         expect(result.length).toBe(0);
     });
 
-    it('should return an empty array if empty text was passed into parse() method', function(){
+    it('should return an empty array if empty text was passed into parse() method', function() {
         var result = parser.parse('');
 
         expect(result.length).toBe(0);
     });
 
-    it('should throw an error if not a text was passed into parse() method', function(){
-        expect(function(){
+    it('should throw an error if not a text was passed into parse() method', function() {
+        expect(function() {
             parser.parse(null);
         }).toThrow(new ParsingError('Parser Error: into the parse() method was passed not a string parameter'));
     });
 
-    it('should parse index of right answer in List syntax block', function(){
-        var result = parser._indexOfRightAnswer(['test1','test2','!test3!','test4']);  
+    it('should parse index of right answer in List syntax block', function() {
+        var result = parser._indexOfRightAnswer(['test1', 'test2', '!test3!', 'test4']);
 
         expect(result).toBe(2);
     });
 
-    it('should creates list object with correct index of answer', function(){
+    it('should creates list object with correct index of answer', function() {
         var result = parser._extractList('{{test1,test2,!test3!,test4}}');
 
         expect(result.rightAnswerIndex).toBe(2);
     });
 
-    it('should removes exclamation points from right answer', function(){
-        var result = parser._removeExclamationPoints(['test1','test2','!test3!','test4']);
+    it('should removes exclamation points from right answer', function() {
+        var result = parser._removeExclamationPoints(['test1', 'test2', '!test3!', 'test4']);
 
         expect(result[2]).toBe('test3');
     });
 
-    it('should returns same array that was passed into the _removeExclamationPoints() method if this array doesn\'t countains a right answer', function(){
-        var result = parser._removeExclamationPoints(['test1','test2']);
+    it('should returns same array that was passed into the _removeExclamationPoints() method if this array doesn\'t countains a right answer', function() {
+        var result = parser._removeExclamationPoints(['test1', 'test2']);
 
         expect(result[0]).toBe('test1');
         expect(result[1]).toBe('test2');
         expect(result.length).toBe(2);
     });
 
-    it('should parse all syntax blocks and extract List object', function(){
+    it('should parse all syntax blocks and extract List object', function() {
         var result = parser.parse('bla bla bla {{test1,!test2!}}');
 
         expect(result.length).toBe(1);
@@ -106,7 +109,7 @@ describe('Parser', function() {
         expect(result[0].items[1]).toBe('test2');
     });
 
-    it('should create List that contains syntax block', function(){
+    it('should create List that contains syntax block', function() {
         var result = parser.parse('bla bla {{test1, !test2!}}');
 
         expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}')
