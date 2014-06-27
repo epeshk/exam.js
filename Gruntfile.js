@@ -104,7 +104,7 @@ module.exports = function(grunt) {
             exam: {
                 src: 'src/**/*.js',
                 options: {
-                    specs: 'test/*test.js',
+                    specs: 'test/*Spec.js',
                     helpers: 'spec/*Helper.js'
                 }
             }
