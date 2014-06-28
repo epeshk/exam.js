@@ -5,3 +5,7 @@ function Translator(){
     }
     var self = this;
 }
+
+Translator.prototype._createListBox = function(listObject, id){
+
+};
