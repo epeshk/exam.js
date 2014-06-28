@@ -12,6 +12,16 @@ Translator.prototype._getNextID = function(){
     return 'examjs_id_' + (++self._currentID); 
 };
 
-Translator.prototype._createListBox = function(listObject, id){
+Translator.prototype._createListBox = function(listObject){
+    var self = this;
+    var id = self._getNextID();
+    var result = '<input list="' + id + '">';
+    result += '<datalist id="' + id + '">';
 
+    listObject.items.forEach(function(item){
+        result += '<option value="' + item + '">';
+    }); 
+    result += '</datalist>';
+
+    return result;
 };
