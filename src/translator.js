@@ -33,7 +33,7 @@ Translator.prototype._convertAllObjects = function(objects){
         if(object instanceof List){
             result.push(self._createListBox(object));
         } else{
-            throw new Error('Converting error. Translator cannot convert this: ' + object);
+            throw new Error('Converting error. Translator cannot convert object that was passed into it');
         }   
     });
 

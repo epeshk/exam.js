@@ -34,5 +34,11 @@ describe('Translator', function() {
             expect(typeof result[0] === 'string').toBeTruthy();
             expect(typeof result[1] === 'string').toBeTruthy();
         });
+        
+        it('should throw an error if it took incorrect objects', function(){
+            expect(function(){
+                translator._convertAllObjects([{},{}]);
+            }).toThrow(new Error('Converting error. Translator cannot convert object that was passed into it'));   
+        });
     });
 });
