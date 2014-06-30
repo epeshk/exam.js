@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             build: {
-                src: 'src/*.js',
+                src: 'build/*.js',
                 options: {
                     "eqeqeq": true,
                     "curly": true,
