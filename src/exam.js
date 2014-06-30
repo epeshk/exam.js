@@ -7,6 +7,14 @@ function Exam(){
     self._parser = new Parser();
 }
 
-Exam.prototype.convert = function(source){
+Exam.prototype.parse = function(source){
+    var self = this;
+    var syntaxObjects = self._parser.parse(source);
+    var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
+    convertionResults.forEach(function(item){
+        source = source.replace(item.source, item.result);
+    });
+
+    return source;
 };
