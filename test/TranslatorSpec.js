@@ -31,8 +31,8 @@ describe('Translator', function() {
             var result = translator._convertAllObjects(data);
 
             expect(result.length).toBe(2);
-            expect(typeof result[0] === 'string').toBeTruthy();
-            expect(typeof result[1] === 'string').toBeTruthy();
+            expect(typeof result[0].result === 'string').toBeTruthy();
+            expect(typeof result[1].result === 'string').toBeTruthy();
         });
         
         it('should throw an error if it took incorrect objects', function(){
