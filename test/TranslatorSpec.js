@@ -25,12 +25,14 @@ describe('Translator', function() {
         });
     });
 
-    describe('_convertAllObjects()', function(){
-        var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}')];
-        var result = translator._convertAllObjects(data);  
+    describe('_convertAllObjects()', function() {
+        it('should convert all syntax objects to the text', function() {
+            var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}')];
+            var result = translator._convertAllObjects(data);
 
-        expect(result.length).toBe(2);
-        expect(typeof result[0] === 'string').toBeTruthy();
-        expect(typeof result[1] === 'string').toBeTruthy();
+            expect(result.length).toBe(2);
+            expect(typeof result[0] === 'string').toBeTruthy();
+            expect(typeof result[1] === 'string').toBeTruthy();
+        });
     });
 });

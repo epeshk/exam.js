@@ -30,6 +30,12 @@ Translator.prototype._convertAllObjects = function(objects){
     var self = this;
     var result = [];
     objects.forEach(function(object){
-        
+        if(object instanceof List){
+            result.push(self._createListBox(object));
+        } else{
+            throw new Error('Converting error. Translator cannot convert this: ' + object);
+        }   
     });
+
+    return result;
 };
