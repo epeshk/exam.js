@@ -9,12 +9,13 @@ function Exam(){
 
 Exam.prototype.parse = function(source){
     var self = this;
-    var syntaxObjects = self._parser.parse(source);
+    var preprocessedSource = markdown.toHTML(source);
+    var syntaxObjects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
     convertionResults.forEach(function(item){
-        source = source.replace(item.source, item.result);
+        preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
 
-    return source;
+    return preprocessedSource;
 };

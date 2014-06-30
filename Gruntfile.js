@@ -111,7 +111,7 @@ module.exports = function(grunt) {
         },
         concat: {
             dist: {
-                src: ['src/parser.js', 'src/translator.js', 'src/exam.js'],
+                src: ['node_modules/markdown/lib/markdown.js','src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             },
         },
