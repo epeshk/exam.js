@@ -24,4 +24,13 @@ describe('Translator', function() {
             expect(result).toBe('<input list="examjs_id_1"><datalist id="examjs_id_1"><option value="test1"><option value="test2"></datalist>');
         });
     });
+
+    describe('_convertAllObjects()', function(){
+        var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}')];
+        var result = translator._convertAllObjects(data);  
+
+        expect(result.length).toBe(2);
+        expect(typeof result[0] === 'string').toBeTruthy();
+        expect(typeof result[1] === 'string').toBeTruthy();
+    });
 });
