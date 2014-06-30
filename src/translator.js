@@ -25,3 +25,11 @@ Translator.prototype._createListBox = function(listObject){
 
     return result;
 };
+
+Translator.prototype._convertAllObjects = function(objects){
+    var self = this;
+    var result = [];
+    objects.forEach(function(object){
+        
+    });
+};
