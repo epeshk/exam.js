@@ -114,7 +114,7 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             dist: {
-                src: ['src/*.js'],
+                src: ['src/parser.js','src/translator.js','src/exam.js'],
                 dest: 'build/exam.js',
             },
         },
