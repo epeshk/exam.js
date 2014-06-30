@@ -6,6 +6,7 @@
     <title>Exam.js</title>
 </head>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+
 <body>
     <div class="top-panel">Exam.js</div>
     <br>
@@ -15,27 +16,28 @@
         This is markdown extantion that allows you to create tests for students
     </div>
     <div class="box">
-        <div class="box promo-text">Source:</div> 
+        <div class="box promo-text">Source:</div>
         <textarea name="exam" id="editor" cols="30" rows="10"></textarea>
         <br>
         <div class="box promo-text">Result</div>
-        <div class="result">
-           <div id="result" class="promo-text"></div> 
+        <div class="result result-box">
+            <div id="result"></div>
         </div>
     </div>
     <script type="text/javascript" src="build/exam.js"></script>
     <script type="text/javascript">
-    var exam = new Exam();
-    var resultDiv = document.getElementById('result');
-    var editor = document.getElementById('editor');
+        var exam = new Exam();
+        var resultDiv = document.getElementById('result');
+        var editor = document.getElementById('editor');
 
-    function update() {
-        var source = editor.value;
-        var resultHTML = exam.parse(source);
-        resultDiv.innerHTML = resultHTML;
-    }
+        function update()
+        {
+            var source = editor.value;
+            var resultHTML = exam.parse(source);
+            resultDiv.innerHTML = resultHTML;
+        }
 
-    editor.oninput = update;
+        editor.oninput = update;
     </script>
 
 </body>
