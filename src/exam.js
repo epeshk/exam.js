@@ -2,10 +2,9 @@ function Exam(){
     if(!(this instanceof Exam)){
         return new Exam();    
     }
-    var self = this,
-        translator = new Translator(),
-        parser = new Parser();
-    
+    var self = this;
+    self._translator = new Translator(),
+    self._parser = new Parser();
 }
 
 Exam.prototype.convert = function(source){
