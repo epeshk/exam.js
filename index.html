@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exam.js</title>
+</head>
+<body>
+    <textarea name="exam" id="exam" cols="30" rows="10"></textarea>
+    <div id="result"></div>
+    <script type="text/javascript" src="build/exam.js"></script>
+    <script type="text/javascript">
+        var exam = new Exam();
+        var resultDiv = document.getElementById('result');
+        var editor = document.getElementById('exam');
+        function update()
+        {
+            var source = editor.value;
+            var resultHTML = exam.parse(source);
+            resultDiv.innerHTML = resultHTML;
+        }
+
+        editor.oninput = update;
+    </script>
+
+</body>
+
+</html>
