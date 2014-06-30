@@ -102,7 +102,7 @@ module.exports = function(grunt) {
         },
         jasmine: {
             exam: {
-                src: 'src/**/*.js',
+                src: 'build/**/*.js',
                 options: {
                     specs: 'test/*Spec.js',
                     helpers: 'spec/*Helper.js'
@@ -133,6 +133,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('travis-ci-test', ['jshint', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify', 'coveralls']);
+    grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify','concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
