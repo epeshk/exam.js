@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat','jshint:dev', 'jasmine', 'notify:test']
+                tasks: ['concat', 'jshint:dev', 'jasmine', 'notify:test']
             }
         },
         clean: {
@@ -110,11 +110,8 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            options: {
-                separator: ';',
-            },
             dist: {
-                src: ['src/parser.js','src/translator.js','src/exam.js'],
+                src: ['src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             },
         },
@@ -133,6 +130,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('travis-ci-test', ['jshint', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify','concat', 'coveralls']);
+    grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
