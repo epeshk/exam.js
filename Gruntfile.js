@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                 }
             },
             dev: {
-                src: 'src/*.js',
+                src: 'build/*.js',
                 options: {
                     "eqeqeq": true,
                     "curly": true,
