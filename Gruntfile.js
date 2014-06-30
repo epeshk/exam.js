@@ -108,7 +108,16 @@ module.exports = function(grunt) {
                     helpers: 'spec/*Helper.js'
                 }
             }
-        }
+        },
+        concat: {
+            options: {
+                separator: ';',
+            },
+            dist: {
+                src: ['src/*.js'],
+                dest: 'build/exam.js',
+            },
+        },
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -116,6 +125,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-coveralls');
