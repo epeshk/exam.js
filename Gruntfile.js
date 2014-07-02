@@ -29,7 +29,8 @@ module.exports = function(grunt) {
                     "funcscope": true,
                     "notypeof": true,
                     "globals": {
-                        $: true
+                        $: true,
+                        markdown: true
                     }
                 }
             },
@@ -48,7 +49,8 @@ module.exports = function(grunt) {
                     "funcscope": true,
                     "notypeof": true,
                     "globals": {
-                        $: true
+                        $: true,
+                        markdown: true
                     }
                 }
             }
