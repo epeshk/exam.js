@@ -136,6 +136,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('travis-ci-test', ['concat:prebuild','jshint','concat:build', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify', 'concat', 'coveralls']);
+    grunt.registerTask('default', ['clean','concat:prebuild', 'jshint:build','concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
