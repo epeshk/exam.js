@@ -31,7 +31,7 @@ body {
     color: #e6f9bc;
     font-size: 20pt;
 }
-#editor {
+.text-pane {
     background: #353535;
     color: #e6f9bc;
     font-size: 18pt;
@@ -47,25 +47,15 @@ body {
     display: inline-block;
     text-align: left;
 }
-#editor::-webkit-scrollbar {
+.text-pane::-webkit-scrollbar {
     width: 0 !important;
 }
-#result {
-    background: #353535;
-    color: #f2e9e1;
+.split-div {
     font-size: 18pt;
-    width: 40%;
     height: 400px;
-    overflow: scroll;
-    overflow: -moz-scrollbars-none;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 0 auto;
+    margin: 5px;
+    text-align: center;
+    vertical-align: middle;
+    color: #e6f9bc;
     display: inline-block;
-    text-align: left;
-}
-#result::-webkit-scrollbar {
-    width: 0 !important;
 }
