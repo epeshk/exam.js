@@ -16,11 +16,11 @@ body {
 }
 .box {
     margin: 0 auto;
-    width: 80%;
+    width: 95%;
     padding: 20px;
 }
 .result-box {
-    width: 80%;
+    width: 95%;
     padding: 20px;
 }
 .promo-text {
@@ -31,14 +31,16 @@ body {
     background: #151515;
     color: #fff;
     font-size: 18pt;
-    width: 90%;
-    height: 90%;
+    width: 40%;
+    height: auto;
     overflow: scroll;
     overflow: -moz-scrollbars-none;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
     padding: 20px;
+    margin: 0 auto;
+    display: inline-block;
 }
 #editor::-webkit-scrollbar {
     width: 0 !important;
@@ -47,14 +49,16 @@ body {
     background: #353535;
     color: #fff;
     font-size: 18pt;
-    width: 90%;
-    height: 90%;
+    width: 40%;
     overflow: scroll;
     overflow: -moz-scrollbars-none;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
     padding: 20px;
+    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
 }
 #result::-webkit-scrollbar {
     width: 0 !important;
