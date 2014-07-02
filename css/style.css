@@ -39,25 +39,23 @@ body {
     -moz-border-radius: 10px;
     border-radius: 10px;
     padding: 20px;
-    margin: 0 auto;
 }
 #editor::-webkit-scrollbar {
     width: 0 !important;
 }
-#result {
-    text-align: left;
-}
-.result {
+#result{
     background: #353535;
     color: #fff;
     font-size: 18pt;
     width: 90%;
-    height: 20%;
+    height: 90%;
     overflow: scroll;
     overflow: -moz-scrollbars-none;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
     padding: 20px;
-    margin: 0 auto;
+}
+#result::-webkit-scrollbar {
+    width: 0 !important;
 }
