@@ -21,16 +21,10 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/*.js',
             'src/**/*.js',
             'test/**/*.js',
-            'test/*.js',
-            'node_modules/jquery/dist/jquery.min.js', {
-                pattern: '**/*.html',
-                watched: true,
-                served: true,
-                included: false
-            }
+            'build/**/*.js',
+            'node_modules/markdown/lib/markdown.js'
         ],
 
         // list of files / patterns to exclude
