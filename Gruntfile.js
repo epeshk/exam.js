@@ -20,7 +20,6 @@ module.exports = function(grunt) {
                     "curly": true,
                     "eqnull": true,
                     "browser": true,
-                    "unused": true,
                     "undef": true,
                     "indent": 4,
                     "latedef": true,
