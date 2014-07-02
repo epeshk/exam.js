@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat', 'jshint:dev', 'jasmine', 'notify:test']
+                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'jasmine', 'notify:test']
             }
         },
         clean: {
@@ -110,10 +110,14 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            dist: {
-                src: ['node_modules/markdown/lib/markdown.js','src/parser.js', 'src/translator.js', 'src/exam.js'],
+            prebuild: {
+                src: ['src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             },
+            build: {
+                src: ['node_modules/markdown/lib/markdown.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
+                dest: 'build/exam.js',
+            }
         },
     });
 
