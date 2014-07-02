@@ -17,7 +17,7 @@
     </div>
     <div class="box">
         <div class="result result-box">
-            <textarea id="editor" contenteditable="true"></textarea>
+            <div id="editor" contenteditable="true"></div>
             <div id="result"></div>
         </div>
     </div>
@@ -29,51 +29,12 @@
 
         function update()
         {
-            var source = editor.value;
+            var source = editor.innerHTML.replace(/<br>/g,'\n');
             var resultHTML = exam.parse(source);
             resultDiv.innerHTML = resultHTML;
         }
 
         editor.oninput = update;
-        
-        var observe;
-        if (window.attachEvent)
-        {
-            observe = function(element, event, handler)
-            {
-                element.attachEvent('on' + event, handler);
-            };
-        }
-        else
-        {
-            observe = function(element, event, handler)
-            {
-                element.addEventListener(event, handler, false);
-            };
-        }
-
-        var text = document.getElementById('editor');
-
-        function resize()
-        {
-            text.style.height = 'auto';
-            text.style.height = text.scrollHeight + 'px';
-        }
-        /* 0-timeout to get the already changed text */
-        function delayedResize()
-        {
-            window.setTimeout(resize, 0);
-
-        }
-        observe(text, 'change', resize);
-        observe(text, 'cut', delayedResize);
-        observe(text, 'paste', delayedResize);
-        observe(text, 'drop', delayedResize);
-        observe(text, 'keydown', delayedResize);
-
-        text.focus();
-        text.select();
-        resize();
     </script>
 
 </body>
