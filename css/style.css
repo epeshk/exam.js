@@ -1,7 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
-    background: #1f8dd6;
+    background: #83988e;
     text-align: center;
     height: 100%;
 }
@@ -9,11 +9,11 @@ body {
     position: fixed;
     width: 100%;
     height: 45px;
-    background: #2d3e50;
+    background: #1c140d;
     text-align: center;
     font-style: oblique;
     font-size: 24pt;
-    color: #fff;
+    color: #bcdea5;
     margin-bottom: 50px;
 }
 .box {
@@ -28,12 +28,12 @@ body {
     height: 80%;
 }
 .promo-text {
-    color: #fff;
+    color: #e6f9bc;
     font-size: 20pt;
 }
 #editor {
     background: #353535;
-    color: #fff;
+    color: #e6f9bc;
     font-size: 18pt;
     width: 40%;
     height: 400px;
@@ -52,7 +52,7 @@ body {
 }
 #result {
     background: #353535;
-    color: #fff;
+    color: #f2e9e1;
     font-size: 18pt;
     width: 40%;
     height: 400px;
