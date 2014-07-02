@@ -135,7 +135,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('test', ['jasmine']);
-    grunt.registerTask('travis-ci-test', ['jshint', 'karma:travis', 'coveralls']);
+    grunt.registerTask('travis-ci-test', ['concat:prebuild','jshint','concat:build', 'karma:travis', 'coveralls']);
     grunt.registerTask('default', ['clean', 'jshint:build', 'karma:build', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
