@@ -1,7 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
-    background: #83988e;
+    background: #5e5a80;
     text-align: center;
     height: 100%;
 }
@@ -13,7 +13,7 @@ body {
     text-align: center;
     font-style: oblique;
     font-size: 24pt;
-    color: #bcdea5;
+    color: #fff;
     margin-bottom: 50px;
 }
 .box {
@@ -28,12 +28,12 @@ body {
     height: 80%;
 }
 .promo-text {
-    color: #e6f9bc;
+    color: #fff;
     font-size: 20pt;
 }
 .text-pane {
     background: #353535;
-    color: #e6f9bc;
+    color: #e3e4fa;
     font-size: 18pt;
     width: 40%;
     height: 400px;
@@ -56,6 +56,6 @@ body {
     margin: 5px;
     text-align: center;
     vertical-align: middle;
-    color: #e6f9bc;
+    color: #fff;
     display: inline-block;
 }
