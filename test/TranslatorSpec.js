@@ -25,6 +25,13 @@ describe('Translator', function() {
         });
     });
 
+    describe('_createTextInput()', function(){
+        it('should create a textInput from TextInput', function(){
+            var result = translator._createTextInput(new TextInput('true', '{{...| true }}'));
+            expect(result).toBe("<input type='text' id='examjs_id_1'></input>");
+        });
+    });
+
     describe('_convertAllObjects()', function() {
         it('should convert all syntax objects to the text', function() {
             var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}')];

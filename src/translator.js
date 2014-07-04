@@ -15,7 +15,7 @@ Translator.prototype._getNextID = function() {
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var id = self._getNextID();
-	var result = "<input type='text'></input>";
+	var result = "<input type=\'text\' id=\'" + id +"\'></input>";
 
 	return result;
 };
