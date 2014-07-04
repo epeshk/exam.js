@@ -5,6 +5,25 @@ describe('Parser', function() {
         parser = new Parser();
     });
 
+    describe('_getTypeBlock()', function() {
+        it('should return string: "textInput" if received textInputBlock', function(){
+            var result = parser._getTypeBlock("{{...|hkfds}}");
+            expect(result).toBe('textInput');
+        });
+
+        it('should return string: "list" if received listBlock', function(){
+            var result = parser._getTypeBlock("{{1, 3,!4!}}");
+            expect(result).toBe('list');
+        });
+    });
+
+    describe('_extractTextInput()',function(){
+        it('should return rightAnswer',function(){
+            var result = parser._extractTextInput("{{...|true}}");
+            expect(result.rightAnswer).toBe('true');
+        });
+    });
+
     describe('_parseSyntaxBlocks()', function() {
         it('should parse spesial blocks from text', function() {
             var result = parser._parseSyntaxBlocks('Text text {{special}} text text');

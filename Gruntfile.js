@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'jasmine', 'notify:test']
+                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'karma:dev', 'notify:test']
             }
         },
         clean: {
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         karma: {
             dev: {
                 configFile: 'karma.conf.js',
-                browsers: ['PhantomJS']
+                browsers: ['Firefox']
             },
             travis: {
                 configFile: 'karma.conf.js',
