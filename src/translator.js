@@ -12,6 +12,14 @@ Translator.prototype._getNextID = function() {
     return 'examjs_id_' + (++self._currentID);
 };
 
+Translator.prototype._createTextInput = function(inputObject){
+	var self = this;
+	var id = self._getNextID();
+	var result = "<input type=\'text\' id=\'" + id +"\'></input>";
+
+	return result;
+};
+
 Translator.prototype._createListBox = function(listObject) {
     var self = this;
     var id = self._getNextID();
@@ -35,8 +43,15 @@ Translator.prototype._convertAllObjects = function(objects) {
                 source: object.syntaxBlock,
                 result: self._createListBox(object)
             });
-        } else {
-            throw new Error('Converting error. Translator cannot convert object that was passed into it');
+        }else{
+        	if(object instanceof TextInput){
+        		result.push({
+        			source: object.syntaxBlock,
+        			result: self._createTextInput(object)
+        		});
+        	}else {
+            	throw new Error('Converting error. Translator cannot convert object that was passed into it');
+        	}
         }
     });
 

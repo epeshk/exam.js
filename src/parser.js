@@ -145,7 +145,6 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
         			break;
         		}
         	}
-            //tmpObj = self._extractList(block);
             if(tmpObj !== null){
                 result.push(tmpObj);
             }

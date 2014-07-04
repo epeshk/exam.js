@@ -25,14 +25,23 @@ describe('Translator', function() {
         });
     });
 
+    describe('_createTextInput()', function(){
+        it('should create a textInput from TextInput', function(){
+            var result = translator._createTextInput(new TextInput('true', '{{...| true }}'));
+            expect(result).toBe("<input type='text' id='examjs_id_1'></input>");
+        });
+    });
+
     describe('_convertAllObjects()', function() {
         it('should convert all syntax objects to the text', function() {
-            var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}')];
+            var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}'),
+            new TextInput("true", "{{...|true}}")];
             var result = translator._convertAllObjects(data);
 
-            expect(result.length).toBe(2);
+            expect(result.length).toBe(3);
             expect(typeof result[0].result === 'string').toBeTruthy();
             expect(typeof result[1].result === 'string').toBeTruthy();
+            expect(typeof result[2].result === 'string').toBeTruthy();
         });
         
         it('should throw an error if it took incorrect objects', function(){
