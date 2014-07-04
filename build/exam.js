@@ -1970,7 +1970,7 @@ Exam.prototype.setPreprocessor = function(newPreprocessor){
 Exam.prototype.parse = function(source){
     var self = this;
     var preprocessedSource;
-    //var preprocessedSource = markdown.toHTML(source);
+
     if(self._preprocessor !== null){
         preprocessedSource = self._preprocessor(source);
     }else{
