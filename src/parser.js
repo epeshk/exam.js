@@ -11,6 +11,11 @@ function List(items, rightAnswerIndex, syntaxBlock) {
     this.syntaxBlock = syntaxBlock;
 }
 
+function TextInput(rightAnswer, syntaxBlock){
+	this.rightAnswer = rightAnswer;
+	this.syntaxBlock = syntaxBlock;
+}
+
 function Parser() {
     'use strict';
     if (!(this instanceof Parser)) {
@@ -22,6 +27,33 @@ function Parser() {
         emptyBlock: '{{}}',
     };
 }
+
+Parser.prototype._getTypeBlock = function(block){
+	var self = this;
+	var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
+	var regexp = new RegExp(textInputPattern);
+	if(textInputPattern.test(block)){
+		return "textInput";
+	}else{
+		return "list";
+	}
+
+};
+
+Parser.prototype._extractTextInput = function(syntaxBlock){
+	var self = this;
+
+	function getRightAnswer(syntaxBlock){
+		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
+		var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition+1,syntaxBlock.length-2).trim();	
+
+		return rightAnswer;
+	}
+
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock);
+
+	return result;
+};
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
     var self = this;
@@ -102,7 +134,18 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     syntaxBlocks.forEach(function(block) {
         var tmpObj;
         if (!isBlockEmpty(block)) {
-            tmpObj = self._extractList(block);
+        	var typeBlock = self._getTypeBlock(block);
+        	switch (typeBlock){
+        		case 'textInput':{
+        			tmpObj = self._extractTextInput(block);
+        			break;
+        		}
+        		case 'list':{
+        			tmpObj = self._extractList(block);
+        			break;
+        		}
+        	}
+            //tmpObj = self._extractList(block);
             if(tmpObj !== null){
                 result.push(tmpObj);
             }
