@@ -1959,11 +1959,20 @@ function Exam(){
     var self = this;
     self._translator = new Translator();
     self._parser = new Parser();
+    self._preprocessor = null;
 }
+
+Exam.prototype.setPreprocessor = function(newPreprocessor){
+    var self = this;
+    self._preprocessor = newPreprocessor;
+};
 
 Exam.prototype.parse = function(source){
     var self = this;
-    var preprocessedSource = markdown.toHTML(source);
+    //var preprocessedSource = markdown.toHTML(source);
+    if(self._preprocessor !== null){
+        var preprocessedSource = self._preprocessor(source);
+    }
     var syntaxObjects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
