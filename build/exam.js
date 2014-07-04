@@ -1969,9 +1969,12 @@ Exam.prototype.setPreprocessor = function(newPreprocessor){
 
 Exam.prototype.parse = function(source){
     var self = this;
+    var preprocessedSource;
     //var preprocessedSource = markdown.toHTML(source);
     if(self._preprocessor !== null){
-        var preprocessedSource = self._preprocessor(source);
+        preprocessedSource = self._preprocessor(source);
+    }else{
+        preprocessedSource = source;
     }
     var syntaxObjects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
