@@ -1965,8 +1965,14 @@ function Exam(){
 
 Exam.prototype.parse = function(source, preprocessor){
     var self = this;
-    if(preprocessor !==null){
+    if(typeof preprocessor === 'function'){
         self._preprocessor = preprocessor;
+    }else{
+        if(typeof preprocessor ==='undefined'){
+            self._preprocessor = markdown.toHTML;
+        }else{
+            throw new Error('The second argument must be a function of parsing');
+        }
     }
     var preprocessedSource = self._preprocessor(source);
     var syntaxObjects = self._parser.parse(preprocessedSource);

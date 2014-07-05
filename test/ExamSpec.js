@@ -6,8 +6,8 @@ describe('Exam', function() {
     });
 
     describe('parse()', function(){
-        it('should replace all syntax blocks to HTML tags if _preprocessor is markdown', function(){
-            var result = exam.parse('bla bla bla {{test1,!test2!}} bla',null);
+        it('should replace all syntax blocks to HTML tags if _preprocessor is default', function(){
+            var result = exam.parse('bla bla bla {{test1,!test2!}} bla');
 
             expect(result).toBe('<p>bla bla bla <input list="examjs_id_1"><datalist id="examjs_id_1"><option value="test1"><option value="test2"></datalist> bla</p>');
         });
@@ -18,6 +18,19 @@ describe('Exam', function() {
             });
 
             expect(result).toBe('bla bla bla <input list="examjs_id_1"><datalist id="examjs_id_1"><option value="test1"><option value="test2"></datalist> bla');
+        });
+
+        it('should show exception if _preprocessor is not function', function(){
+            var text = "pam pam pam";
+            var number = 156;
+
+            expect(function(){
+                exam.parse('bla bla bla {{test1,!test2!}} bla', text);
+            }).toThrow(new Error('The second argument must be a function of parsing'));
+
+            expect(function(){
+                exam.parse('bla bla bla {{test1,!test2!}} bla', number);
+            }).toThrow(new Error('The second argument must be a function of parsing'));
         });
     });
 });
