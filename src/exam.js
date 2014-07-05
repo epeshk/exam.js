@@ -5,23 +5,16 @@ function Exam(){
     var self = this;
     self._translator = new Translator();
     self._parser = new Parser();
-    self._preprocessor = null;
+    self._preprocessor = markdown.toHTML;
 }
 
-Exam.prototype.setPreprocessor = function(newPreprocessor){
-    var self = this;
-    self._preprocessor = newPreprocessor;
-};
 
-Exam.prototype.parse = function(source){
+Exam.prototype.parse = function(source, preprocessor){
     var self = this;
-    var preprocessedSource;
-
-    if(self._preprocessor !== null){
-        preprocessedSource = self._preprocessor(source);
-    }else{
-        preprocessedSource = source;
+    if(preprocessor !==null){
+        self._preprocessor = preprocessor;
     }
+    var preprocessedSource = self._preprocessor(source);
     var syntaxObjects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
