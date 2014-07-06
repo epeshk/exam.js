@@ -16,7 +16,7 @@ Exam.prototype.parse = function(source, preprocessor) {
         if (typeof preprocessor === 'function') {
             self._preprocessor = preprocessor;
         } else {
-            throw new Error('The second argument must be a function of parsing');
+            throw new Error('The second argument must be a parsing function');
         }
     } 
     var preprocessedSource = self._preprocessor(source);
