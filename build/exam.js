@@ -1731,15 +1731,17 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock) {
+function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
-function TextInput(rightAnswer, syntaxBlock){
+function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
 function Parser() {
@@ -1753,8 +1755,15 @@ function Parser() {
         emptyBlock: '{{}}',
     };
 
-    self._objects = null;
+    self._currentID = 0;
+
 }
+
+
+Parser.prototype._getNextID = function() {
+    var self = this;
+    return 'examjs_id_' + (++self._currentID);
+};
 
 
 Parser.prototype._getTypeBlock = function(block){
@@ -1779,7 +1788,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock){
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock);
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
 
 	return result;
 };
@@ -1842,7 +1851,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock);
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
     return result;
 };
 
@@ -1893,7 +1902,6 @@ Parser.prototype.parse = function(text){
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
 
-    self._objects = result;
 
     return result;
 };
@@ -1904,27 +1912,21 @@ function Translator() {
         return new Translator();
     }
     var self = this;
-    self._currentID = 0;
 }
 
-Translator.prototype._getNextID = function() {
-    var self = this;
-    return 'examjs_id_' + (++self._currentID);
-};
+
 
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
-	var id = self._getNextID();
-	var result = "<input type=\'text\' id=\'" + id +"\'></input>";
+	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
 	return result;
 };
 
 Translator.prototype._createListBox = function(listObject) {
     var self = this;
-    var id = self._getNextID();
-    var result = '<input list="' + id + '">';
-    result += '<datalist id="' + id + '">';
+    var result = '<input list="' + listObject._id + '">';
+    result += '<datalist id="' + listObject._id + '">';
 
     listObject.items.forEach(function(item) {
         result += '<option value="' + item + '">';
