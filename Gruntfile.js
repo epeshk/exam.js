@@ -106,7 +106,7 @@ module.exports = function(grunt) {
                 src: 'build/**/*.js',
                 options: {
                     specs: 'test/*Spec.js',
-                    helpers: 'spec/*Helper.js'
+                    helpers: 'test/*Helper.js'
                 }
             }
         },
