@@ -6,6 +6,7 @@ function Exam(){
     self._translator = new Translator();
     self._parser = new Parser();
     self._preprocessor = markdown.toHTML;
+    self._objects = null;
 }
 
 
@@ -21,7 +22,9 @@ Exam.prototype.parse = function(source, preprocessor){
         }
     }
     var preprocessedSource = self._preprocessor(source);
-    var syntaxObjects = self._parser.parse(preprocessedSource);
+    var syntaxObjects = self._parser.parse(preprocessedSource, function(objects){
+        self._objects = objects;
+    });
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
     convertionResults.forEach(function(item){

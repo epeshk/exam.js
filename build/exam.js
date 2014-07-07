@@ -1882,13 +1882,18 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     return result;
 };
 
-Parser.prototype.parse = function(text){
+Parser.prototype.parse = function(text, moveObjectsToExam){
     var self = this;
     if(typeof text !== 'string'){
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
     }
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
+
+    if (moveObjectsToExam) {
+        moveObjectsToExam(result);
+    }
+
     return result;
 };
 
@@ -1960,6 +1965,7 @@ function Exam(){
     self._translator = new Translator();
     self._parser = new Parser();
     self._preprocessor = markdown.toHTML;
+    self._objects = null;
 }
 
 
@@ -1975,7 +1981,9 @@ Exam.prototype.parse = function(source, preprocessor){
         }
     }
     var preprocessedSource = self._preprocessor(source);
-    var syntaxObjects = self._parser.parse(preprocessedSource);
+    var syntaxObjects = self._parser.parse(preprocessedSource, function(objects){
+        self._objects = objects;
+    });
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
     convertionResults.forEach(function(item){
