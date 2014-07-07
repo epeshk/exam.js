@@ -21,14 +21,14 @@ Exam.prototype.parse = function(source, preprocessor) {
         }
     } 
     var preprocessedSource = self._preprocessor(source);
-    var syntaxObjects = self._parser.parse(preprocessedSource);
-    var convertionResults = self._translator._convertAllObjects(syntaxObjects);
+    self._objects = self._parser.parse(preprocessedSource);
+    var convertionResults = self._translator._convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
 
-    self._objects = self._parser._objects;
 
     return preprocessedSource;
 };
+
