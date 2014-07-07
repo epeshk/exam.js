@@ -1752,7 +1752,10 @@ function Parser() {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
     };
+
+    self._objects = null;
 }
+
 
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
@@ -1882,7 +1885,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     return result;
 };
 
-Parser.prototype.parse = function(text, moveObjectsToExam){
+Parser.prototype.parse = function(text){
     var self = this;
     if(typeof text !== 'string'){
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
@@ -1890,9 +1893,7 @@ Parser.prototype.parse = function(text, moveObjectsToExam){
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
 
-    if (moveObjectsToExam) {
-        moveObjectsToExam(result);
-    }
+    self._objects = result;
 
     return result;
 };
@@ -1976,18 +1977,18 @@ Exam.prototype.parse = function(source, preprocessor) {
         if (typeof preprocessor === 'function') {
             self._preprocessor = preprocessor;
         } else {
-            throw new Error('The second argument must be a function of parsing');
+            throw new Error('The second argument must be a parsing function');
         }
     } 
     var preprocessedSource = self._preprocessor(source);
-    var syntaxObjects = self._parser.parse(preprocessedSource, function(objects){
-        self._objects = objects;
-    });
+    var syntaxObjects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(syntaxObjects);
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
+
+    self._objects = self._parser._objects;
 
     return preprocessedSource;
 };

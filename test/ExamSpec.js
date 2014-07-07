@@ -26,11 +26,12 @@ describe('Exam', function() {
 
             expect(function(){
                 exam.parse('bla bla bla {{test1,!test2!}} bla', text);
-            }).toThrow(new Error('The second argument must be a function of parsing'));
+            }).toThrow(new Error('The second argument must be a parsing function'));
 
             expect(function(){
                 exam.parse('bla bla bla {{test1,!test2!}} bla', number);
-            }).toThrow(new Error('The second argument must be a function of parsing'));
+            }).toThrow(new Error('The second argument must be a parsing function'));
         });
+
     });
 });

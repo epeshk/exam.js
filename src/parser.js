@@ -26,7 +26,10 @@ function Parser() {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
     };
+
+    self._objects = null;
 }
+
 
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
@@ -156,7 +159,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     return result;
 };
 
-Parser.prototype.parse = function(text, moveObjectsToExam){
+Parser.prototype.parse = function(text){
     var self = this;
     if(typeof text !== 'string'){
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
@@ -164,9 +167,7 @@ Parser.prototype.parse = function(text, moveObjectsToExam){
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
 
-    if (moveObjectsToExam) {
-        moveObjectsToExam(result);
-    }
+    self._objects = result;
 
     return result;
 };
