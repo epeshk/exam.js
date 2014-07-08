@@ -7,6 +7,7 @@ function Exam() {
     self._parser = new Parser();
     self._preprocessor = markdown.toHTML;
     self._objects = null;
+    self._eventHandlerForSeparatorMode = null;
 }
 
 
@@ -30,5 +31,45 @@ Exam.prototype.parse = function(source, preprocessor) {
 
 
     return preprocessedSource;
+};
+
+Exam.prototype.startExam = function (handlerForSeparatorMode) {
+    var self = this;
+
+    function eventHandlerForSeparatorMode (object, selectAnswer) {
+        if (object.rightAnswer === selectAnswer) {
+            window.alert("true");
+        } else {
+            window.alert("false");
+        }
+    }
+
+
+
+    if (handlerForSeparatorMode) {
+        if(typeof eventHandlerForSeparatorMode === 'function'){
+            self._eventHandlerForSeparatorMode = handlerForSeparatorMode;
+        }
+    } else {
+        self._eventHandlerForSeparatorMode = eventHandlerForSeparatorMode;
+    }
+
+    
+
+    self._objects.forEach(function (object) {
+        var currentObjectId = document.getElementById(object._id);
+
+        if (object instanceof List) {
+            currentObjectId.onselect = function () {
+                var selectAnswer = currentObjectId.value;
+                self._eventHandlerForSeparatorMode(object, selectAnswer);
+            };
+        } else {
+            currentObjectId.oninput = function () {
+                var selectAnswer = currentObjectId.value;
+                self._eventHandlerForSeparatorMode(object, selectAnswer);
+            };
+        }
+    });
 };
 
