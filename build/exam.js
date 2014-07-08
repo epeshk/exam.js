@@ -1969,7 +1969,7 @@ function Exam() {
     self._parser = new Parser();
     self._preprocessor = markdown.toHTML;
     self._objects = null;
-    self._eventHandlerForSeparatorMode = null;
+    self._handlerForSeparatorMode = null;
 }
 
 
@@ -1995,53 +1995,44 @@ Exam.prototype.parse = function(source, preprocessor) {
     return preprocessedSource;
 };
 
+
+Exam.prototype._eventHandlerForSeparatorMode = function (object) {
+    var selectAnswer = document.getElementById(object._id).value;
+    var rightAnswer = "";
+
+    if (object instanceof List) {
+        rightAnswer = object.items[object.rightAnswerIndex];
+    } else {
+        rightAnswer = object.rightAnswer;
+    }
+
+    if (rightAnswer === selectAnswer) {
+        window.alert("true");
+    } else {
+        window.alert("false");
+    }
+};
+
+
 Exam.prototype.startExam = function (handlerForSeparatorMode) {
     var self = this;
 
-    function eventHandlerForSeparatorMode (object) {
-
-        var selectAnswer = document.getElementById(object._id).value;
-        var rightAnswer = "";
-
-        if (object instanceof List) {
-            rightAnswer = object.items[object.rightAnswerIndex];
-        } else {
-            rightAnswer = object.rightAnswer;
-        }
-
-        if (object.rightAnswer === selectAnswer) {
-            window.alert("true");
-        } else {
-            window.alert("false");
-        }
-    }
-
-
-
     if (handlerForSeparatorMode) {
-        if(typeof eventHandlerForSeparatorMode === 'function'){
-            self._eventHandlerForSeparatorMode = handlerForSeparatorMode;
+        if(typeof handlerForSeparatorMode === 'function'){
+            self._handlerForSeparatorMode = handlerForSeparatorMode;
         }
     } else {
-        self._eventHandlerForSeparatorMode = eventHandlerForSeparatorMode;
+        self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
     }
 
     
-
     self._objects.forEach(function (object) {
         var currentObjectId = document.getElementById(object._id);
 
-        if (object instanceof List) {
-            window.alert(object._id);
-            currentObjectId.oninput = function () {
-                window.alert("event");
-                self._eventHandlerForSeparatorMode(object);
-            };
-        } else {
-            currentObjectId.oninput = function () {
-                self._eventHandlerForSeparatorMode(object);
-            };
-        }
+        currentObjectId.oninput = function () {
+            self._handlerForSeparatorMode(object);
+        };
+
     });
 };
 
