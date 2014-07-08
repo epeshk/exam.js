@@ -5,6 +5,18 @@ describe('Parser', function() {
         parser = new Parser();
     });
 
+    describe('_getNextID()', function() {
+        it('should return the next id each time it was called', function() {
+            var result1 = parser._getNextID();
+            var result2 = parser._getNextID();
+            var result3 = parser._getNextID();
+
+            expect(result1).toBe('examjs_id_1');
+            expect(result2).toBe('examjs_id_2');
+            expect(result3).toBe('examjs_id_3');
+        });
+    });
+
     describe('_getTypeBlock()', function() {
         it('should return string: "textInput" if received textInputBlock', function(){
             var result = parser._getTypeBlock("{{...|hkfds}}");
@@ -21,6 +33,14 @@ describe('Parser', function() {
         it('should return rightAnswer',function(){
             var result = parser._extractTextInput("{{...|true}}");
             expect(result.rightAnswer).toBe('true');
+        });
+
+        it('should create unique id for each textInput', function(){
+            var result_1 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
+            var result_2 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
+
+            expect(result_1._id).toBe('examjs_id_1');
+            expect(result_2._id).toBe('examjs_id_2');
         });
     });
 
@@ -76,6 +96,14 @@ describe('Parser', function() {
             var result = parser._extractList('{{test1,test2,!test3!,test4}}');
 
             expect(result.rightAnswerIndex).toBe(2);
+        });
+
+        it('should create unique id for each List', function(){
+            var result_1 = parser._extractList('{{test1,test2,!test3!,test4}}');
+            var result_2 = parser._extractList('{{test1,test2,!test3!,test4}}');
+
+            expect(result_1._id).toBe('examjs_id_1');
+            expect(result_2._id).toBe('examjs_id_2');
         });
     });
 

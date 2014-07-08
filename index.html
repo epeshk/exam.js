@@ -33,9 +33,11 @@
             var source = editor.value;
             var resultHTML = exam.parse(source);
             resultDiv.innerHTML = resultHTML;
+            exam.startExam();
         }
 
         editor.oninput = update;
+
     </script>
 
 </body>

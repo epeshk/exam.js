@@ -5,15 +5,17 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock) {
+function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
-function TextInput(rightAnswer, syntaxBlock){
+function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
 function Parser() {
@@ -26,7 +28,17 @@ function Parser() {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
     };
+
+    self._currentID = 0;
+
 }
+
+
+Parser.prototype._getNextID = function() {
+    var self = this;
+    return 'examjs_id_' + (++self._currentID);
+};
+
 
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
@@ -50,7 +62,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock){
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock);
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
 
 	return result;
 };
@@ -113,7 +125,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock);
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
     return result;
 };
 
@@ -163,5 +175,7 @@ Parser.prototype.parse = function(text){
     }
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
+
+
     return result;
 };

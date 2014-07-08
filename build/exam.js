@@ -1731,15 +1731,17 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock) {
+function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
-function TextInput(rightAnswer, syntaxBlock){
+function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
+    this._id = _id;
 }
 
 function Parser() {
@@ -1752,7 +1754,17 @@ function Parser() {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
     };
+
+    self._currentID = 0;
+
 }
+
+
+Parser.prototype._getNextID = function() {
+    var self = this;
+    return 'examjs_id_' + (++self._currentID);
+};
+
 
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
@@ -1776,7 +1788,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock){
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock);
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
 
 	return result;
 };
@@ -1839,7 +1851,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock);
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
     return result;
 };
 
@@ -1889,6 +1901,8 @@ Parser.prototype.parse = function(text){
     }
     
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
+
+
     return result;
 };
 
@@ -1898,27 +1912,21 @@ function Translator() {
         return new Translator();
     }
     var self = this;
-    self._currentID = 0;
 }
 
-Translator.prototype._getNextID = function() {
-    var self = this;
-    return 'examjs_id_' + (++self._currentID);
-};
+
 
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
-	var id = self._getNextID();
-	var result = "<input type=\'text\' id=\'" + id +"\'></input>";
+	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
 	return result;
 };
 
 Translator.prototype._createListBox = function(listObject) {
     var self = this;
-    var id = self._getNextID();
-    var result = '<input list="' + id + '">';
-    result += '<datalist id="' + id + '">';
+    var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
+    result += '<datalist id="' + listObject._id + "_data"+'">';
 
     listObject.items.forEach(function(item) {
         result += '<option value="' + item + '">';
@@ -1952,7 +1960,7 @@ Translator.prototype._convertAllObjects = function(objects) {
     return result;
 };
 
-function Exam() {
+function Exam(settings) {
     if (!(this instanceof Exam)) {
         return new Exam();
     }
@@ -1960,6 +1968,26 @@ function Exam() {
     self._translator = new Translator();
     self._parser = new Parser();
     self._preprocessor = markdown.toHTML;
+    self._objects = null;
+    self._handlerForSeparatorMode = null;
+    self._handlerForBtnFinish = null;
+    self._settings = {
+        'separatorMode' :   true,
+        'btnFinishId'   :   null, 
+    };
+
+
+    if (settings) {
+        if (typeof settings.separatorMode === 'boolean'){
+            self._settings.separatorMode = settings.separatorMode;
+        }
+
+        if (typeof settings.btnFinishId === 'string') {
+            self._settings.btnFinishId = settings.btnFinishId;
+        }
+    } 
+        
+    
 }
 
 
@@ -1970,16 +1998,102 @@ Exam.prototype.parse = function(source, preprocessor) {
         if (typeof preprocessor === 'function') {
             self._preprocessor = preprocessor;
         } else {
-            throw new Error('The second argument must be a function of parsing');
+            throw new Error('The second argument must be a parsing function');
         }
     } 
     var preprocessedSource = self._preprocessor(source);
-    var syntaxObjects = self._parser.parse(preprocessedSource);
-    var convertionResults = self._translator._convertAllObjects(syntaxObjects);
+    self._objects = self._parser.parse(preprocessedSource);
+    var convertionResults = self._translator._convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
 
+
     return preprocessedSource;
 };
+
+Exam.prototype._getRightAnswer = function (object) {
+    var self = this;
+    var result;
+    if (object instanceof List) {
+        result = object.items[object.rightAnswerIndex];
+    } else {
+        result = object.rightAnswer;
+    }
+
+    return result;
+};
+
+Exam.prototype._eventHandlerForSeparatorMode = function (object) {
+    var self = this;
+    var currentId = document.getElementById(object._id);
+    var selectAnswer = currentId.value;
+    var rightAnswer = self._getRightAnswer(object);
+
+    currentId.style.borderStyle = "solid";
+    currentId.style.borderWidth = "4px";
+
+    if (rightAnswer === selectAnswer) {
+        currentId.style.borderColor = "#00FF00";
+    } else {
+        currentId.style.borderColor = "#FF0000";
+    }
+};
+
+Exam.prototype._eventHandlerForBtnFinish = function (objects) {
+    var self = this;
+    var countQuestions = objects.length;
+    var countRightAnswer = 0;
+    objects.forEach(function (object) {
+        var tmpObjId = document.getElementById(object._id);
+        var rightAnswer = self._getRightAnswer(object);
+        var selectAnswer = tmpObjId.value;
+        if (selectAnswer === rightAnswer) {
+            countRightAnswer++;
+        }
+    });
+
+    window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
+};
+
+
+Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish) {
+    var self = this;
+
+    if (handlerForSeparatorMode) {
+        if(typeof handlerForSeparatorMode === 'function') {
+            self._handlerForSeparatorMode = handlerForSeparatorMode;
+        }
+    } else {
+        self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
+    }
+
+    if(handlerForBtnFinish){
+        if(typeof handlerForBtnFinish === 'function') {
+            self._handlerForBtnFinish = handlerForBtnFinish;
+        }
+    } else {
+        self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
+    }
+
+    
+    if (self._settings.separatorMode) {
+        self._objects.forEach(function (object) {
+            var currentObjectId = document.getElementById(object._id);
+
+            currentObjectId.oninput = function () {
+                self._handlerForSeparatorMode(object);
+            };
+
+        });
+    }  
+
+    if (self._settings.btnFinishId !== null) {
+        var btnId = document.getElementById(self._settings.btnFinishId);
+        btnId.onclick = function () {
+            self._handlerForBtnFinish(self._objects);
+        };
+    }
+};
+
