@@ -35,7 +35,8 @@ Exam.prototype.parse = function(source, preprocessor) {
 
 
 Exam.prototype._eventHandlerForSeparatorMode = function (object) {
-    var selectAnswer = document.getElementById(object._id).value;
+    var currentId = document.getElementById(object._id);
+    var selectAnswer = currentId.value;
     var rightAnswer = "";
 
     if (object instanceof List) {
@@ -44,10 +45,13 @@ Exam.prototype._eventHandlerForSeparatorMode = function (object) {
         rightAnswer = object.rightAnswer;
     }
 
+    currentId.style.borderStyle = "solid";
+    currentId.style.borderWidth = "4px";
+
     if (rightAnswer === selectAnswer) {
-        window.alert("true");
+        currentId.style.borderColor = "#00FF00";
     } else {
-        window.alert("false");
+        currentId.style.borderColor = "#FF0000";
     }
 };
 
