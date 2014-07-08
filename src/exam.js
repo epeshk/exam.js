@@ -8,6 +8,7 @@ function Exam(settings) {
     self._preprocessor = markdown.toHTML;
     self._objects = null;
     self._handlerForSeparatorMode = null;
+    self._handlerForBtnFinish = null;
     self._settings = {
         'separatorMode' :   true,
         'btnFinishId'   :   null, 
@@ -50,17 +51,23 @@ Exam.prototype.parse = function(source, preprocessor) {
     return preprocessedSource;
 };
 
+Exam.prototype._getRightAnswer = function (object) {
+    var self = this;
+    var result;
+    if (object instanceof List) {
+        result = object.items[object.rightAnswerIndex];
+    } else {
+        result = object.rightAnswer;
+    }
+
+    return result;
+};
 
 Exam.prototype._eventHandlerForSeparatorMode = function (object) {
+    var self = this;
     var currentId = document.getElementById(object._id);
     var selectAnswer = currentId.value;
-    var rightAnswer = "";
-
-    if (object instanceof List) {
-        rightAnswer = object.items[object.rightAnswerIndex];
-    } else {
-        rightAnswer = object.rightAnswer;
-    }
+    var rightAnswer = self._getRightAnswer(object);
 
     currentId.style.borderStyle = "solid";
     currentId.style.borderWidth = "4px";
@@ -72,26 +79,59 @@ Exam.prototype._eventHandlerForSeparatorMode = function (object) {
     }
 };
 
+Exam.prototype._eventHandlerForBtnFinish = function (objects) {
+    var self = this;
+    var countQuestions = objects.length;
+    var countRightAnswer = 0;
+    objects.forEach(function (object) {
+        var tmpObjId = document.getElementById(object._id);
+        var rightAnswer = self._getRightAnswer(object);
+        var selectAnswer = tmpObjId.value;
+        if (selectAnswer === rightAnswer) {
+            countRightAnswer++;
+        }
+    });
 
-Exam.prototype.startExam = function (handlerForSeparatorMode) {
+    window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
+};
+
+
+Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish) {
     var self = this;
 
     if (handlerForSeparatorMode) {
-        if(typeof handlerForSeparatorMode === 'function'){
+        if(typeof handlerForSeparatorMode === 'function') {
             self._handlerForSeparatorMode = handlerForSeparatorMode;
         }
     } else {
         self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
     }
 
+    if(handlerForBtnFinish){
+        if(typeof handlerForBtnFinish === 'function') {
+            self._handlerForBtnFinish = handlerForBtnFinish;
+        }
+    } else {
+        self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
+    }
+
     
-    self._objects.forEach(function (object) {
-        var currentObjectId = document.getElementById(object._id);
+    if (self._settings.separatorMode) {
+        self._objects.forEach(function (object) {
+            var currentObjectId = document.getElementById(object._id);
 
-        currentObjectId.oninput = function () {
-            self._handlerForSeparatorMode(object);
+            currentObjectId.oninput = function () {
+                self._handlerForSeparatorMode(object);
+            };
+
+        });
+    }  
+
+    if (self._settings.btnFinishId !== null) {
+        var btnId = document.getElementById(self._settings.btnFinishId);
+        btnId.onclick = function () {
+            self._handlerForBtnFinish(self._objects);
         };
-
-    });
+    }
 };
 
