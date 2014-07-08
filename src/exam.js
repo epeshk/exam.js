@@ -1,4 +1,4 @@
-function Exam() {
+function Exam(settings) {
     if (!(this instanceof Exam)) {
         return new Exam();
     }
@@ -8,6 +8,23 @@ function Exam() {
     self._preprocessor = markdown.toHTML;
     self._objects = null;
     self._handlerForSeparatorMode = null;
+    self._settings = {
+        'separatorMode' :   true,
+        'btnFinishId'   :   null, 
+    };
+
+
+    if (settings) {
+        if (typeof settings.separatorMode === 'boolean'){
+            self._settings.separatorMode = settings.separatorMode;
+        }
+
+        if (typeof settings.btnFinishId === 'string') {
+            self._settings.btnFinishId = settings.btnFinishId;
+        }
+    } 
+        
+    
 }
 
 
