@@ -36,7 +36,17 @@ Exam.prototype.parse = function(source, preprocessor) {
 Exam.prototype.startExam = function (handlerForSeparatorMode) {
     var self = this;
 
-    function eventHandlerForSeparatorMode (object, selectAnswer) {
+    function eventHandlerForSeparatorMode (object) {
+
+        var selectAnswer = document.getElementById(object._id).value;
+        var rightAnswer = "";
+
+        if (object instanceof List) {
+            rightAnswer = object.items[object.rightAnswerIndex];
+        } else {
+            rightAnswer = object.rightAnswer;
+        }
+
         if (object.rightAnswer === selectAnswer) {
             window.alert("true");
         } else {
@@ -60,14 +70,14 @@ Exam.prototype.startExam = function (handlerForSeparatorMode) {
         var currentObjectId = document.getElementById(object._id);
 
         if (object instanceof List) {
-            currentObjectId.onselect = function () {
-                var selectAnswer = currentObjectId.value;
-                self._eventHandlerForSeparatorMode(object, selectAnswer);
+            window.alert(object._id);
+            currentObjectId.oninput = function () {
+                window.alert("event");
+                self._eventHandlerForSeparatorMode(object);
             };
         } else {
             currentObjectId.oninput = function () {
-                var selectAnswer = currentObjectId.value;
-                self._eventHandlerForSeparatorMode(object, selectAnswer);
+                self._eventHandlerForSeparatorMode(object);
             };
         }
     });

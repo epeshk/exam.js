@@ -17,8 +17,8 @@ Translator.prototype._createTextInput = function(inputObject){
 
 Translator.prototype._createListBox = function(listObject) {
     var self = this;
-    var result = '<input list="' + listObject._id + '">';
-    result += '<datalist id="' + listObject._id + '">';
+    var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
+    result += '<datalist id="' + listObject._id + "_data"+'">';
 
     listObject.items.forEach(function(item) {
         result += '<option value="' + item + '">';
