@@ -1850,6 +1850,23 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
+Parser.prototype._removeHelpText = function(syntaxBlock) {
+    var self = this;
+    var result = "";
+    var helpText = "?" + self._getHelpText(syntaxBlock) + "?";
+
+    if (helpText !== "??") {
+        var firstPosition = syntaxBlock.indexOf(helpText);
+        var tmpTextBegin = syntaxBlock.substring(0,firstPosition);
+        var tmpTextEnd = syntaxBlock.substring((firstPosition+helpText.length), syntaxBlock.length);
+        result = tmpTextBegin + tmpTextEnd;
+    } else {
+        result = syntaxBlock;
+    }
+
+    return result;
+};
+
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
