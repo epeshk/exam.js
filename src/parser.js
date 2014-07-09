@@ -5,17 +5,20 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id) {
+function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
+    this.helpText = helpText;
+
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id){
+function TextInput(rightAnswer, syntaxBlock, _id, helpText){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
+    this.helpText = helpText;
 }
 
 function Parser() {
@@ -54,15 +57,17 @@ Parser.prototype._getTypeBlock = function(block){
 
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
+    var helpText = self._getHelpText(syntaxBlock);
+    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
 	function getRightAnswer(syntaxBlock){
-		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
-		var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition+1,syntaxBlock.length-2).trim();	
+		var firstVerticalSeparatorPosition = tmpSyntaxBlock.indexOf("|",0);
+		var rightAnswer = tmpSyntaxBlock.substring(firstVerticalSeparatorPosition+1,tmpSyntaxBlock.length-2).trim();	
 
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(), helpText);
 
 	return result;
 };
@@ -108,9 +113,44 @@ Parser.prototype._removeExclamationPoints = function(items){
     return result;
 };
 
+Parser.prototype._getHelpText = function(syntaxBlock) {
+    var self = this;
+    var result = "";
+    var firstPosition = -1;
+    var lastPosition = -1;
+
+    firstPosition = syntaxBlock.indexOf('?');
+    lastPosition = syntaxBlock.indexOf('?', firstPosition+1);
+
+    if ((firstPosition !== -1) && (lastPosition !== -1)) {
+        result = syntaxBlock.substring(firstPosition+1, lastPosition);
+    }
+
+    return result;
+};
+
+Parser.prototype._removeHelpText = function(syntaxBlock) {
+    var self = this;
+    var result = "";
+    var helpText = "?" + self._getHelpText(syntaxBlock) + "?";
+
+    if (helpText !== "??") {
+        var firstPosition = syntaxBlock.indexOf(helpText);
+        var tmpTextBegin = syntaxBlock.substring(0,firstPosition);
+        var tmpTextEnd = syntaxBlock.substring((firstPosition+helpText.length), syntaxBlock.length);
+        result = tmpTextBegin + tmpTextEnd;
+    } else {
+        result = syntaxBlock;
+    }
+
+    return result;
+};
+
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
+    var helpText = self._getHelpText(syntaxBlock);
+    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
@@ -118,14 +158,14 @@ Parser.prototype._extractList = function(syntaxBlock) {
     }
 
     try {
-        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+        tmpSyntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
             tmpResult.push(trim(elem));
         });
     } catch (e) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID(), helpText);
     return result;
 };
 
