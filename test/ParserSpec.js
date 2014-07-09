@@ -71,9 +71,12 @@ describe('Parser', function() {
         });
 
         it('should create helpText for each input', function() {
-            var result = parser._extractTextInput('bla bla bla {{...|ssfssg?help?}}');
+            var result_1 = parser._extractTextInput('bla bla bla {{...|ssfssg?help?}}');
+            var result_2 = parser._extractTextInput('bla bla bla {{...|ssfssg}}');
 
-            expect(result.helpText).toBe("help");
+            expect(result_2.helpText).toBe("");
+            expect(result_1.helpText).toBe("help");
+            expect(result_1.syntaxBlock).toBe("bla bla bla {{...|ssfssg?help?}}");
         });
     });
 

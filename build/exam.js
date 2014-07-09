@@ -1784,11 +1784,11 @@ Parser.prototype._getTypeBlock = function(block){
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
     var helpText = self._getHelpText(syntaxBlock);
-    syntaxBlock = self._removeHelpText(syntaxBlock);
+    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
 	function getRightAnswer(syntaxBlock){
-		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
-		var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition+1,syntaxBlock.length-2).trim();	
+		var firstVerticalSeparatorPosition = tmpSyntaxBlock.indexOf("|",0);
+		var rightAnswer = tmpSyntaxBlock.substring(firstVerticalSeparatorPosition+1,tmpSyntaxBlock.length-2).trim();	
 
 		return rightAnswer;
 	}
@@ -1876,7 +1876,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
     var helpText = self._getHelpText(syntaxBlock);
-    syntaxBlock = self._removeHelpText(syntaxBlock);
+    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
@@ -1884,7 +1884,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
     }
 
     try {
-        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+        tmpSyntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
             tmpResult.push(trim(elem));
         });
     } catch (e) {
@@ -1960,6 +1960,10 @@ Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
+    if (inputObject.helpText !== "") {
+        result += "<div id='" + inputObject._id + "_help'>?</div>";
+    }
+
 	return result;
 };
 
@@ -1972,6 +1976,10 @@ Translator.prototype._createListBox = function(listObject) {
         result += '<option value="' + item + '">';
     });
     result += '</datalist>';
+
+    if (listObject.helpText !== "") {
+        result += '<div id="' + listObject._id + '_help">?</div>';
+    }
 
     return result;
 };
