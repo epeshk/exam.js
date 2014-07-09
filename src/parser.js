@@ -5,17 +5,20 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id) {
+function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
+    this.helpText = helpText;
+
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id){
+function TextInput(rightAnswer, syntaxBlock, _id, helpText){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
+    this.helpText = helpText;
 }
 
 function Parser() {
@@ -54,6 +57,8 @@ Parser.prototype._getTypeBlock = function(block){
 
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
+    var helpText = self._getHelpText(syntaxBlock);
+    syntaxBlock = self._removeHelpText(syntaxBlock);
 
 	function getRightAnswer(syntaxBlock){
 		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
@@ -62,7 +67,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock){
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(), helpText);
 
 	return result;
 };
@@ -144,6 +149,8 @@ Parser.prototype._removeHelpText = function(syntaxBlock) {
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
+    var helpText = self._getHelpText(syntaxBlock);
+    syntaxBlock = self._removeHelpText(syntaxBlock);
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
@@ -158,7 +165,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID(), helpText);
     return result;
 };
 

@@ -69,6 +69,12 @@ describe('Parser', function() {
             expect(result_1._id).toBe('examjs_id_1');
             expect(result_2._id).toBe('examjs_id_2');
         });
+
+        it('should create helpText for each input', function() {
+            var result = parser._extractTextInput('bla bla bla {{...|ssfssg?help?}}');
+
+            expect(result.helpText).toBe("help");
+        });
     });
 
     describe('_parseSyntaxBlocks()', function() {
@@ -111,7 +117,7 @@ describe('Parser', function() {
         });
 
         it('should trim elements in list but keep spaces between words in elements', function() {
-            var result = parser._extractList('{{test1 test1, test2 test2,  test3 test3  ,test4 test4}}');
+            var result = parser._extractList('{{test1 test1, test2 test2,  test3 test3  ,test4 test4?help?}}');
 
             expect(result.items[0]).toBe('test1 test1');
             expect(result.items[1]).toBe('test2 test2');
@@ -131,6 +137,12 @@ describe('Parser', function() {
 
             expect(result_1._id).toBe('examjs_id_1');
             expect(result_2._id).toBe('examjs_id_2');
+        });
+
+        it('should create helpText for each List', function() {
+            var result = parser._extractList('bla bla bla {{1,2,3,!4!?help?}}');
+
+            expect(result.helpText).toBe("help");
         });
     });
 
