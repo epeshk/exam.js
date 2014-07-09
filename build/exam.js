@@ -1961,7 +1961,7 @@ Translator.prototype._createTextInput = function(inputObject){
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
     if (inputObject.helpText !== "") {
-        result += "<div id='" + inputObject._id + "_help'>?</div>";
+        result += "<div id='" + inputObject._id + "_help'>help!?</div>";
     }
 
 	return result;
@@ -1978,7 +1978,7 @@ Translator.prototype._createListBox = function(listObject) {
     result += '</datalist>';
 
     if (listObject.helpText !== "") {
-        result += '<div id="' + listObject._id + '_help">?</div>';
+        result += '<div id="' + listObject._id + '_help">help!?</div>';
     }
 
     return result;
@@ -2105,9 +2105,25 @@ Exam.prototype._eventHandlerForBtnFinish = function (objects) {
     window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
 };
 
+Exam.prototype._setPropertyForHelpBtn = function() {
+    var self = this;
+
+    self._objects.forEach(function (object) {
+        if (object.helpText !== ""){
+            var currentIdHelp = document.getElementById(object._id + "_help");
+            currentIdHelp.style.backgroundColor = "#00FF00";
+            currentIdHelp.style.color = "#000000";
+            currentIdHelp.style.width = "100px";
+            currentIdHelp.style.textAlign = "center";
+        }
+    });
+};
+
 
 Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish) {
     var self = this;
+
+    self._setPropertyForHelpBtn();
 
     if (handlerForSeparatorMode) {
         if(typeof handlerForSeparatorMode === 'function') {
@@ -2125,6 +2141,7 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
         self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
     }
 
+    
     
     if (self._settings.separatorMode) {
         self._objects.forEach(function (object) {
