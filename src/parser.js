@@ -108,6 +108,22 @@ Parser.prototype._removeExclamationPoints = function(items){
     return result;
 };
 
+Parser.prototype._getHelpText = function(syntaxBlock) {
+    var self = this;
+    var result = "";
+    var firstPosition = -1;
+    var lastPosition = -1;
+
+    firstPosition = syntaxBlock.indexOf('?');
+    lastPosition = syntaxBlock.indexOf('?', firstPosition+1);
+
+    if ((firstPosition !== -1) && (lastPosition !== -1)) {
+        result = syntaxBlock.substring(firstPosition+1, lastPosition);
+    }
+
+    return result;
+};
+
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
