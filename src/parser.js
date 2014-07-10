@@ -5,20 +5,24 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
+function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = helpText;
 
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id, helpText){
+function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
+}
+
+function Hint(syntaxBlock, helpText, _id){
+    this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
+    this._id = _id;
 }
 
 function Parser() {
@@ -46,30 +50,48 @@ Parser.prototype._getNextID = function() {
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
 	var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
-	var regexp = new RegExp(textInputPattern);
-	if(textInputPattern.test(block)){
+    var hintPattern = /\{\{\s*\?\s*.*\?\s*\}\}/g;
+	
+	if (textInputPattern.test(block)) {
 		return "textInput";
-	}else{
-		return "list";
+	} else {
+		if (hintPattern.test(block)) {
+            return "hint";
+        } else {
+            return "list";
+        }
 	}
 
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
-    var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
 	function getRightAnswer(syntaxBlock){
-		var firstVerticalSeparatorPosition = tmpSyntaxBlock.indexOf("|",0);
-		var rightAnswer = tmpSyntaxBlock.substring(firstVerticalSeparatorPosition+1,tmpSyntaxBlock.length-2).trim();	
+		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
+		var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition+1,syntaxBlock.length-2).trim();	
 
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(), helpText);
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
 
 	return result;
+};
+
+Parser.prototype._extractHint = function(syntaxBlock, objects){
+    var self = this;
+    var result = null;
+
+    if (objects.length > 0) {
+        var lastObject = objects[objects.length-1];
+        if ( (lastObject instanceof List) || (lastObject instanceof TextInput) ) {
+            var helpText = self._getHelpText(syntaxBlock);
+            result = new Hint(syntaxBlock, helpText, lastObject._id + "_help");
+        }
+    }
+
+    return result;    
 };
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
@@ -129,28 +151,11 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
-Parser.prototype._removeHelpText = function(syntaxBlock) {
-    var self = this;
-    var result = "";
-    var helpText = "?" + self._getHelpText(syntaxBlock) + "?";
 
-    if (helpText !== "??") {
-        var firstPosition = syntaxBlock.indexOf(helpText);
-        var tmpTextBegin = syntaxBlock.substring(0,firstPosition);
-        var tmpTextEnd = syntaxBlock.substring((firstPosition+helpText.length), syntaxBlock.length);
-        result = tmpTextBegin + tmpTextEnd;
-    } else {
-        result = syntaxBlock;
-    }
-
-    return result;
-};
 
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
-    var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
@@ -158,14 +163,14 @@ Parser.prototype._extractList = function(syntaxBlock) {
     }
 
     try {
-        tmpSyntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
             tmpResult.push(trim(elem));
         });
     } catch (e) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID(), helpText);
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
     return result;
 };
 
@@ -196,6 +201,10 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
         			tmpObj = self._extractList(block);
         			break;
         		}
+                case 'hint':{
+                    tmpObj = self._extractHint(block, result);
+                    break;
+                }
         	}
             if(tmpObj !== null){
                 result.push(tmpObj);

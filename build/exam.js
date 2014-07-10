@@ -1731,20 +1731,24 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
+function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = helpText;
 
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id, helpText){
+function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
+}
+
+function Hint(syntaxBlock, helpText, _id){
+    this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
+    this._id = _id;
 }
 
 function Parser() {
@@ -1772,30 +1776,48 @@ Parser.prototype._getNextID = function() {
 Parser.prototype._getTypeBlock = function(block){
 	var self = this;
 	var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
-	var regexp = new RegExp(textInputPattern);
-	if(textInputPattern.test(block)){
+    var hintPattern = /\{\{\s*\?\s*.*\?\s*\}\}/g;
+	
+	if (textInputPattern.test(block)) {
 		return "textInput";
-	}else{
-		return "list";
+	} else {
+		if (hintPattern.test(block)) {
+            return "hint";
+        } else {
+            return "list";
+        }
 	}
 
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
-    var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
 	function getRightAnswer(syntaxBlock){
-		var firstVerticalSeparatorPosition = tmpSyntaxBlock.indexOf("|",0);
-		var rightAnswer = tmpSyntaxBlock.substring(firstVerticalSeparatorPosition+1,tmpSyntaxBlock.length-2).trim();	
+		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
+		var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition+1,syntaxBlock.length-2).trim();	
 
 		return rightAnswer;
 	}
 
-	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(), helpText);
+	var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
 
 	return result;
+};
+
+Parser.prototype._extractHint = function(syntaxBlock, objects){
+    var self = this;
+    var result = null;
+
+    if (objects.length > 0) {
+        var lastObject = objects[objects.length-1];
+        if ( (lastObject instanceof List) || (lastObject instanceof TextInput) ) {
+            var helpText = self._getHelpText(syntaxBlock);
+            result = new Hint(syntaxBlock, helpText, lastObject._id + "_help");
+        }
+    }
+
+    return result;    
 };
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
@@ -1855,28 +1877,11 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
-Parser.prototype._removeHelpText = function(syntaxBlock) {
-    var self = this;
-    var result = "";
-    var helpText = "?" + self._getHelpText(syntaxBlock) + "?";
 
-    if (helpText !== "??") {
-        var firstPosition = syntaxBlock.indexOf(helpText);
-        var tmpTextBegin = syntaxBlock.substring(0,firstPosition);
-        var tmpTextEnd = syntaxBlock.substring((firstPosition+helpText.length), syntaxBlock.length);
-        result = tmpTextBegin + tmpTextEnd;
-    } else {
-        result = syntaxBlock;
-    }
-
-    return result;
-};
 
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
-    var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
@@ -1884,14 +1889,14 @@ Parser.prototype._extractList = function(syntaxBlock) {
     }
 
     try {
-        tmpSyntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
             tmpResult.push(trim(elem));
         });
     } catch (e) {
         return null;
     }
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID(), helpText);
+    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult),syntaxBlock, self._getNextID());
     return result;
 };
 
@@ -1922,6 +1927,10 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
         			tmpObj = self._extractList(block);
         			break;
         		}
+                case 'hint':{
+                    tmpObj = self._extractHint(block, result);
+                    break;
+                }
         	}
             if(tmpObj !== null){
                 result.push(tmpObj);
@@ -1954,15 +1963,16 @@ function Translator() {
     var self = this;
 }
 
+Translator.prototype._createHint = function (hintObject) {
+    var self = this;
+    var result = "<div id='" + hintObject._id + "'>help!?</div>";
 
+    return result;
+};
 
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
-
-    if (inputObject.helpText !== "") {
-        result += "<div id='" + inputObject._id + "_help'>help!?</div>";
-    }
 
 	return result;
 };
@@ -1977,9 +1987,6 @@ Translator.prototype._createListBox = function(listObject) {
     });
     result += '</datalist>';
 
-    if (listObject.helpText !== "") {
-        result += '<div id="' + listObject._id + '_help">help!?</div>';
-    }
 
     return result;
 };
@@ -1987,22 +1994,36 @@ Translator.prototype._createListBox = function(listObject) {
 Translator.prototype._convertAllObjects = function(objects) {
     var self = this;
     var result = [];
+    var error = true;
     objects.forEach(function(object) {
         if (object instanceof List) {
             result.push({
                 source: object.syntaxBlock,
                 result: self._createListBox(object)
             });
-        }else{
-        	if(object instanceof TextInput){
-        		result.push({
-        			source: object.syntaxBlock,
-        			result: self._createTextInput(object)
-        		});
-        	}else {
-            	throw new Error('Converting error. Translator cannot convert object that was passed into it');
-        	}
+            error = false;
+        } 
+        if (object instanceof TextInput) {
+        	result.push({
+        		source: object.syntaxBlock,
+        		result: self._createTextInput(object)
+        	});
+            error = false;
         }
+        if (object instanceof Hint) {
+            result.push({
+                source: object.syntaxBlock,
+                result: self._createHint(object)
+            });
+            error = false;
+        } 
+        if (object === null) {
+            error = false;
+        }
+        if(error){
+            throw new Error('Converting error. Translator cannot convert object that was passed into it');
+        }
+        
     });
 
     return result;
@@ -2019,6 +2040,7 @@ function Exam(settings) {
     self._objects = null;
     self._handlerForSeparatorMode = null;
     self._handlerForBtnFinish = null;
+    self._handlerForHint = null;
     self._settings = {
         'separatorMode' :   true,
         'btnFinishId'   :   null, 
@@ -2105,12 +2127,16 @@ Exam.prototype._eventHandlerForBtnFinish = function (objects) {
     window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
 };
 
+Exam.prototype._eventHandlerForHint = function (object) {
+    window.alert(object.helpText);
+};
+
 Exam.prototype._setPropertyForHelpBtn = function() {
     var self = this;
 
     self._objects.forEach(function (object) {
-        if (object.helpText !== ""){
-            var currentIdHelp = document.getElementById(object._id + "_help");
+        if (object instanceof Hint){
+            var currentIdHelp = document.getElementById(object._id);
             currentIdHelp.style.backgroundColor = "#00FF00";
             currentIdHelp.style.color = "#000000";
             currentIdHelp.style.width = "100px";
@@ -2120,10 +2146,11 @@ Exam.prototype._setPropertyForHelpBtn = function() {
 };
 
 
-Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish) {
+Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish, handlerForHint) {
     var self = this;
 
     self._setPropertyForHelpBtn();
+
 
     if (handlerForSeparatorMode) {
         if(typeof handlerForSeparatorMode === 'function') {
@@ -2141,18 +2168,32 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
         self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
     }
 
-    
-    
-    if (self._settings.separatorMode) {
-        self._objects.forEach(function (object) {
-            var currentObjectId = document.getElementById(object._id);
+    if(handlerForHint){
+        if(typeof handlerForHint === 'function') {
+            self._handlerForHint = handlerForHint;
+        }
+    } else {
+        self._handlerForHint = self._eventHandlerForHint;
+    }
 
+    
+    
+    self._objects.forEach(function (object) {
+        var currentObjectId = document.getElementById(object._id);
+
+        if ((object instanceof List || object instanceof TextInput) && self._settings.separatorMode) {
             currentObjectId.oninput = function () {
                 self._handlerForSeparatorMode(object);
             };
+        } else {
+            if (object instanceof Hint) {
+                currentObjectId.onclick = function () {
+                    self._handlerForHint(object);
+                };
+            } 
+        }
 
-        });
-    }  
+    });  
 
     if (self._settings.btnFinishId !== null) {
         var btnId = document.getElementById(self._settings.btnFinishId);
