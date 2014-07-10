@@ -10,7 +10,6 @@ function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = false;
 
 }
 
@@ -18,10 +17,10 @@ function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = false;
 }
 
-function Hint(helpText, _id){
+function Hint(syntaxBlock, helpText, _id){
+    this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this._id = _id;
 }
@@ -90,7 +89,7 @@ Parser.prototype._extractHint = function(syntaxBlock, objects){
         var lastObject = objects[objects.length-1];
         if ( (lastObject instanceof List) || (lastObject instanceof TextInput) ) {
             var helpText = self._getHelpText(syntaxBlock);
-            result = new Hint(helpText, lastObject._id + "_help");
+            result = new Hint(syntaxBlock, helpText, lastObject._id + "_help");
         }
     }
 

@@ -99,8 +99,8 @@ Exam.prototype._setPropertyForHelpBtn = function() {
     var self = this;
 
     self._objects.forEach(function (object) {
-        if (object.helpText !== ""){
-            var currentIdHelp = document.getElementById(object._id + "_help");
+        if (object instanceof Hint){
+            var currentIdHelp = document.getElementById(object._id);
             currentIdHelp.style.backgroundColor = "#00FF00";
             currentIdHelp.style.color = "#000000";
             currentIdHelp.style.width = "100px";
@@ -135,11 +135,13 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
     
     if (self._settings.separatorMode) {
         self._objects.forEach(function (object) {
-            var currentObjectId = document.getElementById(object._id);
+            if (object instanceof List || object instanceof TextInput) {
+                var currentObjectId = document.getElementById(object._id);
 
-            currentObjectId.oninput = function () {
-                self._handlerForSeparatorMode(object);
-            };
+                currentObjectId.oninput = function () {
+                    self._handlerForSeparatorMode(object);
+                };
+            }
 
         });
     }  

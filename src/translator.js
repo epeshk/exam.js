@@ -6,15 +6,16 @@ function Translator() {
     var self = this;
 }
 
+Translator.prototype._createHint = function (hintObject) {
+    var self = this;
+    var result = "<div id='" + hintObject._id + "'>help!?</div>";
 
+    return result;
+};
 
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
-
-    if (inputObject.helpText) {
-        result += "<div id='" + inputObject._id + "_help'>help!?</div>";
-    }
 
 	return result;
 };
@@ -29,9 +30,6 @@ Translator.prototype._createListBox = function(listObject) {
     });
     result += '</datalist>';
 
-    if (listObject.helpText) {
-        result += '<div id="' + listObject._id + '_help">help!?</div>';
-    }
 
     return result;
 };
@@ -39,22 +37,36 @@ Translator.prototype._createListBox = function(listObject) {
 Translator.prototype._convertAllObjects = function(objects) {
     var self = this;
     var result = [];
+    var error = true;
     objects.forEach(function(object) {
         if (object instanceof List) {
             result.push({
                 source: object.syntaxBlock,
                 result: self._createListBox(object)
             });
-        }else{
-        	if(object instanceof TextInput){
-        		result.push({
-        			source: object.syntaxBlock,
-        			result: self._createTextInput(object)
-        		});
-        	}else {
-            	throw new Error('Converting error. Translator cannot convert object that was passed into it');
-        	}
+            error = false;
+        } 
+        if (object instanceof TextInput) {
+        	result.push({
+        		source: object.syntaxBlock,
+        		result: self._createTextInput(object)
+        	});
+            error = false;
         }
+        if (object instanceof Hint) {
+            result.push({
+                source: object.syntaxBlock,
+                result: self._createHint(object)
+            });
+            error = false;
+        } 
+        if (object === null) {
+            error = false;
+        }
+        if(error){
+            throw new Error('Converting error. Translator cannot convert object that was passed into it');
+        }
+        
     });
 
     return result;

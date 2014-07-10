@@ -1736,7 +1736,6 @@ function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = false;
 
 }
 
@@ -1744,10 +1743,10 @@ function TextInput(rightAnswer, syntaxBlock, _id){
 	this.rightAnswer = rightAnswer;
 	this.syntaxBlock = syntaxBlock;
     this._id = _id;
-    this.helpText = false;
 }
 
-function Hint(helpText, _id){
+function Hint(syntaxBlock, helpText, _id){
+    this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this._id = _id;
 }
@@ -1816,7 +1815,7 @@ Parser.prototype._extractHint = function(syntaxBlock, objects){
         var lastObject = objects[objects.length-1];
         if ( (lastObject instanceof List) || (lastObject instanceof TextInput) ) {
             var helpText = self._getHelpText(syntaxBlock);
-            result = new Hint(helpText, lastObject._id + "_help");
+            result = new Hint(syntaxBlock, helpText, lastObject._id + "_help");
         }
     }
 
@@ -1983,15 +1982,16 @@ function Translator() {
     var self = this;
 }
 
+Translator.prototype._createHint = function (hintObject) {
+    var self = this;
+    var result = "<div id='" + hintObject._id + "'>help!?</div>";
 
+    return result;
+};
 
 Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
-
-    if (inputObject.helpText) {
-        result += "<div id='" + inputObject._id + "_help'>help!?</div>";
-    }
 
 	return result;
 };
@@ -2006,9 +2006,6 @@ Translator.prototype._createListBox = function(listObject) {
     });
     result += '</datalist>';
 
-    if (listObject.helpText) {
-        result += '<div id="' + listObject._id + '_help">help!?</div>';
-    }
 
     return result;
 };
@@ -2016,22 +2013,36 @@ Translator.prototype._createListBox = function(listObject) {
 Translator.prototype._convertAllObjects = function(objects) {
     var self = this;
     var result = [];
+    var error = true;
     objects.forEach(function(object) {
         if (object instanceof List) {
             result.push({
                 source: object.syntaxBlock,
                 result: self._createListBox(object)
             });
-        }else{
-        	if(object instanceof TextInput){
-        		result.push({
-        			source: object.syntaxBlock,
-        			result: self._createTextInput(object)
-        		});
-        	}else {
-            	throw new Error('Converting error. Translator cannot convert object that was passed into it');
-        	}
+            error = false;
+        } 
+        if (object instanceof TextInput) {
+        	result.push({
+        		source: object.syntaxBlock,
+        		result: self._createTextInput(object)
+        	});
+            error = false;
         }
+        if (object instanceof Hint) {
+            result.push({
+                source: object.syntaxBlock,
+                result: self._createHint(object)
+            });
+            error = false;
+        } 
+        if (object === null) {
+            error = false;
+        }
+        if(error){
+            throw new Error('Converting error. Translator cannot convert object that was passed into it');
+        }
+        
     });
 
     return result;
@@ -2138,8 +2149,8 @@ Exam.prototype._setPropertyForHelpBtn = function() {
     var self = this;
 
     self._objects.forEach(function (object) {
-        if (object.helpText !== ""){
-            var currentIdHelp = document.getElementById(object._id + "_help");
+        if (object instanceof Hint){
+            var currentIdHelp = document.getElementById(object._id);
             currentIdHelp.style.backgroundColor = "#00FF00";
             currentIdHelp.style.color = "#000000";
             currentIdHelp.style.width = "100px";
@@ -2174,11 +2185,13 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
     
     if (self._settings.separatorMode) {
         self._objects.forEach(function (object) {
-            var currentObjectId = document.getElementById(object._id);
+            if (object instanceof List || object instanceof TextInput) {
+                var currentObjectId = document.getElementById(object._id);
 
-            currentObjectId.oninput = function () {
-                self._handlerForSeparatorMode(object);
-            };
+                currentObjectId.oninput = function () {
+                    self._handlerForSeparatorMode(object);
+                };
+            }
 
         });
     }  

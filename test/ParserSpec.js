@@ -21,6 +21,7 @@ describe('Parser', function() {
         });
     });
 
+
     /*describe('_removeHelpText', function() {
         it('should return syntaxBlock without helpText', function() {
             var result_1 = parser._removeHelpText("{{1,2,3?help?}}");
@@ -54,6 +55,14 @@ describe('Parser', function() {
             var result = parser._getTypeBlock("{{1, 3,!4!}}");
             expect(result).toBe('list');
         });
+
+        it('should return string: "hint" if received Hint()', function() {
+            var result_1 = parser._getTypeBlock("{{??}}");
+            var result_2 = parser._getTypeBlock("{{  ?sdaf? }}");
+
+            expect(result_1).toBe('hint');
+            expect(result_2).toBe('hint');
+        });
     });
 
     describe('_extractTextInput()',function(){
@@ -70,14 +79,25 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
-        /*it('should create helpText for each input', function() {
-            var result_1 = parser._extractTextInput('bla bla bla {{...|ssfssg?help?}}');
-            var result_2 = parser._extractTextInput('bla bla bla {{...|ssfssg}}');
+    });
 
-            expect(result_2.helpText).toBe("");
-            expect(result_1.helpText).toBe("help");
-            expect(result_1.syntaxBlock).toBe("bla bla bla {{...|ssfssg?help?}}");
-        });*/
+    describe('_extractHint()', function() {
+        it('should return helpText and unique id', function() {
+            var object = new TextInput("true", "{{...|true}}", "examjs_id_1");
+            var objects = [];
+            objects.push(object);
+            var result = parser._extractHint("{{ ?help? }}", objects);
+
+            expect(result._id).toBe('examjs_id_1_help');
+            expect(result.helpText).toBe('help');
+        });
+
+        it ('should return null if before Hint no List or no TextInput', function(){
+            var objects = [];
+            var result = parser._extractHint("{{ ?help? }}", objects);
+
+            expect(result).toBe(null);
+        });
     });
 
     describe('_parseSyntaxBlocks()', function() {
