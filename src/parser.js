@@ -66,8 +66,6 @@ Parser.prototype._getTypeBlock = function(block){
 
 Parser.prototype._extractTextInput = function(syntaxBlock){
 	var self = this;
-    /*var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);*/
 
 	function getRightAnswer(syntaxBlock){
 		var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|",0);
@@ -153,28 +151,11 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
-/*Parser.prototype._removeHelpText = function(syntaxBlock) {
-    var self = this;
-    var result = "";
-    var helpText = "?" + self._getHelpText(syntaxBlock) + "?";
 
-    if (helpText !== "??") {
-        var firstPosition = syntaxBlock.indexOf(helpText);
-        var tmpTextBegin = syntaxBlock.substring(0,firstPosition);
-        var tmpTextEnd = syntaxBlock.substring((firstPosition+helpText.length), syntaxBlock.length);
-        result = tmpTextBegin + tmpTextEnd;
-    } else {
-        result = syntaxBlock;
-    }
-
-    return result;
-};*/
 
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
-    /*var helpText = self._getHelpText(syntaxBlock);
-    var tmpSyntaxBlock = self._removeHelpText(syntaxBlock);*/
 
     function trim(text) {
         var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');

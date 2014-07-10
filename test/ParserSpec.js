@@ -22,17 +22,6 @@ describe('Parser', function() {
     });
 
 
-    /*describe('_removeHelpText', function() {
-        it('should return syntaxBlock without helpText', function() {
-            var result_1 = parser._removeHelpText("{{1,2,3?help?}}");
-            var result_2 = parser._removeHelpText("{{...|rightAnswer?help?}}");
-            var result_3 = parser._removeHelpText("{{1,2,3}}");
-            expect(result_1).toBe("{{1,2,3}}");
-            expect(result_2).toBe("{{...|rightAnswer}}");
-            expect(result_3).toBe("{{1,2,3}}");
-        });
-    });*/
-
     describe('_getNextID()', function() {
         it('should return the next id each time it was called', function() {
             var result1 = parser._getNextID();
