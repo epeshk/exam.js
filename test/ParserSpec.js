@@ -21,7 +21,7 @@ describe('Parser', function() {
         });
     });
 
-    describe('_removeHelpText', function() {
+    /*describe('_removeHelpText', function() {
         it('should return syntaxBlock without helpText', function() {
             var result_1 = parser._removeHelpText("{{1,2,3?help?}}");
             var result_2 = parser._removeHelpText("{{...|rightAnswer?help?}}");
@@ -30,7 +30,7 @@ describe('Parser', function() {
             expect(result_2).toBe("{{...|rightAnswer}}");
             expect(result_3).toBe("{{1,2,3}}");
         });
-    });
+    });*/
 
     describe('_getNextID()', function() {
         it('should return the next id each time it was called', function() {
@@ -70,14 +70,14 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
-        it('should create helpText for each input', function() {
+        /*it('should create helpText for each input', function() {
             var result_1 = parser._extractTextInput('bla bla bla {{...|ssfssg?help?}}');
             var result_2 = parser._extractTextInput('bla bla bla {{...|ssfssg}}');
 
             expect(result_2.helpText).toBe("");
             expect(result_1.helpText).toBe("help");
             expect(result_1.syntaxBlock).toBe("bla bla bla {{...|ssfssg?help?}}");
-        });
+        });*/
     });
 
     describe('_parseSyntaxBlocks()', function() {
@@ -120,7 +120,7 @@ describe('Parser', function() {
         });
 
         it('should trim elements in list but keep spaces between words in elements', function() {
-            var result = parser._extractList('{{test1 test1, test2 test2,  test3 test3  ,test4 test4?help?}}');
+            var result = parser._extractList('{{test1 test1, test2 test2,  test3 test3  ,test4 test4}}');
 
             expect(result.items[0]).toBe('test1 test1');
             expect(result.items[1]).toBe('test2 test2');
@@ -142,11 +142,11 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
-        it('should create helpText for each List', function() {
+        /*it('should create helpText for each List', function() {
             var result = parser._extractList('bla bla bla {{1,2,3,!4!?help?}}');
 
             expect(result.helpText).toBe("help");
-        });
+        });*/
     });
 
 

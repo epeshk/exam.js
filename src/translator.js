@@ -12,7 +12,7 @@ Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
-    if (inputObject.helpText !== "") {
+    if (inputObject.helpText) {
         result += "<div id='" + inputObject._id + "_help'>help!?</div>";
     }
 
@@ -29,7 +29,7 @@ Translator.prototype._createListBox = function(listObject) {
     });
     result += '</datalist>';
 
-    if (listObject.helpText !== "") {
+    if (listObject.helpText) {
         result += '<div id="' + listObject._id + '_help">help!?</div>';
     }
 
