@@ -223,5 +223,11 @@ describe('Parser', function() {
             expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}');
             expect(result[1].syntaxBlock).toBe('{{? help ?}}');
         });
+
+        it('not should create Hint, If the block of syntax no hint before', function() {
+            var result = parser.parse('bla bla {{?helpText?}}');
+
+            expect(result[0]).toBe(undefined);
+        });
     });
 });
