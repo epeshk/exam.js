@@ -2127,8 +2127,8 @@ Exam.prototype._eventHandlerForBtnFinish = function (objects) {
     window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
 };
 
-Exam.prototype._eventHndlerForHint = function (objects) {
-    //todo
+Exam.prototype._eventHandlerForHint = function (object) {
+    window.alert(object.helpText);
 };
 
 Exam.prototype._setPropertyForHelpBtn = function() {
