@@ -1868,12 +1868,7 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     var lastPosition = -1;
 
     firstPosition = syntaxBlock.indexOf('?');
-    for (var i=syntaxBlock.length-1; i>0; i--) {
-        if (syntaxBlock[i] === '?') {
-            lastPosition = i;
-            break;
-        }
-    }
+    lastPosition = syntaxBlock.lastIndexOf('?');
 
     if ((firstPosition !== -1) && (lastPosition !== -1)) {
         result = syntaxBlock.substring(firstPosition+1, lastPosition);
