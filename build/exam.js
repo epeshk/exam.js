@@ -2040,6 +2040,7 @@ function Exam(settings) {
     self._objects = null;
     self._handlerForSeparatorMode = null;
     self._handlerForBtnFinish = null;
+    self._handlerForHint = null;
     self._settings = {
         'separatorMode' :   true,
         'btnFinishId'   :   null, 
@@ -2126,6 +2127,10 @@ Exam.prototype._eventHandlerForBtnFinish = function (objects) {
     window.alert("Правильных ответов "+ countRightAnswer + " из "+countQuestions);
 };
 
+Exam.prototype._eventHndlerForHint = function (objects) {
+    //todo
+};
+
 Exam.prototype._setPropertyForHelpBtn = function() {
     var self = this;
 
@@ -2141,10 +2146,11 @@ Exam.prototype._setPropertyForHelpBtn = function() {
 };
 
 
-Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish) {
+Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish, handlerForHint) {
     var self = this;
 
     self._setPropertyForHelpBtn();
+
 
     if (handlerForSeparatorMode) {
         if(typeof handlerForSeparatorMode === 'function') {
@@ -2162,20 +2168,32 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
         self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
     }
 
-    
-    
-    if (self._settings.separatorMode) {
-        self._objects.forEach(function (object) {
-            if (object instanceof List || object instanceof TextInput) {
-                var currentObjectId = document.getElementById(object._id);
+    if(handlerForHint){
+        if(typeof handlerForHint === 'function') {
+            self._handlerForHint = handlerForHint;
+        }
+    } else {
+        self._handlerForHint = self._eventHandlerForHint;
+    }
 
-                currentObjectId.oninput = function () {
-                    self._handlerForSeparatorMode(object);
+    
+    
+    self._objects.forEach(function (object) {
+        var currentObjectId = document.getElementById(object._id);
+
+        if ((object instanceof List || object instanceof TextInput) && self._settings.separatorMode) {
+            currentObjectId.oninput = function () {
+                self._handlerForSeparatorMode(object);
+            };
+        } else {
+            if (object instanceof Hint) {
+                currentObjectId.onclick = function () {
+                    self._handlerForHint(object);
                 };
-            }
+            } 
+        }
 
-        });
-    }  
+    });  
 
     if (self._settings.btnFinishId !== null) {
         var btnId = document.getElementById(self._settings.btnFinishId);
