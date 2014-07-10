@@ -7,17 +7,15 @@ describe('Parser', function() {
 
     describe('_getHelpText()', function() {
         it('should return helpText if help is exist', function() {
-            var result_1 = parser._getHelpText("{{1,2,3,4 ?help? }}");
-            var result_2 = parser._getHelpText("{{...|dafs?help?}}");
+            var result_1 = parser._getHelpText("{{ ?help? }}");
+
             expect(result_1).toBe("help");
-            expect(result_2).toBe("help");
         });
 
-        it('should return empty string if help is not exist', function() {
-            var result_1 = parser._getHelpText("{{1,2,3,4}}");
-            var result_2 = parser._getHelpText("{{...|dafs}}");
-            expect(result_1).toBe("");
-            expect(result_2).toBe("");
+        it('should return  helpText if some count "?"', function() {
+            var result_1 = parser._getHelpText("{{? what? where? when? ?}}");
+
+            expect(result_1).toBe(" what? where? when? ");
         });
     });
 
