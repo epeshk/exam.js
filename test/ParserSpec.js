@@ -151,11 +151,6 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
-        /*it('should create helpText for each List', function() {
-            var result = parser._extractList('bla bla bla {{1,2,3,!4!?help?}}');
-
-            expect(result.helpText).toBe("help");
-        });*/
     });
 
 
@@ -220,6 +215,13 @@ describe('Parser', function() {
             var result = parser.parse('bla bla {{test1, !test2!}}');
 
             expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}')
+        });
+
+        it('should create List that contains syntax block and Hint', function() {
+            var result = parser.parse('bla bla {{test1, !test2!}} bla bla{{? help ?}}');
+
+            expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}');
+            expect(result[1].syntaxBlock).toBe('{{? help ?}}');
         });
     });
 });

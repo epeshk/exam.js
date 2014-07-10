@@ -23,6 +23,14 @@ describe('Translator', function() {
         });
     });
 
+    describe('_createHint()', function() {
+        it('should create a btnHelp from Hint', function() {
+            var result = translator._createHint(new Hint("{{?help?}}", "help", "examjs_id_1_help"));
+
+            expect(result).toBe("<div id='examjs_id_1_help'>help!?</div>");
+        });
+    });
+
     describe('_convertAllObjects()', function() {
         it('should convert all syntax objects to the text', function() {
             var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}'),
