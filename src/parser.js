@@ -142,9 +142,10 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     var lastPosition = -1;
 
     firstPosition = syntaxBlock.indexOf('?');
-    for (var i=firstPosition+1; i<syntaxBlock.length; i++) {
+    for (var i=syntaxBlock.length-1; i>0; i--) {
         if (syntaxBlock[i] === '?') {
             lastPosition = i;
+            break;
         }
     }
 
