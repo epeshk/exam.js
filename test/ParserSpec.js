@@ -100,16 +100,6 @@ describe('Parser', function() {
         });
     });
 
-    describe('_extractObjects()', function() {
-        it('should throw an error if try to extract object from empty special block', function() {
-            expect(function() {
-                parser._extractObjects(['{{}}']);
-            }).toThrow(
-                new ParsingError('Cannot parse empty block: {{}}')
-            );
-        });
-    });
-
     describe('_extractList()', function() {
         it('should extract List from syntax block with list', function() {
             var result = parser._extractList('{{1,2,3,4}}');
