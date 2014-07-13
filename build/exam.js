@@ -2036,12 +2036,18 @@ function Exam(settings) {
     var self = this;
     self._translator = new Translator();
     self._parser = new Parser();
-    self._preprocessor = markdown.toHTML;
+    //self._preprocessor = markdown.toHTML;
     self._objects = null;
-    self._handlerForSeparatorMode = null;
-    self._handlerForBtnFinish = null;
-    self._handlerForHint = null;
-    self._settings = {
+    //self._handlerForSeparatorMode = null;
+    //self._handlerForBtnFinish = null;
+    //self._handlerForHint = null;
+    if (settings) {
+        self._settings = settings;
+    } else {
+        self._settings = null;
+    }
+    
+    /*self._settings = {
         'separatorMode' :   true,
         'btnFinishId'   :   null, 
     };
@@ -2055,23 +2061,91 @@ function Exam(settings) {
         if (typeof settings.btnFinishId === 'string') {
             self._settings.btnFinishId = settings.btnFinishId;
         }
-    } 
+    }*/ 
         
     
 }
 
-
-Exam.prototype.parse = function(source, preprocessor) {
+Exam.prototype._setSettings =  function() {
     var self = this;
-    self._preprocessor = markdown.toHTML;
+    var settings = self._settings;
+
+    if (self._settings === null) {
+        self._settings = {
+            "separatorMode" : true,
+            "btnFinishId" : null,
+            "handlerForHint" : self._eventHandlerForHint,
+            "handlerForBtnFinish" : self._eventHandlerForBtnFinish,
+            "handlerForSeparatorMode" : self._eventHandlerForSeparatorMode,
+            "preprocessor" : markdown.toHTML,
+        };
+
+        return;
+    }
+
+    if (settings.separatorMode) {
+        if (typeof settings.separatorMode !== 'boolean') {
+            throw new Error('The separatoMode must be a type of boolean');
+        }
+    } else {
+        settings.separatorMode = true;
+    }
+
+    if (settings.btnFinishId) {
+        if (typeof settings.btnFinishId !== 'string') {
+            throw new Error('The btnFinishId must be a type of string');
+        }
+    } else {
+        settings.btnFinishId = null;
+    }
+
+    if (settings.preprocessor) {
+        if (typeof settings.preprocessor !== 'function') {
+            throw new Error('The preprocessor must be a type of function');
+        }
+    } else {
+        settings.preprocessor = markdown.toHTML;
+    }
+
+    if (settings.handlerForSeparatorMode) {
+        if (typeof settings.handlerForSeparatorMode !== 'function') {
+            throw new Error('The handlerForSeparatorMode must be a type of function');
+        }
+    } else {
+        settings.handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
+    }
+
+    if (settings.handlerForBtnFinish) {
+        if (typeof settings.handlerForBtnFinish !== 'function') {
+            throw new Error('The handlerForBtnFinish must be a type of function');
+        }
+    } else {
+        settings.handlerForBtnFinish = self._eventHandlerForBtnFinish;
+    }
+
+    if (settings.handlerForHint) {
+        if (typeof settings.handlerForHint !== 'function') {
+            throw new Error('The handlerForHint must be a type of function');
+        }
+    } else {
+        settings.handlerForHint = self._eventHandlerForHint;
+    }
+    
+};
+
+
+Exam.prototype.parse = function(source) {
+    var self = this;
+    /*self._preprocessor = markdown.toHTML;
     if (preprocessor) {
         if (typeof preprocessor === 'function') {
             self._preprocessor = preprocessor;
         } else {
             throw new Error('The second argument must be a parsing function');
         }
-    } 
-    var preprocessedSource = self._preprocessor(source);
+    }*/ 
+    self._setSettings();
+    var preprocessedSource = self._settings.preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(self._objects);
 
@@ -2146,13 +2220,13 @@ Exam.prototype._setPropertyForHelpBtn = function() {
 };
 
 
-Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinish, handlerForHint) {
+Exam.prototype.startExam = function () {
     var self = this;
 
     self._setPropertyForHelpBtn();
 
 
-    if (handlerForSeparatorMode) {
+    /*if (handlerForSeparatorMode) {
         if(typeof handlerForSeparatorMode === 'function') {
             self._handlerForSeparatorMode = handlerForSeparatorMode;
         }
@@ -2174,7 +2248,7 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
         }
     } else {
         self._handlerForHint = self._eventHandlerForHint;
-    }
+    }*/
 
     
     
@@ -2183,12 +2257,12 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
 
         if ((object instanceof List || object instanceof TextInput) && self._settings.separatorMode) {
             currentObjectId.oninput = function () {
-                self._handlerForSeparatorMode(object);
+                self._settings.handlerForSeparatorMode(object);
             };
         } else {
             if (object instanceof Hint) {
                 currentObjectId.onclick = function () {
-                    self._handlerForHint(object);
+                    self._settings.handlerForHint(object);
                 };
             } 
         }
@@ -2198,7 +2272,7 @@ Exam.prototype.startExam = function (handlerForSeparatorMode, handlerForBtnFinis
     if (self._settings.btnFinishId !== null) {
         var btnId = document.getElementById(self._settings.btnFinishId);
         btnId.onclick = function () {
-            self._handlerForBtnFinish(self._objects);
+            self._settings.handlerForBtnFinish(self._objects);
         };
     }
 };
