@@ -10,6 +10,21 @@ function Exam(settings) {
     self._handlerForBtnFinish = null;
     self._handlerForSeparatorMode = null;
     self._handlerForHint = null;
+    self._settings = {
+        'separatorMode' :   true,
+        'btnFinishId'   :   null, 
+    };
+
+    if (settings) {
+        if (typeof settings.separatorMode === 'boolean'){
+            self._settings.separatorMode = settings.separatorMode;
+        }
+
+        if (typeof settings.btnFinishId === 'string') {
+            self._settings.btnFinishId = settings.btnFinishId;
+        }
+    } 
+
     self._separatorMode = true;
     self._btnFinishId = null;
     self._preprocessor = markdown.toHTML;
@@ -19,7 +34,6 @@ function Exam(settings) {
     } else {
         self._settings = null;
     }
-        
 }
 
 
