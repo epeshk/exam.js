@@ -15,7 +15,7 @@ function Exam(settings) {
         'btnFinishId'   :   null, 
     };
 
-    if (settings) {
+    /*if (settings) {
         if (typeof settings.separatorMode === 'boolean'){
             self._settings.separatorMode = settings.separatorMode;
         }
@@ -23,7 +23,7 @@ function Exam(settings) {
         if (typeof settings.btnFinishId === 'string') {
             self._settings.btnFinishId = settings.btnFinishId;
         }
-    } 
+    }*/
 
     self._separatorMode = true;
     self._btnFinishId = null;
