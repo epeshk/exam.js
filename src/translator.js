@@ -42,21 +42,24 @@ Translator.prototype._convertAllObjects = function(objects) {
         if (object instanceof List) {
             result.push({
                 source: object.syntaxBlock,
-                result: self._createListBox(object)
+                result: self._createListBox(object),
+                block: 'list'
             });
             error = false;
         } 
         if (object instanceof TextInput) {
         	result.push({
         		source: object.syntaxBlock,
-        		result: self._createTextInput(object)
+        		result: self._createTextInput(object),
+                block: 'textInput'
         	});
             error = false;
         }
         if (object instanceof Hint) {
             result.push({
                 source: object.syntaxBlock,
-                result: self._createHint(object)
+                result: self._createHint(object),
+                block: 'hint'
             });
             error = false;
         } 

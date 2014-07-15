@@ -2000,21 +2000,24 @@ Translator.prototype._convertAllObjects = function(objects) {
         if (object instanceof List) {
             result.push({
                 source: object.syntaxBlock,
-                result: self._createListBox(object)
+                result: self._createListBox(object),
+                block: 'list'
             });
             error = false;
         } 
         if (object instanceof TextInput) {
         	result.push({
         		source: object.syntaxBlock,
-        		result: self._createTextInput(object)
+        		result: self._createTextInput(object),
+                block: 'textInput'
         	});
             error = false;
         }
         if (object instanceof Hint) {
             result.push({
                 source: object.syntaxBlock,
-                result: self._createHint(object)
+                result: self._createHint(object),
+                block: 'hint'
             });
             error = false;
         } 
@@ -2047,7 +2050,7 @@ function Exam(settings) {
         'btnFinishId'   :   null, 
     };
 
-    if (settings) {
+    /*if (settings) {
         if (typeof settings.separatorMode === 'boolean'){
             self._settings.separatorMode = settings.separatorMode;
         }
@@ -2055,7 +2058,7 @@ function Exam(settings) {
         if (typeof settings.btnFinishId === 'string') {
             self._settings.btnFinishId = settings.btnFinishId;
         }
-    } 
+    }*/
 
     self._separatorMode = true;
     self._btnFinishId = null;
@@ -2067,6 +2070,7 @@ function Exam(settings) {
         self._settings = null;
     }
 }
+
 
 Exam.prototype._setSettings =  function() {
     var self = this;
@@ -2110,6 +2114,18 @@ Exam.prototype.parse = function(source) {
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(self._objects);
+    var currentPointer = 0;
+
+    convertionResults.forEach(function(item) {
+        if (item.block === 'hint') {
+            var positionCurrentHint = preprocessedSource.indexOf(item.source, currentPointer);
+            currentPointer = positionCurrentHint + item.source.length;
+            var positionLastPrev = preprocessedSource.lastIndexOf("}", positionCurrentHint);
+            var leftPartText = preprocessedSource.substr(0, positionLastPrev + 1);
+            var rightPartText = preprocessedSource.substr(positionCurrentHint);
+            preprocessedSource = leftPartText + rightPartText;
+        }
+    });
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
