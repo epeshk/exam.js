@@ -22,6 +22,7 @@ function Exam(settings) {
         
 }
 
+
 Exam.prototype._setSettings =  function() {
     var self = this;
     var settings = self._settings;
@@ -64,6 +65,18 @@ Exam.prototype.parse = function(source) {
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
     var convertionResults = self._translator._convertAllObjects(self._objects);
+    var currentPointer = 0;
+
+    convertionResults.forEach(function(item) {
+        if (item.block === 'hint') {
+            var positionCurrentHint = preprocessedSource.indexOf(item.source, currentPointer);
+            currentPointer = positionCurrentHint + item.source.length;
+            var positionLastPrev = preprocessedSource.lastIndexOf("}", positionCurrentHint);
+            var leftPartText = preprocessedSource.substr(0, positionLastPrev + 1);
+            var rightPartText = preprocessedSource.substr(positionCurrentHint);
+            preprocessedSource = leftPartText + rightPartText;
+        }
+    });
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
