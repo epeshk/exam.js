@@ -69,7 +69,6 @@ Translator.prototype._convertAllObjects = function(objects) {
         if(error){
             throw new Error('Converting error. Translator cannot convert object that was passed into it');
         }
-        
     });
 
     return result;

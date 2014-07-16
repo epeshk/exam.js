@@ -2022,7 +2022,6 @@ Translator.prototype._convertAllObjects = function(objects) {
         if(error){
             throw new Error('Converting error. Translator cannot convert object that was passed into it');
         }
-        
     });
 
     return result;
@@ -2076,7 +2075,8 @@ Exam.prototype._setPropertyForHelpBtn = function() {
     self._objects.forEach(function(object) {
         if (object instanceof Hint) {
             var currentIdHelp = document.getElementById(object._id);
-            currentIdHelp.style.backgroundColor = "#00FF00";
+            currentIdHelp.style.cssText = "display: inline;";
+            currentIdHelp.style.backgroundColor = "#808080";
             currentIdHelp.style.color = "#000000";
             currentIdHelp.style.width = "100px";
             currentIdHelp.style.textAlign = "center";
@@ -2130,6 +2130,7 @@ Exam.prototype.parse = function(source) {
 
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
+    self._setPropertyForHelpBtn();
     var convertionResults = self._translator._convertAllObjects(self._objects);
     var currentPointer = 0;
 
@@ -2204,7 +2205,6 @@ Exam.prototype._eventHandlerForHint = function(object) {
 Exam.prototype.startExam = function() {
     var self = this;
 
-    self._setPropertyForHelpBtn();
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
 
