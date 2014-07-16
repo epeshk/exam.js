@@ -37,7 +37,6 @@ function Exam(settings) {
             }
         }
     }
-    self._setPropertyForHelpBtn();
     self._setCallback(settings);
 }
 
@@ -174,6 +173,8 @@ Exam.prototype._eventHandlerForHint = function(object) {
 
 Exam.prototype.startExam = function() {
     var self = this;
+
+    self._setPropertyForHelpBtn();
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
 
