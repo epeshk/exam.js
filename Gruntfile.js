@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'karma:dev', 'notify:test']
+                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'test', 'notify:test']
             }
         },
         clean: {
