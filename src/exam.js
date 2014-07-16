@@ -101,7 +101,6 @@ Exam.prototype.parse = function(source) {
 
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
-    self._setPropertyForHelpBtn();
     var convertionResults = self._translator._convertAllObjects(self._objects);
     var currentPointer = 0;
 
@@ -119,7 +118,6 @@ Exam.prototype.parse = function(source) {
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
-
 
     return preprocessedSource;
 };
@@ -175,6 +173,7 @@ Exam.prototype._eventHandlerForHint = function(object) {
 
 Exam.prototype.startExam = function() {
     var self = this;
+    self._setPropertyForHelpBtn();
 
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
@@ -192,8 +191,8 @@ Exam.prototype.startExam = function() {
         }
     });
 
-    if (self.finishBtnID !== null) {
-        var btnId = document.getElementById(self.finishBtnID);
+    if (self._finishBtnID !== null) {
+        var btnId = document.getElementById(self._finishBtnID);
         btnId.onclick = function() {
             self._handlerForBtnFinish(self._objects);
         };
