@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                     "indent": 4,
                     "latedef": true,
                     "camelcase": true,
-                    "maxdepth": 2,
+                    "maxdepth": 3,
                     "funcscope": true,
                     "notypeof": true,
                     "globals": {
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                     "indent": 4,
                     "latedef": true,
                     "camelcase": true,
-                    "maxdepth": 2,
+                    "maxdepth": 3,
                     "funcscope": true,
                     "notypeof": true,
                     "globals": {

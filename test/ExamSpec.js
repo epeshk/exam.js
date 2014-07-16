@@ -2,11 +2,9 @@
 describe('Exam()',function(){
     it('should set the settings default', function(){
         var exam = new Exam();
-        //exam._setSettings();
-        exam._setCallback();
 
-        expect(exam._separatorMode).toBe(true);
-        expect(exam._btnFinishId).toBe(null);
+        expect(exam._separateCheckingMode).toBe(true);
+        expect(exam._finishBtnID).not.toBeDefined();
         expect(exam._handlerForHint).toBe(exam._eventHandlerForHint);
         expect(exam._handlerForBtnFinish).toBe(exam._eventHandlerForBtnFinish);
         expect(exam._handlerForSeparatorMode).toBe(exam._eventHandlerForSeparatorMode);
@@ -14,20 +12,19 @@ describe('Exam()',function(){
     });
 
     it('should leave the btnFinishId unchanged and setting separatorMode on false', function(){
-        var setting = {'separatorMode' : false};
+        var setting = {separateCheckingMode: false};
         var exam = new Exam(setting);
-        exam._setSettings();
-        expect(exam._separatorMode).toBe(false);
-        expect(exam._btnFinishId).toBe(null);
+
+        expect(exam._separateCheckingMode).toBe(false);
+        expect(exam._finishBtnID).not.toBeDefined();
     });
 
-
     it('should leave the separatorMode unchanged and setting btnFinishId on "button_1"', function(){
-        var setting = {'btnFinishId': "button_1"};
+        var setting = {finishBtnID : "button_1"};
         var exam = new Exam(setting);
-        exam._setSettings();
-        expect(exam._separatorMode).toBe(true);
-        expect(exam._btnFinishId).toBe("button_1");
+
+        expect(exam._separateCheckingMode).toBe(true);
+        expect(exam._finishBtnID).toBe("button_1");
     });
 
     it('should  setting all callback functions on other function', function(){
@@ -36,15 +33,13 @@ describe('Exam()',function(){
         function someFunction_3() {/*todo*/}
         function someFunction_4() {/*todo*/}
         var setting = {
-            'preprocessor': someFunction_1,
-            'handlerForHint': someFunction_2,
-            'handlerForSeparatorMode': someFunction_3,
-            'handlerForBtnFinish': someFunction_4,
+            preprocessor : someFunction_1,
+            handlerForHint: someFunction_2,
+            handlerForSeparatorMode: someFunction_3,
+            handlerForBtnFinish: someFunction_4,
         };
 
         var exam = new Exam(setting);
-        exam._setSettings();
-        exam._setCallback();
 
         expect(exam._preprocessor).toBe(someFunction_1);
         expect(exam._handlerForHint).toBe(someFunction_2);
