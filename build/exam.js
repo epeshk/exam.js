@@ -1736,7 +1736,6 @@ function List(items, rightAnswerIndex, syntaxBlock, _id) {
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this._id = _id;
-
 }
 
 function TextInput(rightAnswer, syntaxBlock, _id) {
@@ -1787,7 +1786,6 @@ Parser.prototype._getTypeBlock = function(block) {
             return "list";
         }
     }
-
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock) {
@@ -1801,7 +1799,6 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
     }
 
     var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
-
     return result;
 };
 
@@ -1951,8 +1948,6 @@ Parser.prototype.parse = function(text) {
     }
 
     var result = self._extractObjects(self._parseSyntaxBlocks(text));
-
-
     return result;
 };
 
