@@ -1777,7 +1777,7 @@ Parser.prototype._getNextID = function() {
     return 'examjs_id_' + (++self._currentID);
 };
 
-Parser.prototype._getTypeBlock = function(block) {
+Parser.prototype._getTypeOfBlock = function(block) {
     var self = this;
     var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
     var hintPattern = /\{\{\s*\?\s*.*\?\s*\}\}/g;
@@ -1922,7 +1922,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
     syntaxBlocks.forEach(function(block) {
         var tmpObj;
         if (!isBlockEmpty(block)) {
-            var typeBlock = self._getTypeBlock(block);
+            var typeBlock = self._getTypeOfBlock(block);
             switch (typeBlock) {
                 case 'textInput':
                     {

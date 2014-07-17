@@ -32,20 +32,20 @@ describe('Parser', function() {
         });
     });
 
-    describe('_getTypeBlock()', function() {
+    describe('_getTypeOfBlock()', function() {
         it('should return string: "textInput" if received textInputBlock', function(){
-            var result = parser._getTypeBlock("{{...|hkfds}}");
+            var result = parser._getTypeOfBlock("{{...|hkfds}}");
             expect(result).toBe('textInput');
         });
 
         it('should return string: "list" if received listBlock', function(){
-            var result = parser._getTypeBlock("{{1, 3,!4!}}");
+            var result = parser._getTypeOfBlock("{{1, 3,!4!}}");
             expect(result).toBe('list');
         });
 
         it('should return string: "hint" if received Hint()', function() {
-            var result_1 = parser._getTypeBlock("{{??}}");
-            var result_2 = parser._getTypeBlock("{{  ?sdaf? }}");
+            var result_1 = parser._getTypeOfBlock("{{??}}");
+            var result_2 = parser._getTypeOfBlock("{{  ?sdaf? }}");
 
             expect(result_1).toBe('hint');
             expect(result_2).toBe('hint');
