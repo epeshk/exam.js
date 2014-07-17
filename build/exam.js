@@ -1840,7 +1840,7 @@ Parser.prototype._indexOfRightAnswer = function(items) {
 Parser.prototype._extractHelpText = function(syntaxBlock){
     var self = this;
     
-    var startIndex = syntaxBlock.lastIndexOf(':?');
+    var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
     var endIndex = syntaxBlock.lastIndexOf('}}');
 
     return syntaxBlock.substring(startIndex, endIndex);
