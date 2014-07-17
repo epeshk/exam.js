@@ -1765,6 +1765,10 @@ function Parser() {
 
 }
 
+Parser.prototype._trim = function(text) {
+    var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
+    return result;
+};
 
 Parser.prototype._getNextID = function() {
     var self = this;
@@ -1837,9 +1841,9 @@ Parser.prototype._indexOfRightAnswer = function(items) {
     return result;
 };
 
-Parser.prototype._extractHelpText = function(syntaxBlock){
+Parser.prototype._extractHelpText = function(syntaxBlock) {
     var self = this;
-    
+
     var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
     var endIndex = syntaxBlock.lastIndexOf('}}');
 
@@ -1889,14 +1893,10 @@ Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
 
-    function trim(text) {
-        var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
-        return result;
-    }
 
     try {
         syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-            tmpResult.push(trim(elem));
+            tmpResult.push(self._trim(elem));
         });
     } catch (e) {
         return null;
