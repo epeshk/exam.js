@@ -1842,11 +1842,13 @@ Parser.prototype._indexOfRightAnswer = function(items) {
 
 Parser.prototype._extractHelpText = function(syntaxBlock) {
     var self = this;
+    if (syntaxBlock.indexOf(':?') !== -1) {
+        var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
+        var endIndex = syntaxBlock.lastIndexOf('}}');
 
-    var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
-    var endIndex = syntaxBlock.lastIndexOf('}}');
-
-    return self._trim(syntaxBlock.substring(startIndex, endIndex));
+        return self._trim(syntaxBlock.substring(startIndex, endIndex));
+    }
+    return syntaxBlock;
 };
 
 Parser.prototype._removeExclamationPoints = function(items) {
