@@ -1731,16 +1731,18 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id) {
+function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
+    this.helpText = helpText;
     this._id = _id;
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id) {
+function TextInput(rightAnswer, syntaxBlock, _id, helpText) {
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
+    this.helpText = helpText;
     this._id = _id;
 }
 
