@@ -120,7 +120,7 @@ Parser.prototype._extractHelpText = function(syntaxBlock) {
     var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
     var endIndex = syntaxBlock.lastIndexOf('}}');
 
-    return syntaxBlock.substring(startIndex, endIndex);
+    return self._trim(syntaxBlock.substring(startIndex, endIndex));
 };
 
 Parser.prototype._removeExclamationPoints = function(items) {
