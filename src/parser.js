@@ -58,13 +58,12 @@ Parser.prototype._getTypeBlock = function(block) {
 
     if (textInputPattern.test(block)) {
         return "textInput";
-    } else {
-        if (hintPattern.test(block)) {
-            return "hint";
-        } else {
-            return "list";
-        }
     }
+    if (hintPattern.test(block)) {
+        return "hint";
+    }
+
+    return "list";
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock) {
