@@ -49,7 +49,6 @@ Parser.prototype._getNextID = function() {
     return 'examjs_id_' + (++self._currentID);
 };
 
-
 Parser.prototype._getTypeBlock = function(block) {
     var self = this;
     var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
@@ -161,12 +160,9 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
-
-
 Parser.prototype._extractList = function(syntaxBlock) {
     var self = this;
     var tmpResult = [];
-
 
     try {
         syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
