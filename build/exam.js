@@ -1837,6 +1837,11 @@ Parser.prototype._indexOfRightAnswer = function(items) {
     return result;
 };
 
+Parser.prototype._extractHelpText = function(syntaxBlock){
+    var self = this;
+    
+};
+
 Parser.prototype._removeExclamationPoints = function(items) {
     var self = this;
     var index = self._indexOfRightAnswer(items);
