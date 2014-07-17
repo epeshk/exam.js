@@ -221,7 +221,7 @@ describe('Parser', function() {
 
     describe('_extractHelpText()', function(){
         it('shold extract help text from syntax block', function(){
-            var result = parser._extractHelpText('{{1,2,3,4 [test]}}');
+            var result = parser._extractHelpText('{{1,2,3,4 :? test }}');
 
             expect(result).toEqual('test');
         });
