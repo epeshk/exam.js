@@ -1768,16 +1768,19 @@ function Parser() {
 }
 
 Parser.prototype._trim = function(text) {
+    'use strict';
     var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
     return result;
 };
 
 Parser.prototype._getNextID = function() {
+    'use strict';
     var self = this;
     return 'examjs_id_' + (++self._currentID);
 };
 
 Parser.prototype._getTypeOfBlock = function(block) {
+    'use strict';
     var self = this;
     var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
     var hintPattern = /\{\{\s*\?\s*.*\?\s*\}\}/g;
@@ -1793,6 +1796,7 @@ Parser.prototype._getTypeOfBlock = function(block) {
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock) {
+    'use strict';
     var self = this;
 
     function getRightAnswer(syntaxBlock) {
@@ -1807,6 +1811,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
 };
 
 Parser.prototype._extractHint = function(syntaxBlock, objects) {
+    'use strict';
     var self = this;
     var result = null;
 
@@ -1822,6 +1827,7 @@ Parser.prototype._extractHint = function(syntaxBlock, objects) {
 };
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
+    'use strict';
     var self = this;
     var regexp = new RegExp(self._patterns.blockPattern);
     var result = text.match(regexp);
@@ -1830,6 +1836,7 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
 };
 
 Parser.prototype._indexOfRightAnswer = function(items) {
+    'use strict';
     var self = this;
     var result = -1;
     items.forEach(function(item) {
@@ -1842,6 +1849,7 @@ Parser.prototype._indexOfRightAnswer = function(items) {
 };
 
 Parser.prototype._extractHelpText = function(syntaxBlock) {
+    'use strict';
     var self = this;
     if (syntaxBlock.indexOf(':?') !== -1) {
         var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
@@ -1853,6 +1861,7 @@ Parser.prototype._extractHelpText = function(syntaxBlock) {
 };
 
 Parser.prototype._removeExclamationPoints = function(items) {
+    'use strict';
     var self = this;
     var index = self._indexOfRightAnswer(items);
     if (index === -1) {
@@ -1874,6 +1883,7 @@ Parser.prototype._removeExclamationPoints = function(items) {
 };
 
 Parser.prototype._getHelpText = function(syntaxBlock) {
+    'use strict';
     var self = this;
     var result = "";
     var firstPosition = -1;
@@ -1890,6 +1900,7 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
 };
 
 Parser.prototype._extractList = function(syntaxBlock) {
+    'use strict';
     var self = this;
     var tmpResult = [];
 
@@ -1906,6 +1917,7 @@ Parser.prototype._extractList = function(syntaxBlock) {
 };
 
 Parser.prototype._extractObjects = function(syntaxBlocks) {
+    'use strict';
     var self = this;
     var result = [];
     if (syntaxBlocks === null) {
@@ -1950,6 +1962,7 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
 };
 
 Parser.prototype.parse = function(text) {
+    'use strict';
     var self = this;
     if (typeof text !== 'string') {
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
