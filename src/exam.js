@@ -1,4 +1,5 @@
 function Exam(settings) {
+    'use strict';
     if (!(this instanceof Exam)) {
         return new Exam();
     }
@@ -41,6 +42,7 @@ function Exam(settings) {
 }
 
 Exam.prototype._setPropertyForHelpBtn = function() {
+    'use strict';
     var self = this;
 
     self._objects.forEach(function(object) {
@@ -56,6 +58,7 @@ Exam.prototype._setPropertyForHelpBtn = function() {
 };
 
 Exam.prototype._setCallback = function(settings) {
+    'use strict';
     var self = this;
     self._handlerForHint = self._eventHandlerForHint;
     self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
@@ -97,6 +100,7 @@ Exam.prototype._setCallback = function(settings) {
 };
 
 Exam.prototype.parse = function(source) {
+    'use strict';
     var self = this;
 
     var preprocessedSource = self._preprocessor(source);
@@ -123,6 +127,7 @@ Exam.prototype.parse = function(source) {
 };
 
 Exam.prototype._getRightAnswer = function(object) {
+    'use strict';
     var self = this;
     var result;
     if (object instanceof List) {
@@ -135,6 +140,7 @@ Exam.prototype._getRightAnswer = function(object) {
 };
 
 Exam.prototype._eventHandlerForSeparatorMode = function(object) {
+    'use strict';
     var self = this;
     var currentId = document.getElementById(object._id);
     var selectAnswer = currentId.value;
@@ -151,6 +157,7 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
 };
 
 Exam.prototype._eventHandlerForBtnFinish = function(objects) {
+    'use strict';
     var self = this;
     var countQuestions = objects.length;
     var countRightAnswer = 0;
@@ -167,11 +174,13 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
 };
 
 Exam.prototype._eventHandlerForHint = function(object) {
+    'use strict';
     window.alert(object.helpText);
 };
 
 
 Exam.prototype.startExam = function() {
+    'use strict';
     var self = this;
     self._setPropertyForHelpBtn();
 

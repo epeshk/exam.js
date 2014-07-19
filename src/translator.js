@@ -7,6 +7,7 @@ function Translator() {
 }
 
 Translator.prototype._createHint = function (hintObject) {
+    'use strict';
     var self = this;
     var result = "<div id='" + hintObject._id + "'>help!?</div>";
 
@@ -14,6 +15,7 @@ Translator.prototype._createHint = function (hintObject) {
 };
 
 Translator.prototype._createTextInput = function(inputObject){
+    'use strict';
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
@@ -21,6 +23,7 @@ Translator.prototype._createTextInput = function(inputObject){
 };
 
 Translator.prototype._createListBox = function(listObject) {
+    'use strict';
     var self = this;
     var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
     result += '<datalist id="' + listObject._id + "_data"+'">';
@@ -35,6 +38,7 @@ Translator.prototype._createListBox = function(listObject) {
 };
 
 Translator.prototype._convertAllObjects = function(objects) {
+    'use strict';
     var self = this;
     var result = [];
     var error = true;

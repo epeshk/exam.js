@@ -5,25 +5,25 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
+function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id, helpText) {
+function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
-function Hint(syntaxBlock, helpText, _id) {
+function Hint(syntaxBlock, helpText, id) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
 function Parser() {
