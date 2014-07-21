@@ -2138,12 +2138,12 @@ Exam.prototype._setPropertyForHelpTag = function(id) {
     'use strict';
     var self = this;
 
-    var currentIdHelp = document.getElementById(id);
-    currentIdHelp.style.cssText = "display: inline;";
-    currentIdHelp.style.backgroundColor = "#808080";
-    currentIdHelp.style.color = "#000000";
-    currentIdHelp.style.width = "100px";
-    currentIdHelp.style.textAlign = "center";
+    var tag = document.getElementById(id);
+    tag.style.cssText = "display: inline;";
+    tag.style.backgroundColor = "#808080";
+    tag.style.color = "#000000";
+    tag.style.width = "100px";
+    tag.style.textAlign = "center";
 };
 
 Exam.prototype._setCallback = function(settings) {
