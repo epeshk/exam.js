@@ -243,10 +243,10 @@ describe('Parser', function() {
             expect(result).toEqual('test');
         });
 
-        it('should return the same text that was passed into this method if syntax block doesn\'t contain :? operator', function(){
+        it('should return null if syntax block doesn\'t contain :? operator', function(){
             var result = parser._extractHelpText('{{1,2,3,4}}');
 
-            expect(result).toEqual('{{1,2,3,4}}');
+            expect(result).toBeNull();
         });
     });
 });
