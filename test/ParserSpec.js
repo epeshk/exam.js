@@ -145,6 +145,11 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
+        it('should extract help text from syntax block', function(){
+            var result = parser._extractList('{{test1,test2,test3 :? help text}}');
+
+            expect(result.helpText).toEqual('help text');    
+        });
     });
 
 
