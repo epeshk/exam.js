@@ -1911,8 +1911,12 @@ Parser.prototype._extractList = function(syntaxBlock) {
     } catch (e) {
         return null;
     }
+    var list = self._removeExclamationPoints(tmpResult);
+    var rightAnswerIndex = self._indexOfRightAnswer(tmpResult);
+    var id = self._getNextID();
+    var helpText = self._extractHelpText(syntaxBlock);
 
-    var result = new List(self._removeExclamationPoints(tmpResult), self._indexOfRightAnswer(tmpResult), syntaxBlock, self._getNextID());
+    var result = new List(list, rightAnswerIndex, syntaxBlock, id, helpText);
     return result;
 };
 
