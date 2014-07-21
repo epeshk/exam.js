@@ -1737,6 +1737,9 @@ function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this._id = id;
+    if(helpText){
+        this._helpTagId = 'help_' + this._id;
+    }
 }
 
 function TextInput(rightAnswer, syntaxBlock, id, helpText) {
@@ -1744,6 +1747,9 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this._id = id;
+    if(helpText){
+        this._helpTagId = 'help_' + this._id;
+    }
 }
 
 function Hint(syntaxBlock, helpText, id) {
