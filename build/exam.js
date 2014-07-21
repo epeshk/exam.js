@@ -2023,7 +2023,7 @@ Translator.prototype._createTextInput = function(inputObject){
 	var result = '<input type="text" id="' + inputObject._id +'"></input>';
 
     if(inputObject.helpText){
-        helpTag = '<div id="' + 'help_text_' + inputObject._id + '">' + inputObject.helpText + '</div>';
+        helpTag = '<div id="' + inputObject._helpTagId + '">' + inputObject.helpText + '</div>';
         result += helpTag;
     }
 
@@ -2043,7 +2043,7 @@ Translator.prototype._createListBox = function(listObject) {
     result += '</datalist>';
 
     if(listObject.helpText){
-        helpTag = '<div id="' + 'help_text_' + listObject._id + '">' + listObject.helpText + '</div>';
+        helpTag = '<div id="' + listObject._helpTextId + '">' + listObject.helpText + '</div>';
         result += helpTag;
     }
 
@@ -2259,14 +2259,11 @@ Exam.prototype._eventHandlerForHint = function(object) {
 Exam.prototype.startExam = function() {
     'use strict';
     var self = this;
-    self._setPropertyForHelpBtn();
 
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
         if (object._helpTagId) {
-            var helpTag = document.getElementById(object._helpId);
-
-
+            self._setPropertyForHelpTag(object._helpTagId);
         }
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {

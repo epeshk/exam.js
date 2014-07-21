@@ -166,14 +166,11 @@ Exam.prototype._eventHandlerForHint = function(object) {
 Exam.prototype.startExam = function() {
     'use strict';
     var self = this;
-    self._setPropertyForHelpBtn();
 
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
         if (object._helpTagId) {
-            var helpTag = document.getElementById(object._helpId);
-
-
+            self._setPropertyForHelpTag(object._helpTagId);
         }
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
