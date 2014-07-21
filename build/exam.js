@@ -1805,8 +1805,11 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
 
         return rightAnswer;
     }
+    var rightAnswer = getRightAnswer(syntaxBlock);
+    var id = self._getNextID(); 
+    var helpText = self._extractHelpText(syntaxBlock);
 
-    var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(),self._extractHelpText(syntaxBlock));
+    var result = new TextInput(rightAnswer, syntaxBlock,id , helpText);
     return result;
 };
 
