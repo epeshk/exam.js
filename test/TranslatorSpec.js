@@ -37,11 +37,11 @@ describe('Translator', function() {
         });
     });
 
-    describe('_convertAllObjects()', function() {
+    describe('convertAllObjects()', function() {
         it('should convert all syntax objects to the text', function() {
             var data = [new List(['test1', 'test2'], 1, '{{test1,!test2!}}'), new List(['test1', 'test2'], 1, '{{test1,!test2!}}'),
             new TextInput("true", "{{...|true}}")];
-            var result = translator._convertAllObjects(data);
+            var result = translator.convertAllObjects(data);
 
             expect(result.length).toBe(3);
             expect(typeof result[0].result === 'string').toBeTruthy();
@@ -51,7 +51,7 @@ describe('Translator', function() {
         
         it('should throw an error if it took incorrect objects', function(){
             expect(function(){
-                translator._convertAllObjects([{},{}]);
+                translator.convertAllObjects([{},{}]);
             }).toThrow(new Error('Converting error. Translator cannot convert object that was passed into it'));   
         });
     });

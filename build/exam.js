@@ -2044,7 +2044,7 @@ Translator.prototype._createListBox = function(listObject) {
     return '<div>' + result + '</div>';
 };
 
-Translator.prototype._convertAllObjects = function(objects) {
+Translator.prototype.convertAllObjects = function(objects) {
     'use strict';
     var self = this;
     var result = [];
@@ -2192,7 +2192,7 @@ Exam.prototype.parse = function(source) {
 
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
-    var convertionResults = self._translator._convertAllObjects(self._objects);
+    var convertionResults = self._translator.convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);

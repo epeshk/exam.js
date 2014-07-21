@@ -105,7 +105,7 @@ Exam.prototype.parse = function(source) {
 
     var preprocessedSource = self._preprocessor(source);
     self._objects = self._parser.parse(preprocessedSource);
-    var convertionResults = self._translator._convertAllObjects(self._objects);
+    var convertionResults = self._translator.convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
         preprocessedSource = preprocessedSource.replace(item.source, item.result);

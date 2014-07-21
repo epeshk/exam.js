@@ -48,7 +48,7 @@ Translator.prototype._createListBox = function(listObject) {
     return '<div>' + result + '</div>';
 };
 
-Translator.prototype._convertAllObjects = function(objects) {
+Translator.prototype.convertAllObjects = function(objects) {
     'use strict';
     var self = this;
     var result = [];
