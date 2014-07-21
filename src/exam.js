@@ -119,9 +119,9 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
     var rightAnswer = self._getRightAnswer(object);
 
     if (rightAnswer === selectAnswer) {
-        currentId.style.color = "#00FF00";
+        currentId.style.color = "#cde472";
     } else {
-        currentId.style.color = "#FF0000";
+        currentId.style.color = "#e9967a";
     }
 };
 
