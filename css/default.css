@@ -1,6 +1,15 @@
 .examjs-help-popup {
     position: relative;
     cursor: pointer;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }
 .examjs-help-popup:before,
 .examjs-help-popup:after {
@@ -33,14 +42,14 @@
 }
 .examjs-help-popup:after {
     content: "";
-    border-top: 10px solid rgba(255,255,255,.85);
+    border-top: 10px solid rgba(255, 255, 255, .85);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     bottom: 20px;
     margin-left: -10px;
 }
 .examjs-help-popup:hover:before,
-.examjs-help-popup:hover:after{
+.examjs-help-popup:hover:after {
     opacity: 1;
     visibility: visible;
     margin-bottom: 0;

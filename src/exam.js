@@ -41,18 +41,6 @@ function Exam(settings) {
     self._setCallback(settings);
 }
 
-Exam.prototype._setPropertyForHelpTag = function(id) {
-    'use strict';
-    var self = this;
-
-    var tag = document.getElementById(id);
-    tag.style.cssText = "display: inline;";
-    tag.style.backgroundColor = "#808080";
-    tag.style.color = "#000000";
-    tag.style.width = "100px";
-    tag.style.textAlign = "center";
-};
-
 Exam.prototype._setCallback = function(settings) {
     'use strict';
     var self = this;
@@ -169,9 +157,6 @@ Exam.prototype.startExam = function() {
 
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
-        if (object._helpTagId) {
-            self._setPropertyForHelpTag(object._helpTagId);
-        }
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {
