@@ -2034,13 +2034,12 @@ Translator.prototype._createListBox = function(listObject) {
     'use strict';
     var self = this;
     var helpTag = '';
-    var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'" class="examjs-input">';
-    result += '<datalist id="' + listObject._id + "_data"+'">';
+    var result = '<select id="'+ listObject._id + '" class="examjs-input">';
 
     listObject.items.forEach(function(item) {
-        result += '<option value="' + item + '">';
+        result += '<option>' + item + '</option>';
     });
-    result += '</datalist>';
+    result += '</select>';
 
     if(listObject.helpText){
         helpTag = '<div id="' + listObject._helpTagId + '" class="examjs-help-popup" data-help="'+ listObject.helpText +'">?</div>';
