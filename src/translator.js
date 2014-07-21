@@ -18,7 +18,7 @@ Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
     var helpTag = '';
-	var result = '<input type="text" id="' + inputObject._id +'" class="examjs-text-input"></input>';
+	var result = '<input type="text" id="' + inputObject._id +'" class="examjs-input"></input>';
 
     if(inputObject.helpText){
         helpTag = '<div id="' + inputObject._helpTagId + '" class="examjs-help-popup" data-help="'+ inputObject.helpText +'">?</div>';
@@ -32,7 +32,7 @@ Translator.prototype._createListBox = function(listObject) {
     'use strict';
     var self = this;
     var helpTag = '';
-    var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
+    var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'" class="examjs-input">';
     result += '<datalist id="' + listObject._id + "_data"+'">';
 
     listObject.items.forEach(function(item) {
