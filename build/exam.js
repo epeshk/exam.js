@@ -2020,7 +2020,7 @@ Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
     var helpTag = '';
-	var result = '<input type="text" id="' + inputObject._id +'"></input>';
+	var result = '<input type="text" id="' + inputObject._id +'" class="examjs-text-input"></input>';
 
     if(inputObject.helpText){
         helpTag = '<div id="' + inputObject._helpTagId + '" class="examjs-help-popup" data-help="'+ inputObject.helpText +'">?</div>';

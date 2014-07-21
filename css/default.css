@@ -3,18 +3,13 @@
     display: inline-block;
     background-color: #fff;
     text-align: center;
+    width: 20px;
+    height: 20px;
+    text-size: .6px;
+    bottom: -5px;
     color: #252525;
     cursor: pointer;
-
-    width: 25px;
-    height: 25px;
-    
-    margin: 0 auto;
-    margin-top: 5px;
-    padding: 2px;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    padding: 3px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -36,7 +31,7 @@
     text-align: center;
     font-size: .8em;
     color: #252525;
-    background-color: rgba(255, 255, 255, .85);
+    background-color: rgba(255, 255, 255, .95);
     bottom: 30px;
     margin-left: -100px;
     padding: 10px;
@@ -50,7 +45,7 @@
 }
 .examjs-help-popup:after {
     content: "";
-    border-top: 10px solid rgba(255, 255, 255, .85);
+    border-top: 10px solid rgba(255, 255, 255, .95);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     bottom: 20px;
@@ -62,7 +57,18 @@
     visibility: visible;
     margin-bottom: 0;
 }
-
-.examjs-block{
+.examjs-block {
     display: inline-block;
-    }
+    text-align: center;
+}
+.examjs-text-input {
+    outline: 0;
+    border: 0;
+    font-size: .8em;
+    color: #fff;
+    background: rgba(0,0,0,0);
+    border-bottom: solid 1px;
+}
+.examjs-text-input:focus {
+    outline: 0;
+}
