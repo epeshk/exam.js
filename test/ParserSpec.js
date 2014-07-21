@@ -167,6 +167,12 @@ describe('Parser', function() {
 
             expect(result.items[2]).toEqual('test3');    
         });
+        
+        it('should create a help tag id', function(){
+            var result = parser._extractList('bla bla bla {{1,2,3,!4! :? help text}}');
+
+            expect(result._helpTagId).toEqual('help_examjs_id_1');
+        });
     });
 
 
