@@ -1999,7 +1999,7 @@ Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
     var helpTag = '';
-	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
+	var result = '<input type="text" id="' + inputObject._id +'"></input>';
     console.log(inputObject.helpText);
     if(inputObject.helpText){
         helpTag = '<div id="' + 'help_text_' + inputObject._id + '">' + inputObject.helpText + '</div>';
