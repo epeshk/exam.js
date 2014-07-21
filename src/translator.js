@@ -17,7 +17,12 @@ Translator.prototype._createHint = function (hintObject) {
 Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
+    var helpTag = '';
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
+    if(inputObject.helpText){
+        helpTag = '<div id="' + 'help_text_' + inputObject._id + '">' + inputObject.helpText + '</div>';
+        result += helpTag;
+    }
 
 	return result;
 };
