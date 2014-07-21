@@ -150,6 +150,12 @@ describe('Parser', function() {
 
             expect(result.helpText).toEqual('help text');    
         });
+
+        it('should correct create last element without help text joining', function(){
+            var result = parser._extractList('{{test1,test2,test3 :? help text}}');
+
+            expect(result.items[2]).toEqual('test3');    
+        });
     });
 
 
