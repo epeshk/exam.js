@@ -79,7 +79,14 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
 
         return rightAnswer;
     }
-    var rightAnswer = getRightAnswer(syntaxBlock);
+    var rightAnswer;
+    var tmpSyntaxBlock;
+    if(syntaxBlock.indexOf(':?') !== -1){
+        tmpSyntaxBlock = syntaxBlock.substring(0,syntaxBlock.indexOf(':?') + 1);
+        rightAnswer = getRightAnswer(tmpSyntaxBlock);
+    } else {
+        rightAnswer = getRightAnswer(syntaxBlock);
+    }
     var id = self._getNextID();
     var helpText = self._extractHelpText(syntaxBlock);
 
