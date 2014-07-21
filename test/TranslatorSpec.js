@@ -19,13 +19,13 @@ describe('Translator', function() {
         it('should create a textInput from TextInput', function(){
             var result_1 = translator._createTextInput(new TextInput('true', '{{...| true }}', 'examjs_id_1'));
 
-            expect(result_1).toBe("<input type='text' id='examjs_id_1'></input>");
+            expect(result_1).toBe('<input type="text" id="examjs_id_1"></input>');
         });
 
         it('should create a text input tag and tag with a help text', function(){
-            var result = translator._createTextInput(new TextInput('right answer', '{{...|right answer :? help text}}', 'examjs_id_1'));
+            var result = translator._createTextInput(new TextInput('right answer', '{{...|right answer :? help text}}', 'examjs_id_1', 'help text'));
 
-            expect(result).toBe("<input type='text' id='examjs_id_1'></input><div id='help_text_examjs_id_1'>help text</div>");
+            expect(result).toBe('<input type="text" id="examjs_id_1"></input><div id="help_text_examjs_id_1">help text</div>');
         });
     });
 
