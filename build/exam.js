@@ -1806,10 +1806,10 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
         return rightAnswer;
     }
     var rightAnswer = getRightAnswer(syntaxBlock);
-    var id = self._getNextID(); 
+    var id = self._getNextID();
     var helpText = self._extractHelpText(syntaxBlock);
 
-    var result = new TextInput(rightAnswer, syntaxBlock,id , helpText);
+    var result = new TextInput(rightAnswer, syntaxBlock, id, helpText);
     return result;
 };
 
@@ -1908,9 +1908,17 @@ Parser.prototype._extractList = function(syntaxBlock) {
     var tmpResult = [];
 
     try {
-        syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-            tmpResult.push(self._trim(elem));
-        });
+        if (syntaxBlock.indexOf(':?') !== -1) {
+            syntaxBlock.substring(0, syntaxBlock.indexOf(':?')).replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+                tmpResult.push(self._trim(elem));
+            });
+
+        } else {
+            syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+                tmpResult.push(self._trim(elem));
+            });
+
+        }
     } catch (e) {
         return null;
     }
