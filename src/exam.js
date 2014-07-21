@@ -118,9 +118,6 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
     var selectAnswer = currentId.value;
     var rightAnswer = self._getRightAnswer(object);
 
-    currentId.style.borderStyle = "solid";
-    currentId.style.borderWidth = "4px";
-
     if (rightAnswer === selectAnswer) {
         currentId.style.color = "#00FF00";
     } else {

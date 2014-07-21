@@ -61,7 +61,7 @@
     display: inline-block;
     text-align: center;
 }
-.examjs-text-input {
+.examjs-input {
     outline: 0;
     border: 0;
     font-size: .8em;
@@ -69,6 +69,6 @@
     background: rgba(0,0,0,0);
     border-bottom: solid 1px;
 }
-.examjs-text-input:focus {
+.examjs-input:focus {
     outline: 0;
 }
