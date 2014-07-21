@@ -66,6 +66,12 @@ describe('Parser', function() {
             expect(result_2._id).toBe('examjs_id_2');
         });
 
+        it('shoud contain help text', function(){
+            var result = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
+
+            expect(result.helpText).toEqual('help text');
+        });
+
     });
 
     describe('_extractHint()', function() {
