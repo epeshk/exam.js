@@ -9,7 +9,7 @@ function Exam(settings) {
     self._objects = [];
 
     self._handlerForBtnFinish = function() {};
-    self._handlerForSeparatorMode = function() {};
+    self._separateCheckingModeEventHandler = function() {};
     self._handlerForHint = function() {};
 
     self._separateCheckingMode = true;
@@ -61,7 +61,7 @@ Exam.prototype._setCallback = function(settings) {
     'use strict';
     var self = this;
     self._handlerForHint = self._eventHandlerForHint;
-    self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
+    self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
     self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
 
     if(settings === undefined){
@@ -72,10 +72,10 @@ Exam.prototype._setCallback = function(settings) {
         if (typeof settings.handlerForSeparatorMode !== 'function') {
             throw new Error('The handlerForSeparatorMode must be a type of function');
         } else {
-            self._handlerForSeparatorMode = settings.handlerForSeparatorMode;
+            self._separateCheckingModeEventHandler = settings.handlerForSeparatorMode;
         }
     } else {
-        self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
+        self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
     }
 
     if (settings.handlerForBtnFinish) {
@@ -177,7 +177,7 @@ Exam.prototype.startExam = function() {
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {
-                self._handlerForSeparatorMode(object);
+                self._separateCheckingModeEventHandler(object);
             };
         } 
     });

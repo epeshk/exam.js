@@ -7,7 +7,7 @@ describe('Exam()',function(){
         expect(exam._finishBtnID).not.toBeDefined();
         expect(exam._handlerForHint).toBe(exam._eventHandlerForHint);
         expect(exam._handlerForBtnFinish).toBe(exam._eventHandlerForBtnFinish);
-        expect(exam._handlerForSeparatorMode).toBe(exam._eventHandlerForSeparatorMode);
+        expect(exam._separateCheckingModeEventHandler).toBe(exam._eventHandlerForSeparatorMode);
         expect(exam._preprocessor).toBe(markdown.toHTML);
     });
 
@@ -28,23 +28,23 @@ describe('Exam()',function(){
     });
 
     it('should  setting all callback functions on other function', function(){
-        function someFunction_1() {/*todo*/}
-        function someFunction_2() {/*todo*/}
-        function someFunction_3() {/*todo*/}
-        function someFunction_4() {/*todo*/}
+        function someFunction1() {/*todo*/}
+        function someFunction2() {/*todo*/}
+        function someFunction3() {/*todo*/}
+        function someFunction4() {/*todo*/}
         var setting = {
-            preprocessor : someFunction_1,
-            handlerForHint: someFunction_2,
-            handlerForSeparatorMode: someFunction_3,
-            handlerForBtnFinish: someFunction_4,
+            preprocessor : someFunction1,
+            handlerForHint: someFunction2,
+            handlerForSeparatorMode: someFunction3,
+            handlerForBtnFinish: someFunction4,
         };
 
         var exam = new Exam(setting);
 
-        expect(exam._preprocessor).toBe(someFunction_1);
-        expect(exam._handlerForHint).toBe(someFunction_2);
-        expect(exam._handlerForSeparatorMode).toBe(someFunction_3);
-        expect(exam._handlerForBtnFinish).toBe(someFunction_4);
+        expect(exam._preprocessor).toBe(someFunction1);
+        expect(exam._handlerForHint).toBe(someFunction2);
+        expect(exam._separateCheckingModeEventHandler).toBe(someFunction3);
+        expect(exam._handlerForBtnFinish).toBe(someFunction4);
     });
 
 });
