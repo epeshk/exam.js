@@ -1731,25 +1731,25 @@ function ParsingError(message) {
 
 ParsingError.prototype = Error.prototype;
 
-function List(items, rightAnswerIndex, syntaxBlock, _id, helpText) {
+function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.items = items;
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
-function TextInput(rightAnswer, syntaxBlock, _id, helpText) {
+function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
-function Hint(syntaxBlock, helpText, _id) {
+function Hint(syntaxBlock, helpText, id) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = _id;
+    this._id = id;
 }
 
 function Parser() {
@@ -1806,7 +1806,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
         return rightAnswer;
     }
 
-    var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
+    var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(),self._extractHelpText(syntaxBlock));
     return result;
 };
 
@@ -1981,6 +1981,7 @@ function Translator() {
 }
 
 Translator.prototype._createHint = function (hintObject) {
+    'use strict';
     var self = this;
     var result = "<div id='" + hintObject._id + "'>help!?</div>";
 
@@ -1988,6 +1989,7 @@ Translator.prototype._createHint = function (hintObject) {
 };
 
 Translator.prototype._createTextInput = function(inputObject){
+    'use strict';
 	var self = this;
 	var result = "<input type=\'text\' id=\'" + inputObject._id +"\'></input>";
 
@@ -1995,6 +1997,7 @@ Translator.prototype._createTextInput = function(inputObject){
 };
 
 Translator.prototype._createListBox = function(listObject) {
+    'use strict';
     var self = this;
     var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
     result += '<datalist id="' + listObject._id + "_data"+'">';
@@ -2009,6 +2012,7 @@ Translator.prototype._createListBox = function(listObject) {
 };
 
 Translator.prototype._convertAllObjects = function(objects) {
+    'use strict';
     var self = this;
     var result = [];
     var error = true;
@@ -2049,6 +2053,7 @@ Translator.prototype._convertAllObjects = function(objects) {
 };
 
 function Exam(settings) {
+    'use strict';
     if (!(this instanceof Exam)) {
         return new Exam();
     }
@@ -2091,6 +2096,7 @@ function Exam(settings) {
 }
 
 Exam.prototype._setPropertyForHelpBtn = function() {
+    'use strict';
     var self = this;
 
     self._objects.forEach(function(object) {
@@ -2106,6 +2112,7 @@ Exam.prototype._setPropertyForHelpBtn = function() {
 };
 
 Exam.prototype._setCallback = function(settings) {
+    'use strict';
     var self = this;
     self._handlerForHint = self._eventHandlerForHint;
     self._handlerForSeparatorMode = self._eventHandlerForSeparatorMode;
@@ -2147,6 +2154,7 @@ Exam.prototype._setCallback = function(settings) {
 };
 
 Exam.prototype.parse = function(source) {
+    'use strict';
     var self = this;
 
     var preprocessedSource = self._preprocessor(source);
@@ -2173,6 +2181,7 @@ Exam.prototype.parse = function(source) {
 };
 
 Exam.prototype._getRightAnswer = function(object) {
+    'use strict';
     var self = this;
     var result;
     if (object instanceof List) {
@@ -2185,6 +2194,7 @@ Exam.prototype._getRightAnswer = function(object) {
 };
 
 Exam.prototype._eventHandlerForSeparatorMode = function(object) {
+    'use strict';
     var self = this;
     var currentId = document.getElementById(object._id);
     var selectAnswer = currentId.value;
@@ -2201,6 +2211,7 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
 };
 
 Exam.prototype._eventHandlerForBtnFinish = function(objects) {
+    'use strict';
     var self = this;
     var countQuestions = objects.length;
     var countRightAnswer = 0;
@@ -2217,11 +2228,13 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
 };
 
 Exam.prototype._eventHandlerForHint = function(object) {
+    'use strict';
     window.alert(object.helpText);
 };
 
 
 Exam.prototype.startExam = function() {
+    'use strict';
     var self = this;
     self._setPropertyForHelpBtn();
 

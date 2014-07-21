@@ -80,7 +80,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
         return rightAnswer;
     }
 
-    var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID());
+    var result = new TextInput(getRightAnswer(syntaxBlock), syntaxBlock, self._getNextID(),self._extractHelpText(syntaxBlock));
     return result;
 };
 
