@@ -134,7 +134,7 @@ Parser.prototype._extractHelpText = function(syntaxBlock) {
 
         return self._trim(syntaxBlock.substring(startIndex, endIndex));
     }
-    return syntaxBlock;
+    return null;
 };
 
 Parser.prototype._removeExclamationPoints = function(items) {
