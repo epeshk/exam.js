@@ -9,10 +9,10 @@
     visibility: hidden;
     opacity: 0;
     margin-bottom: 15px;
-    -webkit-transition: opacity: .7s, margin-bottom .7s;
-    -moz-transition: opacity: .7s, margin-bottom .7s;
-    transition: opacity: .7s, margin-bottom .7s;
     left: 50%;
+    -webkit-transition: opacity .7s, margin-bottom .7s;
+    -moz-transition: opacity .7s, margin-bottom .7s;
+    transition: opacity .7s, margin-bottom .7s;
 }
 .examjs-help-popup:before {
     width: 200px;
