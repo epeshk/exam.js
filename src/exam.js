@@ -41,20 +41,16 @@ function Exam(settings) {
     self._setCallback(settings);
 }
 
-Exam.prototype._setPropertyForHelpBtn = function() {
+Exam.prototype._setPropertyForHelpTag = function(id) {
     'use strict';
     var self = this;
 
-    self._objects.forEach(function(object) {
-        if (object instanceof Hint) {
-            var currentIdHelp = document.getElementById(object._id);
-            currentIdHelp.style.cssText = "display: inline;";
-            currentIdHelp.style.backgroundColor = "#808080";
-            currentIdHelp.style.color = "#000000";
-            currentIdHelp.style.width = "100px";
-            currentIdHelp.style.textAlign = "center";
-        }
-    });
+    var currentIdHelp = document.getElementById(id);
+    currentIdHelp.style.cssText = "display: inline;";
+    currentIdHelp.style.backgroundColor = "#808080";
+    currentIdHelp.style.color = "#000000";
+    currentIdHelp.style.width = "100px";
+    currentIdHelp.style.textAlign = "center";
 };
 
 Exam.prototype._setCallback = function(settings) {
@@ -64,7 +60,7 @@ Exam.prototype._setCallback = function(settings) {
     self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
     self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
 
-    if(settings === undefined){
+    if (settings === undefined) {
         return;
     }
 
@@ -174,12 +170,17 @@ Exam.prototype.startExam = function() {
 
     self._objects.forEach(function(object) {
         var currentObjectId = document.getElementById(object._id);
+        if (object._helpTagId) {
+            var helpTag = document.getElementById(object._helpId);
+
+
+        }
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {
                 self._separateCheckingModeEventHandler(object);
             };
-        } 
+        }
     });
 
     if (self._finishBtnID !== null) {
