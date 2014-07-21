@@ -19,7 +19,7 @@ Translator.prototype._createTextInput = function(inputObject){
 	var self = this;
     var helpTag = '';
 	var result = '<input type="text" id="' + inputObject._id +'"></input>';
-    console.log(inputObject.helpText);
+
     if(inputObject.helpText){
         helpTag = '<div id="' + 'help_text_' + inputObject._id + '">' + inputObject.helpText + '</div>';
         result += helpTag;
