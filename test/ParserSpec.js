@@ -77,6 +77,12 @@ describe('Parser', function() {
 
             expect(result.rightAnswer).toEqual('right_answer');
         });
+
+        it('should create a help tag id', function(){
+            var result = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
+
+            expect(result._helpTagId).toEqual('help_examjs_id_1');
+        });
     });
 
     describe('_extractHint()', function() {
