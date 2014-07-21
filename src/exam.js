@@ -108,7 +108,6 @@ Exam.prototype.parse = function(source) {
     var convertionResults = self._translator._convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
-        console.log(item.source + '\nto:\n' + item.result);
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
 
