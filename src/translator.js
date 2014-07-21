@@ -41,7 +41,7 @@ Translator.prototype._createListBox = function(listObject) {
     result += '</datalist>';
 
     if(listObject.helpText){
-        helpTag = '<div id="' + listObject._helpTagId + '">' + listObject.helpText + '</div>';
+        helpTag = '<div id="' + listObject._helpTagId + '" class="examjs-help-popup" data-help="'+ listObject.helpText +'">?</div>';
         result += helpTag;
     }
 
