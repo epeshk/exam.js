@@ -25,7 +25,7 @@ Translator.prototype._createTextInput = function(inputObject){
         result += helpTag;
     }
 
-	return result;
+	return '<div>' + result + '</div>';
 };
 
 Translator.prototype._createListBox = function(listObject) {

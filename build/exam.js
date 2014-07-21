@@ -2006,7 +2006,7 @@ Translator.prototype._createTextInput = function(inputObject){
         result += helpTag;
     }
 
-	return result;
+	return '<div>' + result + '</div>';
 };
 
 Translator.prototype._createListBox = function(listObject) {
@@ -2175,6 +2175,7 @@ Exam.prototype.parse = function(source) {
     var convertionResults = self._translator._convertAllObjects(self._objects);
 
     convertionResults.forEach(function(item) {
+        console.log(item.source + '\nto:\n' + item.result);
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
     });
 
@@ -2246,13 +2247,7 @@ Exam.prototype.startExam = function() {
             currentObjectId.oninput = function() {
                 self._handlerForSeparatorMode(object);
             };
-        } else {
-            if (object instanceof Hint) {
-                currentObjectId.onclick = function() {
-                    self._handlerForHint(object);
-                };
-            }
-        }
+        } 
     });
 
     if (self._finishBtnID !== null) {
