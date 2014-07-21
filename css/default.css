@@ -62,3 +62,7 @@
     visibility: visible;
     margin-bottom: 0;
 }
+
+.examjs-block{
+    display: inline-block;
+    }
