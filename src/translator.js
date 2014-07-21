@@ -21,7 +21,7 @@ Translator.prototype._createTextInput = function(inputObject){
 	var result = '<input type="text" id="' + inputObject._id +'"></input>';
 
     if(inputObject.helpText){
-        helpTag = '<div id="' + inputObject._helpTagId + '">' + inputObject.helpText + '</div>';
+        helpTag = '<div id="' + inputObject._helpTagId + '" class="examjs-help-popup" data-help="'+ inputObject.helpText +'">?</div>';
         result += helpTag;
     }
 
