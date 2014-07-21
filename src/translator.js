@@ -25,7 +25,7 @@ Translator.prototype._createTextInput = function(inputObject){
         result += helpTag;
     }
 
-	return '<div>' + result + '</div>';
+	return '<div class="examjs-block">' + result + '</div>';
 };
 
 Translator.prototype._createListBox = function(listObject) {
@@ -45,7 +45,7 @@ Translator.prototype._createListBox = function(listObject) {
         result += helpTag;
     }
 
-    return '<div>' + result + '</div>';
+    return '<div class="examjs-block">' + result + '</div>';
 };
 
 Translator.prototype.convertAllObjects = function(objects) {

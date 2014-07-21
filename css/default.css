@@ -1,9 +1,17 @@
 .examjs-help-popup {
     position: relative;
+    display: inline-block;
+    background-color: #fff;
+    text-align: center;
+    color: #252525;
     cursor: pointer;
+
+    width: 25px;
+    height: 25px;
+    
+    margin: 0 auto;
+    margin-top: 5px;
     padding: 2px;
-    width: 20px;
-    height: 20px;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
