@@ -31,6 +31,7 @@ Translator.prototype._createTextInput = function(inputObject){
 Translator.prototype._createListBox = function(listObject) {
     'use strict';
     var self = this;
+    var helpTag = '';
     var result = '<input list="' + listObject._id + "_data"+'" id="'+listObject._id+'">';
     result += '<datalist id="' + listObject._id + "_data"+'">';
 
@@ -39,8 +40,12 @@ Translator.prototype._createListBox = function(listObject) {
     });
     result += '</datalist>';
 
+    if(listObject.helpText){
+        helpTag = '<div id="' + 'help_text_' + listObject._id + '">' + listObject.helpText + '</div>';
+        result += helpTag;
+    }
 
-    return result;
+    return '<div>' + result + '</div>';
 };
 
 Translator.prototype._convertAllObjects = function(objects) {
