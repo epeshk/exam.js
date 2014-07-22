@@ -2182,17 +2182,17 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
     'use strict';
     var self = this;
     var countQuestions = objects.length;
-    var countRightAnswer = 0;
+    var countOfRightAnswer = 0;
     objects.forEach(function(object) {
         var tmpObjId = document.getElementById(object._id);
         var rightAnswer = self._getRightAnswer(object);
         var selectAnswer = tmpObjId.value;
         if (selectAnswer === rightAnswer) {
-            countRightAnswer++;
+            countOfRightAnswer++;
         }
     });
 
-    window.alert("Правильных ответов " + countRightAnswer + " из " + countQuestions);
+    window.alert("Правильных ответов " + countOfRightAnswer + " из " + countQuestions);
 };
 
 Exam.prototype._eventHandlerForHint = function(object) {
