@@ -2197,7 +2197,6 @@ Exam.prototype._eventHandlerForHint = function(object) {
     window.alert(object.helpText);
 };
 
-
 Exam.prototype.startExam = function() {
     'use strict';
     var self = this;
