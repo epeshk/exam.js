@@ -85,25 +85,6 @@ describe('Parser', function() {
         });
     });
 
-    describe('_extractHint()', function() {
-        it('should return helpText and unique id', function() {
-            var object = new TextInput("true", "{{...|true}}", "examjs_id_1");
-            var objects = [];
-            objects.push(object);
-            var result = parser._extractHint("{{ ?help? }}", objects);
-
-            expect(result._id).toBe('examjs_id_1_help');
-            expect(result.helpText).toBe('help');
-        });
-
-        it ('should return null if before Hint no List or no TextInput', function(){
-            var objects = [];
-            var result = parser._extractHint("{{ ?help? }}", objects);
-
-            expect(result).toBe(null);
-        });
-    });
-
     describe('_parseSyntaxBlocks()', function() {
         it('should parse spesial blocks from text', function() {
             var result = parser._parseSyntaxBlocks('Text text {{special}} text text');
