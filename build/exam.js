@@ -2192,7 +2192,7 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
         }
     });
 
-    window.alert("Правильных ответов " + countOfRightAnswer + " из " + countOfQuestions);
+    window.alert("Count of a right answers: " + countOfRightAnswer + "/" + countOfQuestions);
 };
 
 Exam.prototype._eventHandlerForHint = function(object) {
