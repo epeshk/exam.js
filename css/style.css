@@ -37,7 +37,7 @@ body {
     font-size: 18pt;
     width: 40%;
     height: 600px;
-    overflow: scroll;
+    overflow: auto;
     overflow: -moz-scrollbars-none;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;

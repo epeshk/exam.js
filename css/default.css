@@ -57,6 +57,8 @@
     opacity: 1;
     visibility: visible;
     margin-bottom: 0;
+    z-index: 10;
+    position: absolute;
 }
 .examjs-block {
     display: inline-block;
