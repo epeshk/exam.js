@@ -2091,10 +2091,10 @@ function Exam(settings) {
             }
         }
     }
-    self._setCallback(settings);
+    self._setCallbacks(settings);
 }
 
-Exam.prototype._setCallback = function(settings) {
+Exam.prototype._setCallbacks = function(settings) {
     'use strict';
     var self = this;
     self._handlerForHint = self._eventHandlerForHint;
