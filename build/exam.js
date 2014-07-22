@@ -2117,9 +2117,8 @@ Exam.prototype._setCallback = function(settings) {
     if (settings.handlerForBtnFinish) {
         if (typeof settings.handlerForBtnFinish !== 'function') {
             throw new Error('The handlerForBtnFinish must be a type of function');
-        } else {
-            self._handlerForBtnFinish = settings.handlerForBtnFinish;
         }
+        self._handlerForBtnFinish = settings.handlerForBtnFinish;
     } else {
         self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
     }
