@@ -2108,9 +2108,8 @@ Exam.prototype._setCallback = function(settings) {
     if (settings.handlerForSeparatorMode) {
         if (typeof settings.handlerForSeparatorMode !== 'function') {
             throw new Error('The handlerForSeparatorMode must be a type of function');
-        } else {
-            self._separateCheckingModeEventHandler = settings.handlerForSeparatorMode;
         }
+        self._separateCheckingModeEventHandler = settings.handlerForSeparatorMode;
     } else {
         self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
     }
