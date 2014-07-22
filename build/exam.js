@@ -2127,9 +2127,8 @@ Exam.prototype._setCallback = function(settings) {
     if (settings.handlerForHint) {
         if (typeof settings.handlerForHint !== 'function') {
             throw new Error('The handlerForHint must be a type of function');
-        } else {
-            self._handlerForHint = settings.handlerForHint;
         }
+        self._handlerForHint = settings.handlerForHint;
     } else {
         self._handlerForHint = self._eventHandlerForHint;
     }
