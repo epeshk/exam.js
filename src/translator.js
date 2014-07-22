@@ -69,14 +69,6 @@ Translator.prototype.convertAllObjects = function(objects) {
         	});
             error = false;
         }
-        if (object instanceof Hint) {
-            result.push({
-                source: object.syntaxBlock,
-                result: self._createHint(object),
-                block: 'hint'
-            });
-            error = false;
-        } 
         if (object === null) {
             error = false;
         }
