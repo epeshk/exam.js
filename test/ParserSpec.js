@@ -42,14 +42,6 @@ describe('Parser', function() {
             var result = parser._getTypeOfBlock("{{1, 3,!4!}}");
             expect(result).toBe('list');
         });
-
-        it('should return string: "hint" if received Hint()', function() {
-            var result_1 = parser._getTypeOfBlock("{{??}}");
-            var result_2 = parser._getTypeOfBlock("{{  ?sdaf? }}");
-
-            expect(result_1).toBe('hint');
-            expect(result_2).toBe('hint');
-        });
     });
 
     describe('_extractTextInput()',function(){
@@ -225,12 +217,6 @@ describe('Parser', function() {
 
             expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}');
             expect(result[1].syntaxBlock).toBe('{{? help ?}}');
-        });
-
-        it('not should create Hint, If the block of syntax no hint before', function() {
-            var result = parser.parse('bla bla {{?helpText?}}');
-
-            expect(result[0]).toBe(undefined);
         });
     });
 
