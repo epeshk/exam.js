@@ -26,12 +26,6 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     }
 }
 
-function Hint(syntaxBlock, helpText, id) {
-    this.syntaxBlock = syntaxBlock;
-    this.helpText = helpText;
-    this._id = id;
-}
-
 function Parser() {
     'use strict';
     if (!(this instanceof Parser)) {
@@ -97,22 +91,6 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
     var helpText = self._extractHelpText(syntaxBlock);
 
     var result = new TextInput(rightAnswer, syntaxBlock, id, helpText);
-    return result;
-};
-
-Parser.prototype._extractHint = function(syntaxBlock, objects) {
-    'use strict';
-    var self = this;
-    var result = null;
-
-    if (objects.length > 0) {
-        var lastObject = objects[objects.length - 1];
-        if ((lastObject instanceof List) || (lastObject instanceof TextInput)) {
-            var helpText = self._getHelpText(syntaxBlock);
-            result = new Hint(syntaxBlock, helpText, lastObject._id + "_help");
-        }
-    }
-
     return result;
 };
 
@@ -246,11 +224,6 @@ Parser.prototype._extractObjects = function(syntaxBlocks) {
                 case 'list':
                     {
                         tmpObj = self._extractList(block);
-                        break;
-                    }
-                case 'hint':
-                    {
-                        tmpObj = self._extractHint(block, result);
                         break;
                     }
             }
