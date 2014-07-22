@@ -1783,13 +1783,9 @@ Parser.prototype._getTypeOfBlock = function(block) {
     'use strict';
     var self = this;
     var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
-    var hintPattern = /\{\{\s*\?\s*.*\?\s*\}\}/g;
 
     if (textInputPattern.test(block)) {
         return "textInput";
-    }
-    if (hintPattern.test(block)) {
-        return "hint";
     }
 
     return "list";
