@@ -128,7 +128,7 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
 Exam.prototype._eventHandlerForBtnFinish = function(objects) {
     'use strict';
     var self = this;
-    var countQuestions = objects.length;
+    var countOfQuestions = objects.length;
     var countOfRightAnswer = 0;
     objects.forEach(function(object) {
         var tmpObjId = document.getElementById(object._id);
@@ -139,7 +139,7 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
         }
     });
 
-    window.alert("Правильных ответов " + countOfRightAnswer + " из " + countQuestions);
+    window.alert("Правильных ответов " + countOfRightAnswer + " из " + countOfQuestions);
 };
 
 Exam.prototype._eventHandlerForHint = function(object) {
