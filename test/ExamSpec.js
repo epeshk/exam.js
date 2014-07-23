@@ -27,19 +27,19 @@ describe('Exam()',function(){
         expect(exam._finishBtnID).toBe("button_1");
     });
 
-    it('should  setting all callback functions on other function', function(){
+    it('should set all callback functions', function(){
         function someFunction1() {/*todo*/}
         function someFunction2() {/*todo*/}
         function someFunction3() {/*todo*/}
         function someFunction4() {/*todo*/}
-        var setting = {
+        var settings = {
             preprocessor : someFunction1,
             handlerForHint: someFunction2,
-            handlerForSeparatorMode: someFunction3,
+            separateCheckingModeEventHandler: someFunction3,
             handlerForBtnFinish: someFunction4,
         };
 
-        var exam = new Exam(setting);
+        var exam = new Exam(settings);
 
         expect(exam._preprocessor).toBe(someFunction1);
         expect(exam._handlerForHint).toBe(someFunction2);

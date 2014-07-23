@@ -2102,11 +2102,11 @@ Exam.prototype._setCallbacks = function(settings) {
         return;
     }
 
-    if (settings.handlerForSeparatorMode) {
-        if (typeof settings.handlerForSeparatorMode !== 'function') {
-            throw new Error('The handlerForSeparatorMode must be a type of function');
+    if (settings.separateCheckingModeEventHandler) {
+        if (typeof settings.separateCheckingModeEventHandler !== 'function') {
+            throw new Error('The separateCheckingModeEventHandler must be a type of function');
         }
-        self._separateCheckingModeEventHandler = settings.handlerForSeparatorMode;
+        self._separateCheckingModeEventHandler = settings.separateCheckingModeEventHandler;
     }
 
     if (settings.handlerForBtnFinish) {
