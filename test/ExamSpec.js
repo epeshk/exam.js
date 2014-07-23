@@ -5,7 +5,7 @@ describe('Exam()',function(){
 
         expect(exam._separateCheckingMode).toBe(true);
         expect(exam._finishBtnID).not.toBeDefined();
-        expect(exam._handlerForHint).toBeDefined();
+        expect(exam._helpHintEventHandler).toBeDefined();
         expect(exam._finishBtnEventHandler).toBeDefined();
         expect(exam._separateCheckingModeEventHandler).toBeDefined();
         expect(exam._preprocessor).toBe(markdown.toHTML);
@@ -34,7 +34,7 @@ describe('Exam()',function(){
         function someFunction4() {/*todo*/}
         var settings = {
             preprocessor : someFunction1,
-            handlerForHint: someFunction2,
+            helpHintEventHandler: someFunction2,
             separateCheckingModeEventHandler: someFunction3,
             finishBtnEventHandler: someFunction4,
         };
@@ -42,7 +42,7 @@ describe('Exam()',function(){
         var exam = new Exam(settings);
 
         expect(exam._preprocessor).toBe(someFunction1);
-        expect(exam._handlerForHint).toBe(someFunction2);
+        expect(exam._helpHintEventHandler).toBe(someFunction2);
         expect(exam._separateCheckingModeEventHandler).toBe(someFunction3);
         expect(exam._finishBtnEventHandler).toBe(someFunction4);
     });

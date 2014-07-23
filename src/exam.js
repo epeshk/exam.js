@@ -10,7 +10,7 @@ function Exam(settings) {
 
     self._finishBtnEventHandler = function() {};
     self._separateCheckingModeEventHandler = function() {};
-    self._handlerForHint = function() {};
+    self._helpHintEventHandler = function() {};
 
     self._separateCheckingMode = true;
     self._preprocessor = markdown.toHTML;
@@ -63,11 +63,11 @@ Exam.prototype._setCallbacks = function(settings) {
         self._finishBtnEventHandler = settings.finishBtnEventHandler;
     }
 
-    if (settings.handlerForHint) {
-        if (typeof settings.handlerForHint !== 'function') {
-            throw new Error('The handlerForHint must be a type of function');
+    if (settings.helpHintEventHandler) {
+        if (typeof settings.helpHintEventHandler !== 'function') {
+            throw new Error('The helpHintEventHandler must be a type of function');
         }
-        self._handlerForHint = settings.handlerForHint;
+        self._helpHintEventHandler = settings.helpHintEventHandler;
     }
 };
 
