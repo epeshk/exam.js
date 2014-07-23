@@ -5,9 +5,9 @@ describe('Exam()',function(){
 
         expect(exam._separateCheckingMode).toBe(true);
         expect(exam._finishBtnID).not.toBeDefined();
-        expect(exam._handlerForHint).toBe(exam._eventHandlerForHint);
-        expect(exam._handlerForBtnFinish).toBe(exam._eventHandlerForBtnFinish);
-        expect(exam._separateCheckingModeEventHandler).toBe(exam._eventHandlerForSeparatorMode);
+        expect(exam._handlerForHint).toBeDefined();
+        expect(exam._handlerForBtnFinish).toBeDefined();
+        expect(exam._separateCheckingModeEventHandler).toBeDefined();
         expect(exam._preprocessor).toBe(markdown.toHTML);
     });
 

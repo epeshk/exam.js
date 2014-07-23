@@ -2097,9 +2097,6 @@ function Exam(settings) {
 Exam.prototype._setCallbacks = function(settings) {
     'use strict';
     var self = this;
-    self._handlerForHint = self._eventHandlerForHint;
-    self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
-    self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
 
     if (settings === undefined) {
         return;
@@ -2110,8 +2107,6 @@ Exam.prototype._setCallbacks = function(settings) {
             throw new Error('The handlerForSeparatorMode must be a type of function');
         }
         self._separateCheckingModeEventHandler = settings.handlerForSeparatorMode;
-    } else {
-        self._separateCheckingModeEventHandler = self._eventHandlerForSeparatorMode;
     }
 
     if (settings.handlerForBtnFinish) {
@@ -2119,8 +2114,6 @@ Exam.prototype._setCallbacks = function(settings) {
             throw new Error('The handlerForBtnFinish must be a type of function');
         }
         self._handlerForBtnFinish = settings.handlerForBtnFinish;
-    } else {
-        self._handlerForBtnFinish = self._eventHandlerForBtnFinish;
     }
 
     if (settings.handlerForHint) {
@@ -2128,8 +2121,6 @@ Exam.prototype._setCallbacks = function(settings) {
             throw new Error('The handlerForHint must be a type of function');
         }
         self._handlerForHint = settings.handlerForHint;
-    } else {
-        self._handlerForHint = self._eventHandlerForHint;
     }
 };
 
