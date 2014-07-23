@@ -65,6 +65,11 @@ Parser.prototype._getTypeOfBlock = function(block) {
     return "list";
 };
 
+Parser.prototype._getRightAnswer = function(syntaxBlock){
+    'use strict';
+
+};
+
 Parser.prototype._extractTextInput = function(syntaxBlock) {
     'use strict';
     var self = this;
