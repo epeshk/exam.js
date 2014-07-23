@@ -11,7 +11,7 @@ function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this.id = id;
-    if(helpText){
+    if (helpText) {
         this._helpTagId = 'help_' + this.id;
     }
 }
@@ -21,7 +21,7 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this.id = id;
-    if(helpText){
+    if (helpText) {
         this._helpTagId = 'help_' + this.id;
     }
 }
@@ -65,9 +65,22 @@ Parser.prototype._getTypeOfBlock = function(block) {
     return "list";
 };
 
-Parser.prototype._extractRightAnswer = function(syntaxBlock){
+Parser.prototype._extractRightAnswer = function(syntaxBlock) {
     'use strict';
+    var self = this;
+    var startIndex,
+        endIndex,
+        rightAnswer;
 
+    startIndex = syntaxBlock.indexOf(">", 0);
+    if(syntaxBlock.indexOf(':?') !== -1){
+        endIndex = syntaxBlock.indexOf(':?');
+    } else {
+        endIndex = syntaxBlock.indexOf('}}');
+    }
+    rightAnswer = syntaxBlock.substring(startIndex + 1, endIndex).trim();
+
+    return rightAnswer;
 };
 
 Parser.prototype._extractTextInput = function(syntaxBlock) {
@@ -82,8 +95,8 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
     }
     var rightAnswer;
     var tmpSyntaxBlock;
-    if(syntaxBlock.indexOf(':?') !== -1){
-        tmpSyntaxBlock = syntaxBlock.substring(0,syntaxBlock.indexOf(':?') + 1);
+    if (syntaxBlock.indexOf(':?') !== -1) {
+        tmpSyntaxBlock = syntaxBlock.substring(0, syntaxBlock.indexOf(':?') + 1);
         rightAnswer = getRightAnswer(tmpSyntaxBlock);
     } else {
         rightAnswer = getRightAnswer(syntaxBlock);
