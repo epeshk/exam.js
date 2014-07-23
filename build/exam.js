@@ -1782,7 +1782,7 @@ Parser.prototype._getNextID = function() {
 Parser.prototype._getTypeOfBlock = function(block) {
     'use strict';
     var self = this;
-    var textInputPattern = /\{\{\s*\.{3}\s*\|\s*.*/g;
+    var textInputPattern = /\{\{\s*\.{3}\s*\>\s*.*/g;
 
     if (textInputPattern.test(block)) {
         return "textInput";
@@ -1813,20 +1813,7 @@ Parser.prototype._extractTextInput = function(syntaxBlock) {
     'use strict';
     var self = this;
 
-    function getRightAnswer(syntaxBlock) {
-        var firstVerticalSeparatorPosition = syntaxBlock.indexOf("|", 0);
-        var rightAnswer = syntaxBlock.substring(firstVerticalSeparatorPosition + 1, syntaxBlock.length - 2).trim();
-
-        return rightAnswer;
-    }
-    var rightAnswer;
-    var tmpSyntaxBlock;
-    if (syntaxBlock.indexOf(':?') !== -1) {
-        tmpSyntaxBlock = syntaxBlock.substring(0, syntaxBlock.indexOf(':?') + 1);
-        rightAnswer = getRightAnswer(tmpSyntaxBlock);
-    } else {
-        rightAnswer = getRightAnswer(syntaxBlock);
-    }
+    var rightAnswer = self._extractRightAnswer(syntaxBlock);
     var id = self._getNextID();
     var helpText = self._extractHelpText(syntaxBlock);
 
@@ -1928,7 +1915,8 @@ Parser.prototype._extractList = function(syntaxBlock) {
         return null;
     }
     var list = self._removeExclamationPoints(tmpResult);
-    var rightAnswerIndex = self._indexOfRightAnswer(tmpResult);
+    var rightAnswer = self._extractRightAnswer(syntaxBlock);
+    var rightAnswerIndex = self._indexOfRightAnswer(tmpResult, rightAnswer);
     var id = self._getNextID();
     var helpText = self._extractHelpText(syntaxBlock);
 

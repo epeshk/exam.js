@@ -34,7 +34,7 @@ describe('Parser', function() {
 
     describe('_getTypeOfBlock()', function() {
         it('should return string: "textInput" if received textInputBlock', function(){
-            var result = parser._getTypeOfBlock("{{...|hkfds}}");
+            var result = parser._getTypeOfBlock("{{...>hkfds}}");
             expect(result).toBe('textInput');
         });
 
@@ -46,32 +46,32 @@ describe('Parser', function() {
 
     describe('_extractTextInput()',function(){
         it('should return rightAnswer',function(){
-            var result = parser._extractTextInput("{{...|true}}");
+            var result = parser._extractTextInput("{{...>true}}");
             expect(result.rightAnswer).toBe('true');
         });
 
         it('should create unique id for each textInput', function(){
-            var result_1 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
-            var result_2 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
+            var result_1 = parser._extractTextInput('bla bla bla {{...>fnkjdsh}}');
+            var result_2 = parser._extractTextInput('bla bla bla {{...>fnkjdsh}}');
 
             expect(result_1.id).toBe('examjsid_1');
             expect(result_2.id).toBe('examjsid_2');
         });
 
         it('should contain help text', function(){
-            var result = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
+            var result = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
 
             expect(result.helpText).toEqual('help text');
         });
 
         it('should correct extract right answer in case of a syntax block contains a help text', function(){
-            var result  = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
+            var result  = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
 
             expect(result.rightAnswer).toEqual('right_answer');
         });
 
         it('should create a help tag id', function(){
-            var result = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
+            var result = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
 
             expect(result._helpTagId).toEqual('help_examjsid_1');
         });
