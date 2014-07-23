@@ -56,7 +56,7 @@ Parser.prototype._getNextID = function() {
 Parser.prototype._getTypeOfBlock = function(block) {
     'use strict';
     var self = this;
-    var textInputPattern = /\{\{\s*\.{3}\s*\>\s*.*/g;
+    var textInputPattern = /\{\{\s*\.{3}\s*\::\s*.*/g;
 
     if (textInputPattern.test(block)) {
         return "textInput";
@@ -72,13 +72,13 @@ Parser.prototype._extractRightAnswer = function(syntaxBlock) {
         endIndex,
         rightAnswer;
 
-    startIndex = syntaxBlock.indexOf(">", 0);
-    if(syntaxBlock.indexOf(':?') !== -1){
+    startIndex = syntaxBlock.indexOf('::') + 2;
+    if (syntaxBlock.indexOf(':?') !== -1) {
         endIndex = syntaxBlock.indexOf(':?');
     } else {
         endIndex = syntaxBlock.indexOf('}}');
     }
-    rightAnswer = syntaxBlock.substring(startIndex + 1, endIndex).trim();
+    rightAnswer = syntaxBlock.substring(startIndex, endIndex).trim();
 
     return rightAnswer;
 };
@@ -104,12 +104,12 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
     return result;
 };
 
-Parser.prototype._indexOfRightAnswer = function(items) {
+Parser.prototype._indexOfRightAnswer = function(items, answer) {
     'use strict';
     var self = this;
     var result = -1;
     items.forEach(function(item) {
-        if (item.indexOf('!') === 0 && item.lastIndexOf('!') === item.length - 1) {
+        if (self._trim(item.toLowerCase()) === self._trim(answer.toLowerCase())) {
             result = items.indexOf(item);
         }
     });
@@ -174,27 +174,29 @@ Parser.prototype._extractList = function(syntaxBlock) {
     var tmpResult = [];
 
     try {
-        if (syntaxBlock.indexOf(':?') !== -1) {
+        if (syntaxBlock.indexOf('::') !== -1) {
+            syntaxBlock.substring(0, syntaxBlock.indexOf('::')).replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
+                tmpResult.push(self._trim(elem));
+            });
+        } else if (syntaxBlock.indexOf(':?') !== -1) {
             syntaxBlock.substring(0, syntaxBlock.indexOf(':?')).replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
                 tmpResult.push(self._trim(elem));
             });
-
         } else {
             syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
                 tmpResult.push(self._trim(elem));
             });
-
         }
     } catch (e) {
         return null;
     }
-    var list = self._removeExclamationPoints(tmpResult);
+
     var rightAnswer = self._extractRightAnswer(syntaxBlock);
     var rightAnswerIndex = self._indexOfRightAnswer(tmpResult, rightAnswer);
     var id = self._getNextID();
     var helpText = self._extractHelpText(syntaxBlock);
 
-    var result = new List(list, rightAnswerIndex, syntaxBlock, id, helpText);
+    var result = new List(tmpResult, rightAnswerIndex, syntaxBlock, id, helpText);
     return result;
 };
 

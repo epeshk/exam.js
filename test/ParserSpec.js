@@ -34,44 +34,44 @@ describe('Parser', function() {
 
     describe('_getTypeOfBlock()', function() {
         it('should return string: "textInput" if received textInputBlock', function(){
-            var result = parser._getTypeOfBlock("{{...>hkfds}}");
+            var result = parser._getTypeOfBlock("{{...::hkfds}}");
             expect(result).toBe('textInput');
         });
 
         it('should return string: "list" if received listBlock', function(){
-            var result = parser._getTypeOfBlock("{{1, 3,!4!}}");
+            var result = parser._getTypeOfBlock("{{1, 3, 4 :: 4}}");
             expect(result).toBe('list');
         });
     });
 
     describe('_extractTextInput()',function(){
         it('should return rightAnswer',function(){
-            var result = parser._extractTextInput("{{...>true}}");
+            var result = parser._extractTextInput("{{...::true}}");
             expect(result.rightAnswer).toBe('true');
         });
 
         it('should create unique id for each textInput', function(){
-            var result_1 = parser._extractTextInput('bla bla bla {{...>fnkjdsh}}');
-            var result_2 = parser._extractTextInput('bla bla bla {{...>fnkjdsh}}');
+            var result_1 = parser._extractTextInput('bla bla bla {{...::fnkjdsh}}');
+            var result_2 = parser._extractTextInput('bla bla bla {{...::fnkjdsh}}');
 
             expect(result_1.id).toBe('examjsid_1');
             expect(result_2.id).toBe('examjsid_2');
         });
 
         it('should contain help text', function(){
-            var result = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
+            var result = parser._extractTextInput('bla bla bla {{...::right_answer :? help text}}');
 
             expect(result.helpText).toEqual('help text');
         });
 
         it('should correct extract right answer in case of a syntax block contains a help text', function(){
-            var result  = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
+            var result  = parser._extractTextInput('bla bla bla {{...::right_answer :? help text}}');
 
             expect(result.rightAnswer).toEqual('right_answer');
         });
 
         it('should create a help tag id', function(){
-            var result = parser._extractTextInput('bla bla bla {{...>right_answer :? help text}}');
+            var result = parser._extractTextInput('bla bla bla {{...::right_answer :? help text}}');
 
             expect(result._helpTagId).toEqual('help_examjsid_1');
         });
@@ -116,7 +116,7 @@ describe('Parser', function() {
         });
 
         it('should creates list object with correct index of answer', function() {
-            var result = parser._extractList('{{test1,test2,!test3!,test4}}');
+            var result = parser._extractList('{{test1,test2,test3,test4 :: test3}}');
 
             expect(result.rightAnswerIndex).toBe(2);
         });
@@ -151,25 +151,9 @@ describe('Parser', function() {
 
     describe('_indexOfRightAnswer()', function() {
         it('should parse index of right answer in List syntax block', function() {
-            var result = parser._indexOfRightAnswer(['test1', 'test2', '!test3!', 'test4']);
+            var result = parser._indexOfRightAnswer(['test1', 'test2', 'test3', 'test4'],'test3');
 
             expect(result).toBe(2);
-        });
-    });
-
-    describe('_removeExclamationPoints()', function() {
-        it('should removes exclamation points from right answer', function() {
-            var result = parser._removeExclamationPoints(['test1', 'test2', '!test3!', 'test4']);
-
-            expect(result[2]).toBe('test3');
-        });
-
-        it('should returns same array that was passed into the _removeExclamationPoints() method if this array doesn\'t countains a right answer', function() {
-            var result = parser._removeExclamationPoints(['test1', 'test2']);
-
-            expect(result[0]).toBe('test1');
-            expect(result[1]).toBe('test2');
-            expect(result.length).toBe(2);
         });
     });
 
@@ -199,7 +183,7 @@ describe('Parser', function() {
         });
 
         it('should parse all syntax blocks and extract List object', function() {
-            var result = parser.parse('bla bla bla {{test1,!test2!}}');
+            var result = parser.parse('bla bla bla {{test1,test2 :: test2}}');
 
             expect(result.length).toBe(1);
             expect(result[0].rightAnswerIndex).toBe(1);
@@ -236,13 +220,13 @@ describe('Parser', function() {
 
     describe('_extractRightAnswer()', function(){
         it('should return a right answer if syntax block does not contains :? operator', function(){
-            var result = parser._extractRightAnswer('{{... > 42 }}');
+            var result = parser._extractRightAnswer('{{... :: 42 }}');
 
             expect(result).toEqual('42');
         });  
 
         it('should return a right answer if syntax block does contains :? operator', function(){
-            var result = parser._extractRightAnswer('{{... > 42 :? help }}');
+            var result = parser._extractRightAnswer('{{... :: 42 :? help }}');
 
             expect(result).toEqual('42');
         });
