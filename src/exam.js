@@ -102,7 +102,7 @@ Exam.prototype._separateCheckingModeEventHandler = function(object) {
     var selectAnswer = currentId.value;
     var rightAnswer = self._getRightAnswer(object);
 
-    if (rightAnswer === selectAnswer) {
+    if (rightAnswer.toLowerCase() === selectAnswer.toLowerCase()) {
         currentId.style.color = "#7fe817";
     } else {
         currentId.style.color = "#e42217";
