@@ -36,7 +36,7 @@ describe('Exam()',function(){
             preprocessor : someFunction1,
             handlerForHint: someFunction2,
             separateCheckingModeEventHandler: someFunction3,
-            handlerForBtnFinish: someFunction4,
+            finishBtnEventHandler: someFunction4,
         };
 
         var exam = new Exam(settings);

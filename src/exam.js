@@ -56,11 +56,11 @@ Exam.prototype._setCallbacks = function(settings) {
         self._separateCheckingModeEventHandler = settings.separateCheckingModeEventHandler;
     }
 
-    if (settings.handlerForBtnFinish) {
-        if (typeof settings.handlerForBtnFinish !== 'function') {
-            throw new Error('The handlerForBtnFinish must be a type of function');
+    if (settings.finishBtnEventHandler) {
+        if (typeof settings.finishBtnEventHandler !== 'function') {
+            throw new Error('The finishBtnEventHandler must be a type of function');
         }
-        self._finishBtnEventHandler = settings.handlerForBtnFinish;
+        self._finishBtnEventHandler = settings.finishBtnEventHandler;
     }
 
     if (settings.handlerForHint) {
