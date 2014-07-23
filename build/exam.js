@@ -2061,7 +2061,7 @@ function Exam(settings) {
     self._parser = new Parser();
     self._objects = [];
 
-    self._handlerForBtnFinish = function() {};
+    self._finishBtnEventHandler = function() {};
     self._separateCheckingModeEventHandler = function() {};
     self._handlerForHint = function() {};
 
@@ -2113,7 +2113,7 @@ Exam.prototype._setCallbacks = function(settings) {
         if (typeof settings.handlerForBtnFinish !== 'function') {
             throw new Error('The handlerForBtnFinish must be a type of function');
         }
-        self._handlerForBtnFinish = settings.handlerForBtnFinish;
+        self._finishBtnEventHandler = settings.handlerForBtnFinish;
     }
 
     if (settings.handlerForHint) {
@@ -2205,7 +2205,7 @@ Exam.prototype.startExam = function() {
     if (self._finishBtnID !== null) {
         var btnId = document.getElementById(self._finishBtnID);
         btnId.onclick = function() {
-            self._handlerForBtnFinish(self._objects);
+            self._finishBtnEventHandler(self._objects);
         };
     }
 };

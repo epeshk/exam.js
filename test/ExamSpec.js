@@ -6,7 +6,7 @@ describe('Exam()',function(){
         expect(exam._separateCheckingMode).toBe(true);
         expect(exam._finishBtnID).not.toBeDefined();
         expect(exam._handlerForHint).toBeDefined();
-        expect(exam._handlerForBtnFinish).toBeDefined();
+        expect(exam._finishBtnEventHandler).toBeDefined();
         expect(exam._separateCheckingModeEventHandler).toBeDefined();
         expect(exam._preprocessor).toBe(markdown.toHTML);
     });
@@ -44,7 +44,7 @@ describe('Exam()',function(){
         expect(exam._preprocessor).toBe(someFunction1);
         expect(exam._handlerForHint).toBe(someFunction2);
         expect(exam._separateCheckingModeEventHandler).toBe(someFunction3);
-        expect(exam._handlerForBtnFinish).toBe(someFunction4);
+        expect(exam._finishBtnEventHandler).toBe(someFunction4);
     });
 
 });
