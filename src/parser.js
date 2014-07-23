@@ -10,9 +10,9 @@ function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = id;
+    this.id = id;
     if(helpText){
-        this._helpTagId = 'help_' + this._id;
+        this._helpTagId = 'help_' + this.id;
     }
 }
 
@@ -20,9 +20,9 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = id;
+    this.id = id;
     if(helpText){
-        this._helpTagId = 'help_' + this._id;
+        this._helpTagId = 'help_' + this.id;
     }
 }
 
@@ -50,7 +50,7 @@ Parser.prototype._trim = function(text) {
 Parser.prototype._getNextID = function() {
     'use strict';
     var self = this;
-    return 'examjs_id_' + (++self._currentID);
+    return 'examjsid_' + (++self._currentID);
 };
 
 Parser.prototype._getTypeOfBlock = function(block) {

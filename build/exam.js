@@ -1736,9 +1736,9 @@ function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
     this.rightAnswerIndex = rightAnswerIndex;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = id;
+    this.id = id;
     if(helpText){
-        this._helpTagId = 'help_' + this._id;
+        this._helpTagId = 'help_' + this.id;
     }
 }
 
@@ -1746,9 +1746,9 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
-    this._id = id;
+    this.id = id;
     if(helpText){
-        this._helpTagId = 'help_' + this._id;
+        this._helpTagId = 'help_' + this.id;
     }
 }
 
@@ -1776,7 +1776,7 @@ Parser.prototype._trim = function(text) {
 Parser.prototype._getNextID = function() {
     'use strict';
     var self = this;
-    return 'examjs_id_' + (++self._currentID);
+    return 'examjsid_' + (++self._currentID);
 };
 
 Parser.prototype._getTypeOfBlock = function(block) {
@@ -1980,7 +1980,7 @@ function Translator() {
 Translator.prototype._createHint = function (hintObject) {
     'use strict';
     var self = this;
-    var result = "<div id='" + hintObject._id + "'>help!?</div>";
+    var result = "<div id='" + hintObject.id + "'>help!?</div>";
 
     return result;
 };
@@ -1989,7 +1989,7 @@ Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
     var helpTag = '';
-	var result = '<input type="text" id="' + inputObject._id +'" class="examjs-input"></input>';
+	var result = '<input type="text" id="' + inputObject.id +'" class="examjs-input"></input>';
 
     if(inputObject.helpText){
         helpTag = '<div id="' + inputObject._helpTagId + '" class="examjs-help-popup" data-help="'+ inputObject.helpText +'">?</div>';
@@ -2003,7 +2003,7 @@ Translator.prototype._createListBox = function(listObject) {
     'use strict';
     var self = this;
     var helpTag = '';
-    var result = '<select id="'+ listObject._id + '" class="examjs-input">';
+    var result = '<select id="'+ listObject.id + '" class="examjs-input">';
 
     listObject.items.forEach(function(item) {
         result += '<option>' + item + '</option>';
@@ -2155,7 +2155,7 @@ Exam.prototype._getRightAnswer = function(object) {
 Exam.prototype._eventHandlerForSeparatorMode = function(object) {
     'use strict';
     var self = this;
-    var currentId = document.getElementById(object._id);
+    var currentId = document.getElementById(object.id);
     var selectAnswer = currentId.value;
     var rightAnswer = self._getRightAnswer(object);
 
@@ -2172,7 +2172,7 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
     var countOfQuestions = objects.length;
     var countOfRightAnswer = 0;
     objects.forEach(function(object) {
-        var tmpObjId = document.getElementById(object._id);
+        var tmpObjId = document.getElementById(object.id);
         var rightAnswer = self._getRightAnswer(object);
         var selectAnswer = tmpObjId.value;
         if (selectAnswer === rightAnswer) {
@@ -2193,7 +2193,7 @@ Exam.prototype.startExam = function() {
     var self = this;
 
     self._objects.forEach(function(object) {
-        var currentObjectId = document.getElementById(object._id);
+        var currentObjectId = document.getElementById(object.id);
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {

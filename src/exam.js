@@ -102,7 +102,7 @@ Exam.prototype._getRightAnswer = function(object) {
 Exam.prototype._eventHandlerForSeparatorMode = function(object) {
     'use strict';
     var self = this;
-    var currentId = document.getElementById(object._id);
+    var currentId = document.getElementById(object.id);
     var selectAnswer = currentId.value;
     var rightAnswer = self._getRightAnswer(object);
 
@@ -119,7 +119,7 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
     var countOfQuestions = objects.length;
     var countOfRightAnswer = 0;
     objects.forEach(function(object) {
-        var tmpObjId = document.getElementById(object._id);
+        var tmpObjId = document.getElementById(object.id);
         var rightAnswer = self._getRightAnswer(object);
         var selectAnswer = tmpObjId.value;
         if (selectAnswer === rightAnswer) {
@@ -140,7 +140,7 @@ Exam.prototype.startExam = function() {
     var self = this;
 
     self._objects.forEach(function(object) {
-        var currentObjectId = document.getElementById(object._id);
+        var currentObjectId = document.getElementById(object.id);
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {

@@ -26,9 +26,9 @@ describe('Parser', function() {
             var result2 = parser._getNextID();
             var result3 = parser._getNextID();
 
-            expect(result1).toBe('examjs_id_1');
-            expect(result2).toBe('examjs_id_2');
-            expect(result3).toBe('examjs_id_3');
+            expect(result1).toBe('examjsid_1');
+            expect(result2).toBe('examjsid_2');
+            expect(result3).toBe('examjsid_3');
         });
     });
 
@@ -54,8 +54,8 @@ describe('Parser', function() {
             var result_1 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
             var result_2 = parser._extractTextInput('bla bla bla {{...|fnkjdsh}}');
 
-            expect(result_1._id).toBe('examjs_id_1');
-            expect(result_2._id).toBe('examjs_id_2');
+            expect(result_1.id).toBe('examjsid_1');
+            expect(result_2.id).toBe('examjsid_2');
         });
 
         it('should contain help text', function(){
@@ -73,7 +73,7 @@ describe('Parser', function() {
         it('should create a help tag id', function(){
             var result = parser._extractTextInput('bla bla bla {{...|right_answer :? help text}}');
 
-            expect(result._helpTagId).toEqual('help_examjs_id_1');
+            expect(result._helpTagId).toEqual('help_examjsid_1');
         });
     });
 
@@ -125,8 +125,8 @@ describe('Parser', function() {
             var result_1 = parser._extractList('{{test1,test2,!test3!,test4}}');
             var result_2 = parser._extractList('{{test1,test2,!test3!,test4}}');
 
-            expect(result_1._id).toBe('examjs_id_1');
-            expect(result_2._id).toBe('examjs_id_2');
+            expect(result_1.id).toBe('examjsid_1');
+            expect(result_2.id).toBe('examjsid_2');
         });
 
         it('should extract help text from syntax block', function(){
@@ -144,7 +144,7 @@ describe('Parser', function() {
         it('should create a help tag id', function(){
             var result = parser._extractList('bla bla bla {{1,2,3,!4! :? help text}}');
 
-            expect(result._helpTagId).toEqual('help_examjs_id_1');
+            expect(result._helpTagId).toEqual('help_examjsid_1');
         });
     });
 

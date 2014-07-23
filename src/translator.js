@@ -9,7 +9,7 @@ function Translator() {
 Translator.prototype._createHint = function (hintObject) {
     'use strict';
     var self = this;
-    var result = "<div id='" + hintObject._id + "'>help!?</div>";
+    var result = "<div id='" + hintObject.id + "'>help!?</div>";
 
     return result;
 };
@@ -18,7 +18,7 @@ Translator.prototype._createTextInput = function(inputObject){
     'use strict';
 	var self = this;
     var helpTag = '';
-	var result = '<input type="text" id="' + inputObject._id +'" class="examjs-input"></input>';
+	var result = '<input type="text" id="' + inputObject.id +'" class="examjs-input"></input>';
 
     if(inputObject.helpText){
         helpTag = '<div id="' + inputObject._helpTagId + '" class="examjs-help-popup" data-help="'+ inputObject.helpText +'">?</div>';
@@ -32,7 +32,7 @@ Translator.prototype._createListBox = function(listObject) {
     'use strict';
     var self = this;
     var helpTag = '';
-    var result = '<select id="'+ listObject._id + '" class="examjs-input">';
+    var result = '<select id="'+ listObject.id + '" class="examjs-input">';
 
     listObject.items.forEach(function(item) {
         result += '<option>' + item + '</option>';
