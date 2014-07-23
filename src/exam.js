@@ -8,10 +8,6 @@ function Exam(settings) {
     self._parser = new Parser();
     self._objects = [];
 
-    self._finishBtnEventHandler = function() {};
-    self._separateCheckingModeEventHandler = function() {};
-    self._helpHintEventHandler = function() {};
-
     self._separateCheckingMode = true;
     self._preprocessor = markdown.toHTML;
 
@@ -99,7 +95,7 @@ Exam.prototype._getRightAnswer = function(object) {
     return result;
 };
 
-Exam.prototype._eventHandlerForSeparatorMode = function(object) {
+Exam.prototype._separateCheckingModeEventHandler = function(object) {
     'use strict';
     var self = this;
     var currentId = document.getElementById(object.id);
@@ -113,7 +109,7 @@ Exam.prototype._eventHandlerForSeparatorMode = function(object) {
     }
 };
 
-Exam.prototype._eventHandlerForBtnFinish = function(objects) {
+Exam.prototype._finishBtnEventHandler = function(objects) {
     'use strict';
     var self = this;
     var countOfQuestions = objects.length;
@@ -130,7 +126,7 @@ Exam.prototype._eventHandlerForBtnFinish = function(objects) {
     window.alert("Count of a right answers: " + countOfRightAnswer + "/" + countOfQuestions);
 };
 
-Exam.prototype._eventHandlerForHint = function(object) {
+Exam.prototype._helpHintEventHandler = function(object) {
     'use strict';
     window.alert(object.helpText);
 };
