@@ -240,5 +240,11 @@ describe('Parser', function() {
 
             expect(result).toEqual('42');
         });  
+
+        it('should return a right answer if syntax block does contains :? operator', function(){
+            var result = parser._extractRightAnswer('{{... > 42 :? help }}');
+
+            expect(result).toEqual('42');
+        });
     });
 });
