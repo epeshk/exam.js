@@ -233,4 +233,12 @@ describe('Parser', function() {
             expect(result).toBeNull();
         });
     });
+
+    describe('_extractRightAnswer()', function(){
+        it('should return a right answer if syntax block does not contains :? operator', function(){
+            var result = parser._extractRightAnswer('{{... | 42 }}');
+
+            expect(result).toEqual('42');
+        });  
+    });
 });

@@ -1791,7 +1791,7 @@ Parser.prototype._getTypeOfBlock = function(block) {
     return "list";
 };
 
-Parser.prototype._getRightAnswer = function(syntaxBlock){
+Parser.prototype._extractRightAnswer = function(syntaxBlock){
     'use strict';
 
 };
