@@ -2085,14 +2085,14 @@ function Exam(settings) {
             if (typeof settings.finishBtnID === 'string') {
                 self._finishBtnID = settings.finishBtnID;
             } else {
-                throw new Error('The btnFinishId must be a type of string');
+                throw new Error('The finishBtnID parameter must be a type of string');
             }
         }
         if (settings.preprocessor !== undefined) {
             if (typeof settings.preprocessor === 'function') {
                 self._preprocessor = settings.preprocessor;
             } else {
-                throw new Error('The preprocessor must be a type of function');
+                throw new Error('The preprocessor parameter must be a type of function');
             }
         }
     }
