@@ -17,7 +17,7 @@ function Exam(settings) {
             if (typeof settings.separateCheckingMode === 'boolean') {
                 self._separateCheckingMode = settings.separateCheckingMode;
             } else {
-                throw new Error('The separatoMode must be a type of boolean');
+                throw new Error('The separateCheckingMode parameter must be a type of boolean');
             }
         }
         if (settings.finishBtnID !== undefined) {
