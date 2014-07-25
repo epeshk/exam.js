@@ -92,6 +92,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
     var lastToken = '';
     var tmpToken = '';
     var expression = new Expression();
+    var source = syntaxBlock;
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
     function tryToAddSeparator(expression, token) {
@@ -128,7 +129,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
             if (!self._isEmpty(lastToken)) {
                 expression.addLexem(new Item(lastToken));
             }
-            tryToAddSeparator(expression,tmpToken);
+            tryToAddSeparator(expression, tmpToken);
 
             lastToken = '';
             tmpToken = '';
@@ -138,6 +139,6 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     return {
         expression: expression,
-        syntaxBlock: syntaxBlock
+        syntaxBlock: source
     };
 };

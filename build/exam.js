@@ -1818,6 +1818,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
     var lastToken = '';
     var tmpToken = '';
     var expression = new Expression();
+    var source = syntaxBlock;
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
     function tryToAddSeparator(expression, token) {
@@ -1854,7 +1855,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
             if (!self._isEmpty(lastToken)) {
                 expression.addLexem(new Item(lastToken));
             }
-            tryToAddSeparator(expression,tmpToken);
+            tryToAddSeparator(expression, tmpToken);
 
             lastToken = '';
             tmpToken = '';
@@ -1864,7 +1865,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     return {
         expression: expression,
-        syntaxBlock: syntaxBlock
+        syntaxBlock: source
     };
 };
 
@@ -1954,15 +1955,12 @@ Parser.prototype._extractRightAnswer = function(syntaxBlock) {
     return rightAnswer;
 };
 
-Parser.prototype._extractTextInput = function(syntaxBlock) {
+Parser.prototype._createTextInput = function(expressionObject, syntaxBlock) {
     'use strict';
     var self = this;
 
-    var rightAnswer = self._extractRightAnswer(syntaxBlock);
     var id = self._getNextID();
-    var helpText = self._extractHelpText(syntaxBlock);
-
-    var result = new TextInput(rightAnswer, syntaxBlock, id, helpText);
+    var result = new TextInput(expressionObject.answers[0], syntaxBlock, id, expressionObject.helpText);
     return result;
 };
 
@@ -2039,35 +2037,14 @@ Parser.prototype._getHelpText = function(syntaxBlock) {
     return result;
 };
 
-Parser.prototype._extractList = function(syntaxBlock) {
+Parser.prototype._createList = function(expressionObj, syntaxBlock) {
     'use strict';
     var self = this;
-    var tmpResult = [];
 
-    try {
-        if (syntaxBlock.indexOf('::') !== -1) {
-            syntaxBlock.substring(0, syntaxBlock.indexOf('::')).replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-                tmpResult.push(self._trim(elem));
-            });
-        } else if (syntaxBlock.indexOf(':?') !== -1) {
-            syntaxBlock.substring(0, syntaxBlock.indexOf(':?')).replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-                tmpResult.push(self._trim(elem));
-            });
-        } else {
-            syntaxBlock.replace(/(\{|\})+?/g, '').split(',').forEach(function(elem) {
-                tmpResult.push(self._trim(elem));
-            });
-        }
-    } catch (e) {
-        return null;
-    }
-
-    var rightAnswer = self._extractRightAnswer(syntaxBlock);
-    var rightAnswerIndex = self._indexOfRightAnswer(tmpResult, rightAnswer);
+    var rightAnswerIndex = self._indexOfRightAnswer(expressionObj.item, expressionObj.answers[0]);
     var id = self._getNextID();
-    var helpText = self._extractHelpText(syntaxBlock);
 
-    var result = new List(tmpResult, rightAnswerIndex, syntaxBlock, id, helpText);
+    var result = new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
     return result;
 };
 
@@ -2080,11 +2057,11 @@ Parser.prototype._extractObjects = function(expressions) {
     }
 
     expressions.forEach(function(exp) {
-        var tmpObj = self._parseExpression(exp);
+        var tmpObj = self._parseExpression(exp.expression);
         if(tmpObj.hasInputToken){
-            result.push(self._createTextInput(tmpObj));
+            result.push(self._createTextInput(tmpObj, exp.syntaxBlock));
         } else {
-            result.push(self._createList(tmpObj));
+            result.push(self._createList(tmpObj, exp.syntaxBlock));
         }
     });
 
@@ -2097,7 +2074,6 @@ Parser.prototype._parseExpression = function(expression) {
     var result = {
         items: [],
         answers: [],
-        helpText: '',
         hasInputToken: false
     };
     var e = expression.getExpression();
@@ -2112,7 +2088,7 @@ Parser.prototype._parseExpression = function(expression) {
             result.answers.push(item.value);
         } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
             result.helpText = item.value;
-        } else if (item instanceof ItemsSeparator) {
+        } else if (item instanceof AnswerSeparator) {
             lastSeparator = item;
         } else if (item instanceof HelpSeparator) {
             lastSeparator = item;
