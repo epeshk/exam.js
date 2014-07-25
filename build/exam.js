@@ -1899,6 +1899,7 @@ function Parser() {
         return new Parser();
     }
     var self = this;
+    self.lexer = new Lexer();
     self._patterns = {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
         emptyBlock: '{{}}',
@@ -2067,44 +2068,48 @@ Parser.prototype._extractList = function(syntaxBlock) {
     return result;
 };
 
-Parser.prototype._extractObjects = function(syntaxBlocks) {
+Parser.prototype._extractObjects = function(expressions) {
     'use strict';
     var self = this;
     var result = [];
-    if (syntaxBlocks === null) {
+    if (expressions === null) {
         return result;
     }
 
-    function isBlockEmpty(obj) {
-        if (obj === self._patterns.emptyBlock) {
-            return true;
-        }
-        return false;
-    }
-
-    syntaxBlocks.forEach(function(block) {
-        var tmpObj;
-        if (!isBlockEmpty(block)) {
-            var typeBlock = self._getTypeOfBlock(block);
-            switch (typeBlock) {
-                case 'textInput':
-                    {
-                        tmpObj = self._extractTextInput(block);
-                        break;
-                    }
-                case 'list':
-                    {
-                        tmpObj = self._extractList(block);
-                        break;
-                    }
-            }
-            if (tmpObj !== null) {
-                result.push(tmpObj);
-            }
-        }
+    expressions.forEach(function(exp) {
+        var tmpObj = self._parseExpression(exp);
     });
 
     return result;
+};
+
+Parser.prototype._parseExpression = function(expression) {
+    'use strict';
+    var self = this;
+    var result = {
+        items: [],
+        answers: [],
+        helpText: '',
+        hasInputToken: false
+    };
+    var e = expression.getExpression();
+    var lastSeparator = null;
+
+    e.forEach(function(item) {
+        if (item instanceof InputToken) {
+            result.hasInputToken = true;
+        } else if (item instanceof Item && lastSeparator === null) {
+            result.items.push(item.value);
+        } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
+            result.answers.push(item.value);
+        } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
+            result.helpText = item.value;
+        } else if (item instanceof ItemsSeparator) {
+            lastSeparator = item;
+        } else if (item instanceof HelpSeparator) {
+            lastSeparator = item;
+        }
+    });
 };
 
 Parser.prototype.parse = function(text) {
@@ -2113,8 +2118,15 @@ Parser.prototype.parse = function(text) {
     if (typeof text !== 'string') {
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
     }
+    var syntaxBlocks = self._parseSyntaxBlocks(text);
+    var expressions = [];
+    if (syntaxBlocks) {
+        syntaxBlocks.forEach(function(item) {
+            expressions.push(self.lexer.parse(item));
+        });
+    }
 
-    var result = self._extractObjects(self._parseSyntaxBlocks(text));
+    var result = self._extractObjects(expressions);
     return result;
 };
 
