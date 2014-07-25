@@ -59,6 +59,15 @@ Lexer.prototype._range = function(n) {
     });
 };
 
+Lexer.prototype._clearSyntaxBlock = function(syntaxBlock){
+    if(syntaxBlock.substring(0,2) === '{{'){
+        syntaxBlock = syntaxBlock.substring(2);        
+    } else if (syntaxBlock.substring(0,syntaxBlock.length - 2) === '}}'){
+        syntaxBlock = syntaxBlock.substring(0,syntaxBlock.length - 2);
+    }
+    return syntaxBlock;
+};
+
 Lexer.prototype.parse = function(syntaxBlock) {
     'use strict';
     var self = this;
