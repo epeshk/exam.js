@@ -60,4 +60,18 @@ describe('Lexer', function() {
             expect(result).toEqual('1,2,3,4');
         });
     });
+
+    describe('_isEmpty()', function(){
+        it('should return true if string is empty', function(){
+            var result = lexer._isEmpty('    ');
+            
+            expect(result).toBeTruthy();
+        });  
+
+        it('should return false if string is not empty', function(){
+            var result = lexer._isEmpty('  test ');
+            
+            expect(result).toBeFalsy();
+        });  
+    });
 });
