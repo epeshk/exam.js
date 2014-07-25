@@ -20,6 +20,16 @@ function extend(Child, Parent) {
     Child.superclass = Parent.prototype;
 }
 
+function Expression(){
+    'use strict';
+    var self = this;
+
+    var lexems = [];
+    self.addLexem = function(lexem){
+        lexems.push(lexem);
+    };
+}
+
 function Lexem(value) {
     'use strict';
     var self = this;
