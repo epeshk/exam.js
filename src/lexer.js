@@ -1,14 +1,11 @@
 function Lexer() {
     'use strict';
     var self = this;
-    self.ANSWER_SPTR = 0;
-    self.ITEMS_SPTR = 1;
-    self.HELP_SPTR = 2;
 
     self.tokens = {
-        '::': self.ANSWER_SPTR,
-        ',': self.ITEMS_SPTR,
-        ':?': self.HELP_SPTR
+        ANSWER_SPTR : '::',
+        HELP_SPTR   : ':?',
+        ITEMS_SPTR  : ','
     };
 }
 
@@ -27,6 +24,10 @@ function Expression(){
     var lexems = [];
     self.addLexem = function(lexem){
         lexems.push(lexem);
+    };
+
+    self.getExpression = function(){
+        return lexems;
     };
 }
 
@@ -53,4 +54,26 @@ Lexer.prototype._range = function(n) {
     return Array.apply(null, new Array(n)).map(function(_, i) {
         return i;
     });
+};
+
+Lexer.prototype.parse = function(syntaxBlock){
+    'use strict';
+    var self = this;
+    var lastToken = '';
+    var tmpToken = '';
+    var expression = new Expression();
+
+    for(var i = 0; i < syntaxBlock.length; i++){
+        var lastChar = syntaxBlock[i];
+        if(lastChar === self.tokens.ITEMS_SPTR){
+            expression.addLexem(new ItemsSeparator(lastChar));            
+            lastToken = '';
+        } else {
+            lastToken += lastChar;
+        }        
+
+        expression.addLexem(new Item(lastToken));
+    }
+
+    return expression;
 };
