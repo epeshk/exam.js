@@ -1738,7 +1738,9 @@ function Lexer() {
         ANSWER_SPTR: '::',
         HELP_SPTR: ':?',
         ITEMS_SPTR: ',',
-        INPUT_TOKEN: '...'
+        INPUT_TOKEN: '...',
+        START_BLOCK_TOKEN: '{{',
+        END_BLOCK_TOKEN: '}}'
     };
 }
 
@@ -1796,10 +1798,12 @@ Lexer.prototype._range = function(n) {
 };
 
 Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
-    if (syntaxBlock.substring(0, 2) === '{{') {
+    'use strict';
+    var self = this;
+    if (syntaxBlock.substring(0, 2) === self.tokens.START_BLOCK_TOKEN) {
         syntaxBlock = syntaxBlock.substring(2);
     }
-    if (syntaxBlock.substring(syntaxBlock.length - 2) === '}}') {
+    if (syntaxBlock.substring(syntaxBlock.length - 2) === self.tokens.END_BLOCK_TOKEN) {
         syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
     }
     return syntaxBlock;
