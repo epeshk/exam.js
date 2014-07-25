@@ -39,9 +39,15 @@ describe('Lexer', function() {
             var result = lexer.parse('{{1,2,... :: test text :? help text}}');
             
             expect(result.getExpression().length).toEqual(9);
-            result.getExpression().forEach(function(item){
-                console.log(item.value);
-            });
+            expect(result.getExpression()[0] instanceof Item).toBeTruthy();
+            expect(result.getExpression()[1] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.getExpression()[2] instanceof Item).toBeTruthy();
+            expect(result.getExpression()[3] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.getExpression()[4] instanceof InputToken).toBeTruthy();
+            expect(result.getExpression()[5] instanceof AnswerSeparator).toBeTruthy();
+            expect(result.getExpression()[6] instanceof Item).toBeTruthy();
+            expect(result.getExpression()[7] instanceof HelpSeparator).toBeTruthy();
+            expect(result.getExpression()[8] instanceof Item).toBeTruthy();
         });
 
         it('should return an expression with a lexems that contains a correct values', function(){
