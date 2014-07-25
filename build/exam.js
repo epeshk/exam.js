@@ -1803,11 +1803,12 @@ Lexer.prototype._isEmpty = function(string) {
 
 Lexer.prototype.parse = function(syntaxBlock) {
     'use strict';
-    var self = this;
-    var lastToken = '';
-    var tmpToken = '';
-    var expression = [];
-    var source = syntaxBlock;
+    var self = this,
+        lastToken = '',
+        tmpToken = '',
+        expression = [],
+        source = syntaxBlock;
+        
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
     function tryToAddSeparator(expression, token) {
