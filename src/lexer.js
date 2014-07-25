@@ -136,5 +136,8 @@ Lexer.prototype.parse = function(syntaxBlock) {
     }
     expression.addLexem(new Item(lastToken));
 
-    return expression;
+    return {
+        expression: expression,
+        syntaxBlock: syntaxBlock
+    };
 };

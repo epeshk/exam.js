@@ -211,6 +211,11 @@ Parser.prototype._extractObjects = function(expressions) {
 
     expressions.forEach(function(exp) {
         var tmpObj = self._parseExpression(exp);
+        if(tmpObj.hasInputToken){
+            result.push(self._createTextInput(tmpObj));
+        } else {
+            result.push(self._createList(tmpObj));
+        }
     });
 
     return result;
@@ -243,6 +248,8 @@ Parser.prototype._parseExpression = function(expression) {
             lastSeparator = item;
         }
     });
+
+    return result;
 };
 
 Parser.prototype.parse = function(text) {
