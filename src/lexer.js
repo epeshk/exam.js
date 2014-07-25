@@ -18,20 +18,6 @@ function Lexer() {
     };
 }
 
-function Expression() {
-    'use strict';
-    var self = this;
-
-    var lexemes = [];
-    self.addLexem = function(lexeme) {
-        lexemes.push(lexeme);
-    };
-
-    self.getExpression = function() {
-        return lexemes;
-    };
-}
-
 function Item(value) {
     'use strict';
     var self = this;
@@ -94,7 +80,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
     var self = this;
     var lastToken = '';
     var tmpToken = '';
-    var expression = new Expression();
+    var expression = [];
     var source = syntaxBlock;
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
@@ -131,7 +117,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
             tmpToken === self.tokens.HELP_SPTR ||
             tmpToken === self.tokens.INPUT_TOKEN) {
             if (!self._isEmpty(lastToken)) {
-                expression.addLexem(new Item(lastToken));
+                expression.push(new Item(lastToken));
             }
             tryToAddSeparator(expression, tmpToken);
 
@@ -139,7 +125,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
             tmpToken = '';
         }
     }
-    expression.addLexem(new Item(lastToken));
+    expression.push(new Item(lastToken));
 
     return {
         expression: expression,
