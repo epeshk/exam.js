@@ -56,11 +56,12 @@ Lexer.prototype._range = function(n) {
     });
 };
 
-Lexer.prototype._clearSyntaxBlock = function(syntaxBlock){
-    if(syntaxBlock.substring(0,2) === '{{'){
-        syntaxBlock = syntaxBlock.substring(2);        
-    } if (syntaxBlock.substring(syntaxBlock.length - 2) === '}}'){
-        syntaxBlock = syntaxBlock.substring(0,syntaxBlock.length - 2);
+Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
+    if (syntaxBlock.substring(0, 2) === '{{') {
+        syntaxBlock = syntaxBlock.substring(2);
+    }
+    if (syntaxBlock.substring(syntaxBlock.length - 2) === '}}') {
+        syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
     }
     return syntaxBlock;
 };
@@ -75,12 +76,24 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];
-        if (lastChar === self.tokens.ITEMS_SPTR) {
-            expression.addLexem(new Item(lastToken));
-            expression.addLexem(new ItemsSeparator(lastChar));
-            lastToken = '';
+        if (self.tokens.ITEMS_SPTR.indexOf(lastChar) !== -1 || self.tokens.ANSWER_SPTR.indexOf(lastChar) !== -1 || self.tokens.HELP_SPTR.indexOf(lastChar) !== -1) {
+            tmpToken += lastChar;
         } else {
-            lastToken += lastChar;
+            lastToken += (tmpToken + lastChar);
+        }
+        if (tmpToken === self.tokens.ITEMS_SPTR || tmpToken === self.tokens.ANSWER_SPTR || tmpToken === self.tokens.HELP_SPTR) {
+            expression.addLexem(new Item(lastToken));
+            if (tmpToken === self.tokens.ITEMS_SPTR) {
+                expression.addLexem(new ItemsSeparator(tmpToken));
+            }
+            if (tmpToken === self.tokens.ANSWER_SPTR) {
+                expression.addLexem(new ItemsSeparator(tmpToken));
+            }
+            if (tmpToken === self.tokens.HELP_SPTR) {
+                expression.addLexem(new ItemsSeparator(tmpToken));
+            }
+            lastToken = '';
+            tmpToken = '';
         }
     }
     expression.addLexem(new Item(lastToken));
