@@ -27,4 +27,12 @@ describe('Lexer', function() {
             expect(result.getExpression().length).toEqual(3);
         });
     });
+
+    describe('_clearSyntaxBLock()', function(){
+        it('should return syntax block without a {{ and }} tokens', function(){
+            var result = lexer._clearSyntaxBlock('{{1,2,3,4}}');
+
+            expect(result).toEqual('1,2,3,4');
+        });
+    });
 });
