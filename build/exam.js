@@ -1727,9 +1727,14 @@ function merge_text_nodes( jsonml ) {
 function Lexer(){
     'use strict';
     var self = this;
+    self.ANSWER_SPTR = 0;
+    self.ITEMS_SPTR = 1;
+    self.HELP_SPTR = 2;
 
     self.tokens = {
-        '::': "test" 
+        '::': self.ANSWER_SPTR,
+        ',' : self.ITEMS_SPTR,
+        ':?' : self.HELP_SPTR
     };
 }
 
