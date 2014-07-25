@@ -34,6 +34,14 @@ describe('Lexer', function() {
             expect(result.getExpression()[1] instanceof ItemsSeparator).toBeTruthy();
             expect(result.getExpression()[2] instanceof Item).toBeTruthy();
         });
+
+        it('should return an expression with a lexems that contains a correct values', function(){
+            var result = lexer.parse('{{1,2}}');
+
+            expect(result.getExpression()[0].value).toEqual('1');
+            expect(result.getExpression()[1].value).toEqual(',');
+            expect(result.getExpression()[2].value).toEqual('2');
+        });
     });
 
     describe('_clearSyntaxBLock()', function(){

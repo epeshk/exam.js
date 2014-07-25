@@ -9,14 +9,6 @@ function Lexer() {
     };
 }
 
-function extend(Child, Parent) {
-    var F = function() {};
-    F.prototype = Parent.prototype;
-    Child.prototype = new F();
-    Child.prototype.constructor = Child;
-    Child.superclass = Parent.prototype;
-}
-
 function Expression() {
     'use strict';
     var self = this;
@@ -31,24 +23,29 @@ function Expression() {
     };
 }
 
-function Lexem(value) {
+function Item(value) {
     'use strict';
     var self = this;
     self.value = value;
 }
 
-function Item(value) {}
+function AnswerSeparator(value) {
+    'use strict';
+    var self = this;
+    self.value = value;
+}
 
-function AnswerSeparator(value) {}
+function ItemsSeparator(value) {
+    'use strict';
+    var self = this;
+    self.value = value;
+}
 
-function ItemsSeparator(value) {}
-
-function HelpSeparator(value) {}
-
-extend(Item, Lexem);
-extend(AnswerSeparator, Lexem);
-extend(ItemsSeparator, Lexem);
-extend(HelpSeparator, Lexem);
+function HelpSeparator(value) {
+    'use strict';
+    var self = this;
+    self.value = value;
+}
 
 Lexer.prototype._range = function(n) {
     'use strict';
