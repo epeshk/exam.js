@@ -35,6 +35,15 @@ describe('Lexer', function() {
             expect(result.getExpression()[2] instanceof Item).toBeTruthy();
         });
 
+        it('should return an expression that contains all types of a tokens', function(){
+            var result = lexer.parse('{{1,2,... :: test text :? help text}}');
+            
+            expect(result.getExpression().length).toEqual(9);
+            result.getExpression().forEach(function(item){
+                console.log(item.value);
+            });
+        });
+
         it('should return an expression with a lexems that contains a correct values', function(){
             var result = lexer.parse('{{1,2}}');
 
