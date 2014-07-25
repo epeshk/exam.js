@@ -1731,7 +1731,8 @@ function Lexer() {
     self.tokens = {
         ANSWER_SPTR: '::',
         HELP_SPTR: ':?',
-        ITEMS_SPTR: ','
+        ITEMS_SPTR: ',',
+        INPUT_TOKEN: '...'
     };
 }
 
@@ -1750,6 +1751,12 @@ function Expression() {
 }
 
 function Item(value) {
+    'use strict';
+    var self = this;
+    self.value = value;
+}
+
+function InputToken(value){
     'use strict';
     var self = this;
     self.value = value;
@@ -1802,21 +1809,30 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];
-        if (self.tokens.ITEMS_SPTR.indexOf(lastChar) !== -1 || self.tokens.ANSWER_SPTR.indexOf(lastChar) !== -1 || self.tokens.HELP_SPTR.indexOf(lastChar) !== -1) {
+        if (self.tokens.ITEMS_SPTR.indexOf(lastChar) !== -1 || 
+            self.tokens.ANSWER_SPTR.indexOf(lastChar) !== -1 || 
+            self.tokens.HELP_SPTR.indexOf(lastChar) !== -1 ||
+            self.tokens.INPUT_TOKEN.indexOf(lastChar) !== -1) {
             tmpToken += lastChar;
         } else {
             lastToken += (tmpToken + lastChar);
         }
-        if (tmpToken === self.tokens.ITEMS_SPTR || tmpToken === self.tokens.ANSWER_SPTR || tmpToken === self.tokens.HELP_SPTR) {
+        if (tmpToken === self.tokens.ITEMS_SPTR || 
+            tmpToken === self.tokens.ANSWER_SPTR || 
+            tmpToken === self.tokens.HELP_SPTR ||
+            tmpToken === self.tokens.INPUT_TOKEN) {
             expression.addLexem(new Item(lastToken));
             if (tmpToken === self.tokens.ITEMS_SPTR) {
                 expression.addLexem(new ItemsSeparator(tmpToken));
             }
             if (tmpToken === self.tokens.ANSWER_SPTR) {
-                expression.addLexem(new ItemsSeparator(tmpToken));
+                expression.addLexem(new AnswerSeparator(tmpToken));
             }
             if (tmpToken === self.tokens.HELP_SPTR) {
-                expression.addLexem(new ItemsSeparator(tmpToken));
+                expression.addLexem(new HelpSeparator(tmpToken));
+            }
+            if(tmpToken === self.tokens.INPUT_TOKEN){
+                expression.addLexem(new InputToken(tmpToken));
             }
             lastToken = '';
             tmpToken = '';
