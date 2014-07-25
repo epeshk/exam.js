@@ -1724,6 +1724,23 @@ function merge_text_nodes( jsonml ) {
   }
 } )() );
 
+function Lexer(){
+    'use strict';
+    var self = this;
+
+    self.tokens = {
+        '::': "test" 
+    };
+}
+
+
+Lexer.prototype._range = function(n){
+    'use strict';
+    var self = this;
+
+    return Array.apply(null,new Array(n)).map(function (_, i) {return i;});
+};
+
 function ParsingError(message) {
     this.message = message || 'Error was ocured while parsing!';
     this.name = 'ParsingError';

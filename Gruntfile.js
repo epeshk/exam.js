@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat:prebuild', 'jshint:dev','concat:build', 'test', 'notify:test']
+                tasks: ['concat:prebuild', 'jshint:dev', 'concat:build', 'test', 'notify:test']
             }
         },
         clean: {
@@ -112,11 +112,11 @@ module.exports = function(grunt) {
         },
         concat: {
             prebuild: {
-                src: ['src/lexer.js','src/parser.js', 'src/translator.js', 'src/exam.js'],
+                src: ['src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             },
             build: {
-                src: ['node_modules/markdown/lib/markdown.js','src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
+                src: ['node_modules/markdown/lib/markdown.js', 'src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             }
         },
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('test', ['jasmine']);
-    grunt.registerTask('travis-ci-test', ['concat:prebuild','jshint','concat:build', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean','concat:prebuild', 'jshint:build','concat:build', 'test', 'uglify', 'concat', 'coveralls']);
+    grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
+    grunt.registerTask('default', ['clean', 'concat:prebuild', 'jshint:build', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
