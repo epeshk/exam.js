@@ -1820,6 +1820,23 @@ Lexer.prototype.parse = function(syntaxBlock) {
     var expression = new Expression();
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
+    function tryToAddSeparator(expression, token) {
+        if (!self._isEmpty(token)) {
+            if (token === self.tokens.ITEMS_SPTR) {
+                expression.addLexem(new ItemsSeparator(token));
+            }
+            if (token === self.tokens.ANSWER_SPTR) {
+                expression.addLexem(new AnswerSeparator(token));
+            }
+            if (token === self.tokens.HELP_SPTR) {
+                expression.addLexem(new HelpSeparator(token));
+            }
+            if (token === self.tokens.INPUT_TOKEN) {
+                expression.addLexem(new InputToken(token));
+            }
+        }
+    }
+
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];
         if (self.tokens.ITEMS_SPTR.indexOf(lastChar) !== -1 ||
@@ -1837,19 +1854,8 @@ Lexer.prototype.parse = function(syntaxBlock) {
             if (!self._isEmpty(lastToken)) {
                 expression.addLexem(new Item(lastToken));
             }
+            tryToAddSeparator(expression,tmpToken);
 
-            if (tmpToken === self.tokens.ITEMS_SPTR) {
-                expression.addLexem(new ItemsSeparator(tmpToken));
-            }
-            if (tmpToken === self.tokens.ANSWER_SPTR) {
-                expression.addLexem(new AnswerSeparator(tmpToken));
-            }
-            if (tmpToken === self.tokens.HELP_SPTR) {
-                expression.addLexem(new HelpSeparator(tmpToken));
-            }
-            if (tmpToken === self.tokens.INPUT_TOKEN) {
-                expression.addLexem(new InputToken(tmpToken));
-            }
             lastToken = '';
             tmpToken = '';
         }
