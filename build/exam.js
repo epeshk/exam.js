@@ -1748,13 +1748,13 @@ function Expression() {
     'use strict';
     var self = this;
 
-    var lexems = [];
-    self.addLexem = function(lexem) {
-        lexems.push(lexem);
+    var lexemes = [];
+    self.addLexem = function(lexeme) {
+        lexemes.push(lexeme);
     };
 
     self.getExpression = function() {
-        return lexems;
+        return lexemes;
     };
 }
 
