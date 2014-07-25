@@ -126,10 +126,9 @@ Parser.prototype._parseExpression = function(expression) {
         answers: [],
         hasInputToken: false
     };
-    var e = expression.getExpression();
     var lastSeparator = null;
 
-    e.forEach(function(item) {
+    expression.forEach(function(item) {
         if (item instanceof InputToken) {
             result.hasInputToken = true;
         } else if (item instanceof Item && lastSeparator === null) {

@@ -1813,16 +1813,16 @@ Lexer.prototype.parse = function(syntaxBlock) {
     function tryToAddSeparator(expression, token) {
         if (!self._isEmpty(token)) {
             if (token === self.tokens.ITEMS_SPTR) {
-                expression.addLexem(new ItemsSeparator(token));
+                expression.push(new ItemsSeparator(token));
             }
             if (token === self.tokens.ANSWER_SPTR) {
-                expression.addLexem(new AnswerSeparator(token));
+                expression.push(new AnswerSeparator(token));
             }
             if (token === self.tokens.HELP_SPTR) {
-                expression.addLexem(new HelpSeparator(token));
+                expression.push(new HelpSeparator(token));
             }
             if (token === self.tokens.INPUT_TOKEN) {
-                expression.addLexem(new InputToken(token));
+                expression.push(new InputToken(token));
             }
         }
     }
@@ -1987,10 +1987,9 @@ Parser.prototype._parseExpression = function(expression) {
         answers: [],
         hasInputToken: false
     };
-    var e = expression.getExpression();
     var lastSeparator = null;
 
-    e.forEach(function(item) {
+    expression.forEach(function(item) {
         if (item instanceof InputToken) {
             result.hasInputToken = true;
         } else if (item instanceof Item && lastSeparator === null) {
