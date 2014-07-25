@@ -74,7 +74,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
     var lastToken = '';
     var tmpToken = '';
     var expression = new Expression();
-    syntaxBlock = syntaxBlock.substring(2,syntaxBlock.length - 2);
+    syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];

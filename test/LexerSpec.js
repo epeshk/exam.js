@@ -26,6 +26,14 @@ describe('Lexer', function() {
 
             expect(result.getExpression().length).toEqual(3);
         });
+
+        it('should return an expression that contains two Items and one ItemsSeparator', function(){
+            var result = lexer.parse('{{1,2}}');
+
+            expect(result.getExpression()[0] instanceof Item).toBeTruthy();
+            expect(result.getExpression()[1] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.getExpression()[2] instanceof Item).toBeTruthy();
+        });
     });
 
     describe('_clearSyntaxBLock()', function(){
