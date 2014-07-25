@@ -120,6 +120,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
             tmpToken += lastChar;
         } else {
             lastToken += (tmpToken + lastChar);
+            tmpToken = '';
         }
         if (tmpToken === self.tokens.ITEMS_SPTR ||
             tmpToken === self.tokens.ANSWER_SPTR ||
