@@ -50,7 +50,7 @@ describe('Lexer', function() {
             expect(result.expression.getExpression()[8] instanceof Item).toBeTruthy();
         });
 
-        it('should return an expression with a lexems that contains a correct values', function(){
+        it('should return an expression with a lexemes that contains a correct values', function(){
             var result = lexer.parse('{{1,2}}');
 
             expect(result.expression.getExpression()[0].value).toEqual('1');
@@ -58,7 +58,7 @@ describe('Lexer', function() {
             expect(result.expression.getExpression()[2].value).toEqual('2');
         });
 
-        it('should return an expression with a item lexem if source contains uncompleted part of a separator token (like this ..)', function(){
+        it('should return an expression with a item lexeme if source contains uncompleted part of a separator token (like this ..)', function(){
             var result = lexer.parse('{{.. :: test}}');
 
             expect(result.expression.getExpression()[0].value).toEqual('..');
