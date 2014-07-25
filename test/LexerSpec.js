@@ -44,9 +44,9 @@ describe('Lexer', function() {
             expect(result.expression.getExpression()[2] instanceof Item).toBeTruthy();
             expect(result.expression.getExpression()[3] instanceof ItemsSeparator).toBeTruthy();
             expect(result.expression.getExpression()[4] instanceof InputToken).toBeTruthy();
-            expect(result.expression..getExpression()[5] instanceof AnswerSeparator).toBeTruthy();
+            expect(result.expression.getExpression()[5] instanceof AnswerSeparator).toBeTruthy();
             expect(result.expression.getExpression()[6] instanceof Item).toBeTruthy();
-            expect(result.expression..getExpression()[7] instanceof HelpSeparator).toBeTruthy();
+            expect(result.expression.getExpression()[7] instanceof HelpSeparator).toBeTruthy();
             expect(result.expression.getExpression()[8] instanceof Item).toBeTruthy();
         });
 

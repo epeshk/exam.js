@@ -54,34 +54,29 @@ Parser.prototype._getNextID = function() {
     return 'examjsid_' + (++self._currentID);
 };
 
-Parser.prototype._getTypeOfBlock = function(block) {
+Parser.prototype._indexOfRightAnswer = function(items, answer) {
     'use strict';
     var self = this;
-    var textInputPattern = /\{\{\s*\.{3}\s*\::\s*.*/g;
-
-    if (textInputPattern.test(block)) {
-        return "textInput";
+    var result = -1;
+    if (answer) {
+        items.forEach(function(item) {
+            if (self._trim(item.toLowerCase()) === self._trim(answer.toLowerCase())) {
+                result = items.indexOf(item);
+            }
+        });
     }
-
-    return "list";
+    return result;
 };
 
-Parser.prototype._extractRightAnswer = function(syntaxBlock) {
+Parser.prototype._createList = function(expressionObj, syntaxBlock) {
     'use strict';
     var self = this;
-    var startIndex,
-        endIndex,
-        rightAnswer;
 
-    startIndex = syntaxBlock.indexOf('::') + 2;
-    if (syntaxBlock.indexOf(':?') !== -1) {
-        endIndex = syntaxBlock.indexOf(':?');
-    } else {
-        endIndex = syntaxBlock.indexOf('}}');
-    }
-    rightAnswer = syntaxBlock.substring(startIndex, endIndex).trim();
+    var rightAnswerIndex = self._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]);
+    var id = self._getNextID();
 
-    return rightAnswer;
+    var result = new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
+    return result;
 };
 
 Parser.prototype._createTextInput = function(expressionObject, syntaxBlock) {
@@ -102,80 +97,6 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
     return result;
 };
 
-Parser.prototype._indexOfRightAnswer = function(items, answer) {
-    'use strict';
-    var self = this;
-    var result = -1;
-    items.forEach(function(item) {
-        if (self._trim(item.toLowerCase()) === self._trim(answer.toLowerCase())) {
-            result = items.indexOf(item);
-        }
-    });
-
-    return result;
-};
-
-Parser.prototype._extractHelpText = function(syntaxBlock) {
-    'use strict';
-    var self = this;
-    if (syntaxBlock.indexOf(':?') !== -1) {
-        var startIndex = syntaxBlock.lastIndexOf(':?') + 2;
-        var endIndex = syntaxBlock.lastIndexOf('}}');
-
-        return self._trim(syntaxBlock.substring(startIndex, endIndex));
-    }
-    return null;
-};
-
-Parser.prototype._removeExclamationPoints = function(items) {
-    'use strict';
-    var self = this;
-    var index = self._indexOfRightAnswer(items);
-    if (index === -1) {
-        return items;
-    }
-    var tmpWord = items[index];
-    var result = [];
-
-    var resultWord = tmpWord.substring(1, tmpWord.length - 1);
-    items.forEach(function(item) {
-        if (items.indexOf(item) === index) {
-            result.push(resultWord);
-        } else {
-            result.push(item);
-        }
-    });
-
-    return result;
-};
-
-Parser.prototype._getHelpText = function(syntaxBlock) {
-    'use strict';
-    var self = this;
-    var result = "";
-    var firstPosition = -1;
-    var lastPosition = -1;
-
-    firstPosition = syntaxBlock.indexOf('?');
-    lastPosition = syntaxBlock.lastIndexOf('?');
-
-    if ((firstPosition !== -1) && (lastPosition !== -1)) {
-        result = syntaxBlock.substring(firstPosition + 1, lastPosition);
-    }
-
-    return result;
-};
-
-Parser.prototype._createList = function(expressionObj, syntaxBlock) {
-    'use strict';
-    var self = this;
-
-    var rightAnswerIndex = self._indexOfRightAnswer(expressionObj.item, expressionObj.answers[0]);
-    var id = self._getNextID();
-
-    var result = new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
-    return result;
-};
 
 Parser.prototype._extractObjects = function(expressions) {
     'use strict';
@@ -187,7 +108,7 @@ Parser.prototype._extractObjects = function(expressions) {
 
     expressions.forEach(function(exp) {
         var tmpObj = self._parseExpression(exp.expression);
-        if(tmpObj.hasInputToken){
+        if (tmpObj.hasInputToken) {
             result.push(self._createTextInput(tmpObj, exp.syntaxBlock));
         } else {
             result.push(self._createList(tmpObj, exp.syntaxBlock));

@@ -1,3 +1,9 @@
+var LEXER_HELPER = {
+    trim: function(string) {
+        return string.replace(/^\s+/, '').replace(/\s+$/, '');
+    }
+};
+
 function Lexer() {
     'use strict';
     var self = this;
@@ -27,7 +33,7 @@ function Expression() {
 function Item(value) {
     'use strict';
     var self = this;
-    self.value = value;
+    self.value = LEXER_HELPER.trim(value);
 }
 
 function InputToken(value) {
@@ -39,19 +45,19 @@ function InputToken(value) {
 function AnswerSeparator(value) {
     'use strict';
     var self = this;
-    self.value = value;
+    self.value = LEXER_HELPER.trim(value);
 }
 
 function ItemsSeparator(value) {
     'use strict';
     var self = this;
-    self.value = value;
+    self.value = LEXER_HELPER.trim(value);
 }
 
 function HelpSeparator(value) {
     'use strict';
     var self = this;
-    self.value = value;
+    self.value = LEXER_HELPER.trim(value);
 }
 
 Lexer.prototype._range = function(n) {
@@ -76,14 +82,7 @@ Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
 Lexer.prototype._isEmpty = function(string) {
     'use strict';
     var self = this;
-
-    if (!('trim' in String.prototype)) {
-        String.prototype.trim = function() {
-            return this.replace(/^\s+/, '').replace(/\s+$/, '');
-        };
-    }
-
-    return string.trim() === '';
+    return LEXER_HELPER.trim(string) === '';
 };
 
 Lexer.prototype.parse = function(syntaxBlock) {
