@@ -1918,8 +1918,9 @@ Parser.prototype._getNextID = function() {
 
 Parser.prototype._indexOfRightAnswer = function(items, answer) {
     'use strict';
-    var self = this;
-    var result = -1;
+    var self = this,
+        result = -1;
+
     if (answer) {
         items.forEach(function(item) {
             if (self._trim(item.toLowerCase()) === self._trim(answer.toLowerCase())) {
@@ -1932,29 +1933,26 @@ Parser.prototype._indexOfRightAnswer = function(items, answer) {
 
 Parser.prototype._createList = function(expressionObj, syntaxBlock) {
     'use strict';
-    var self = this;
+    var self = this,
+        rightAnswerIndex = self._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]),
+        id = self._getNextID();
 
-    var rightAnswerIndex = self._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]);
-    var id = self._getNextID();
-
-    var result = new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
-    return result;
+    return new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
 };
 
 Parser.prototype._createTextInput = function(expressionObject, syntaxBlock) {
     'use strict';
-    var self = this;
+    var self = this,
+        id = self._getNextID();
 
-    var id = self._getNextID();
-    var result = new TextInput(expressionObject.answers[0], syntaxBlock, id, expressionObject.helpText);
-    return result;
+    return new TextInput(expressionObject.answers[0], syntaxBlock, id, expressionObject.helpText);
 };
 
 Parser.prototype._parseSyntaxBlocks = function(text) {
     'use strict';
-    var self = this;
-    var regexp = new RegExp(self._patterns.blockPattern);
-    var result = text.match(regexp);
+    var self = this,
+        regexp = new RegExp(self._patterns.blockPattern),
+        result = text.match(regexp);
 
     return result;
 };
@@ -1962,8 +1960,9 @@ Parser.prototype._parseSyntaxBlocks = function(text) {
 
 Parser.prototype._extractObjects = function(expressions) {
     'use strict';
-    var self = this;
-    var result = [];
+    var self = this,
+        result = [];
+
     if (expressions === null) {
         return result;
     }
@@ -1982,13 +1981,13 @@ Parser.prototype._extractObjects = function(expressions) {
 
 Parser.prototype._parseExpression = function(expression) {
     'use strict';
-    var self = this;
-    var result = {
-        items: [],
-        answers: [],
-        hasInputToken: false
-    };
-    var lastSeparator = null;
+    var self = this,
+        result = {
+            items: [],
+            answers: [],
+            hasInputToken: false
+        },
+        lastSeparator = null;
 
     expression.forEach(function(item) {
         if (item instanceof InputToken) {
@@ -2011,20 +2010,21 @@ Parser.prototype._parseExpression = function(expression) {
 
 Parser.prototype.parse = function(text) {
     'use strict';
-    var self = this;
     if (typeof text !== 'string') {
         throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
     }
-    var syntaxBlocks = self._parseSyntaxBlocks(text);
-    var expressions = [];
+
+    var self = this,
+        syntaxBlocks = self._parseSyntaxBlocks(text),
+        expressions = [];
+
     if (syntaxBlocks) {
         syntaxBlocks.forEach(function(item) {
             expressions.push(self.lexer.parse(item));
         });
     }
 
-    var result = self._extractObjects(expressions);
-    return result;
+    return self._extractObjects(expressions);
 };
 
 function Translator() {
