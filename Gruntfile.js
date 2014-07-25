@@ -112,11 +112,11 @@ module.exports = function(grunt) {
         },
         concat: {
             prebuild: {
-                src: ['src/parser.js', 'src/translator.js', 'src/exam.js'],
+                src: ['src/lexer.js','src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             },
             build: {
-                src: ['node_modules/markdown/lib/markdown.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
+                src: ['node_modules/markdown/lib/markdown.js','src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
                 dest: 'build/exam.js',
             }
         },
