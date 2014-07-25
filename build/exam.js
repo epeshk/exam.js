@@ -1799,11 +1799,17 @@ Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
     return syntaxBlock;
 };
 
-Lexer.prototype._isEmpty = function(string){
-    if(string){
-        return true;
+Lexer.prototype._isEmpty = function(string) {
+    'use strict';
+    var self = this;
+
+    if (!('trim' in String.prototype)) {
+        String.prototype.trim = function() {
+            return this.replace(/^\s+/, '').replace(/\s+$/, '');
+        };
     }
-    return false;
+
+    return string.trim() === '';
 };
 
 Lexer.prototype.parse = function(syntaxBlock) {
@@ -1828,7 +1834,9 @@ Lexer.prototype.parse = function(syntaxBlock) {
             tmpToken === self.tokens.ANSWER_SPTR ||
             tmpToken === self.tokens.HELP_SPTR ||
             tmpToken === self.tokens.INPUT_TOKEN) {
-            expression.addLexem(new Item(lastToken));
+            if (!self._isEmpty(lastToken)) {
+                expression.addLexem(new Item(lastToken));
+            }
 
             if (tmpToken === self.tokens.ITEMS_SPTR) {
                 expression.addLexem(new ItemsSeparator(tmpToken));
