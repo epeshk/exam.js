@@ -57,6 +57,13 @@ describe('Lexer', function() {
             expect(result.expression.getExpression()[1].value).toEqual(',');
             expect(result.expression.getExpression()[2].value).toEqual('2');
         });
+
+        it('should return an expression with a item lexem if source contains uncompleted part of a separator token (like this ..)', function(){
+            var result = lexer.parse('{{.. :: test}}');
+
+            expect(result.expression.getExpression()[0].value).toEqual('..');
+            expect(result.expression.getExpression()[0] instanceof Item).toBeTruthy();
+        });
     });
 
     describe('_clearSyntaxBLock()', function(){
