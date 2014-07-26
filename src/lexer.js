@@ -48,15 +48,6 @@ function HelpSeparator(value) {
     self.value = LEXER_HELPER.trim(value);
 }
 
-Lexer.prototype._range = function(n) {
-    'use strict';
-    var self = this;
-
-    return Array.apply(null, new Array(n)).map(function(_, i) {
-        return i;
-    });
-};
-
 Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
     'use strict';
     var self = this;
