@@ -1792,7 +1792,7 @@ Lexer.prototype._isEmpty = function(string) {
     return LEXER_HELPER.trim(string) === '';
 };
 
-Lexer.prototype._isPartOfSeparator = function(string) {
+Lexer.prototype._isPartOfToken = function(string) {
     'use strict';
     var self = this;
 
@@ -1831,10 +1831,10 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];
-        if (self._isPartOfSeparator(tmpToken + lastChar)) {
+        if (self._isPartOfToken(tmpToken + lastChar)) {
             tmpToken += lastChar;
         } else {
-            if (self._isPartOfSeparator(lastChar)) {
+            if (self._isPartOfToken(lastChar)) {
                 lastToken += tmpToken;
                 tmpToken = lastChar;
             } else {

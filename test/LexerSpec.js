@@ -79,12 +79,12 @@ describe('Lexer', function() {
         });  
     });
 
-    describe('_isPartOfSeparator()', function(){
+    describe('_isPartOfToken()', function(){
         it('shoud return True if the tokens contains a char', function(){
-            var result1 = lexer._isPartOfSeparator(',');
-            var result2 = lexer._isPartOfSeparator(':');
-            var result3 = lexer._isPartOfSeparator('.');
-            var result4 = lexer._isPartOfSeparator('?');
+            var result1 = lexer._isPartOfToken(',');
+            var result2 = lexer._isPartOfToken(':');
+            var result3 = lexer._isPartOfToken('.');
+            var result4 = lexer._isPartOfToken('?');
 
             expect(result1).toBeTruthy();
             expect(result2).toBeTruthy();
@@ -93,9 +93,9 @@ describe('Lexer', function() {
         });  
 
         it('should return True if the tokens contains a string', function(){
-            var result1 = lexer._isPartOfSeparator('::');
-            var result2 = lexer._isPartOfSeparator(':?');
-            var result3 = lexer._isPartOfSeparator('..');
+            var result1 = lexer._isPartOfToken('::');
+            var result2 = lexer._isPartOfToken(':?');
+            var result3 = lexer._isPartOfToken('..');
 
             expect(result1).toBeTruthy();
             expect(result2).toBeTruthy();
@@ -103,9 +103,9 @@ describe('Lexer', function() {
         });
 
         it('should return False if the tokens not contains a string', function(){
-            var result1 = lexer._isPartOfSeparator(':.');
-            var result2 = lexer._isPartOfSeparator(':,');
-            var result3 = lexer._isPartOfSeparator('.,');
+            var result1 = lexer._isPartOfToken(':.');
+            var result2 = lexer._isPartOfToken(':,');
+            var result3 = lexer._isPartOfToken('.,');
 
             expect(result1).toBeFalsy();
             expect(result2).toBeFalsy();
