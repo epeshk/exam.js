@@ -78,4 +78,12 @@ describe('Lexer', function() {
             expect(result).toBeFalsy();
         });  
     });
+
+    describe('_isPartOfSeparator()', function(){
+        it('shoud return True if the tokens contains a char', function(){
+            var result = lexer._isPartOfSeparator(',');
+
+            expect(result).toBeTruthy();
+        });  
+    });
 });
