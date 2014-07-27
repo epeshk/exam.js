@@ -49,6 +49,12 @@ describe('Lexer', function() {
             expect(result.expression[0].value).toEqual('..');
             expect(result.expression[0] instanceof Item).toBeTruthy();
         });
+
+        it('should return an expression that contains 3 items if first item is a uncompleted token', function(){
+            var result = lexer.parse('{{..,2,3 :: answer }}');
+
+            expect(result.expression[0].value).toEqual('..');
+        });
     });
 
     describe('_clearSyntaxBLock()', function(){
