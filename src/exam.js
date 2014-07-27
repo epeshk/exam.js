@@ -140,10 +140,12 @@ Exam.prototype._helpHintEventHandler = function(object) {
 
 Exam.prototype.startExam = function() {
     'use strict';
-    var self = this;
-
+    var self = this,
+        currentObjectId,
+        btnId;
+        
     self._objects.forEach(function(object) {
-        var currentObjectId = document.getElementById(object.id);
+        currentObjectId = document.getElementById(object.id);
 
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
             currentObjectId.oninput = function() {
@@ -153,7 +155,7 @@ Exam.prototype.startExam = function() {
     });
 
     if (self._finishBtnID !== null) {
-        var btnId = document.getElementById(self._finishBtnID);
+        btnId = document.getElementById(self._finishBtnID);
         btnId.onclick = function() {
             self._finishBtnEventHandler(self._objects);
         };
