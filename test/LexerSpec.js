@@ -114,7 +114,7 @@ describe('Lexer', function() {
     });
 
     describe('_isToken()', function(){
-        it('should return True if string that was passed into this method is syntax token', function(){
+        it('should return True if string that was passed into this method is a syntax token', function(){
             var result1 = lexer._isToken('...');
             var result2 = lexer._isToken('::');
             var result3 = lexer._isToken(':?');
@@ -126,7 +126,7 @@ describe('Lexer', function() {
             expect(result4).toBeTruthy();
         });  
 
-        it('should return False if string that was passed into this method is not syntax token', function(){
+        it('should return False if string that was passed into this method is not a syntax token', function(){
             var result1 = lexer._isToken('..,');
             var result2 = lexer._isToken('');
 
