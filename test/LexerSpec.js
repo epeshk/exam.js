@@ -81,9 +81,15 @@ describe('Lexer', function() {
 
     describe('_isPartOfSeparator()', function(){
         it('shoud return True if the tokens contains a char', function(){
-            var result = lexer._isPartOfSeparator(',');
+            var result1 = lexer._isPartOfSeparator(',');
+            var result2 = lexer._isPartOfSeparator(':');
+            var result3 = lexer._isPartOfSeparator('.');
+            var result4 = lexer._isPartOfSeparator('?');
 
-            expect(result).toBeTruthy();
+            expect(result1).toBeTruthy();
+            expect(result2).toBeTruthy();
+            expect(result3).toBeTruthy();
+            expect(result4).toBeTruthy();
         });  
     });
 });
