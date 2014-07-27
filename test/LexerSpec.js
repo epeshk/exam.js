@@ -125,5 +125,13 @@ describe('Lexer', function() {
             expect(result3).toBeTruthy();
             expect(result4).toBeTruthy();
         });  
+
+        it('should return False if string that was passed into this method is not syntax token', function(){
+            var result1 = lexer._isToken('..,');
+            var result2 = lexer._isToken('');
+
+            expect(result1).toBeFalsy();
+            expect(result2).toBeFalsy();
+        });
     });
 });
