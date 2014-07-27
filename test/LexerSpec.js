@@ -112,4 +112,18 @@ describe('Lexer', function() {
             expect(result3).toBeFalsy();
         });
     });
+
+    describe('_isToken()', function(){
+        it('should return True if string that was passed into this method is syntax token', function(){
+            var result1 = lexer._isToken('...');
+            var result2 = lexer._isToken('::');
+            var result3 = lexer._isToken(':?');
+            var result4 = lexer._isToken(',');
+            
+            expect(result1).toBeTruthy();
+            expect(result2).toBeTruthy();
+            expect(result3).toBeTruthy();
+            expect(result4).toBeTruthy();
+        });  
+    });
 });
