@@ -1792,14 +1792,14 @@ Lexer.prototype._isEmpty = function(string) {
     return LEXER_HELPER.trim(string) === '';
 };
 
-Lexer.prototype._isPartOfSeparator = function(string){
+Lexer.prototype._isPartOfSeparator = function(string) {
     'use strict';
     var self = this;
 
     return ((self.tokens.ITEMS_SPTR.indexOf(string) !== -1) ||
-            (self.tokens.ANSWER_SPTR.indexOf(string) !== -1) ||
-            (self.tokens.HELP_SPTR.indexOf(string) !== -1) ||
-            (self.tokens.INPUT_TOKEN.indexOf(string) !== -1));  
+        (self.tokens.ANSWER_SPTR.indexOf(string) !== -1) ||
+        (self.tokens.HELP_SPTR.indexOf(string) !== -1) ||
+        (self.tokens.INPUT_TOKEN.indexOf(string) !== -1));
 };
 
 Lexer.prototype.parse = function(syntaxBlock) {
@@ -1809,7 +1809,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
         tmpToken = '',
         expression = [],
         source = syntaxBlock;
-        
+
     syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
 
     function tryToAddSeparator(expression, token) {
@@ -1831,14 +1831,16 @@ Lexer.prototype.parse = function(syntaxBlock) {
 
     for (var i = 0; i < syntaxBlock.length; i++) {
         var lastChar = syntaxBlock[i];
-        if (self.tokens.ITEMS_SPTR.indexOf(tmpToken + lastChar) !== -1 ||
-            self.tokens.ANSWER_SPTR.indexOf(tmpToken + lastChar) !== -1 ||
-            self.tokens.HELP_SPTR.indexOf(tmpToken + lastChar) !== -1 ||
-            self.tokens.INPUT_TOKEN.indexOf(tmpToken + lastChar) !== -1) {
+        if (self._isPartOfSeparator(tmpToken + lastChar)) {
             tmpToken += lastChar;
         } else {
-            lastToken += (tmpToken + lastChar);
-            tmpToken = ''; 
+            if (self._isPartOfSeparator(lastChar)) {
+                lastToken += tmpToken;
+                tmpToken = lastChar;
+            } else {
+                lastToken += (tmpToken + lastChar);
+                tmpToken = '';
+            }
         }
         if (tmpToken === self.tokens.ITEMS_SPTR ||
             tmpToken === self.tokens.ANSWER_SPTR ||
