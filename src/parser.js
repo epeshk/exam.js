@@ -39,7 +39,6 @@ function Parser() {
     };
 
     self._currentID = 0;
-
 }
 
 Parser.prototype._trim = function(text) {
