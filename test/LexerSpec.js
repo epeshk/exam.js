@@ -101,5 +101,15 @@ describe('Lexer', function() {
             expect(result2).toBeTruthy();
             expect(result3).toBeTruthy();
         });
+
+        it('should return False if the tokens not contains a string', function(){
+            var result1 = lexer._isPartOfSeparator(':.');
+            var result2 = lexer._isPartOfSeparator(':,');
+            var result3 = lexer._isPartOfSeparator('.,');
+
+            expect(result1).toBeFalsy();
+            expect(result2).toBeFalsy();
+            expect(result3).toBeFalsy();
+        });
     });
 });
