@@ -2220,10 +2220,10 @@ Exam.prototype._getRightAnswer = function(object) {
 
 Exam.prototype._separateCheckingModeEventHandler = function(object) {
     'use strict';
-    var self = this;
-    var currentId = document.getElementById(object.id);
-    var selectAnswer = currentId.value;
-    var rightAnswer = self._getRightAnswer(object);
+    var self = this,
+        currentId = document.getElementById(object.id),
+        selectAnswer = currentId.value,
+        rightAnswer = self._getRightAnswer(object);
 
     if (rightAnswer.toLowerCase() === selectAnswer.toLowerCase()) {
         currentId.style.color = "#7fe817";
@@ -2234,13 +2234,18 @@ Exam.prototype._separateCheckingModeEventHandler = function(object) {
 
 Exam.prototype._finishBtnEventHandler = function(objects) {
     'use strict';
-    var self = this;
-    var countOfQuestions = objects.length;
-    var countOfRightAnswer = 0;
+    var self = this,
+        countOfQuestions = objects.length,
+        countOfRightAnswer = 0,
+        tmpObjId,
+        rightAnswer,
+        selectAnswer;
+
     objects.forEach(function(object) {
-        var tmpObjId = document.getElementById(object.id);
-        var rightAnswer = self._getRightAnswer(object);
-        var selectAnswer = tmpObjId.value;
+        tmpObjId = document.getElementById(object.id);
+        rightAnswer = self._getRightAnswer(object);
+        selectAnswer = tmpObjId.value;
+
         if (selectAnswer === rightAnswer) {
             countOfRightAnswer++;
         }
