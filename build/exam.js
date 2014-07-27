@@ -2206,8 +2206,9 @@ Exam.prototype.parse = function(source) {
 
 Exam.prototype._getRightAnswer = function(object) {
     'use strict';
-    var self = this;
-    var result;
+    var self = this,
+        result;
+
     if (object instanceof List) {
         result = object.items[object.rightAnswerIndex];
     } else {
