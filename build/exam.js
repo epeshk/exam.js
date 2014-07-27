@@ -1802,6 +1802,16 @@ Lexer.prototype._isPartOfToken = function(string) {
         (self.tokens.INPUT_TOKEN.indexOf(string) !== -1));
 };
 
+Lexer.prototype._isToken = function(string){
+    'use strict';
+    var self = this;
+
+    return string === self.tokens.ITEMS_SPTR ||
+            string === self.tokens.ANSWER_SPTR ||
+            string === self.tokens.HELP_SPTR ||
+            string === self.tokens.INPUT_TOKEN;
+};
+
 Lexer.prototype.parse = function(syntaxBlock) {
     'use strict';
     var self = this,
@@ -1842,10 +1852,7 @@ Lexer.prototype.parse = function(syntaxBlock) {
                 tmpToken = '';
             }
         }
-        if (tmpToken === self.tokens.ITEMS_SPTR ||
-            tmpToken === self.tokens.ANSWER_SPTR ||
-            tmpToken === self.tokens.HELP_SPTR ||
-            tmpToken === self.tokens.INPUT_TOKEN) {
+        if (self._isToken(tmpToken)) {
             if (!self._isEmpty(lastToken)) {
                 expression.push(new Item(lastToken));
             }
