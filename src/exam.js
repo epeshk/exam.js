@@ -117,7 +117,8 @@ Exam.prototype.getAnswersInformation = function() {
         countOfRightAnswers = 0,
         tmpObjId,
         rightAnswer,
-        selectedAnswer;
+        selectedAnswer,
+        result = {};
 
     self._objects.forEach(function(object) {
         tmpObjId = document.getElementById(object.id);
@@ -131,10 +132,10 @@ Exam.prototype.getAnswersInformation = function() {
         }
     });
 
-    return {
-        tests: self._objects.length,
-        rightAnswers: countOfRightAnswers
-    };
+    result.tests = self._objects.length;
+    result.rightAnswers = countOfRightAnswers;
+
+    return result; 
 };
 
 Exam.prototype._finishBtnEventHandler = function() {
