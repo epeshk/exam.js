@@ -118,7 +118,9 @@ Exam.prototype.getAnswersInformation = function() {
         tmpObjId,
         rightAnswer,
         selectedAnswer,
-        result = {};
+        result = {
+            idOfRightAnswers: []
+        };
 
     self._objects.forEach(function(object) {
         tmpObjId = document.getElementById(object.id);
@@ -128,6 +130,7 @@ Exam.prototype.getAnswersInformation = function() {
 
             if (selectedAnswer === rightAnswer) {
                 countOfRightAnswers++;
+                result.idOfRightAnswers.push(object.id);
             }
         }
     });
