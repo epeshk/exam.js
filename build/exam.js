@@ -2276,7 +2276,7 @@ Exam.prototype.startExam = function() {
     'use strict';
     var self = this,
         currentObjectId,
-        btnId;
+        finishBtn;
 
     self._objects.forEach(function(object) {
         currentObjectId = document.getElementById(object.id);
@@ -2289,8 +2289,8 @@ Exam.prototype.startExam = function() {
     });
 
     if (self._finishBtnID !== null) {
-        btnId = document.getElementById(self._finishBtnID);
-        btnId.onclick = function() {
+        finishBtn = document.getElementById(self._finishBtnID);
+        finishBtn.onclick = function() {
             self._finishBtnEventHandler();
         };
     }
