@@ -2239,14 +2239,14 @@ Exam.prototype._finishBtnEventHandler = function(objects) {
         countOfRightAnswer = 0,
         tmpObjId,
         rightAnswer,
-        selectAnswer;
+        selectedAnswer;
 
     objects.forEach(function(object) {
         tmpObjId = document.getElementById(object.id);
         rightAnswer = self._getRightAnswer(object);
-        selectAnswer = tmpObjId.value;
+        selectedAnswer = tmpObjId.value;
 
-        if (selectAnswer === rightAnswer) {
+        if (selectedAnswer === rightAnswer) {
             countOfRightAnswer++;
         }
     });
