@@ -16,6 +16,7 @@
     <div class="box promo-text">
         This is a markdown extension that allows you to create tests for students
     </div>
+    <div class="button" id="finishBtn">Finish</div>
     <div class="box">
         <div class="result result-box">
             <textarea id="editor" class="text-pane"></textarea>
@@ -24,7 +25,9 @@
     </div>
     <script type="text/javascript" src="build/exam.js"></script>
     <script type="text/javascript">
-        var exam = new Exam();
+        var exam = new Exam({
+            finishBtnID : 'finishBtn'
+        });
         var resultDiv = document.getElementById('result');
         var editor = document.getElementById('editor');
 
