@@ -2232,7 +2232,7 @@ Exam.prototype._separateCheckingModeEventHandler = function(object) {
     }
 };
 
-Exam.prototype.getAnswersInformation = function(){
+Exam.prototype.getAnswersInformation = function() {
     'use strict';
     var self = this,
         countOfRightAnswers = 0,
@@ -2242,15 +2242,20 @@ Exam.prototype.getAnswersInformation = function(){
 
     self._objects.forEach(function(object) {
         tmpObjId = document.getElementById(object.id);
-        rightAnswer = self._getRightAnswer(object);
-        selectedAnswer = tmpObjId.value;
+        if (tmpObjId) {
+            rightAnswer = self._getRightAnswer(object);
+            selectedAnswer = tmpObjId.value;
 
-        if (selectedAnswer === rightAnswer) {
-            countOfRightAnswers++;
+            if (selectedAnswer === rightAnswer) {
+                countOfRightAnswers++;
+            }
         }
     });
 
-    return { tests: self._objects.length, rightAnswers: countOfRightAnswers };
+    return {
+        tests: self._objects.length,
+        rightAnswers: countOfRightAnswers
+    };
 };
 
 Exam.prototype._finishBtnEventHandler = function() {
@@ -2272,7 +2277,7 @@ Exam.prototype.startExam = function() {
     var self = this,
         currentObjectId,
         btnId;
-        
+
     self._objects.forEach(function(object) {
         currentObjectId = document.getElementById(object.id);
 
