@@ -41,15 +41,19 @@
         {
             var source = editor.value;
             var resultHTML = exam.parse(source);
-            var answersInfo = exam.getAnswersInformation();
             resultDiv.innerHTML = resultHTML;
-            answersDiv.innerHTML = answersInfo.rightAnswers;
-            testsDiv.innerHTML = answersInfo.tests;
             exam.startExam();
         }
 
-        editor.oninput = update;
+        function checkAnswers(){
+            var answersInfo = exam.getAnswersInformation();
+            
+            answersDiv.innerHTML = answersInfo.rightAnswers;
+            testsDiv.innerHTML = answersInfo.tests;
+        }
 
+        editor.oninput = update;
+        resultDiv.oninput = checkAnswers;
     </script>
 
 </body>
