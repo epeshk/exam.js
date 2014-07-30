@@ -36,6 +36,12 @@
         var editor = document.getElementById('editor');
         var answersDiv = document.getElementById('answers');
         var testsDiv = document.getElementById('tests');
+        function checkAnswers(){
+            var answersInfo = exam.getAnswersInformation();
+            
+            answersDiv.innerHTML = ('Answers: ' + answersInfo.rightAnswers);
+            testsDiv.innerHTML = ('Tests: ' +answersInfo.tests);
+        }
 
         function update()
         {
@@ -43,13 +49,7 @@
             var resultHTML = exam.parse(source);
             resultDiv.innerHTML = resultHTML;
             exam.startExam();
-        }
-
-        function checkAnswers(){
-            var answersInfo = exam.getAnswersInformation();
-            
-            answersDiv.innerHTML = ('Answers: ' + answersInfo.rightAnswers);
-            testsDiv.innerHTML = ('Tests: ' +answersInfo.tests);
+            checkAnswers();
         }
 
         editor.oninput = update;
