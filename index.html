@@ -17,6 +17,10 @@
         This is a markdown extension that allows you to create tests for students
     </div>
     <div class="button" id="finishBtn">Finish</div>
+    <div class="answers-box">
+        <div id="answers">0</div>
+        <div id="tests">0</div>
+    </div>
     <div class="box">
         <div class="result result-box">
             <textarea id="editor" class="text-pane"></textarea>
@@ -30,12 +34,17 @@
         });
         var resultDiv = document.getElementById('result');
         var editor = document.getElementById('editor');
+        var answersDiv = document.getElementById('answers');
+        var testsDiv = document.getElementById('tests');
 
         function update()
         {
             var source = editor.value;
             var resultHTML = exam.parse(source);
+            var answersInfo = exam.getAnswersInformation();
             resultDiv.innerHTML = resultHTML;
+            answersDiv.innerHTML = answersInfo.rightAnswers;
+            testsDiv.innerHTML = answersInfo.tests;
             exam.startExam();
         }
 
