@@ -19,7 +19,7 @@
     <div class="button" id="finishBtn">Finish</div>
     <div class="answers-box">
         <div class="counter" id="answers">Answers: 0</div>
-        <div class="counter" id="tests">0: Tests</div>
+        <div class="counter" id="tests">Tests: 0</div>
     </div>
     <div class="box">
         <div class="result result-box">
@@ -49,7 +49,7 @@
             var answersInfo = exam.getAnswersInformation();
             
             answersDiv.innerHTML = ('Answers: ' + answersInfo.rightAnswers);
-            testsDiv.innerHTML = (answersInfo.tests + ': Tests');
+            testsDiv.innerHTML = ('Tests: ' +answersInfo.tests);
         }
 
         editor.oninput = update;
