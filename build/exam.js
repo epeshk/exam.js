@@ -2232,26 +2232,34 @@ Exam.prototype._separateCheckingModeEventHandler = function(object) {
     }
 };
 
-Exam.prototype._finishBtnEventHandler = function(objects) {
+Exam.prototype.getAnswersInformation = function(){
     'use strict';
     var self = this,
-        countOfQuestions = objects.length,
-        countOfRightAnswer = 0,
+        countOfRightAnswers = 0,
         tmpObjId,
         rightAnswer,
         selectedAnswer;
 
-    objects.forEach(function(object) {
+    self._objects.forEach(function(object) {
         tmpObjId = document.getElementById(object.id);
         rightAnswer = self._getRightAnswer(object);
         selectedAnswer = tmpObjId.value;
 
         if (selectedAnswer === rightAnswer) {
-            countOfRightAnswer++;
+            countOfRightAnswers++;
         }
     });
 
-    window.alert("Count of a right answers: " + countOfRightAnswer + "/" + countOfQuestions);
+    return { tests: self._objects.length, rightAnswers: countOfRightAnswers };
+};
+
+Exam.prototype._finishBtnEventHandler = function() {
+    'use strict';
+    var self = this,
+        answersInformation;
+
+    answersInformation = self.getAnswersInformation();
+    window.alert("Count of a right answers: " + answersInformation.rightAnswers + "/" + answersInformation.tests);
 };
 
 Exam.prototype._helpHintEventHandler = function(object) {
@@ -2278,7 +2286,7 @@ Exam.prototype.startExam = function() {
     if (self._finishBtnID !== null) {
         btnId = document.getElementById(self._finishBtnID);
         btnId.onclick = function() {
-            self._finishBtnEventHandler(self._objects);
+            self._finishBtnEventHandler();
         };
     }
 };
