@@ -171,7 +171,7 @@ Exam.prototype.startExam = function() {
         }
     });
 
-    if (self._finishBtnID !== null) {
+    if (self._finishBtnID != null) {
         finishBtn = document.getElementById(self._finishBtnID);
         finishBtn.onclick = function() {
             self._finishBtnEventHandler();
