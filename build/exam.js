@@ -2249,7 +2249,7 @@ Exam.prototype.getAnswersInformation = function() {
             rightAnswer = self._getRightAnswer(object);
             selectedAnswer = tmpObjId.value;
 
-            if (selectedAnswer === rightAnswer) {
+            if (selectedAnswer.toLowerCase() === rightAnswer.toLowerCase()) {
                 countOfRightAnswers++;
                 result.idOfRightAnswers.push(object.id);
             }
@@ -2292,7 +2292,7 @@ Exam.prototype.startExam = function() {
         }
     });
 
-    if (self._finishBtnID !== null) {
+    if (self._finishBtnID != null) {
         finishBtn = document.getElementById(self._finishBtnID);
         finishBtn.onclick = function() {
             self._finishBtnEventHandler();

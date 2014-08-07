@@ -128,7 +128,7 @@ Exam.prototype.getAnswersInformation = function() {
             rightAnswer = self._getRightAnswer(object);
             selectedAnswer = tmpObjId.value;
 
-            if (selectedAnswer === rightAnswer) {
+            if (selectedAnswer.toLowerCase() === rightAnswer.toLowerCase()) {
                 countOfRightAnswers++;
                 result.idOfRightAnswers.push(object.id);
             }
