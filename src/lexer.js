@@ -14,7 +14,9 @@ function Lexer() {
         ITEMS_SPTR: ',',
         INPUT_TOKEN: '...',
         START_BLOCK_TOKEN: '{{',
-        END_BLOCK_TOKEN: '}}'
+        END_BLOCK_TOKEN: '}}',
+        START_CHECKBOX_TOKEN: '|',
+        END_CHECKBOX_TOKEN: '|'
     };
 }
 
