@@ -1724,6 +1724,96 @@ function merge_text_nodes( jsonml ) {
   }
 } )() );
 
+(function() {
+  var AnswerSeparator, HelpSeparator, InputToken, Item, ItemsSeparator, Lexer,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Lexer = (function() {
+    function Lexer() {}
+
+    Lexer.tokens = {
+      ANSWER_SPTR: "::",
+      HELP_SPTR: ":?",
+      ITEMS_SPTR: ",",
+      INPUT_TOKEN: "...",
+      START_BLOCK_TOKEN: "{{",
+      END_BLOCK_TOKEN: "}}",
+      START_CHECKBOX_TOKEN: "|",
+      END_CHECKBOX_TOKEN: "|"
+    };
+
+    Lexer.parse = function(syntaxBlock) {};
+
+    return Lexer;
+
+  })();
+
+  Item = (function() {
+    function Item(value) {
+      this.value = value;
+    }
+
+    return Item;
+
+  })();
+
+  InputToken = (function(_super) {
+    __extends(InputToken, _super);
+
+    function InputToken() {
+      return InputToken.__super__.constructor.apply(this, arguments);
+    }
+
+    return InputToken;
+
+  })(Item);
+
+  AnswerSeparator = (function(_super) {
+    __extends(AnswerSeparator, _super);
+
+    function AnswerSeparator() {
+      return AnswerSeparator.__super__.constructor.apply(this, arguments);
+    }
+
+    return AnswerSeparator;
+
+  })(Item);
+
+  ItemsSeparator = (function(_super) {
+    __extends(ItemsSeparator, _super);
+
+    function ItemsSeparator() {
+      return ItemsSeparator.__super__.constructor.apply(this, arguments);
+    }
+
+    return ItemsSeparator;
+
+  })(Item);
+
+  HelpSeparator = (function(_super) {
+    __extends(HelpSeparator, _super);
+
+    function HelpSeparator() {
+      return HelpSeparator.__super__.constructor.apply(this, arguments);
+    }
+
+    return HelpSeparator;
+
+  })(Item);
+
+  this.InputToken = InputToken;
+
+  this.AnswerSeparator = AnswerSeparator;
+
+  this.ItemsSeparator = ItemsSeparator;
+
+  this.HelpSeparator = this.HelpSeparator;
+
+  this.Lexer = Lexer;
+
+}).call(this);
+
 function ParsingError(message) {
     this.message = message || 'Error was ocured while parsing!';
     this.name = 'ParsingError';
