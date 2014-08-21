@@ -123,7 +123,7 @@ module.exports = function(grunt) {
         coffee: {
             compile: {
                 files: {
-                    'dist/lexer-c.js': ['src/lexer.coffee']
+                    'src/lexer-c.js': ['src/lexer.coffee']
                 }
             },
         }
