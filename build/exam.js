@@ -1759,9 +1759,13 @@ function merge_text_nodes( jsonml ) {
       return syntaxBlock;
     };
 
-    Lexer.prototype._isEmpty = function(string) {};
+    Lexer.prototype._isEmpty = function(string) {
+      return LEXER_HELPER.trim(string) === '';
+    };
 
-    Lexer.prototype._isPartOfToken = function(string) {};
+    Lexer.prototype._isPartOfToken = function(string) {
+      return (self.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (self.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (self.tokens.HELP_SPTR.indexOf(string) !== -1) || (self.tokens.INPUT_TOKEN.indexOf(string) !== -1);
+    };
 
     Lexer.prototype._isToken = function(string) {};
 
