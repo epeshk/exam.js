@@ -1725,9 +1725,15 @@ function merge_text_nodes( jsonml ) {
 } )() );
 
 (function() {
-  var AnswerSeparator, HelpSeparator, InputToken, Item, ItemsSeparator, Lexer,
+  var AnswerSeparator, HelpSeparator, InputToken, Item, ItemsSeparator, LEXER_HELPER, Lexer,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  LEXER_HELPER = {
+    trim: function(string) {
+      return string.replace(/^\s+/, '').replace(/\s+$/, '');
+    }
+  };
 
   Lexer = (function() {
     function Lexer() {}
@@ -1743,7 +1749,15 @@ function merge_text_nodes( jsonml ) {
       END_CHECKBOX_TOKEN: "|"
     };
 
-    Lexer.parse = function(syntaxBlock) {};
+    Lexer.prototype.parse = function(syntaxBlock) {};
+
+    Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {};
+
+    Lexer.prototype._isEmpty = function(string) {};
+
+    Lexer.prototype._isPartOfToken = function(string) {};
+
+    Lexer.prototype._isToken = function(string) {};
 
     return Lexer;
 
@@ -1752,6 +1766,7 @@ function merge_text_nodes( jsonml ) {
   Item = (function() {
     function Item(value) {
       this.value = value;
+      this.value = LEXER_HELPER.trim(this.value);
     }
 
     return Item;
