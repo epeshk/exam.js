@@ -1792,105 +1792,103 @@ function merge_text_nodes( jsonml ) {
   })(Item);
 
   Lexer = (function() {
-    function Lexer() {}
-
-    Lexer.prototype.tokens = {
-      ANSWER_SPTR: "::",
-      HELP_SPTR: ":?",
-      ITEMS_SPTR: ",",
-      INPUT_TOKEN: "...",
-      START_BLOCK_TOKEN: "{{",
-      END_BLOCK_TOKEN: "}}",
-      START_CHECKBOX_TOKEN: "|",
-      END_CHECKBOX_TOKEN: "|"
-    };
+    function Lexer() {
+      this.tokens = {
+        ANSWER_SPTR: "::",
+        HELP_SPTR: ":?",
+        ITEMS_SPTR: ",",
+        INPUT_TOKEN: "...",
+        START_BLOCK_TOKEN: "{{",
+        END_BLOCK_TOKEN: "}}",
+        START_CHECKBOX_TOKEN: "|",
+        END_CHECKBOX_TOKEN: "|"
+      };
+      this._clearSyntaxBlock = (function(_this) {
+        return function(syntaxBlock) {
+          if (syntaxBlock.substring(0, 2) === _this.tokens.START_BLOCK_TOKEN) {
+            syntaxBlock = syntaxBlock.substring(2);
+          }
+          if (syntaxBlock.substring(syntaxBlock.length - 2) === _this.tokens.END_BLOCK_TOKEN) {
+            syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
+          }
+          return syntaxBlock;
+        };
+      })(this);
+      this._isEmpty = function(string) {
+        return LEXER_HELPER.trim(string) === "";
+      };
+      this._isPartOfToken = (function(_this) {
+        return function(string) {
+          return (_this.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (_this.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (_this.tokens.HELP_SPTR.indexOf(string) !== -1) || (_this.tokens.INPUT_TOKEN.indexOf(string) !== -1);
+        };
+      })(this);
+      this._isToken = (function(_this) {
+        return function(string) {
+          return string === _this.tokens.ITEMS_SPTR || string === _this.tokens.ANSWER_SPTR || string === _this.tokens.HELP_SPTR || string === _this.tokens.INPUT_TOKEN;
+        };
+      })(this);
+      this.parse = (function(_this) {
+        return function(syntaxBlock) {
+          var exp, lastChar, lastToken, source, symbol, tmpToken, tryToAddSeparator, _i, _len;
+          exp = [];
+          lastToken = "";
+          tmpToken = "";
+          source = syntaxBlock;
+          syntaxBlock = _this._clearSyntaxBlock(syntaxBlock);
+          tryToAddSeparator = function(exp, token) {
+            if (!_this._isEmpty(token)) {
+              if (token === _this.tokens.ITEMS_SPTR) {
+                exp.push(new ItemsSeparator(token));
+              }
+              if (token === _this.tokens.ANSWER_SPTR) {
+                exp.push(new AnswerSeparator(token));
+              }
+              if (token === _this.tokens.HELP_SPTR) {
+                exp.push(new HelpSeparator(token));
+              }
+              if (token === _this.tokens.INPUT_TOKEN) {
+                exp.push(new InputToken(token));
+              }
+            }
+          };
+          for (_i = 0, _len = syntaxBlock.length; _i < _len; _i++) {
+            symbol = syntaxBlock[_i];
+            lastChar = symbol;
+            if (_this._isPartOfToken(tmpToken + lastChar)) {
+              tmpToken += lastChar;
+            } else {
+              if (_this._isPartOfToken(lastChar)) {
+                lastToken += tmpToken;
+                tmpToken = lastChar;
+              } else {
+                lastToken += tmpToken + lastChar;
+                tmpToken = "";
+              }
+            }
+            if (_this._isToken(tmpToken)) {
+              if (!_this._isEmpty(lastToken)) {
+                exp.push(new Item(lastToken));
+              }
+              tryToAddSeparator(exp, tmpToken);
+              lastToken = "";
+              tmpToken = "";
+            }
+          }
+          exp.push(new Item(lastToken));
+          exp = exp.filter(function(e) {
+            return e.value !== void 0 && e.value !== null;
+          });
+          return {
+            expression: exp,
+            syntaxBlock: source
+          };
+        };
+      })(this);
+    }
 
     return Lexer;
 
   })();
-
-  Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
-    var self;
-    self = this;
-    if (syntaxBlock.substring(0, 2) === self.tokens.START_BLOCK_TOKEN) {
-      syntaxBlock = syntaxBlock.substring(2);
-    }
-    if (syntaxBlock.substring(syntaxBlock.length - 2) === self.tokens.END_BLOCK_TOKEN) {
-      syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
-    }
-    return syntaxBlock;
-  };
-
-  Lexer.prototype._isEmpty = function(string) {
-    return LEXER_HELPER.trim(string) === "";
-  };
-
-  Lexer.prototype._isPartOfToken = function(string) {
-    var self;
-    self = this;
-    return (self.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (self.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (self.tokens.HELP_SPTR.indexOf(string) !== -1) || (self.tokens.INPUT_TOKEN.indexOf(string) !== -1);
-  };
-
-  Lexer.prototype._isToken = function(string) {
-    var self;
-    self = this;
-    return string === self.tokens.ITEMS_SPTR || string === self.tokens.ANSWER_SPTR || string === self.tokens.HELP_SPTR || string === self.tokens.INPUT_TOKEN;
-  };
-
-  Lexer.prototype.parse = function(syntaxBlock) {
-    var expression, i, lastChar, lastToken, self, source, tmpToken, tryToAddSeparator, _i, _len, _ref;
-    self = this;
-    syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
-    expression = [];
-    lastToken = "";
-    tmpToken = "";
-    source = syntaxBlock;
-    tryToAddSeparator = function(expression, token) {
-      if (!self._isEmpty(token)) {
-        if (token === self.tokens.ITEMS_SPTR) {
-          expression.push(new ItemsSeparator(token));
-        }
-        if (token === self.tokens.ANSWER_SPTR) {
-          expression.push(new AnswerSeparator(token));
-        }
-        if (token === self.tokens.HELP_SPTR) {
-          expression.push(new HelpSeparator(token));
-        }
-        if (token === self.tokens.INPUT_TOKEN) {
-          return expression.push(new InputToken(token));
-        }
-      }
-    };
-    _ref = syntaxBlock.length;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      i = _ref[_i];
-      lastChar = syntaxBlock[i];
-      if (self._isPartOfToken(tmpToken + lastChar)) {
-        tmpToken += lastChar;
-      } else {
-        if (self._isPartOfToken(lastChar)) {
-          lastToken += tmpToken;
-          tmpToken = lastChar;
-        } else {
-          lastToken += tmpToken + lastChar;
-          tmpToken = "";
-        }
-      }
-      if (self._isToken(tmpToken)) {
-        if (!self._isEmpty(lastToken)) {
-          expression.push(new Item(lastToken));
-        }
-        tryToAddSeparator(expression, tmpToken);
-        lastToken = "";
-        tmpToken = "";
-      }
-    }
-    expression.push(new Item(lastToken));
-    return {
-      expression: expression,
-      syntaxBlock: source
-    };
-  };
 
   this.Item = Item;
 
@@ -2046,18 +2044,21 @@ Parser.prototype._parseExpression = function(expression) {
         lastSeparator = null;
 
     expression.forEach(function(item) {
-        if (item instanceof InputToken) {
-            result.hasInputToken = true;
-        } else if (item instanceof Item && lastSeparator === null) {
-            result.items.push(item.value);
-        } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
-            result.answers.push(item.value);
-        } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
-            result.helpText = item.value;
-        } else if (item instanceof AnswerSeparator) {
-            lastSeparator = item;
-        } else if (item instanceof HelpSeparator) {
-            lastSeparator = item;
+        if (!(item instanceof ItemsSeparator)) {
+            if (item instanceof InputToken) {
+                result.hasInputToken = true;
+            } else if (item instanceof AnswerSeparator) {
+                console.log(item.value)
+                lastSeparator = item;
+            } else if (item instanceof HelpSeparator) {
+                lastSeparator = item;
+            } else if (item instanceof Item && lastSeparator === null) {
+                result.items.push(item.value);
+            } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
+                result.answers.push(item.value);
+            } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
+                result.helpText = item.value;
+            }
         }
     });
 

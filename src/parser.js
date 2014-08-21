@@ -138,18 +138,21 @@ Parser.prototype._parseExpression = function(expression) {
         lastSeparator = null;
 
     expression.forEach(function(item) {
-        if (item instanceof InputToken) {
-            result.hasInputToken = true;
-        } else if (item instanceof Item && lastSeparator === null) {
-            result.items.push(item.value);
-        } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
-            result.answers.push(item.value);
-        } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
-            result.helpText = item.value;
-        } else if (item instanceof AnswerSeparator) {
-            lastSeparator = item;
-        } else if (item instanceof HelpSeparator) {
-            lastSeparator = item;
+        if (!(item instanceof ItemsSeparator)) {
+            if (item instanceof InputToken) {
+                result.hasInputToken = true;
+            } else if (item instanceof AnswerSeparator) {
+                console.log(item.value)
+                lastSeparator = item;
+            } else if (item instanceof HelpSeparator) {
+                lastSeparator = item;
+            } else if (item instanceof Item && lastSeparator === null) {
+                result.items.push(item.value);
+            } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
+                result.answers.push(item.value);
+            } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
+                result.helpText = item.value;
+            }
         }
     });
 

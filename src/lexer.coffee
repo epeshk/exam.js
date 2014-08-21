@@ -13,87 +13,86 @@ class ItemsSeparator extends Item
 class HelpSeparator extends Item
 
 class Lexer
-    @::tokens =
-        ANSWER_SPTR: "::"
-        HELP_SPTR: ":?"
-        ITEMS_SPTR: ","
-        INPUT_TOKEN: "..."
-        START_BLOCK_TOKEN: "{{"
-        END_BLOCK_TOKEN: "}}"
-        START_CHECKBOX_TOKEN: "|"
-        END_CHECKBOX_TOKEN: "|"
+    constructor: ->
+        @tokens =
+            ANSWER_SPTR: "::"
+            HELP_SPTR: ":?"
+            ITEMS_SPTR: ","
+            INPUT_TOKEN: "..."
+            START_BLOCK_TOKEN: "{{"
+            END_BLOCK_TOKEN: "}}"
+            START_CHECKBOX_TOKEN: "|"
+            END_CHECKBOX_TOKEN: "|"
 
-Lexer::_clearSyntaxBlock = (syntaxBlock) ->
-    self = this
-    if syntaxBlock.substring(0, 2) is self.tokens.START_BLOCK_TOKEN
-        syntaxBlock = syntaxBlock.substring(2)
-    if syntaxBlock.substring(syntaxBlock.length - 2) is self.tokens.END_BLOCK_TOKEN
-        syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2)
-    syntaxBlock;
+        @_clearSyntaxBlock = (syntaxBlock) =>
+            if syntaxBlock.substring(0, 2) is @tokens.START_BLOCK_TOKEN
+                syntaxBlock = syntaxBlock.substring(2)
+            if syntaxBlock.substring(syntaxBlock.length - 2) is @tokens.END_BLOCK_TOKEN
+                syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2)
+            syntaxBlock;
 
-Lexer::_isEmpty = (string) ->
-    LEXER_HELPER.trim(string) is ""
+        @_isEmpty = (string) ->
+            LEXER_HELPER.trim(string) is ""
 
-Lexer::_isPartOfToken = (string) ->
-    self = this
-    ((self.tokens.ITEMS_SPTR.indexOf(string) isnt -1) or
-    (self.tokens.ANSWER_SPTR.indexOf(string) isnt -1) or
-    (self.tokens.HELP_SPTR.indexOf(string) isnt -1) or
-    (self.tokens.INPUT_TOKEN.indexOf(string) isnt -1))
+        @_isPartOfToken = (string) =>
+            ((@tokens.ITEMS_SPTR.indexOf(string) isnt -1) or
+            (@tokens.ANSWER_SPTR.indexOf(string) isnt -1) or
+            (@tokens.HELP_SPTR.indexOf(string) isnt -1) or
+            (@tokens.INPUT_TOKEN.indexOf(string) isnt -1))
 
-Lexer::_isToken = (string) -> 
-    self = this
-    string is self.tokens.ITEMS_SPTR or
-    string is self.tokens.ANSWER_SPTR or 
-    string is self.tokens.HELP_SPTR or
-    string is self.tokens.INPUT_TOKEN;
+        @_isToken = (string) => 
+            string is @tokens.ITEMS_SPTR or
+            string is @tokens.ANSWER_SPTR or 
+            string is @tokens.HELP_SPTR or
+            string is @tokens.INPUT_TOKEN;
 
-Lexer::parse = (syntaxBlock) ->
-    self = this
-    syntaxBlock = self._clearSyntaxBlock(syntaxBlock);
-    expression = []
-    lastToken = ""
-    tmpToken = ""
-    source = syntaxBlock
-
-    tryToAddSeparator = (expression, token) ->
-        if not self._isEmpty(token)
-            if token is self.tokens.ITEMS_SPTR
-                expression.push(new ItemsSeparator(token))
-            if token is self.tokens.ANSWER_SPTR
-                expression.push(new AnswerSeparator(token))
-            if token is self.tokens.HELP_SPTR
-                expression.push(new HelpSeparator(token))
-            if token is self.tokens.INPUT_TOKEN
-                expression.push(new InputToken(token))
-
-
-    for i in syntaxBlock.length
-        lastChar = syntaxBlock[i]
-        if self._isPartOfToken(tmpToken + lastChar)
-            tmpToken += lastChar
-        else
-            if self._isPartOfToken(lastChar)
-                lastToken += tmpToken
-                tmpToken = lastChar
-            else
-                lastToken += (tmpToken + lastChar);
-                tmpToken = "";
-
-        if self._isToken(tmpToken)
-            if not self._isEmpty(lastToken)
-                expression.push(new Item(lastToken))
-            tryToAddSeparator(expression, tmpToken)
-
-            lastToken = "";
+        @parse = (syntaxBlock) =>
+            exp = []
+            lastToken = ""
             tmpToken = ""
+            source = syntaxBlock
 
-    expression.push(new Item(lastToken))
+            syntaxBlock = @_clearSyntaxBlock(syntaxBlock);
 
-    {
-        expression: expression,
-        syntaxBlock: source
-    }
+            tryToAddSeparator = (exp, token) =>
+                if not @_isEmpty(token)
+                    if token is @tokens.ITEMS_SPTR
+                        exp.push(new ItemsSeparator(token))
+                    if token is @tokens.ANSWER_SPTR
+                        exp.push(new AnswerSeparator(token))
+                    if token is @tokens.HELP_SPTR
+                        exp.push(new HelpSeparator(token))
+                    if token is @tokens.INPUT_TOKEN
+                        exp.push(new InputToken(token))
+                return
+
+            for symbol in syntaxBlock
+                lastChar = symbol
+                if @_isPartOfToken(tmpToken + lastChar)
+                    tmpToken += lastChar
+                else
+                    if @_isPartOfToken(lastChar)
+                        lastToken += tmpToken
+                        tmpToken = lastChar
+                    else
+                        lastToken += (tmpToken + lastChar)
+                        tmpToken = ""
+
+                if @_isToken(tmpToken)
+                    if not @_isEmpty(lastToken)
+                        exp.push(new Item(lastToken))
+                    tryToAddSeparator(exp, tmpToken)
+
+                    lastToken = ""
+                    tmpToken = ""
+
+            exp.push(new Item(lastToken))
+            exp = exp.filter (e) -> e.value isnt undefined and e.value isnt null
+
+            {
+                expression: exp
+                syntaxBlock: source
+            }
 
 @Item = Item
 @InputToken = InputToken
@@ -101,4 +100,3 @@ Lexer::parse = (syntaxBlock) ->
 @ItemsSeparator = ItemsSeparator
 @HelpSeparator = HelpSeparator
 @Lexer = Lexer
-
