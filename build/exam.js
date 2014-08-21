@@ -1900,13 +1900,13 @@ function TextInput(rightAnswer, syntaxBlock, id, helpText) {
     }
 }
 
-function Checkbox(items ,rightAnswer, syntaxBlock, id, helpText){
+function Checkbox(items, rightAnswer, syntaxBlock, id, helpText) {
     this.items = items;
     this.rightAnswer = rightAnswer;
     this.syntaxBlock = syntaxBlock;
     this.helpText = helpText;
     this.id = id;
-    if(helpText) {
+    if (helpText) {
         this._helpTagId = 'help_' + this.id;
     }
 }
