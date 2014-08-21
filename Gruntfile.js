@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         },
         watch: {
             dev: {
-                files: ['src/*.js', 'test/*.js'],
+                files: ['src/*.js', 'test/*.js', 'src/*.coffee'],
                 tasks: ['coffee','concat:prebuild', 'jshint:dev', 'concat:build', 'test', 'notify:test']
             }
         },
