@@ -1749,15 +1749,23 @@ function merge_text_nodes( jsonml ) {
       END_CHECKBOX_TOKEN: "|"
     };
 
-    Lexer.prototype.parse = function(syntaxBlock) {};
-
-    Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {};
+    Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
+      if (syntaxBlock.substring(0, 2) === self.tokens.START_BLOCK_TOKEN) {
+        syntaxBlock = syntaxBlock.substring(2);
+      }
+      if (syntaxBlock.substring(syntaxBlock.length - 2) === self.tokens.END_BLOCK_TOKEN) {
+        syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
+      }
+      return syntaxBlock;
+    };
 
     Lexer.prototype._isEmpty = function(string) {};
 
     Lexer.prototype._isPartOfToken = function(string) {};
 
     Lexer.prototype._isToken = function(string) {};
+
+    Lexer.prototype.parse = function(syntaxBlock) {};
 
     return Lexer;
 
