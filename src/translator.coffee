@@ -1,5 +1,5 @@
 class Translator
-    @constructor: ->
+    constructor: ->
 
         @::_createTextInput = (inputObject) ->
             helpTag = ""
@@ -9,6 +9,5 @@ class Translator
                 result += helpTag
 
             result
-        
 
 @Translator = Translator
