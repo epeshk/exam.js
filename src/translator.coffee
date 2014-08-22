@@ -1,14 +1,14 @@
 class Translator
     constructor: ->
 
-        @::_createTextInput = (inputObject) ->
+        @_createTextInput = (inputObject) ->
             result = "<input type='text' id='#{inputObject.id}' class='examjs-input'></input>"
             if inputObject.helpText
                 result += "<div id'#{inputObject._helpTagId}' class='examjs-help-popup' data-help='#{inputObject.helpText}'>?</div>"
 
             result
 
-        @::_createListBox = (listObject) ->
+        @_createListBox = (listObject) ->
             result = "<select id='#{listObject.id}' class='examjs-input'>"
 
             for item in listObject.items
@@ -20,20 +20,20 @@ class Translator
 
             "<div class='examjs-block'>#{result}</div>"
 
-        @::convertAllObjects = (objects) ->
+        @convertAllObjects = (objects) ->
             result = []
 
             for object in objects
                 if (object instanceof List)
                     result.push {
                         source: object.syntaxBlock
-                        result: self._createListBox(object)
+                        result: @_createListBox(object)
                         block: 'list'
                     }
                 else if (object instanceof TextInput)
                     result.push {
                         source: object.syntaxBlock,
-                        result: self._createTextInput(object),
+                        result: @_createTextInput(object),
                         block: 'textInput'
                     }
                 else
