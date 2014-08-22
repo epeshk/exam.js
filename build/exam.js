@@ -2092,9 +2092,9 @@ Parser.prototype.parse = function(text) {
         var result;
         result = "<input type='text' id='" + inputObject.id + "' class='examjs-input'></input>";
         if (inputObject.helpText) {
-          result += "<div id'" + inputObject._helpTagId + "' class='examjs-help-popup' data-help='" + inputObject.helpText + "'>?</div>";
+          result += "<div id='" + inputObject._helpTagId + "' class='examjs-help-popup' data-help='" + inputObject.helpText + "'>?</div>";
         }
-        return result;
+        return "<div class='examjs-block'>" + result + "</div>";
       };
       this._createListBox = function(listObject) {
         var item, result, _i, _len, _ref;
@@ -2106,7 +2106,7 @@ Parser.prototype.parse = function(text) {
         }
         result += '</select>';
         if (listObject.helpText) {
-          result += "<div id'" + listObject._helpTagId + "' class='examjs-help-popup' data-help='" + inputObject.helpText + "'>?</div>";
+          result += "<div id='" + listObject._helpTagId + "' class='examjs-help-popup' data-help='" + inputObject.helpText + "'>?</div>";
         }
         return "<div class='examjs-block'>" + result + "</div>";
       };
