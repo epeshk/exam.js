@@ -20,4 +20,25 @@ class Translator
 
             "<div class='examjs-block'>#{result}</div>"
 
+        @::convertAllObjects = (objects) ->
+            result = []
+
+            for object in objects
+                if (object instanceof List)
+                    result.push {
+                        source: object.syntaxBlock
+                        result: self._createListBox(object)
+                        block: 'list'
+                    }
+                else if (object instanceof TextInput)
+                    result.push {
+                        source: object.syntaxBlock,
+                        result: self._createTextInput(object),
+                        block: 'textInput'
+                    }
+                else
+                    throw new Error('Converting error. Translator cannot convert object that was passed into it')
+
+            result
+
 @Translator = Translator
