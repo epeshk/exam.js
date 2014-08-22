@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js', 'src/*.coffee'],
-                tasks: ['coffee','concat:prebuild', 'jshint:dev', 'concat:build', 'test', 'notify:test']
+                tasks: ['coffee','concat:prebuild', 'concat:build', 'test', 'notify:test']
             }
         },
         clean: {
@@ -144,6 +144,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jasmine']);
     grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean','coffee', 'concat:prebuild', 'jshint:build', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
+    grunt.registerTask('default', ['clean','coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
