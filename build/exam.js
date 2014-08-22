@@ -2048,7 +2048,6 @@ Parser.prototype._parseExpression = function(expression) {
             if (item instanceof InputToken) {
                 result.hasInputToken = true;
             } else if (item instanceof AnswerSeparator) {
-                console.log(item.value)
                 lastSeparator = item;
             } else if (item instanceof HelpSeparator) {
                 lastSeparator = item;
