@@ -9,3 +9,5 @@ class List extends ExamObject
 		super(syntaxBlock, helpText, id)
 		@items = items
 		@rightAnswerIndex = rightAnswerIndex
+		if helpText
+			@_helpTagId = "help_#{@id}"
