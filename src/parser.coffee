@@ -11,3 +11,8 @@ class List extends ExamObject
         super(syntaxBlock, helpText, id)
         @items = items
         @rightAnswerIndex = rightAnswerIndex
+
+class TextInput extends ExamObject
+    constructor: (syntaxBlock, helpText, id, rightAnswer) ->
+        super(syntaxBlock,helpText,id)
+        @rightAnswer = rightAnswer
