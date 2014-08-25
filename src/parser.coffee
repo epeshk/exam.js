@@ -4,5 +4,8 @@ class ExamObject
 		@helpText = helpText
 		@id = id
 
-class List
-	constructor: (items, rightAnswerIndex, syntaxBlock, id, helpText) ->
+class List extends ExamObject
+	constructor: (syntaxBlock, helpText, id, items, rightAnswerIndex) ->
+		super(syntaxBlock, helpText, id)
+		@items = items
+		@rightAnswerIndex = rightAnswerIndex
