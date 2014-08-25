@@ -16,6 +16,7 @@ class TextInput extends ExamObject
     constructor: (syntaxBlock, helpText, id, rightAnswer) ->
         super(syntaxBlock,helpText,id)
         @rightAnswer = rightAnswer
+        
 class CheckBox extends ExamObject
     constructor: (syntaxBlock, helpText, id, items, rightAnswerIndex) ->
         super(syntaxBlock, helpText, id)
