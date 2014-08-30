@@ -22,3 +22,10 @@ class CheckBox extends ExamObject
         super(syntaxBlock, helpText, id)
         @items = items
         @rightAnswerIndex = rightAnswerIndex
+
+class Parser
+    constructor: (lexer) ->
+        @_patterns =
+            blockPattern: /\{\{(.|\n)*?\}\}/g
+            emptyBlock: '{{}}'
+        @_currentID = 0
