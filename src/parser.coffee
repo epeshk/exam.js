@@ -29,3 +29,5 @@ class Parser
             blockPattern: /\{\{(.|\n)*?\}\}/g
             emptyBlock: '{{}}'
         @_currentID = 0
+        @lexer = lexer
+

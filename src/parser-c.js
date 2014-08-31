@@ -62,6 +62,7 @@
         emptyBlock: '{{}}'
       };
       this._currentID = 0;
+      this.lexer = lexer;
     }
 
     return Parser;
