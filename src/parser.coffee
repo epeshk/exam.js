@@ -112,6 +112,3 @@ class Parser
 @List = List
 @TextInput = TextInput
 @CheckBox = CheckBox
-
-
-
