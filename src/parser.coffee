@@ -37,4 +37,13 @@ class Parser
 
         @_getNextID = ->
             "examjsid_#{++@._currentID}"
-        
+
+        @_indexOfRightAnswer = (items, answer) ->
+            result = -1
+
+            if answer
+                for item in items
+                    if @_trim(item.toLowerCase()) is @_trim(answer.toLowerCase())
+                        result = items.indexOf item
+
+            result

@@ -71,6 +71,19 @@
       this._getNextID = function() {
         return "examjsid_" + (++this._currentID);
       };
+      this._indexOfRightAnswer = function(items, answer) {
+        var item, result, _i, _len;
+        result = -1;
+        if (answer) {
+          for (_i = 0, _len = items.length; _i < _len; _i++) {
+            item = items[_i];
+            if (this._trim(item.toLowerCase()) === this._trim(answer.toLowerCase())) {
+              result = items.indexOf(item);
+            }
+          }
+        }
+        return result;
+      };
     }
 
     return Parser;
