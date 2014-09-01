@@ -95,6 +95,11 @@
         id = this._getNextID();
         return new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0]);
       };
+      this._parseSyntaxBlocks = function(text) {
+        var regexp;
+        regexp = new RegExp(this._patterns.blockPattern);
+        return text.match(regexp);
+      };
     }
 
     return Parser;

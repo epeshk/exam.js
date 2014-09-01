@@ -58,6 +58,9 @@ class Parser
             id = @_getNextID()
             new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0])
 
+        @_parseSyntaxBlocks = (text) ->
+            regexp = new RegExp(@_patterns.blockPattern)
+            text.match(regexp)
 
 
 
