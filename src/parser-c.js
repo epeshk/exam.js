@@ -116,6 +116,43 @@
         }
         return result;
       };
+      this._parseExpression = function(expression) {
+        var lastSeparator, result, token, _i, _len;
+        result = {
+          items: [],
+          answers: [],
+          hasInputToken: false
+        };
+        lastSeparator = null;
+        for (_i = 0, _len = expression.length; _i < _len; _i++) {
+          token = expression[_i];
+          if (!token instanceof ItemsSeparator) {
+            switch (token) {
+              case token instanceof InputToken:
+                result.hasInputToken = true;
+                break;
+              case token instanceof AnswerSeparator:
+                lastSeparator = token;
+                break;
+              case token instanceof HelpSeparator:
+                lastSeparator = token;
+                break;
+              case token instanceof Item && lastSeparator === null:
+                result.items.push(token.value);
+                break;
+              case token instanceof Item && lastSeparator instanceof AnswerSeparator:
+                result.answers.push(token.value);
+                break;
+              case token instanceof Item && lastSeparator instanceof HelpSeparator:
+                result.helpText = token.value;
+                break;
+              default:
+                token;
+            }
+          }
+        }
+        return result;
+      };
     }
 
     return Parser;

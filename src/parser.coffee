@@ -75,6 +75,27 @@ class Parser
 
             result
 
+        @_parseExpression = (expression) ->
+            result = {
+                items: []
+                answers: []
+                hasInputToken: false
+            }
+            lastSeparator = null
+
+            for token in expression
+                if not token instanceof ItemsSeparator
+                    switch token
+                        when token instanceof InputToken then result.hasInputToken = true
+                        when token instanceof AnswerSeparator then lastSeparator = token
+                        when token instanceof HelpSeparator then lastSeparator = token
+                        when token instanceof Item and lastSeparator is null then result.items.push(token.value)
+                        when token instanceof Item and lastSeparator instanceof AnswerSeparator then result.answers.push(token.value)
+                        when token instanceof Item and lastSeparator instanceof HelpSeparator then result.helpText = token.value
+                        else token
+
+            result
+
 
 
 
