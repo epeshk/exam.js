@@ -90,6 +90,11 @@
         id = this._getNextID();
         return new List(syntaxBlock, expressionObj.helpText, id, expressionObj.items, rightAnswerIndex);
       };
+      this._createTextInput = function(expressionObj, syntaxBlock) {
+        var id;
+        id = this._getNextID();
+        return new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0]);
+      };
     }
 
     return Parser;

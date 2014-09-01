@@ -54,10 +54,13 @@ class Parser
 
             new List(syntaxBlock, expressionObj.helpText, id, expressionObj.items, rightAnswerIndex)
 
+        @_createTextInput = (expressionObj, syntaxBlock) ->
+            id = @_getNextID()
+            new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0])
 
 
 
 
 
 
-            
+
