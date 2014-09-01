@@ -1904,184 +1904,191 @@ function merge_text_nodes( jsonml ) {
 
 }).call(this);
 
-function ParsingError(message) {
-    this.message = message || 'Error was ocured while parsing!';
-    this.name = 'ParsingError';
-}
+(function() {
+  var CheckBox, ExamObject, List, Parser, TextInput,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-ParsingError.prototype = Error.prototype;
-
-function List(items, rightAnswerIndex, syntaxBlock, id, helpText) {
-    this.items = items;
-    this.rightAnswerIndex = rightAnswerIndex;
-    this.syntaxBlock = syntaxBlock;
-    this.helpText = helpText;
-    this.id = id;
-    if (helpText) {
-        this._helpTagId = 'help_' + this.id;
+  ExamObject = (function() {
+    function ExamObject(syntaxBlock, helpText, id) {
+      this.syntaxBlock = syntaxBlock;
+      this.helpText = helpText;
+      this.id = id;
+      if (helpText) {
+        this._helpTagId = "help_" + this.id;
+      }
     }
-}
 
-function TextInput(rightAnswer, syntaxBlock, id, helpText) {
-    this.rightAnswer = rightAnswer;
-    this.syntaxBlock = syntaxBlock;
-    this.helpText = helpText;
-    this.id = id;
-    if (helpText) {
-        this._helpTagId = 'help_' + this.id;
-    }
-}
+    return ExamObject;
 
-function Checkbox(items, rightAnswer, syntaxBlock, id, helpText) {
-    this.items = items;
-    this.rightAnswer = rightAnswer;
-    this.syntaxBlock = syntaxBlock;
-    this.helpText = helpText;
-    this.id = id;
-    if (helpText) {
-        this._helpTagId = 'help_' + this.id;
-    }
-}
+  })();
 
-function Parser() {
-    'use strict';
-    if (!(this instanceof Parser)) {
-        return new Parser();
+  List = (function(_super) {
+    __extends(List, _super);
+
+    function List(syntaxBlock, helpText, id, items, rightAnswerIndex) {
+      List.__super__.constructor.call(this, syntaxBlock, helpText, id);
+      this.items = items;
+      this.rightAnswerIndex = rightAnswerIndex;
     }
-    var self = this;
-    self.lexer = new Lexer();
-    self._patterns = {
+
+    return List;
+
+  })(ExamObject);
+
+  TextInput = (function(_super) {
+    __extends(TextInput, _super);
+
+    function TextInput(syntaxBlock, helpText, id, rightAnswer) {
+      TextInput.__super__.constructor.call(this, syntaxBlock, helpText, id);
+      this.rightAnswer = rightAnswer;
+    }
+
+    return TextInput;
+
+  })(ExamObject);
+
+  CheckBox = (function(_super) {
+    __extends(CheckBox, _super);
+
+    function CheckBox(syntaxBlock, helpText, id, items, rightAnswerIndex) {
+      CheckBox.__super__.constructor.call(this, syntaxBlock, helpText, id);
+      this.items = items;
+      this.rightAnswerIndex = rightAnswerIndex;
+    }
+
+    return CheckBox;
+
+  })(ExamObject);
+
+  Parser = (function() {
+    function Parser(lexer) {
+      this._patterns = {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
-        emptyBlock: '{{}}',
-    };
-
-    self._currentID = 0;
-}
-
-Parser.prototype._trim = function(text) {
-    'use strict';
-    var result = text.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '').replace(/\s+/g, ' ');
-    return result;
-};
-
-Parser.prototype._getNextID = function() {
-    'use strict';
-    var self = this;
-    return 'examjsid_' + (++self._currentID);
-};
-
-Parser.prototype._indexOfRightAnswer = function(items, answer) {
-    'use strict';
-    var self = this,
+        emptyBlock: '{{}}'
+      };
+      this._currentID = 0;
+      this.lexer = lexer;
+      this._trim = function(text) {
+        var whiteSpacesPattern;
+        whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g;
+        return text.replace(whiteSpacesPattern, '').replace(/\s+/g, ' ');
+      };
+      this._getNextID = function() {
+        return "examjsid_" + (++this._currentID);
+      };
+      this._indexOfRightAnswer = function(items, answer) {
+        var item, result, _i, _len;
         result = -1;
-
-    if (answer) {
-        items.forEach(function(item) {
-            if (self._trim(item.toLowerCase()) === self._trim(answer.toLowerCase())) {
-                result = items.indexOf(item);
+        if (answer) {
+          for (_i = 0, _len = items.length; _i < _len; _i++) {
+            item = items[_i];
+            if (this._trim(item.toLowerCase()) === this._trim(answer.toLowerCase())) {
+              result = items.indexOf(item);
             }
-        });
-    }
-    return result;
-};
-
-Parser.prototype._createList = function(expressionObj, syntaxBlock) {
-    'use strict';
-    var self = this,
-        rightAnswerIndex = self._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]),
-        id = self._getNextID();
-
-    return new List(expressionObj.items, rightAnswerIndex, syntaxBlock, id, expressionObj.helpText);
-};
-
-Parser.prototype._createTextInput = function(expressionObject, syntaxBlock) {
-    'use strict';
-    var self = this,
-        id = self._getNextID();
-
-    return new TextInput(expressionObject.answers[0], syntaxBlock, id, expressionObject.helpText);
-};
-
-Parser.prototype._parseSyntaxBlocks = function(text) {
-    'use strict';
-    var self = this,
-        regexp = new RegExp(self._patterns.blockPattern),
-        result = text.match(regexp);
-
-    return result;
-};
-
-
-Parser.prototype._extractObjects = function(expressions) {
-    'use strict';
-    var self = this,
-        result = [];
-
-    if (expressions === null) {
+          }
+        }
         return result;
-    }
-
-    expressions.forEach(function(exp) {
-        var tmpObj = self._parseExpression(exp.expression);
-        if (tmpObj.hasInputToken) {
-            result.push(self._createTextInput(tmpObj, exp.syntaxBlock));
-        } else {
-            result.push(self._createList(tmpObj, exp.syntaxBlock));
-        }
-    });
-
-    return result;
-};
-
-Parser.prototype._parseExpression = function(expression) {
-    'use strict';
-    var self = this,
-        result = {
-            items: [],
-            answers: [],
-            hasInputToken: false
-        },
-        lastSeparator = null;
-
-    expression.forEach(function(item) {
-        if (!(item instanceof ItemsSeparator)) {
-            if (item instanceof InputToken) {
-                result.hasInputToken = true;
-            } else if (item instanceof AnswerSeparator) {
-                lastSeparator = item;
-            } else if (item instanceof HelpSeparator) {
-                lastSeparator = item;
-            } else if (item instanceof Item && lastSeparator === null) {
-                result.items.push(item.value);
-            } else if (item instanceof Item && lastSeparator instanceof AnswerSeparator) {
-                result.answers.push(item.value);
-            } else if (item instanceof Item && lastSeparator instanceof HelpSeparator) {
-                result.helpText = item.value;
+      };
+      this._createList = function(expressionObj, syntaxBlock) {
+        var id, rightAnswerIndex;
+        rightAnswerIndex = this._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]);
+        id = this._getNextID();
+        return new List(syntaxBlock, expressionObj.helpText, id, expressionObj.items, rightAnswerIndex);
+      };
+      this._createTextInput = function(expressionObj, syntaxBlock) {
+        var id;
+        id = this._getNextID();
+        return new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0]);
+      };
+      this._parseSyntaxBlocks = function(text) {
+        var regexp;
+        regexp = new RegExp(this._patterns.blockPattern);
+        return text.match(regexp);
+      };
+      this._extractObjects = function(expressions) {
+        var exp, result, tmpObj, _i, _len;
+        result = [];
+        if (expressions !== null) {
+          for (_i = 0, _len = expressions.length; _i < _len; _i++) {
+            exp = expressions[_i];
+            tmpObj = this._parseExpression(exp.expression);
+            if (tmpObj.hasInputToken) {
+              result.push(this._createTextInput(tmpObj, exp.syntaxBlock));
+            } else {
+              result.push(this._createList(tmpObj, exp.syntaxBlock));
             }
+          }
         }
-    });
-
-    return result;
-};
-
-Parser.prototype.parse = function(text) {
-    'use strict';
-    if (typeof text !== 'string') {
-        throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
-    }
-
-    var self = this,
-        syntaxBlocks = self._parseSyntaxBlocks(text),
+        return result;
+      };
+      this._parseExpression = function(expression) {
+        var lastSeparator, result, token, _i, _len;
+        result = {
+          items: [],
+          answers: [],
+          hasInputToken: false
+        };
+        lastSeparator = null;
+        for (_i = 0, _len = expression.length; _i < _len; _i++) {
+          token = expression[_i];
+          if (!(token instanceof ItemsSeparator)) {
+            switch (false) {
+              case !(token instanceof InputToken):
+                result.hasInputToken = true;
+                break;
+              case !(token instanceof AnswerSeparator):
+                lastSeparator = token;
+                break;
+              case !(token instanceof HelpSeparator):
+                lastSeparator = token;
+                break;
+              case !(token instanceof Item && lastSeparator === null):
+                result.items.push(token.value);
+                break;
+              case !(token instanceof Item && lastSeparator instanceof AnswerSeparator):
+                result.answers.push(token.value);
+                break;
+              case !(token instanceof Item && lastSeparator instanceof HelpSeparator):
+                result.helpText = token.value;
+                break;
+              default:
+                null;
+            }
+          }
+        }
+        return result;
+      };
+      this.parse = function(text) {
+        var block, expressions, syntaxBlocks, _i, _len;
+        if (typeof text !== 'string') {
+          throw new Error('Parser Error: into the parse() method was passed not a string parameter');
+        }
+        syntaxBlocks = this._parseSyntaxBlocks(text);
         expressions = [];
-
-    if (syntaxBlocks) {
-        syntaxBlocks.forEach(function(item) {
-            expressions.push(self.lexer.parse(item));
-        });
+        if (syntaxBlocks) {
+          for (_i = 0, _len = syntaxBlocks.length; _i < _len; _i++) {
+            block = syntaxBlocks[_i];
+            expressions.push(this.lexer.parse(block));
+          }
+        }
+        return this._extractObjects(expressions);
+      };
     }
 
-    return self._extractObjects(expressions);
-};
+    return Parser;
+
+  })();
+
+  this.Parser = Parser;
+
+  this.List = List;
+
+  this.TextInput = TextInput;
+
+  this.CheckBox = CheckBox;
+
+}).call(this);
 
 (function() {
   var Translator;
@@ -2106,7 +2113,7 @@ Parser.prototype.parse = function(text) {
         }
         result += '</select>';
         if (listObject.helpText) {
-          result += "<div id='" + listObject._helpTagId + "' class='examjs-help-popup' data-help='" + inputObject.helpText + "'>?</div>";
+          result += "<div id='" + listObject._helpTagId + "' class='examjs-help-popup' data-help='" + listObject.helpText + "'>?</div>";
         }
         return "<div class='examjs-block'>" + result + "</div>";
       };
@@ -2151,7 +2158,7 @@ function Exam(settings) {
 
     var self = this;
     self._translator = new Translator();
-    self._parser = new Parser();
+    self._parser = new Parser(new Lexer());
     self._objects = [];
 
     self._separateCheckingMode = true;

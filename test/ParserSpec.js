@@ -2,7 +2,7 @@
 describe('Parser', function() {
     var parser;
     beforeEach(function() {
-        parser = new Parser();
+        parser = new Parser(new Lexer());
     });
 
     describe('_getNextID()', function() {
@@ -24,7 +24,7 @@ describe('Parser', function() {
         });
 
         it('should create an instance of Parser even Parser was called as a function', function() {
-            var parser1 = Parser();
+            var parser1 = new Parser(new Lexer());
             var result = parser1._parseSyntaxBlocks('Text text {{special}} text text');
             expect(result[0]).toBe('{{special}}');
         });
@@ -60,7 +60,7 @@ describe('Parser', function() {
         it('should throw an error if not a text was passed into parse() method', function() {
             expect(function() {
                 parser.parse(null);
-            }).toThrow(new ParsingError('Parser Error: into the parse() method was passed not a string parameter'));
+            }).toThrow(new Error('Parser Error: into the parse() method was passed not a string parameter'));
         });
 
         it('should parse all syntax blocks and extract List object', function() {
@@ -82,6 +82,11 @@ describe('Parser', function() {
 
             expect(result[0].syntaxBlock).toBe('{{test1, !test2!}}');
             expect(result[1].syntaxBlock).toBe('{{? help ?}}');
+        });
+
+        it('should create List with help text', function(){
+            var result = parser.parse('bla bal {{ test1, test2 :: test1 :? help text }}');
+            expect(result[0].helpText).toBe('help text');
         });
     });
 });

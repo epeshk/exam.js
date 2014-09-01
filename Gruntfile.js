@@ -125,7 +125,7 @@ module.exports = function(grunt) {
                 files: {
                     'src/lexer.js': 'src/lexer.coffee',
                     'src/translator.js' : 'src/translator.coffee',
-                    'src/parser-c.js' : 'src/parser.coffee'
+                    'src/parser.js' : 'src/parser.coffee'
                 }
             },
         }

@@ -84,21 +84,20 @@ class Parser
             lastSeparator = null
 
             for token in expression
-                if not token instanceof ItemsSeparator
-                    switch token
+                if not (token instanceof ItemsSeparator)
+                    switch
                         when token instanceof InputToken then result.hasInputToken = true
                         when token instanceof AnswerSeparator then lastSeparator = token
                         when token instanceof HelpSeparator then lastSeparator = token
                         when token instanceof Item and lastSeparator is null then result.items.push(token.value)
                         when token instanceof Item and lastSeparator instanceof AnswerSeparator then result.answers.push(token.value)
                         when token instanceof Item and lastSeparator instanceof HelpSeparator then result.helpText = token.value
-                        else token
-
+                        else null
             result
 
         @parse = (text) ->
             if typeof text isnt 'string'
-                throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
+                throw new Error('Parser Error: into the parse() method was passed not a string parameter');
 
             syntaxBlocks = @_parseSyntaxBlocks text
             expressions = []
@@ -109,7 +108,10 @@ class Parser
 
             @_extractObjects(expressions)
 
-
+@Parser = Parser
+@List = List
+@TextInput = TextInput
+@CheckBox = CheckBox
 
 
 

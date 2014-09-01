@@ -6,7 +6,7 @@ function Exam(settings) {
 
     var self = this;
     self._translator = new Translator();
-    self._parser = new Parser();
+    self._parser = new Parser(new Lexer());
     self._objects = [];
 
     self._separateCheckingMode = true;

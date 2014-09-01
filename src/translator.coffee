@@ -16,7 +16,7 @@ class Translator
             result += '</select>'
 
             if listObject.helpText
-                result += "<div id='#{listObject._helpTagId}' class='examjs-help-popup' data-help='#{inputObject.helpText}'>?</div>"
+                result += "<div id='#{listObject._helpTagId}' class='examjs-help-popup' data-help='#{listObject.helpText}'>?</div>"
 
             "<div class='examjs-block'>#{result}</div>"
 
