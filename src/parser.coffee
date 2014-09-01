@@ -62,6 +62,19 @@ class Parser
             regexp = new RegExp(@_patterns.blockPattern)
             text.match(regexp)
 
+        @_extractObjects = (expressions) ->
+            result = []
+
+            if expressions isnt null
+                for exp in expressions
+                    tmpObj = @_parseExpression(exp.expression)
+                    if tmpObj.hasInputToken
+                        result.push(@_createTextInput(tmpObj, exp.syntaxBlock))
+                    else
+                        result.push(@_createList(tmpObj, exp.syntaxBlock))
+
+            result
+
 
 
 

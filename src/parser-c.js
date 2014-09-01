@@ -100,6 +100,22 @@
         regexp = new RegExp(this._patterns.blockPattern);
         return text.match(regexp);
       };
+      this._extractObjects = function(expressions) {
+        var exp, result, tmpObj, _i, _len;
+        result = [];
+        if (expressions !== null) {
+          for (_i = 0, _len = expressions.length; _i < _len; _i++) {
+            exp = expressions[_i];
+            tmpObj = this._parseExpression(exp.expression);
+            if (tmpObj.hasInputToken) {
+              result.push(this._createTextInput(tmpObj, exp.syntaxBlock));
+            } else {
+              result.push(this._createList(tmpObj, exp.syntaxBlock));
+            }
+          }
+        }
+        return result;
+      };
     }
 
     return Parser;
