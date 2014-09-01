@@ -50,6 +50,14 @@ class Exam
 
             preprocessedSource
 
+        @_getRightAnswer = (object) ->
+            if object instanceof List
+                result = object.items[object.rightAnswerIndex]
+            else
+                result = object.rightAnswer
+            result
+        
+
 
 
 
