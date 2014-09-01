@@ -39,3 +39,21 @@ class Exam
                 if typeof settings.helpHintEventHandler isnt 'function'
                     throw new Error('The helpHintEventHandler must be a type of function')
                 @_helpHintEventHandler = settings.helpHintEventHandler
+
+        @parse = (source) ->
+            preprocessedSource = @_preprocessor(source)
+            @_objects = @_parser.parse(preprocessedSource)
+            convertionResults = @_translator.convertAllObjects(@_objects)
+
+            for item in convertionResults
+                preprocessedSource = preprocessedSource.replace(item.source, item.result)
+
+            preprocessedSource
+
+
+
+
+
+
+
+
