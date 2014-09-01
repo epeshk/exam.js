@@ -84,6 +84,12 @@
         }
         return result;
       };
+      this._createList = function(expressionObj, syntaxBlock) {
+        var id, rightAnswerIndex;
+        rightAnswerIndex = this._indexOfRightAnswer(expressionObj.items, expressionObj.answers[0]);
+        id = this._getNextID();
+        return new List(syntaxBlock, expressionObj.helpText, id, expressionObj.items, rightAnswerIndex);
+      };
     }
 
     return Parser;

@@ -47,3 +47,17 @@ class Parser
                         result = items.indexOf item
 
             result
+
+        @_createList = (expressionObj, syntaxBlock) ->
+            rightAnswerIndex = @_indexOfRightAnswer(expressionObj.items, expressionObj.answers[0])
+            id = @_getNextID()
+
+            new List(syntaxBlock, expressionObj.helpText, id, expressionObj.items, rightAnswerIndex)
+
+
+
+
+
+
+
+            
