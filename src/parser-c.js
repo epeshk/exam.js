@@ -68,6 +68,9 @@
         whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g;
         return text.replace(whiteSpacesPattern, '').replace(/\s+/g, ' ');
       };
+      this._getNextID = function() {
+        return "examjsid_" + (++this._currentID);
+      };
     }
 
     return Parser;

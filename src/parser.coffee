@@ -35,3 +35,6 @@ class Parser
             whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g
             text.replace(whiteSpacesPattern, '').replace(/\s+/g,' ')
 
+        @_getNextID = ->
+            "examjsid_#{++@._currentID}"
+        
