@@ -63,6 +63,11 @@
       };
       this._currentID = 0;
       this.lexer = lexer;
+      this._trim = function(text) {
+        var whiteSpacesPattern;
+        whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g;
+        return text.replace(whiteSpacesPattern, '').replace(/\s+/g, ' ');
+      };
     }
 
     return Parser;

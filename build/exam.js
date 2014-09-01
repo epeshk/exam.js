@@ -2248,6 +2248,9 @@ Exam.prototype._separateCheckingModeEventHandler = function(object) {
         currentId = document.getElementById(object.id),
         selectAnswer = currentId.value,
         rightAnswer = self._getRightAnswer(object);
+        if(rightAnswer == null || selectedAnswer == null){
+            return;
+        }
 
     if (rightAnswer.toLowerCase() === selectAnswer.toLowerCase()) {
         currentId.style.color = "#7fe817";

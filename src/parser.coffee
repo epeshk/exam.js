@@ -31,3 +31,7 @@ class Parser
         @_currentID = 0
         @lexer = lexer
 
+        @_trim = (text) ->
+            whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g
+            text.replace(whiteSpacesPattern, '').replace(/\s+/g,' ')
+
