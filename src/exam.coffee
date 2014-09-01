@@ -56,7 +56,18 @@ class Exam
             else
                 result = object.rightAnswer
             result
-        
+
+        @_separateCheckingModeEventHandler = (object) ->
+            currentId = document.getElementById(object.id)
+            selectedAnswer = currentId.value
+            rightAnswer = @_getRightAnswer(object)
+
+            if selectedAnswer? or rightAnswer?
+                if rightAnswer.toLowerCase() is selectedAnswer.toLowerCase()
+                    currentId.style.color = "#7fe817"
+                else
+                    currentId.style.color = "#e42217"
+
 
 
 
