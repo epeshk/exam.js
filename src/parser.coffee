@@ -96,6 +96,18 @@ class Parser
 
             result
 
+        @parse = (text) ->
+            if typeof text isnt 'string'
+                throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
+
+            syntaxBlocks = @_parseSyntaxBlocks text
+            expressions = []
+
+            if syntaxBlocks
+                for block in syntaxBlocks
+                    expressions.push(@lexer.parse(block))
+
+            @_extractObjects(expressions)
 
 
 

@@ -153,6 +153,21 @@
         }
         return result;
       };
+      this.parse = function(text) {
+        var block, expressions, syntaxBlocks, _i, _len;
+        if (typeof text !== 'string') {
+          throw new ParsingError('Parser Error: into the parse() method was passed not a string parameter');
+        }
+        syntaxBlocks = this._parseSyntaxBlocks(text);
+        expressions = [];
+        if (syntaxBlocks) {
+          for (_i = 0, _len = syntaxBlocks.length; _i < _len; _i++) {
+            block = syntaxBlocks[_i];
+            expressions.push(this.lexer.parse(block));
+          }
+        }
+        return this._extractObjects(expressions);
+      };
     }
 
     return Parser;
