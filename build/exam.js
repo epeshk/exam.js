@@ -2150,186 +2150,144 @@ function merge_text_nodes( jsonml ) {
 
 }).call(this);
 
-function Exam(settings) {
-    'use strict';
-    if (!(this instanceof Exam)) {
-        return new Exam();
+(function() {
+  var Exam;
+
+  Exam = (function() {
+    function Exam(settings) {
+      this._translator = new Translator();
+      this._parser = new Parser(new Lexer());
+      this._objects = [];
+      this._separateCheckingMode = true;
+      this._preprocessor = markdown.toHTML;
+      if (settings) {
+        if (settings.separateCheckingMode != null) {
+          if (typeof settings.separateCheckingMode === 'boolean') {
+            this._separateCheckingMode = settings.separateCheckingMode;
+          } else {
+            throw new Error('The separateCheckingMode parameter must be a type of boolean');
+          }
+        }
+        if (settings.finishBtnID != null) {
+          if (typeof settings.finishBtnID === 'string') {
+            this._finishBtnID = settings.finishBtnID;
+          } else {
+            throw new Error('The finishBtnID parameter must be a type of string');
+          }
+        }
+        if (settings.preprocessor != null) {
+          if (typeof settings.preprocessor === 'function') {
+            this._preprocessor = settings.preprocessor;
+          } else {
+            throw new Error('The preprocessor parameter must be a type of function');
+          }
+        }
+        this._setCallbacks(settings);
+      }
     }
 
-    var self = this;
-    self._translator = new Translator();
-    self._parser = new Parser(new Lexer());
-    self._objects = [];
-
-    self._separateCheckingMode = true;
-    self._preprocessor = markdown.toHTML;
-
-    if (settings) {
-        if (settings.separateCheckingMode !== undefined) {
-            if (typeof settings.separateCheckingMode === 'boolean') {
-                self._separateCheckingMode = settings.separateCheckingMode;
-            } else {
-                throw new Error('The separateCheckingMode parameter must be a type of boolean');
-            }
-        }
-        if (settings.finishBtnID !== undefined) {
-            if (typeof settings.finishBtnID === 'string') {
-                self._finishBtnID = settings.finishBtnID;
-            } else {
-                throw new Error('The finishBtnID parameter must be a type of string');
-            }
-        }
-        if (settings.preprocessor !== undefined) {
-            if (typeof settings.preprocessor === 'function') {
-                self._preprocessor = settings.preprocessor;
-            } else {
-                throw new Error('The preprocessor parameter must be a type of function');
-            }
-        }
-    }
-    self._setCallbacks(settings);
-}
-
-Exam.prototype._setCallbacks = function(settings) {
-    'use strict';
-    var self = this;
-
-    if (settings === undefined) {
-        return;
-    }
-
-    if (settings.separateCheckingModeEventHandler) {
+    Exam.prototype._setCallbacks = function(settings) {
+      if (settings.separateCheckingModeEventHandler) {
         if (typeof settings.separateCheckingModeEventHandler !== 'function') {
-            throw new Error('The separateCheckingModeEventHandler must be a type of function');
+          throw new Error('The separateCheckingModeEventHandler must be a type of function');
         }
-        self._separateCheckingModeEventHandler = settings.separateCheckingModeEventHandler;
-    }
-
-    if (settings.finishBtnEventHandler) {
+        this._separateCheckingModeEventHandler = settings.separateCheckingModeEventHandler;
+      }
+      if (settings.finishBtnEventHandler) {
         if (typeof settings.finishBtnEventHandler !== 'function') {
-            throw new Error('The finishBtnEventHandler must be a type of function');
+          throw new Error('The finishBtnEventHandler must be a type of function');
         }
-        self._finishBtnEventHandler = settings.finishBtnEventHandler;
-    }
+        return this._finishBtnEventHandler = settings.finishBtnEventHandler;
+      }
+    };
 
-    if (settings.helpHintEventHandler) {
-        if (typeof settings.helpHintEventHandler !== 'function') {
-            throw new Error('The helpHintEventHandler must be a type of function');
-        }
-        self._helpHintEventHandler = settings.helpHintEventHandler;
-    }
-};
-
-Exam.prototype.parse = function(source) {
-    'use strict';
-    var self = this;
-
-    var preprocessedSource = self._preprocessor(source);
-    self._objects = self._parser.parse(preprocessedSource);
-    var convertionResults = self._translator.convertAllObjects(self._objects);
-
-    convertionResults.forEach(function(item) {
+    Exam.prototype.parse = function(source) {
+      var convertionResults, item, preprocessedSource, _i, _len;
+      preprocessedSource = this._preprocessor(source);
+      this._objects = this._parser.parse(preprocessedSource);
+      convertionResults = this._translator.convertAllObjects(this._objects);
+      for (_i = 0, _len = convertionResults.length; _i < _len; _i++) {
+        item = convertionResults[_i];
         preprocessedSource = preprocessedSource.replace(item.source, item.result);
-    });
+      }
+      return preprocessedSource;
+    };
 
-    return preprocessedSource;
-};
-
-Exam.prototype._getRightAnswer = function(object) {
-    'use strict';
-    var self = this,
-        result;
-
-    if (object instanceof List) {
+    Exam.prototype._getRightAnswer = function(object) {
+      var result;
+      if (object instanceof List) {
         result = object.items[object.rightAnswerIndex];
-    } else {
+      } else {
         result = object.rightAnswer;
-    }
+      }
+      return result;
+    };
 
-    return result;
-};
-
-Exam.prototype._separateCheckingModeEventHandler = function(object) {
-    'use strict';
-    var self = this,
-        currentId = document.getElementById(object.id),
-        selectAnswer = currentId.value,
-        rightAnswer = self._getRightAnswer(object);
-        if(rightAnswer == null || selectedAnswer == null){
-            return;
+    Exam.prototype._separateCheckingModeEventHandler = function(object) {
+      var currentId, rightAnswer, selectedAnswer;
+      currentId = document.getElementById(object.id);
+      selectedAnswer = currentId.value;
+      rightAnswer = this._getRightAnswer(object);
+      if ((selectedAnswer != null) || (rightAnswer != null)) {
+        if (rightAnswer.toLowerCase() === selectedAnswer.toLowerCase()) {
+          return currentId.style.color = "#7fe817";
+        } else {
+          return currentId.style.color = "#e42217";
         }
+      }
+    };
 
-    if (rightAnswer.toLowerCase() === selectAnswer.toLowerCase()) {
-        currentId.style.color = "#7fe817";
-    } else {
-        currentId.style.color = "#e42217";
-    }
-};
-
-Exam.prototype.getAnswersInformation = function() {
-    'use strict';
-    var self = this,
-        countOfRightAnswers = 0,
-        tmpObjId,
-        rightAnswer,
-        selectedAnswer,
-        result = {
-            idOfRightAnswers: []
-        };
-
-    self._objects.forEach(function(object) {
+    Exam.prototype.getAnswersInformation = function() {
+      var countOfRightAnswers, object, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
+      countOfRightAnswers = 0;
+      _ref = this._objects;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        object = _ref[_i];
         tmpObjId = document.getElementById(object.id);
         if (tmpObjId) {
-            rightAnswer = self._getRightAnswer(object);
-            selectedAnswer = tmpObjId.value;
-
-            if (selectedAnswer.toLowerCase() === rightAnswer.toLowerCase()) {
-                countOfRightAnswers++;
-                result.idOfRightAnswers.push(object.id);
-            }
+          rightAnswer = this._getRightAnswer(object);
+          selectedAnswer = tmpObjId.value;
+          if ((selectedAnswer != null ? selectedAnswer.toLowerCase() : void 0) === (rightAnswer != null ? rightAnswer.toLowerCase() : void 0)) {
+            countOfRightAnswers++;
+            result.idOfRightAnswers.push(object.id);
+          }
         }
-    });
+      }
+      result.tests = this._objects.length;
+      result.rightAnswers = countOfRightAnswers;
+      return result;
+    };
 
-    result.tests = self._objects.length;
-    result.rightAnswers = countOfRightAnswers;
+    Exam.prototype._finishBtnEventHandler = function() {
+      var answersInformation;
+      answersInformation = this.getAnswersInformation();
+      return window.alert("Count of a right answers: " + answersInformation.rightAnswers + "/" + asnwersInformation.tests);
+    };
 
-    return result; 
-};
-
-Exam.prototype._finishBtnEventHandler = function() {
-    'use strict';
-    var self = this,
-        answersInformation;
-
-    answersInformation = self.getAnswersInformation();
-    window.alert("Count of a right answers: " + answersInformation.rightAnswers + "/" + answersInformation.tests);
-};
-
-Exam.prototype._helpHintEventHandler = function(object) {
-    'use strict';
-    window.alert(object.helpText);
-};
-
-Exam.prototype.startExam = function() {
-    'use strict';
-    var self = this,
-        currentObjectId,
-        finishBtn;
-
-    self._objects.forEach(function(object) {
+    Exam.prototype.startExam = function() {
+      var currentObjectId, finishBtn, object, _i, _len, _ref;
+      _ref = this._objects;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        object = _ref[_i];
         currentObjectId = document.getElementById(object.id);
-
-        if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
-            currentObjectId.oninput = function() {
-                self._separateCheckingModeEventHandler(object);
-            };
+        if ((object instanceof List || object instanceof TextInput) && this._separateCheckingMode) {
+          currentObjectId.oninput = function() {
+            return this._separateCheckingModeEventHandler(object);
+          };
         }
-    });
-
-    if (self._finishBtnID != null) {
-        finishBtn = document.getElementById(self._finishBtnID);
-        finishBtn.onclick = function() {
-            self._finishBtnEventHandler();
+      }
+      if (this._finishBtnID != null) {
+        finishBtn = document.getElementById(this._finishBtnID);
+        return finishBtn.onclick = function() {
+          return this._finishBtnEventHandler();
         };
-    }
-};
+      }
+    };
+
+    return Exam;
+
+  })();
+
+  this.Exam = Exam;
+
+}).call(this);
