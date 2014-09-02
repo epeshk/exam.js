@@ -68,6 +68,24 @@ class Exam
                 else
                     currentId.style.color = "#e42217"
 
+        @_getAnswersInformation = ->
+            countOfRightAnswers = 0
+
+            for object in @_objects
+                tmpObjId = document.getElementById(object.id)
+                if tmpObjId
+                    rightAnswer = @_getRightAnswer object
+                    selectedAnswer = tmpObjId.value
+
+                    if selectedAnswer?.toLowerCase() is rightAnswer?.toLowerCase()
+                        countOfRightAnswers++
+                        result.idOfRightAnswers.push(object.id)
+
+            result.tests = @_objects.length
+            result.rightAnswers = countOfRightAnswers
+            result
+            
+
 
 
 
