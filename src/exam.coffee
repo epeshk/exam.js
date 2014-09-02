@@ -100,7 +100,4 @@ class Exam
                 finishBtn = document.getElementById(@_finishBtnID)
                 finishBtn.onclick = -> @_finishBtnEventHandler()
 
-
-
-
-
+@Exam = Exam
