@@ -8,13 +8,13 @@ module.exports = function(grunt) {
                 banner: '/* Nightingale Studio 2014 golovim@gmail.com */\n'
             },
             target: {
-                src: 'src/exam.js',
+                src: 'dist/exam.js',
                 dest: 'dist/exam.min.js'
             }
         },
         jshint: {
             build: {
-                src: 'build/*.js',
+                src: 'dist/exam.js',
                 options: {
                     "eqeqeq": true,
                     "curly": true,
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                 }
             },
             dev: {
-                src: 'build/*.js',
+                src: 'dist/exam.js',
                 options: {
                     "eqeqeq": true,
                     "curly": true,
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
         },
         jasmine: {
             exam: {
-                src: 'build/**/*.js',
+                src: 'dist/exam.js',
                 options: {
                     specs: 'test/*Spec.js',
                     helpers: 'test/*Helper.js'
@@ -112,21 +112,21 @@ module.exports = function(grunt) {
         },
         concat: {
             prebuild: {
-                src: ['src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
-                dest: 'build/exam.js',
+                src: ['build/lexer.js', 'build/parser.js', 'build/translator.js', 'build/exam.js'],
+                dest: 'dist/exam.js',
             },
             build: {
-                src: ['node_modules/markdown/lib/markdown.js', 'src/lexer.js', 'src/parser.js', 'src/translator.js', 'src/exam.js'],
-                dest: 'build/exam.js',
+                src: ['node_modules/markdown/lib/markdown.js', 'build/lexer.js', 'build/parser.js', 'build/translator.js', 'build/exam.js'],
+                dest: 'dist/exam.js',
             }
         },
         coffee: {
             compile: {
                 files: {
-                    'src/lexer.js': 'src/lexer.coffee',
-                    'src/translator.js' : 'src/translator.coffee',
-                    'src/parser.js' : 'src/parser.coffee',
-                    'src/exam.js' : 'src/exam.coffee'
+                    'build/lexer.js': 'src/lexer.coffee',
+                    'build/translator.js' : 'src/translator.coffee',
+                    'build/parser.js' : 'src/parser.coffee',
+                    'build/exam.js' : 'src/exam.coffee'
                 }
             },
         }
