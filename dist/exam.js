@@ -2250,8 +2250,9 @@ function merge_text_nodes( jsonml ) {
     };
 
     Exam.prototype.getAnswersInformation = function() {
-      var countOfRightAnswers, object, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
+      var countOfRightAnswers, object, result, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
       countOfRightAnswers = 0;
+      result = {};
       _ref = this._objects;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         object = _ref[_i];

@@ -65,6 +65,7 @@ class Exam
 
     @::getAnswersInformation = ->
         countOfRightAnswers = 0
+        result = {}
 
         for object in @_objects
             tmpObjId = document.getElementById(object.id)
