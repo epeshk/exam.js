@@ -87,7 +87,7 @@ class Lexer
                 tmpToken = ""
 
         exp.push(new Item(lastToken))
-        exp = exp.filter (e) => e.value isnt undefined and e.value isnt null
+        exp = exp.filter (e) => e.value?
 
         {
             expression: exp

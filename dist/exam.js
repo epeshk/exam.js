@@ -1878,7 +1878,7 @@ function merge_text_nodes( jsonml ) {
       exp.push(new Item(lastToken));
       exp = exp.filter((function(_this) {
         return function(e) {
-          return e.value !== void 0 && e.value !== null;
+          return e.value != null;
         };
       })(this));
       return {
