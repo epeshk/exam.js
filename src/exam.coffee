@@ -85,6 +85,11 @@ class Exam
             result.rightAnswers = countOfRightAnswers
             result
 
+        @_finishBtnEventHandler = ->
+            answersInformation = @getAnswersInformation()
+            window.alert("Count of a right answers: #{answersInformation.rightAnswers}/#{asnwersInformation.tests}")
+            
+
 
 
 
