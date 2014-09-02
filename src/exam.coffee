@@ -88,12 +88,17 @@ class Exam
         @_finishBtnEventHandler = ->
             answersInformation = @getAnswersInformation()
             window.alert("Count of a right answers: #{answersInformation.rightAnswers}/#{asnwersInformation.tests}")
-            
 
+        @startExam = ->
+            for object in @_objects
+                currentObjectId = document.getElementById(object.id)
 
+                if (object instanceof List or object instanceof TextInput) and @_separateCheckingMode
+                    currentObjectId.oninput = -> @_separateCheckingModeEventHandler(object)
 
-
-
+            if @_finishBtnID?
+                finishBtn = document.getElementById(@_finishBtnID)
+                finishBtn.onclick = -> @_finishBtnEventHandler()
 
 
 
