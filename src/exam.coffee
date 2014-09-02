@@ -68,7 +68,7 @@ class Exam
                 else
                     currentId.style.color = "#e42217"
 
-        @_getAnswersInformation = ->
+        @getAnswersInformation = ->
             countOfRightAnswers = 0
 
             for object in @_objects
@@ -84,7 +84,7 @@ class Exam
             result.tests = @_objects.length
             result.rightAnswers = countOfRightAnswers
             result
-            
+
 
 
 
