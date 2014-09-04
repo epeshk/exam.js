@@ -18,6 +18,8 @@ class Translator
 
         "<div class='examjs-block'>#{result}</div>"
 
+    @::_createCheckBox = (checkBoxObject) ->
+
     @::convertAllObjects = (objects) ->
         result = []
 
