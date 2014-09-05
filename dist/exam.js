@@ -1950,10 +1950,10 @@ function merge_text_nodes( jsonml ) {
   CheckBox = (function(_super) {
     __extends(CheckBox, _super);
 
-    function CheckBox(syntaxBlock, helpText, id, items, rightAnswerIndex) {
+    function CheckBox(syntaxBlock, helpText, id, items, rightAnswers) {
       CheckBox.__super__.constructor.call(this, syntaxBlock, helpText, id);
       this.items = items;
-      this.rightAnswerIndex = rightAnswerIndex;
+      this.rightAnswers = rightAnswers;
     }
 
     return CheckBox;

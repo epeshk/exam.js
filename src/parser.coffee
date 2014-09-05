@@ -18,10 +18,10 @@ class TextInput extends ExamObject
         @rightAnswer = rightAnswer
         
 class CheckBox extends ExamObject
-    constructor: (syntaxBlock, helpText, id, items, rightAnswerIndex) ->
+    constructor: (syntaxBlock, helpText, id, items, rightAnswers) ->
         super(syntaxBlock, helpText, id)
         @items = items
-        @rightAnswerIndex = rightAnswerIndex
+        @rightAnswers  = rightAnswers
 
 class Parser
     constructor: (lexer) ->
