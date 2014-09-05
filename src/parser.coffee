@@ -58,6 +58,10 @@ class Parser
         id = @_getNextID()
         new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0])
 
+    @::_createCheckBox = (expressionObj, syntaxBlock) ->
+        id = @_getNextID()
+        new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.answers)
+
     @::_parseSyntaxBlocks = (text) ->
         regexp = new RegExp(@_patterns.blockPattern)
         text.match(regexp)
@@ -70,6 +74,8 @@ class Parser
                 tmpObj = @_parseExpression(exp.expression)
                 if tmpObj.hasInputToken
                     result.push(@_createTextInput(tmpObj, exp.syntaxBlock))
+                else if tmpObj.answers.length > 1
+                    #stub
                 else
                     result.push(@_createList(tmpObj, exp.syntaxBlock))
 
