@@ -2010,7 +2010,7 @@ function merge_text_nodes( jsonml ) {
     Parser.prototype._createCheckBox = function(expressionObj, syntaxBlock) {
       var id;
       id = this._getNextID();
-      return new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.answers);
+      return new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.items, expressionObj.answers);
     };
 
     Parser.prototype._parseSyntaxBlocks = function(text) {

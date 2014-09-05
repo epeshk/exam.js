@@ -60,7 +60,7 @@ class Parser
 
     @::_createCheckBox = (expressionObj, syntaxBlock) ->
         id = @_getNextID()
-        new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.answers)
+        new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.items, expressionObj.answers)
 
     @::_parseSyntaxBlocks = (text) ->
         regexp = new RegExp(@_patterns.blockPattern)
