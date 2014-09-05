@@ -21,8 +21,6 @@ class Lexer
             INPUT_TOKEN: "..."
             START_BLOCK_TOKEN: "{{"
             END_BLOCK_TOKEN: "}}"
-            START_CHECKBOX_TOKEN: "|"
-            END_CHECKBOX_TOKEN: "|"
 
     @::_clearSyntaxBlock = (syntaxBlock) ->
         if syntaxBlock.substring(0, 2) is @tokens.START_BLOCK_TOKEN

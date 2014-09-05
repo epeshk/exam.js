@@ -1799,9 +1799,7 @@ function merge_text_nodes( jsonml ) {
         ITEMS_SPTR: ",",
         INPUT_TOKEN: "...",
         START_BLOCK_TOKEN: "{{",
-        END_BLOCK_TOKEN: "}}",
-        START_CHECKBOX_TOKEN: "|",
-        END_CHECKBOX_TOKEN: "|"
+        END_BLOCK_TOKEN: "}}"
       };
     }
 
@@ -2127,6 +2125,21 @@ function merge_text_nodes( jsonml ) {
       if (listObject.helpText) {
         result += "<div id='" + listObject._helpTagId + "' class='examjs-help-popup' data-help='" + listObject.helpText + "'>?</div>";
       }
+      return "<div class='examjs-block'>" + result + "</div>";
+    };
+
+    Translator.prototype._createCheckBox = function(checkBoxObject) {
+      var item, result, _i, _len, _ref;
+      result = "<div id='" + checkBoxObject.id + "' class='examjs-input'>";
+      _ref = checkBoxObject.items;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        result += "<input type='checkbox'>" + item + "</input>";
+      }
+      if (checkBoxObject.helpText) {
+        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup' data-help='" + checkBoxObject.helpText + "'>?</div>";
+      }
+      result += "</div>";
       return "<div class='examjs-block'>" + result + "</div>";
     };
 
