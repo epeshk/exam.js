@@ -2007,6 +2007,12 @@ function merge_text_nodes( jsonml ) {
       return new TextInput(syntaxBlock, expressionObj.helpText, id, expressionObj.answers[0]);
     };
 
+    Parser.prototype._createCheckBox = function(expressionObj, syntaxBlock) {
+      var id;
+      id = this._getNextID();
+      return new CheckBox(syntaxBlock, expressionObj.helpText, id, expressionObj.answers);
+    };
+
     Parser.prototype._parseSyntaxBlocks = function(text) {
       var regexp;
       regexp = new RegExp(this._patterns.blockPattern);
@@ -2022,6 +2028,8 @@ function merge_text_nodes( jsonml ) {
           tmpObj = this._parseExpression(exp.expression);
           if (tmpObj.hasInputToken) {
             result.push(this._createTextInput(tmpObj, exp.syntaxBlock));
+          } else if (tmpObj.answers.length > 1) {
+            result.push(this._createCheckBox(tmpObj, exp.syntaxBlock));
           } else {
             result.push(this._createList(tmpObj, exp.syntaxBlock));
           }

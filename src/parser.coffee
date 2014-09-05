@@ -75,7 +75,7 @@ class Parser
                 if tmpObj.hasInputToken
                     result.push(@_createTextInput(tmpObj, exp.syntaxBlock))
                 else if tmpObj.answers.length > 1
-                    #stub
+                    result.push(@_createCheckBox(tmpObj, exp.syntaxBlock))
                 else
                     result.push(@_createList(tmpObj, exp.syntaxBlock))
 
