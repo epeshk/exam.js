@@ -46,6 +46,12 @@ class Translator
                     result: @_createTextInput(object),
                     block: 'textInput'
                 }
+            else if (object instanceof CheckBox)
+                result.push {
+                    source: object.syntaxBlock,
+                    result: @_createCheckBox(object),
+                    block: 'checkBox'
+                }
             else
                 throw new Error('Converting error. Translator cannot convert object that was passed into it')
 

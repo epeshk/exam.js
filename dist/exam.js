@@ -2168,6 +2168,12 @@ function merge_text_nodes( jsonml ) {
             result: this._createTextInput(object),
             block: 'textInput'
           });
+        } else if (object instanceof CheckBox) {
+          result.push({
+            source: object.syntaxBlock,
+            result: this._createCheckBox(object),
+            block: 'checkBox'
+          });
         } else {
           throw new Error('Converting error. Translator cannot convert object that was passed into it');
         }
