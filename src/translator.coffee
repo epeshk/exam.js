@@ -19,15 +19,15 @@ class Translator
         "<div class='examjs-block'>#{result}</div>"
 
     @::_createCheckBox = (checkBoxObject) ->
-        result = "<div id='#{checkBoxObject.id}' class='examjs-input'>"
+        result = "<ul id='#{checkBoxObject.id}' class='examjs-input'>"
 
         for item in checkBoxObject.items
-            result += "<input type='checkbox'>#{item}</input>"
+            result += "<li><input type='checkbox'>#{item}</input></li>"
 
         if checkBoxObject.helpText
             result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-popup' data-help='#{checkBoxObject.helpText}'>?</div>"
 
-        result += "</div>"
+        result += "</ul>"
         "<div class='examjs-block'>#{result}</div>"
 
     @::convertAllObjects = (objects) ->
