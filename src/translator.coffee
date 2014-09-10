@@ -24,10 +24,11 @@ class Translator
         for item in checkBoxObject.items
             result += "<li><input type='checkbox'>#{item}</input></li>"
 
-        if checkBoxObject.helpText
-            result += "<div id='#{checkBoxObject._helpTagId}' data-help='#{checkBoxObject.helpText}'>?</div>"
-
         result += "</ul>"
+
+        if checkBoxObject.helpText
+            result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-checkbox-popup' data-help='#{checkBoxObject.helpText}'>?</div>"
+                
         "<div class='examjs-block'>#{result}</div>"
 
     @::convertAllObjects = (objects) ->

@@ -2144,10 +2144,10 @@ function merge_text_nodes( jsonml ) {
         item = _ref[_i];
         result += "<li><input type='checkbox'>" + item + "</input></li>";
       }
-      if (checkBoxObject.helpText) {
-        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup' data-help='" + checkBoxObject.helpText + "'>?</div>";
-      }
       result += "</ul>";
+      if (checkBoxObject.helpText) {
+        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-checkbox-popup' data-help='" + checkBoxObject.helpText + "'>?</div>";
+      }
       return "<div class='examjs-block'>" + result + "</div>";
     };
 
