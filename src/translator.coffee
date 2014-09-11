@@ -19,7 +19,7 @@ class Translator
         "<div class='examjs-block'>#{result}</div>"
 
     @::_createCheckBox = (checkBoxObject) ->
-        result = "<ul id='#{checkBoxObject.id}' class='examjs-input'>"
+        result = "<ul id='#{checkBoxObject.id}' class='examjs-block'>"
 
         for item in checkBoxObject.items
             result += "<li><input type='checkbox'>#{item}</input></li>"
@@ -27,9 +27,9 @@ class Translator
         result += "</ul>"
 
         if checkBoxObject.helpText
-            result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-checkbox-popup' data-help='#{checkBoxObject.helpText}'>?</div>"
+            result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-popup examjs-block' data-help='#{checkBoxObject.helpText}'>?</div>"
                 
-        "<div class='examjs-block'>#{result}</div>"
+        "<div class='examjs-checkbox-block'>#{result}</div>"
 
     @::convertAllObjects = (objects) ->
         result = []
