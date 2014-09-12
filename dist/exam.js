@@ -2142,7 +2142,7 @@ function merge_text_nodes( jsonml ) {
       _ref = checkBoxObject.items;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        result += "<li><input type='checkbox'>" + item + "</input></li>";
+        result += "<li><input type='checkbox' class='examjs-checkbox'>" + item + "</input></li>";
       }
       result += "</ul>";
       if (checkBoxObject.helpText) {
@@ -2256,8 +2256,10 @@ function merge_text_nodes( jsonml ) {
       var result;
       if (object instanceof List) {
         result = object.items[object.rightAnswerIndex];
-      } else {
+      } else if (object instanceof TextInput) {
         result = object.rightAnswer;
+      } else {
+        result = object.rightAnswers;
       }
       return result;
     };

@@ -48,8 +48,10 @@ class Exam
     @::_getRightAnswer = (object) ->
         if object instanceof List
             result = object.items[object.rightAnswerIndex]
-        else
+        else if object instanceof TextInput
             result = object.rightAnswer
+        else
+            result = object.rightAnswers
         result
 
     @::_separateCheckingModeEventHandler = (object) ->
