@@ -2309,23 +2309,15 @@ function merge_text_nodes( jsonml ) {
     Exam.prototype.startExam = function() {
       var finishBtn, self;
       self = this;
-      (function() {
-        var currentObjectId, object, _i, _len, _ref, _results;
-        _ref = self._objects;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          object = _ref[_i];
-          currentObjectId = document.getElementById(object.id);
-          if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
-            _results.push(currentObjectId.oninput = function() {
-              return self._separateCheckingModeEventHandler(object);
-            });
-          } else {
-            _results.push(void 0);
-          }
+      self._objects.forEach(function(object) {
+        var currentObjectId;
+        currentObjectId = document.getElementById(object.id);
+        if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
+          return currentObjectId.oninput = function() {
+            return self._separateCheckingModeEventHandler(object);
+          };
         }
-        return _results;
-      })();
+      });
       if (self._finishBtnID != null) {
         finishBtn = document.getElementById(self._finishBtnID);
         return finishBtn.onclick = function() {

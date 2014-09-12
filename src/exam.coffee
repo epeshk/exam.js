@@ -89,12 +89,11 @@ class Exam
 
     @::startExam = ->
         self = @;
-        do ->
-            for object in self._objects
-                currentObjectId = document.getElementById(object.id)
+        self._objects.forEach (object)->
+            currentObjectId = document.getElementById(object.id)
 
-                if (object instanceof List or object instanceof TextInput) and self._separateCheckingMode
-                    currentObjectId.oninput = -> self._separateCheckingModeEventHandler(object)
+            if (object instanceof List or object instanceof TextInput) and self._separateCheckingMode
+                currentObjectId.oninput = -> self._separateCheckingModeEventHandler(object)
         if self._finishBtnID?
             finishBtn = document.getElementById(self._finishBtnID)
             finishBtn.onclick = -> self._finishBtnEventHandler()
