@@ -2138,17 +2138,17 @@ function merge_text_nodes( jsonml ) {
 
     Translator.prototype._createCheckBox = function(checkBoxObject) {
       var item, result, _i, _len, _ref;
-      result = "<ul id='" + checkBoxObject.id + "' class='examjs-input'>";
+      result = "<ul id='" + checkBoxObject.id + "' class='examjs-block'>";
       _ref = checkBoxObject.items;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         result += "<li><input type='checkbox'>" + item + "</input></li>";
       }
-      if (checkBoxObject.helpText) {
-        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup' data-help='" + checkBoxObject.helpText + "'>?</div>";
-      }
       result += "</ul>";
-      return "<div class='examjs-block'>" + result + "</div>";
+      if (checkBoxObject.helpText) {
+        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup examjs-block' data-help='" + checkBoxObject.helpText + "'>?</div>";
+      }
+      return "<div class='examjs-checkbox-block'>" + result + "</div>";
     };
 
     Translator.prototype.convertAllObjects = function(objects) {

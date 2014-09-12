@@ -15,8 +15,7 @@
     -moz-border-radius: 50%;
     border-radius: 50%;
 }
-.examjs-help-popup:before,
-.examjs-help-popup:after {
+.examjs-help-popup:before, .examjs-help-popup:after {
     display: block;
     position: absolute;
     visibility: hidden;
@@ -52,8 +51,7 @@
     bottom: 20px;
     margin-left: -10px;
 }
-.examjs-help-popup:hover:before,
-.examjs-help-popup:hover:after {
+.examjs-help-popup:hover:before, .examjs-help-popup:hover:after {
     opacity: 1;
     visibility: visible;
     margin-bottom: 0;
@@ -62,7 +60,13 @@
 }
 .examjs-block {
     display: inline-block;
-    text-align: center;
+    vertical-align: top;
+    margin: 5%;
+}
+.examjs-checkbox-block {
+    width: 90%;
+    vertical-align: middle;
+    text-align: left;
 }
 .examjs-input {
     margin-left: 5px;
@@ -71,7 +75,7 @@
     border: 0;
     font-size: .8em;
     color: #fff;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     border-bottom: solid 1px;
 }
 .examjs-input:focus {
