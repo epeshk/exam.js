@@ -2279,7 +2279,9 @@ function merge_text_nodes( jsonml ) {
     Exam.prototype.getAnswersInformation = function() {
       var countOfRightAnswers, object, result, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
       countOfRightAnswers = 0;
-      result = {};
+      result = {
+        idOfRightAnswers: []
+      };
       _ref = this._objects;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         object = _ref[_i];
@@ -2305,21 +2307,29 @@ function merge_text_nodes( jsonml ) {
     };
 
     Exam.prototype.startExam = function() {
-      var currentObjectId, finishBtn, object, _i, _len, _ref;
-      _ref = this._objects;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        object = _ref[_i];
-        currentObjectId = document.getElementById(object.id);
-        if ((object instanceof List || object instanceof TextInput) && this._separateCheckingMode) {
-          currentObjectId.oninput = function() {
-            return this._separateCheckingModeEventHandler(object);
-          };
+      var finishBtn, self;
+      self = this;
+      (function() {
+        var currentObjectId, object, _i, _len, _ref, _results;
+        _ref = self._objects;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          object = _ref[_i];
+          currentObjectId = document.getElementById(object.id);
+          if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
+            _results.push(currentObjectId.oninput = function() {
+              return self._separateCheckingModeEventHandler(object);
+            });
+          } else {
+            _results.push(void 0);
+          }
         }
-      }
-      if (this._finishBtnID != null) {
-        finishBtn = document.getElementById(this._finishBtnID);
+        return _results;
+      })();
+      if (self._finishBtnID != null) {
+        finishBtn = document.getElementById(self._finishBtnID);
         return finishBtn.onclick = function() {
-          return this._finishBtnEventHandler();
+          return self._finishBtnEventHandler();
         };
       }
     };

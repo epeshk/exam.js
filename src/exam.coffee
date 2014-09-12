@@ -65,7 +65,9 @@ class Exam
 
     @::getAnswersInformation = ->
         countOfRightAnswers = 0
-        result = {}
+        result = {
+            idOfRightAnswers: [] 
+        }
 
         for object in @_objects
             tmpObjId = document.getElementById(object.id)
@@ -86,13 +88,15 @@ class Exam
         window.alert("Count of a right answers: #{answersInformation.rightAnswers}/#{asnwersInformation.tests}")
 
     @::startExam = ->
-        for object in @_objects
-            currentObjectId = document.getElementById(object.id)
+        self = @;
+        do ->
+            for object in self._objects
+                currentObjectId = document.getElementById(object.id)
 
-            if (object instanceof List or object instanceof TextInput) and @_separateCheckingMode
-                currentObjectId.oninput = -> @_separateCheckingModeEventHandler(object)
-        if @_finishBtnID?
-            finishBtn = document.getElementById(@_finishBtnID)
-            finishBtn.onclick = -> @_finishBtnEventHandler()
+                if (object instanceof List or object instanceof TextInput) and self._separateCheckingMode
+                    currentObjectId.oninput = -> self._separateCheckingModeEventHandler(object)
+        if self._finishBtnID?
+            finishBtn = document.getElementById(self._finishBtnID)
+            finishBtn.onclick = -> self._finishBtnEventHandler()
 
 @Exam = Exam
