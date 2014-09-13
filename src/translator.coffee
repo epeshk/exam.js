@@ -22,7 +22,7 @@ class Translator
         result = "<ul id='#{checkBoxObject.id}' class='examjs-block'>"
 
         for item in checkBoxObject.items
-            result += "<li><input type='checkbox'>#{item}</input></li>"
+            result += "<li><input type='checkbox' class='examjs-checkbox'>#{item}</input></li>"
 
         result += "</ul>"
 

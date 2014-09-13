@@ -2142,7 +2142,7 @@ function merge_text_nodes( jsonml ) {
       _ref = checkBoxObject.items;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        result += "<li><input type='checkbox'>" + item + "</input></li>";
+        result += "<li><input type='checkbox' class='examjs-checkbox'>" + item + "</input></li>";
       }
       result += "</ul>";
       if (checkBoxObject.helpText) {
@@ -2256,8 +2256,10 @@ function merge_text_nodes( jsonml ) {
       var result;
       if (object instanceof List) {
         result = object.items[object.rightAnswerIndex];
-      } else {
+      } else if (object instanceof TextInput) {
         result = object.rightAnswer;
+      } else {
+        result = object.rightAnswers;
       }
       return result;
     };
@@ -2279,7 +2281,9 @@ function merge_text_nodes( jsonml ) {
     Exam.prototype.getAnswersInformation = function() {
       var countOfRightAnswers, object, result, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
       countOfRightAnswers = 0;
-      result = {};
+      result = {
+        idOfRightAnswers: []
+      };
       _ref = this._objects;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         object = _ref[_i];
@@ -2305,21 +2309,21 @@ function merge_text_nodes( jsonml ) {
     };
 
     Exam.prototype.startExam = function() {
-      var currentObjectId, finishBtn, object, _i, _len, _ref;
-      _ref = this._objects;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        object = _ref[_i];
+      var finishBtn, self;
+      self = this;
+      self._objects.forEach(function(object) {
+        var currentObjectId;
         currentObjectId = document.getElementById(object.id);
-        if ((object instanceof List || object instanceof TextInput) && this._separateCheckingMode) {
-          currentObjectId.oninput = function() {
-            return this._separateCheckingModeEventHandler(object);
+        if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
+          return currentObjectId.oninput = function() {
+            return self._separateCheckingModeEventHandler(object);
           };
         }
-      }
-      if (this._finishBtnID != null) {
-        finishBtn = document.getElementById(this._finishBtnID);
+      });
+      if (self._finishBtnID != null) {
+        finishBtn = document.getElementById(self._finishBtnID);
         return finishBtn.onclick = function() {
-          return this._finishBtnEventHandler();
+          return self._finishBtnEventHandler();
         };
       }
     };
