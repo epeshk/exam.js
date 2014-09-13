@@ -2146,7 +2146,7 @@ function merge_text_nodes( jsonml ) {
       }
       result += "</ul>";
       if (checkBoxObject.helpText) {
-        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup examjs-block' data-help='" + checkBoxObject.helpText + "'>?</div>";
+        result += "<div id='" + checkBoxObject._helpTagId + "' class='examjs-help-popup examjs-checkbox-popup' data-help='" + checkBoxObject.helpText + "'>?</div>";
       }
       return "<div class='examjs-checkbox-block'>" + result + "</div>";
     };

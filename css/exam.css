@@ -61,6 +61,8 @@
 .examjs-block {
     display: inline-block;
     vertical-align: top;
+}
+.examjs-checkbox-popup{
     margin: 5%;
 }
 .examjs-checkbox-block {

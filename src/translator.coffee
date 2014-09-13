@@ -27,7 +27,7 @@ class Translator
         result += "</ul>"
 
         if checkBoxObject.helpText
-            result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-popup examjs-block' data-help='#{checkBoxObject.helpText}'>?</div>"
+            result += "<div id='#{checkBoxObject._helpTagId}' class='examjs-help-popup examjs-checkbox-popup' data-help='#{checkBoxObject.helpText}'>?</div>"
                 
         "<div class='examjs-checkbox-block'>#{result}</div>"
 
