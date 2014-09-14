@@ -2278,6 +2278,13 @@ function merge_text_nodes( jsonml ) {
       }
     };
 
+    Exam.prototype._getCheckboxAnswersResult = function(object) {
+      var answers, checkbox, result;
+      result = false;
+      answers = this._getRightAnswer(object);
+      return checkbox = document.getElementById(object.id);
+    };
+
     Exam.prototype.getAnswersInformation = function() {
       var countOfRightAnswers, object, result, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
       countOfRightAnswers = 0;

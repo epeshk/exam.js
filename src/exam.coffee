@@ -65,6 +65,13 @@ class Exam
             else
                 currentId.style.color = "#e42217"
 
+    @::_getCheckboxAnswersResult = (object) ->
+        result = false
+        answers = @_getRightAnswer(object)
+        checkbox = document.getElementById(object.id)
+        #TODO: implement this method
+
+
     @::getAnswersInformation = ->
         countOfRightAnswers = 0
         result = {
