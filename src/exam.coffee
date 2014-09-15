@@ -66,11 +66,15 @@ class Exam
                 currentId.style.color = "#e42217"
 
     @::_getCheckboxAnswersResult = (object) ->
+        rightAnswers = @_getRightAnswer(object)
         result = false
-        answers = @_getRightAnswer(object)
+        currentAnswers = []
         checkbox = document.getElementById(object.id)
-        #TODO: implement this method
-
+        for element in checkbox.getElementByClassName('examjs-checkbox')
+            currentAnswers.push(element.value.toLowerCase)
+        for a in rightAnswers
+            result = currentAnswers.indexOf(a) > 0|| result
+        result
 
     @::getAnswersInformation = ->
         countOfRightAnswers = 0
