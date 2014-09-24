@@ -97,7 +97,9 @@ class Exam
             tmpObjId = document.getElementById(object.id)
             if tmpObjId
                 if object instanceof CheckBox
-                    continue
+                    if @_validateCheckBox(object)
+                        countOfRightAnswers++
+                        result.idOfRightAnswers.push(object.id)
                 else      
                     rightAnswer = @_getRightAnswer object
                     selectedAnswer = tmpObjId.value
