@@ -2264,11 +2264,33 @@ function merge_text_nodes( jsonml ) {
       return result;
     };
 
+    Exam.prototype._validateCheckBox = function(object) {
+      var a, checkbox, checkboxes, isValid, rightAnswers, values, _i, _j, _len, _len1;
+      isValid = true;
+      checkboxes = document.querySelectorAll("#" + object.id + " .examjs-checkbox");
+      values = [];
+      for (_i = 0, _len = checkboxes.length; _i < _len; _i++) {
+        checkbox = checkboxes[_i];
+        if (checkbox.checked) {
+          values.push(checkbox.nextSibling.data);
+        }
+      }
+      rightAnswers = this._getRightAnswer(object);
+      for (_j = 0, _len1 = rightAnswers.length; _j < _len1; _j++) {
+        a = rightAnswers[_j];
+        isValid = isValid && values.indexOf(a) !== -1;
+      }
+      return isValid;
+    };
+
     Exam.prototype._separateCheckingModeEventHandler = function(object) {
       var currentId, rightAnswer, selectedAnswer;
       currentId = document.getElementById(object.id);
       selectedAnswer = currentId.value;
       rightAnswer = this._getRightAnswer(object);
+      if (object instanceof CheckBox) {
+        this._validateCheckBox(object);
+      }
       if ((selectedAnswer != null) || (rightAnswer != null)) {
         if (rightAnswer.toLowerCase() === selectedAnswer.toLowerCase()) {
           return currentId.style.color = "#7fe817";
@@ -2307,11 +2329,15 @@ function merge_text_nodes( jsonml ) {
         object = _ref[_i];
         tmpObjId = document.getElementById(object.id);
         if (tmpObjId) {
-          rightAnswer = this._getRightAnswer(object);
-          selectedAnswer = tmpObjId.value;
-          if ((selectedAnswer != null ? selectedAnswer.toLowerCase() : void 0) === (rightAnswer != null ? rightAnswer.toLowerCase() : void 0)) {
-            countOfRightAnswers++;
-            result.idOfRightAnswers.push(object.id);
+          if (object instanceof CheckBox) {
+            continue;
+          } else {
+            rightAnswer = this._getRightAnswer(object);
+            selectedAnswer = tmpObjId.value;
+            if ((selectedAnswer != null ? selectedAnswer.toLowerCase() : void 0) === (rightAnswer != null ? rightAnswer.toLowerCase() : void 0)) {
+              countOfRightAnswers++;
+              result.idOfRightAnswers.push(object.id);
+            }
           }
         }
       }
@@ -2334,6 +2360,10 @@ function merge_text_nodes( jsonml ) {
         currentObjectId = document.getElementById(object.id);
         if ((object instanceof List || object instanceof TextInput) && self._separateCheckingMode) {
           return currentObjectId.oninput = function() {
+            return self._separateCheckingModeEventHandler(object);
+          };
+        } else if ((object instanceof CheckBox) && self._separateCheckingMode) {
+          return currentObjectId.onchange = function() {
             return self._separateCheckingModeEventHandler(object);
           };
         }

@@ -54,10 +54,25 @@ class Exam
             result = object.rightAnswers
         result
 
+    @::_validateCheckBox = (object) ->
+        isValid = true
+        checkboxes = document.querySelectorAll("##{object.id} .examjs-checkbox")
+        values = []
+        for checkbox in checkboxes
+            if checkbox.checked
+                values.push(checkbox.nextSibling.data)
+        rightAnswers = @_getRightAnswer(object)
+        for a in rightAnswers
+            isValid = isValid && values.indexOf(a) isnt -1
+        isValid
+
+
     @::_separateCheckingModeEventHandler = (object) ->
         currentId = document.getElementById(object.id)
         selectedAnswer = currentId.value
         rightAnswer = @_getRightAnswer(object)
+        if object instanceof CheckBox
+            @_validateCheckBox(object)
 
         if selectedAnswer? or rightAnswer?
             if rightAnswer.toLowerCase() is selectedAnswer.toLowerCase()
@@ -85,12 +100,15 @@ class Exam
         for object in @_objects
             tmpObjId = document.getElementById(object.id)
             if tmpObjId
-                rightAnswer = @_getRightAnswer object
-                selectedAnswer = tmpObjId.value
+                if object instanceof CheckBox
+                    continue
+                else      
+                    rightAnswer = @_getRightAnswer object
+                    selectedAnswer = tmpObjId.value
 
-                if selectedAnswer?.toLowerCase() is rightAnswer?.toLowerCase()
-                    countOfRightAnswers++
-                    result.idOfRightAnswers.push(object.id)
+                    if selectedAnswer?.toLowerCase() is rightAnswer?.toLowerCase()
+                        countOfRightAnswers++
+                        result.idOfRightAnswers.push(object.id)
 
         result.tests = @_objects.length
         result.rightAnswers = countOfRightAnswers
@@ -107,6 +125,8 @@ class Exam
 
             if (object instanceof List or object instanceof TextInput) and self._separateCheckingMode
                 currentObjectId.oninput = -> self._separateCheckingModeEventHandler(object)
+            else if (object instanceof CheckBox) and self._separateCheckingMode
+                currentObjectId.onchange = -> self._separateCheckingModeEventHandler(object)
         if self._finishBtnID?
             finishBtn = document.getElementById(self._finishBtnID)
             finishBtn.onclick = -> self._finishBtnEventHandler()
