@@ -62,23 +62,30 @@ class Exam
             if checkbox.checked
                 values.push(checkbox.nextSibling.data)
         rightAnswers = @_getRightAnswer(object)
-        for a in rightAnswers
-            isValid = isValid && values.indexOf(a) isnt -1
+        if rightAnswers.length is values.length           
+            for a in rightAnswers
+                isValid = isValid && values.indexOf(a) isnt -1
+        else
+            isValid = false
         isValid
 
 
     @::_separateCheckingModeEventHandler = (object) ->
-        currentId = document.getElementById(object.id)
-        selectedAnswer = currentId.value
+        elem = document.getElementById(object.id)
+        selectedAnswer = elem.value
         rightAnswer = @_getRightAnswer(object)
         if object instanceof CheckBox
-            @_validateCheckBox(object)
+            if @_validateCheckBox(object)
+                elem.style.color = "#7fe817"
+            else
+                elem.style.color = "#e42217"
+            return
 
         if selectedAnswer? or rightAnswer?
             if rightAnswer.toLowerCase() is selectedAnswer.toLowerCase()
-                currentId.style.color = "#7fe817"
+                elem.style.color = "#7fe817"
             else
-                currentId.style.color = "#e42217"
+                elem.style.color = "#e42217"
 
     @::_getCheckboxAnswersResult = (object) ->
         rightAnswers = @_getRightAnswer(object)

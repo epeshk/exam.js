@@ -2276,26 +2276,35 @@ function merge_text_nodes( jsonml ) {
         }
       }
       rightAnswers = this._getRightAnswer(object);
-      for (_j = 0, _len1 = rightAnswers.length; _j < _len1; _j++) {
-        a = rightAnswers[_j];
-        isValid = isValid && values.indexOf(a) !== -1;
+      if (rightAnswers.length === values.length) {
+        for (_j = 0, _len1 = rightAnswers.length; _j < _len1; _j++) {
+          a = rightAnswers[_j];
+          isValid = isValid && values.indexOf(a) !== -1;
+        }
+      } else {
+        isValid = false;
       }
       return isValid;
     };
 
     Exam.prototype._separateCheckingModeEventHandler = function(object) {
-      var currentId, rightAnswer, selectedAnswer;
-      currentId = document.getElementById(object.id);
-      selectedAnswer = currentId.value;
+      var elem, rightAnswer, selectedAnswer;
+      elem = document.getElementById(object.id);
+      selectedAnswer = elem.value;
       rightAnswer = this._getRightAnswer(object);
       if (object instanceof CheckBox) {
-        this._validateCheckBox(object);
+        if (this._validateCheckBox(object)) {
+          elem.style.color = "#7fe817";
+        } else {
+          elem.style.color = "#e42217";
+        }
+        return;
       }
       if ((selectedAnswer != null) || (rightAnswer != null)) {
         if (rightAnswer.toLowerCase() === selectedAnswer.toLowerCase()) {
-          return currentId.style.color = "#7fe817";
+          return elem.style.color = "#7fe817";
         } else {
-          return currentId.style.color = "#e42217";
+          return elem.style.color = "#e42217";
         }
       }
     };
