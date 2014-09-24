@@ -2309,24 +2309,6 @@ function merge_text_nodes( jsonml ) {
       }
     };
 
-    Exam.prototype._getCheckboxAnswersResult = function(object) {
-      var a, checkbox, currentAnswers, element, result, rightAnswers, _i, _j, _len, _len1, _ref;
-      rightAnswers = this._getRightAnswer(object);
-      result = false;
-      currentAnswers = [];
-      checkbox = document.getElementById(object.id);
-      _ref = checkbox.getElementByClassName('examjs-checkbox');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        element = _ref[_i];
-        currentAnswers.push(element.value.toLowerCase);
-      }
-      for (_j = 0, _len1 = rightAnswers.length; _j < _len1; _j++) {
-        a = rightAnswers[_j];
-        result = currentAnswers.indexOf(a) > 0 || result;
-      }
-      return result;
-    };
-
     Exam.prototype.getAnswersInformation = function() {
       var countOfRightAnswers, object, result, rightAnswer, selectedAnswer, tmpObjId, _i, _len, _ref;
       countOfRightAnswers = 0;
