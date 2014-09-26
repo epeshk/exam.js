@@ -2204,21 +2204,21 @@ function merge_text_nodes( jsonml ) {
           if (typeof settings.separateCheckingMode === 'boolean') {
             this._separateCheckingMode = settings.separateCheckingMode;
           } else {
-            throw new Error('The separateCheckingMode parameter must be a type of boolean');
+            throw new Error('separateCheckingMode must be a type of boolean');
           }
         }
         if (settings.finishBtnID != null) {
           if (typeof settings.finishBtnID === 'string') {
             this._finishBtnID = settings.finishBtnID;
           } else {
-            throw new Error('The finishBtnID parameter must be a type of string');
+            throw new Error('finishBtnID must be a type of string');
           }
         }
         if (settings.preprocessor != null) {
           if (typeof settings.preprocessor === 'function') {
             this._preprocessor = settings.preprocessor;
           } else {
-            throw new Error('The preprocessor parameter must be a type of function');
+            throw new Error('preprocessor must be a type of function');
           }
         }
         this._setCallbacks(settings);

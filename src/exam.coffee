@@ -11,17 +11,17 @@ class Exam
                 if typeof settings.separateCheckingMode is 'boolean'
                     @_separateCheckingMode = settings.separateCheckingMode
                 else
-                    throw new Error('The separateCheckingMode parameter must be a type of boolean')
+                    throw new Error('separateCheckingMode must be a type of boolean')
             if settings.finishBtnID?
                 if typeof settings.finishBtnID is 'string'
                     @_finishBtnID = settings.finishBtnID
                 else
-                    throw new Error('The finishBtnID parameter must be a type of string')
+                    throw new Error('finishBtnID must be a type of string')
             if settings.preprocessor?
                 if typeof settings.preprocessor is 'function'
                     @_preprocessor = settings.preprocessor
                 else
-                    throw new Error('The preprocessor parameter must be a type of function')
+                    throw new Error('preprocessor must be a type of function')
 
             @_setCallbacks(settings)
 
