@@ -32,7 +32,7 @@ describe('Parser', function() {
 
     describe('_indexOfRightAnswer()', function() {
         it('should parse index of right answer in List syntax block', function() {
-            var result = parser._indexOfRightAnswer(['test1', 'test2', 'test3', 'test4'],'test3');
+            var result = parser._indexOfRightAnswer(['test1', 'test2', 'test3', 'test4'], 'test3');
 
             expect(result).toBe(2);
         });
@@ -84,23 +84,28 @@ describe('Parser', function() {
             expect(result[1].syntaxBlock).toBe('{{? help ?}}');
         });
 
-        it('should create TextInput object', function(){
+        it('should create TextInput object', function() {
             var result = parser.parse('bla bla {{ ... :: test}}');
             expect(result[0] instanceof TextInput).toBeTruthy();
         });
 
-        it('should create List with help text', function(){
+        it('should create List object', function() {
+            var result = parser.parse('bla bla {{ 1,2,3 :: 1}}');
+            expect(result[0] instanceof List).toBeTruthy();
+        });
+
+        it('should create List with help text', function() {
             var result = parser.parse('bla bal {{ test1, test2 :: test1 :? help text }}');
             expect(result[0].helpText).toBe('help text');
         });
 
-        it('should create CheckBox with 3 items and 2 rightAnswers', function(){
+        it('should create CheckBox with 3 items and 2 rightAnswers', function() {
             var result = parser.parse('bla bla {{ test1, test2, test3 :: test1,test2 }}');
             expect(result[0].items.length).toBe(3);
             expect(result[0].rightAnswers.length).toBe(2);
         });
 
-        it('should create CheckBox with help text', function(){
+        it('should create CheckBox with help text', function() {
             var result = parser.parse('bla bla {{ test1, test2, test3 :: test1,test2 :? help text }}');
             expect(result[0].helpText).toBe('help text');
         });
