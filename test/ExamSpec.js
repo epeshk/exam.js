@@ -28,19 +28,19 @@ describe('Exam()',function(){
 
     it('should set all callback functions', function(){
         function someFunction1() {}
+        function someFunction2() {}
         function someFunction3() {}
-        function someFunction4() {}
         var settings = {
             preprocessor : someFunction1,
-            separateCheckingModeEventHandler: someFunction3,
-            finishBtnEventHandler: someFunction4,
+            separateCheckingModeEventHandler: someFunction2,
+            finishBtnEventHandler: someFunction3,
         };
 
         var exam = new Exam(settings);
 
         expect(exam._preprocessor).toBe(someFunction1);
-        expect(exam._separateCheckingModeEventHandler).toBe(someFunction3);
-        expect(exam._finishBtnEventHandler).toBe(someFunction4);
+        expect(exam._separateCheckingModeEventHandler).toBe(someFunction2);
+        expect(exam._finishBtnEventHandler).toBe(someFunction3);
     });
 
 });
