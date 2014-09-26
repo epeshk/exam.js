@@ -2340,6 +2340,15 @@ function merge_text_nodes( jsonml ) {
       return result;
     };
 
+    Exam.prototype.onAnswer = function(tagId, callback) {
+      var info, tag;
+      tag = document.getElementById(tagId);
+      info = this.getAnswersInformation();
+      return tag.oninput = function() {
+        return callback(info.tests(info.rightAnswers));
+      };
+    };
+
     Exam.prototype._finishBtnEventHandler = function() {
       var answersInformation;
       answersInformation = this.getAnswersInformation();

@@ -112,6 +112,11 @@ class Exam
         result.rightAnswers = countOfRightAnswers
         result
 
+    @::onAnswer = (tagId, callback) ->
+        tag = document.getElementById tagId
+        info = do @getAnswersInformation
+        tag.oninput = -> callback info.tests info.rightAnswers
+
     @::_finishBtnEventHandler = ->
         answersInformation = @getAnswersInformation()
         window.alert("Count of a right answers: #{answersInformation.rightAnswers}/#{asnwersInformation.tests}")
