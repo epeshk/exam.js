@@ -114,8 +114,13 @@ class Exam
 
     @::onAnswer = (tagId, callback) ->
         tag = document.getElementById tagId
-        info = do @getAnswersInformation
-        tag.oninput = -> callback info.tests info.rightAnswers
+
+        tag.oninput = =>
+            info = do @getAnswersInformation
+            callback(info.tests, info.rightAnswers)
+        tag.onchange = => 
+            info = do @getAnswersInformation
+            callback(info.tests, info.rightAnswers)
 
     @::_finishBtnEventHandler = ->
         answersInformation = @getAnswersInformation()

@@ -2341,12 +2341,22 @@ function merge_text_nodes( jsonml ) {
     };
 
     Exam.prototype.onAnswer = function(tagId, callback) {
-      var info, tag;
+      var tag;
       tag = document.getElementById(tagId);
-      info = this.getAnswersInformation();
-      return tag.oninput = function() {
-        return callback(info.tests(info.rightAnswers));
-      };
+      tag.oninput = (function(_this) {
+        return function() {
+          var info;
+          info = _this.getAnswersInformation();
+          return callback(info.tests, info.rightAnswers);
+        };
+      })(this);
+      return tag.onchange = (function(_this) {
+        return function() {
+          var info;
+          info = _this.getAnswersInformation();
+          return callback(info.tests, info.rightAnswers);
+        };
+      })(this);
     };
 
     Exam.prototype._finishBtnEventHandler = function() {

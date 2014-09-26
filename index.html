@@ -29,32 +29,27 @@
     </div>
     <script type="text/javascript" src="dist/exam.js"></script>
     <script type="text/javascript">
-        var exam = new Exam({
-            finishBtnID : 'finishBtn'
-        });
-        var resultDiv = document.getElementById('result');
-        var editor = document.getElementById('editor');
-        var answersDiv = document.getElementById('answers');
-        var testsDiv = document.getElementById('tests');
-        function checkAnswers(){
-            var answersInfo = exam.getAnswersInformation();
-            
-            answersDiv.innerHTML = ('Answers: ' + answersInfo.rightAnswers);
-            testsDiv.innerHTML = ('Tests: ' +answersInfo.tests);
-        }
+    var exam = new Exam({
+        finishBtnID: 'finishBtn'
+    });
+    var resultDiv = document.getElementById('result');
+    var editor = document.getElementById('editor');
+    var answersDiv = document.getElementById('answers');
+    var testsDiv = document.getElementById('tests');
 
-        function update()
-        {
-            var source = editor.value;
-            var resultHTML = exam.parse(source);
-            resultDiv.innerHTML = resultHTML;
-            exam.startExam();
-            checkAnswers();
-        }
+    exam.onAnswer('result', function(tests, rightAnswers) {
+        answersDiv.innerHTML = ('Answers: ' + tests);
+        testsDiv.innerHTML = ('Tests: ' + rightAnswers);
+    });
 
-        editor.oninput = update;
-        resultDiv.oninput = checkAnswers;
-        resultDiv.onchange = checkAnswers;
+    function update() {
+        var source = editor.value;
+        var resultHTML = exam.parse(source);
+        resultDiv.innerHTML = resultHTML;
+        exam.startExam();
+    }
+
+    editor.oninput = update;
     </script>
 
 </body>
