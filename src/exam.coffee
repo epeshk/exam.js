@@ -113,14 +113,20 @@ class Exam
         result
 
     @::onAnswer = (tagId, callback) ->
-        tag = document.getElementById tagId
+        tags = []
+        if tagId instanceof Array
+            for tId in tagId
+                tags.push(document.getElementById tId)
+        else
+            tags.push(document.getElementById tagId)
 
-        tag.oninput = =>
-            info = do @getAnswersInformation
-            callback(info.tests, info.rightAnswers)
-        tag.onchange = => 
-            info = do @getAnswersInformation
-            callback(info.tests, info.rightAnswers)
+        for tag in tags
+            tag.oninput = =>
+                info = do @getAnswersInformation
+                callback(info.tests, info.rightAnswers)
+            tag.onchange = => 
+                info = do @getAnswersInformation
+                callback(info.tests, info.rightAnswers)
 
     @::_finishBtnEventHandler = ->
         answersInformation = @getAnswersInformation()

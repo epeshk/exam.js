@@ -2341,22 +2341,35 @@ function merge_text_nodes( jsonml ) {
     };
 
     Exam.prototype.onAnswer = function(tagId, callback) {
-      var tag;
-      tag = document.getElementById(tagId);
-      tag.oninput = (function(_this) {
-        return function() {
-          var info;
-          info = _this.getAnswersInformation();
-          return callback(info.tests, info.rightAnswers);
-        };
-      })(this);
-      return tag.onchange = (function(_this) {
-        return function() {
-          var info;
-          info = _this.getAnswersInformation();
-          return callback(info.tests, info.rightAnswers);
-        };
-      })(this);
+      var tId, tag, tags, _i, _j, _len, _len1, _results;
+      tags = [];
+      if (tagId instanceof Array) {
+        for (_i = 0, _len = tagId.length; _i < _len; _i++) {
+          tId = tagId[_i];
+          tags.push(document.getElementById(tId));
+        }
+      } else {
+        tags.push(document.getElementById(tagId));
+      }
+      _results = [];
+      for (_j = 0, _len1 = tags.length; _j < _len1; _j++) {
+        tag = tags[_j];
+        tag.oninput = (function(_this) {
+          return function() {
+            var info;
+            info = _this.getAnswersInformation();
+            return callback(info.tests, info.rightAnswers);
+          };
+        })(this);
+        _results.push(tag.onchange = (function(_this) {
+          return function() {
+            var info;
+            info = _this.getAnswersInformation();
+            return callback(info.tests, info.rightAnswers);
+          };
+        })(this));
+      }
+      return _results;
     };
 
     Exam.prototype._finishBtnEventHandler = function() {
