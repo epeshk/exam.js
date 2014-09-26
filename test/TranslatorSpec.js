@@ -29,6 +29,14 @@ describe('Translator', function() {
         });
     });
 
+    describe('_createCheckBox()', function(){
+        it('should create a checkbox from CheckBox object', function(){
+            var result = translator._createCheckBox(new CheckBox('{{1,2,3::1,2}}', undefined, 'examjs_id_1', ['1','2','3'], ['1','2']));
+
+            expect(result).toBe("<div class='examjs-checkbox-block'><div id='examjs_id_1' class='examjs-block'><div><input type='checkbox' class='examjs-checkbox'>1</input></div><div><input type='checkbox' class='examjs-checkbox'>2</input></div><div><input type='checkbox' class='examjs-checkbox'>3</input></div></div></div>");
+        });
+    });
+
     describe('convertAllObjects()', function() {
         it('should convert all syntax objects to the text', function() {
             var data = [new List('{{test1,!test2!}}',undefined, undefined, ['test1', 'test2'], 1), new List('{{test1,!test2!}}', undefined, undefined, ['test1', 'test2'], 1),
