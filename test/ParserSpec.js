@@ -94,6 +94,11 @@ describe('Parser', function() {
             expect(result[0] instanceof List).toBeTruthy();
         });
 
+        it('should create CheckBox object', function() {
+            var result = parser.parse('bla bla {{ 1,2,3 :: 1,2}}');
+            expect(result[0] instanceof CheckBox).toBeTruthy();
+        });
+
         it('should create List with help text', function() {
             var result = parser.parse('bla bal {{ test1, test2 :: test1 :? help text }}');
             expect(result[0].helpText).toBe('help text');
