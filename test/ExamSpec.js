@@ -27,10 +27,10 @@ describe('Exam()',function(){
     });
 
     it('should set all callback functions', function(){
-        function someFunction1() {/*todo*/}
-        function someFunction2() {/*todo*/}
-        function someFunction3() {/*todo*/}
-        function someFunction4() {/*todo*/}
+        function someFunction1() {}
+        function someFunction2() {}
+        function someFunction3() {}
+        function someFunction4() {}
         var settings = {
             preprocessor : someFunction1,
             separateCheckingModeEventHandler: someFunction3,
