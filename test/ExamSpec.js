@@ -28,7 +28,6 @@ describe('Exam()',function(){
 
     it('should set all callback functions', function(){
         function someFunction1() {}
-        function someFunction2() {}
         function someFunction3() {}
         function someFunction4() {}
         var settings = {
