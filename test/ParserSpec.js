@@ -94,5 +94,10 @@ describe('Parser', function() {
             expect(result[0].items.length).toBe(3);
             expect(result[0].rightAnswers.length).toBe(2);
         });
+
+        it('should create CheckBox with help text', function(){
+            var result = parser.parse('bla bla {{ test1, test2, test3 :: test1,test2 :? help text }}');
+            expect(result[0].helpText).toBe('help text');
+        });
     });
 });
