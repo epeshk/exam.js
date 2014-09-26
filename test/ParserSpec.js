@@ -84,6 +84,11 @@ describe('Parser', function() {
             expect(result[1].syntaxBlock).toBe('{{? help ?}}');
         });
 
+        it('should create TextInput object', function(){
+            var result = parser.parse('bla bla {{ ... :: test}}');
+            expect(result[0] instanceof TextInput).toBeTruthy();
+        });
+
         it('should create List with help text', function(){
             var result = parser.parse('bla bal {{ test1, test2 :: test1 :? help text }}');
             expect(result[0].helpText).toBe('help text');
