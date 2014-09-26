@@ -38,8 +38,8 @@
     var testsDiv = document.getElementById('tests');
 
     exam.onAnswer('result', function(tests, rightAnswers) {
-        answersDiv.innerHTML = ('Answers: ' + tests);
-        testsDiv.innerHTML = ('Tests: ' + rightAnswers);
+        answersDiv.innerHTML = ('Answers: ' + rightAnswers);
+        testsDiv.innerHTML = ('Tests: ' + tests);
     });
 
     function update() {
