@@ -88,5 +88,11 @@ describe('Parser', function() {
             var result = parser.parse('bla bal {{ test1, test2 :: test1 :? help text }}');
             expect(result[0].helpText).toBe('help text');
         });
+
+        it('should create CheckBox with 3 items and 2 rightAnswers', function(){
+            var result = parser.parse('bla bla {{ test1, test2, test3 :: test1,test2 }}');
+            expect(result[0].items.length).toBe(3);
+            expect(result[0].rightAnswers.length).toBe(2);
+        });
     });
 });
