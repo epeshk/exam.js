@@ -8,7 +8,7 @@ class Translator
 
     @::_createListBox = (listObject) ->
         result = "<select id='#{listObject.id}' class='examjs-input'>"
-
+        result += "<option></option>"
         for item in listObject.items
             result += "<option>#{item}</option>"
         result += '</select>'

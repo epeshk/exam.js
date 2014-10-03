@@ -2124,6 +2124,7 @@ function merge_text_nodes( jsonml ) {
     Translator.prototype._createListBox = function(listObject) {
       var item, result, _i, _len, _ref;
       result = "<select id='" + listObject.id + "' class='examjs-input'>";
+      result += "<option></option>";
       _ref = listObject.items;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
