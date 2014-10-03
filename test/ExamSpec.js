@@ -55,7 +55,7 @@ describe('Exam', function() {
         it('should replace all syntax blocks to HTML tags if _preprocessor is default', function(){
             var result = exam.parse('bla bla bla {{test1,test2 :: test2}} bla');
 
-            expect(result).toBe("<p>bla bla bla <div class='examjs-block'><select id='examjsid_1' class='examjs-input'><option>test1</option><option>test2</option></select></div> bla</p>");
+            expect(result).toBe("<p>bla bla bla <div class='examjs-block'><select id='examjsid_1' class='examjs-input'><option></option><option>test1</option><option>test2</option></select></div> bla</p>");
         });
 
     });

@@ -11,7 +11,7 @@ describe('Translator', function() {
         it('should create a listbox from List', function() {
             var result = translator._createListBox(new List( '{{test1,!test2!}}',undefined, 'examjs_id_1',['test1', 'test2'], 1));
 
-            expect(result).toBe("<div class='examjs-block'><select id='examjs_id_1' class='examjs-input'><option>test1</option><option>test2</option></select></div>");
+            expect(result).toBe("<div class='examjs-block'><select id='examjs_id_1' class='examjs-input'><option></option><option>test1</option><option>test2</option></select></div>");
         });
     });
 
