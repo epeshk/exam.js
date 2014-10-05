@@ -5,7 +5,7 @@ class Exam
         @_objects = [];
 
         @_separateChecking = true;
-        @_preprocessor = markdown.toHTML;
+        @_lang = markdown.toHTML;
         if settings
             if settings.separateChecking?
                 if typeof settings.separateChecking is 'boolean'
@@ -17,11 +17,11 @@ class Exam
                     @_finishBtnID = settings.finishBtnID
                 else
                     throw new Error('finishBtnID must be a type of string')
-            if settings.preprocessor?
-                if typeof settings.preprocessor is 'function'
-                    @_preprocessor = settings.preprocessor
+            if settings.lang?
+                if typeof settings.lang is 'function'
+                    @_lang = settings.lang
                 else
-                    throw new Error('preprocessor must be a type of function')
+                    throw new Error('lang must be a type of function')
 
             @_setCallbacks(settings)
 
@@ -36,7 +36,7 @@ class Exam
             @_finishBtnEventHandler = settings.finishBtnEventHandler
 
     @::parse = (source) ->
-        preprocessedSource = @_preprocessor(source)
+        preprocessedSource = @_lang(source)
         @_objects = @_parser.parse(preprocessedSource)
         convertionResults = @_translator.convertAllObjects(@_objects)
 

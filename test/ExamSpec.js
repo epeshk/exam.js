@@ -7,7 +7,7 @@ describe('Exam()',function(){
         expect(exam._finishBtnID).not.toBeDefined();
         expect(exam._finishBtnEventHandler).toBeDefined();
         expect(exam._separateCheckingEventHandler).toBeDefined();
-        expect(exam._preprocessor).toBe(markdown.toHTML);
+        expect(exam._lang).toBe(markdown.toHTML);
     });
 
     it('should leave the btnFinishId unchanged and setting separatorMode on false', function(){
@@ -31,14 +31,14 @@ describe('Exam()',function(){
         function someFunction2() {}
         function someFunction3() {}
         var settings = {
-            preprocessor : someFunction1,
+            lang : someFunction1,
             separateCheckingEventHandler: someFunction2,
             finishBtnEventHandler: someFunction3,
         };
 
         var exam = new Exam(settings);
 
-        expect(exam._preprocessor).toBe(someFunction1);
+        expect(exam._lang).toBe(someFunction1);
         expect(exam._separateCheckingEventHandler).toBe(someFunction2);
         expect(exam._finishBtnEventHandler).toBe(someFunction3);
     });
@@ -52,7 +52,7 @@ describe('Exam', function() {
     });
 
     describe('parse()', function(){
-        it('should replace all syntax blocks to HTML tags if _preprocessor is default', function(){
+        it('should replace all syntax blocks to HTML tags if _lang is default', function(){
             var result = exam.parse('bla bla bla {{test1,test2 :: test2}} bla');
 
             expect(result).toBe("<p>bla bla bla <div class='examjs-block'><select id='examjsid_1' class='examjs-input'><option></option><option>test1</option><option>test2</option></select></div> bla</p>");

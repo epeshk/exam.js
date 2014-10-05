@@ -2199,7 +2199,7 @@ function merge_text_nodes( jsonml ) {
       this._parser = new Parser(new Lexer());
       this._objects = [];
       this._separateChecking = true;
-      this._preprocessor = markdown.toHTML;
+      this._lang = markdown.toHTML;
       if (settings) {
         if (settings.separateChecking != null) {
           if (typeof settings.separateChecking === 'boolean') {
@@ -2215,11 +2215,11 @@ function merge_text_nodes( jsonml ) {
             throw new Error('finishBtnID must be a type of string');
           }
         }
-        if (settings.preprocessor != null) {
-          if (typeof settings.preprocessor === 'function') {
-            this._preprocessor = settings.preprocessor;
+        if (settings.lang != null) {
+          if (typeof settings.lang === 'function') {
+            this._lang = settings.lang;
           } else {
-            throw new Error('preprocessor must be a type of function');
+            throw new Error('lang must be a type of function');
           }
         }
         this._setCallbacks(settings);
@@ -2243,7 +2243,7 @@ function merge_text_nodes( jsonml ) {
 
     Exam.prototype.parse = function(source) {
       var convertionResults, item, preprocessedSource, _i, _len;
-      preprocessedSource = this._preprocessor(source);
+      preprocessedSource = this._lang(source);
       this._objects = this._parser.parse(preprocessedSource);
       convertionResults = this._translator.convertAllObjects(this._objects);
       for (_i = 0, _len = convertionResults.length; _i < _len; _i++) {
