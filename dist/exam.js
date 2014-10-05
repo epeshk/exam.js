@@ -2227,11 +2227,11 @@ function merge_text_nodes( jsonml ) {
     }
 
     Exam.prototype._setCallbacks = function(settings) {
-      if (settings.separateCheckingEventHandler) {
-        if (typeof settings.separateCheckingEventHandler !== 'function') {
-          throw new Error('The separateCheckingEventHandler must be a type of function');
+      if (settings.separateCheckingHandler) {
+        if (typeof settings.separateCheckingHandler !== 'function') {
+          throw new Error('The separateCheckingHandler must be a type of function');
         }
-        this._separateCheckingEventHandler = settings.separateCheckingEventHandler;
+        this._separateCheckingHandler = settings.separateCheckingHandler;
       }
       if (settings.finishBtnEventHandler) {
         if (typeof settings.finishBtnEventHandler !== 'function') {
@@ -2288,7 +2288,7 @@ function merge_text_nodes( jsonml ) {
       return isValid;
     };
 
-    Exam.prototype._separateCheckingEventHandler = function(object) {
+    Exam.prototype._separateCheckingHandler = function(object) {
       var elem, rightAnswer, selectedAnswer;
       elem = document.getElementById(object.id);
       selectedAnswer = elem.value;
@@ -2387,11 +2387,11 @@ function merge_text_nodes( jsonml ) {
         currentObjectId = document.getElementById(object.id);
         if ((object instanceof List || object instanceof TextInput) && self._separateChecking) {
           return currentObjectId.oninput = function() {
-            return self._separateCheckingEventHandler(object);
+            return self._separateCheckingHandler(object);
           };
         } else if ((object instanceof CheckBox) && self._separateChecking) {
           return currentObjectId.onchange = function() {
-            return self._separateCheckingEventHandler(object);
+            return self._separateCheckingHandler(object);
           };
         }
       });

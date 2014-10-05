@@ -26,10 +26,10 @@ class Exam
             @_setCallbacks(settings)
 
     @::_setCallbacks = (settings) ->
-        if settings.separateCheckingEventHandler
-            if typeof settings.separateCheckingEventHandler isnt 'function'
-                throw new Error('The separateCheckingEventHandler must be a type of function')
-            @_separateCheckingEventHandler = settings.separateCheckingEventHandler
+        if settings.separateCheckingHandler
+            if typeof settings.separateCheckingHandler isnt 'function'
+                throw new Error('The separateCheckingHandler must be a type of function')
+            @_separateCheckingHandler = settings.separateCheckingHandler
         if settings.finishBtnEventHandler
             if typeof settings.finishBtnEventHandler isnt 'function'
                 throw new Error('The finishBtnEventHandler must be a type of function')
@@ -70,7 +70,7 @@ class Exam
         isValid
 
 
-    @::_separateCheckingEventHandler = (object) ->
+    @::_separateCheckingHandler = (object) ->
         elem = document.getElementById(object.id)
         selectedAnswer = elem.value
         rightAnswer = @_getRightAnswer(object)
@@ -138,9 +138,9 @@ class Exam
             currentObjectId = document.getElementById(object.id)
 
             if (object instanceof List or object instanceof TextInput) and self._separateChecking
-                currentObjectId.oninput = -> self._separateCheckingEventHandler(object)
+                currentObjectId.oninput = -> self._separateCheckingHandler(object)
             else if (object instanceof CheckBox) and self._separateChecking
-                currentObjectId.onchange = -> self._separateCheckingEventHandler(object)
+                currentObjectId.onchange = -> self._separateCheckingHandler(object)
         if self._finishBtnID?
             finishBtn = document.getElementById(self._finishBtnID)
             finishBtn.onclick = -> self._finishBtnEventHandler()
