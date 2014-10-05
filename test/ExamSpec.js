@@ -5,7 +5,7 @@ describe('Exam()',function(){
 
         expect(exam._separateChecking).toBe(true);
         expect(exam._finishBtnID).not.toBeDefined();
-        expect(exam._finishBtnEventHandler).toBeDefined();
+        expect(exam._finishBtnHandler).toBeDefined();
         expect(exam._separateCheckingHandler).toBeDefined();
         expect(exam._lang).toBe(markdown.toHTML);
     });
@@ -33,14 +33,14 @@ describe('Exam()',function(){
         var settings = {
             lang : someFunction1,
             separateCheckingHandler: someFunction2,
-            finishBtnEventHandler: someFunction3,
+            finishBtnHandler: someFunction3,
         };
 
         var exam = new Exam(settings);
 
         expect(exam._lang).toBe(someFunction1);
         expect(exam._separateCheckingHandler).toBe(someFunction2);
-        expect(exam._finishBtnEventHandler).toBe(someFunction3);
+        expect(exam._finishBtnHandler).toBe(someFunction3);
     });
 
 });

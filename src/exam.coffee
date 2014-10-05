@@ -30,10 +30,10 @@ class Exam
             if typeof settings.separateCheckingHandler isnt 'function'
                 throw new Error('The separateCheckingHandler must be a type of function')
             @_separateCheckingHandler = settings.separateCheckingHandler
-        if settings.finishBtnEventHandler
-            if typeof settings.finishBtnEventHandler isnt 'function'
-                throw new Error('The finishBtnEventHandler must be a type of function')
-            @_finishBtnEventHandler = settings.finishBtnEventHandler
+        if settings.finishBtnHandler
+            if typeof settings.finishBtnHandler isnt 'function'
+                throw new Error('The finishBtnHandler must be a type of function')
+            @_finishBtnHandler = settings.finishBtnHandler
 
     @::parse = (source) ->
         preprocessedSource = @_lang(source)
@@ -128,7 +128,7 @@ class Exam
                 info = do @getAnswersInformation
                 callback(info.tests, info.rightAnswers)
 
-    @::_finishBtnEventHandler = ->
+    @::_finishBtnHandler = ->
         answersInformation = @getAnswersInformation()
         window.alert("Count of a right answers: #{answersInformation.rightAnswers}/#{asnwersInformation.tests}")
 
@@ -143,6 +143,6 @@ class Exam
                 currentObjectId.onchange = -> self._separateCheckingHandler(object)
         if self._finishBtnID?
             finishBtn = document.getElementById(self._finishBtnID)
-            finishBtn.onclick = -> self._finishBtnEventHandler()
+            finishBtn.onclick = -> self._finishBtnHandler()
 
 @Exam = Exam

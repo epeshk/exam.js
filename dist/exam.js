@@ -2233,11 +2233,11 @@ function merge_text_nodes( jsonml ) {
         }
         this._separateCheckingHandler = settings.separateCheckingHandler;
       }
-      if (settings.finishBtnEventHandler) {
-        if (typeof settings.finishBtnEventHandler !== 'function') {
-          throw new Error('The finishBtnEventHandler must be a type of function');
+      if (settings.finishBtnHandler) {
+        if (typeof settings.finishBtnHandler !== 'function') {
+          throw new Error('The finishBtnHandler must be a type of function');
         }
-        return this._finishBtnEventHandler = settings.finishBtnEventHandler;
+        return this._finishBtnHandler = settings.finishBtnHandler;
       }
     };
 
@@ -2373,7 +2373,7 @@ function merge_text_nodes( jsonml ) {
       return _results;
     };
 
-    Exam.prototype._finishBtnEventHandler = function() {
+    Exam.prototype._finishBtnHandler = function() {
       var answersInformation;
       answersInformation = this.getAnswersInformation();
       return window.alert("Count of a right answers: " + answersInformation.rightAnswers + "/" + asnwersInformation.tests);
@@ -2398,7 +2398,7 @@ function merge_text_nodes( jsonml ) {
       if (self._finishBtnID != null) {
         finishBtn = document.getElementById(self._finishBtnID);
         return finishBtn.onclick = function() {
-          return self._finishBtnEventHandler();
+          return self._finishBtnHandler();
         };
       }
     };
