@@ -3,18 +3,18 @@ describe('Exam()',function(){
     it('should set the settings default', function(){
         var exam = new Exam();
 
-        expect(exam._separateCheckingMode).toBe(true);
+        expect(exam._separateChecking).toBe(true);
         expect(exam._finishBtnID).not.toBeDefined();
         expect(exam._finishBtnEventHandler).toBeDefined();
-        expect(exam._separateCheckingModeEventHandler).toBeDefined();
+        expect(exam._separateCheckingEventHandler).toBeDefined();
         expect(exam._preprocessor).toBe(markdown.toHTML);
     });
 
     it('should leave the btnFinishId unchanged and setting separatorMode on false', function(){
-        var setting = {separateCheckingMode: false};
+        var setting = {separateChecking: false};
         var exam = new Exam(setting);
 
-        expect(exam._separateCheckingMode).toBe(false);
+        expect(exam._separateChecking).toBe(false);
         expect(exam._finishBtnID).not.toBeDefined();
     });
 
@@ -22,7 +22,7 @@ describe('Exam()',function(){
         var setting = {finishBtnID : "button_1"};
         var exam = new Exam(setting);
 
-        expect(exam._separateCheckingMode).toBe(true);
+        expect(exam._separateChecking).toBe(true);
         expect(exam._finishBtnID).toBe("button_1");
     });
 
@@ -32,14 +32,14 @@ describe('Exam()',function(){
         function someFunction3() {}
         var settings = {
             preprocessor : someFunction1,
-            separateCheckingModeEventHandler: someFunction2,
+            separateCheckingEventHandler: someFunction2,
             finishBtnEventHandler: someFunction3,
         };
 
         var exam = new Exam(settings);
 
         expect(exam._preprocessor).toBe(someFunction1);
-        expect(exam._separateCheckingModeEventHandler).toBe(someFunction2);
+        expect(exam._separateCheckingEventHandler).toBe(someFunction2);
         expect(exam._finishBtnEventHandler).toBe(someFunction3);
     });
 

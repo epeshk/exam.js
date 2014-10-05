@@ -4,14 +4,14 @@ class Exam
         @_parser = new Parser(new Lexer());
         @_objects = [];
 
-        @_separateCheckingMode = true;
+        @_separateChecking = true;
         @_preprocessor = markdown.toHTML;
         if settings
-            if settings.separateCheckingMode?
-                if typeof settings.separateCheckingMode is 'boolean'
-                    @_separateCheckingMode = settings.separateCheckingMode
+            if settings.separateChecking?
+                if typeof settings.separateChecking is 'boolean'
+                    @_separateChecking = settings.separateChecking
                 else
-                    throw new Error('separateCheckingMode must be a type of boolean')
+                    throw new Error('separateChecking must be a type of boolean')
             if settings.finishBtnID?
                 if typeof settings.finishBtnID is 'string'
                     @_finishBtnID = settings.finishBtnID
@@ -26,10 +26,10 @@ class Exam
             @_setCallbacks(settings)
 
     @::_setCallbacks = (settings) ->
-        if settings.separateCheckingModeEventHandler
-            if typeof settings.separateCheckingModeEventHandler isnt 'function'
-                throw new Error('The separateCheckingModeEventHandler must be a type of function')
-            @_separateCheckingModeEventHandler = settings.separateCheckingModeEventHandler
+        if settings.separateCheckingEventHandler
+            if typeof settings.separateCheckingEventHandler isnt 'function'
+                throw new Error('The separateCheckingEventHandler must be a type of function')
+            @_separateCheckingEventHandler = settings.separateCheckingEventHandler
         if settings.finishBtnEventHandler
             if typeof settings.finishBtnEventHandler isnt 'function'
                 throw new Error('The finishBtnEventHandler must be a type of function')
@@ -70,7 +70,7 @@ class Exam
         isValid
 
 
-    @::_separateCheckingModeEventHandler = (object) ->
+    @::_separateCheckingEventHandler = (object) ->
         elem = document.getElementById(object.id)
         selectedAnswer = elem.value
         rightAnswer = @_getRightAnswer(object)
@@ -137,10 +137,10 @@ class Exam
         self._objects.forEach (object)->
             currentObjectId = document.getElementById(object.id)
 
-            if (object instanceof List or object instanceof TextInput) and self._separateCheckingMode
-                currentObjectId.oninput = -> self._separateCheckingModeEventHandler(object)
-            else if (object instanceof CheckBox) and self._separateCheckingMode
-                currentObjectId.onchange = -> self._separateCheckingModeEventHandler(object)
+            if (object instanceof List or object instanceof TextInput) and self._separateChecking
+                currentObjectId.oninput = -> self._separateCheckingEventHandler(object)
+            else if (object instanceof CheckBox) and self._separateChecking
+                currentObjectId.onchange = -> self._separateCheckingEventHandler(object)
         if self._finishBtnID?
             finishBtn = document.getElementById(self._finishBtnID)
             finishBtn.onclick = -> self._finishBtnEventHandler()
