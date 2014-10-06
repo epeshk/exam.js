@@ -11,28 +11,28 @@ class Exam
                 if typeof settings.separateChecking is 'boolean'
                     @_separateChecking = settings.separateChecking
                 else
-                    throw new Error('separateChecking must be a type of boolean')
+                    throw new Error('parameter "separateChecking" must be a type of boolean')
             if settings.finishBtnID?
                 if typeof settings.finishBtnID is 'string'
                     @_finishBtnID = settings.finishBtnID
                 else
-                    throw new Error('finishBtnID must be a type of string')
+                    throw new Error('parameter "finishBtnID" must be a type of string')
             if settings.lang?
                 if typeof settings.lang is 'function'
                     @_lang = settings.lang
                 else
-                    throw new Error('lang must be a type of function')
+                    throw new Error('parameter "lang" must be a type of function')
 
             @_setCallbacks(settings)
 
     @::_setCallbacks = (settings) ->
         if settings.separateCheckingHandler
             if typeof settings.separateCheckingHandler isnt 'function'
-                throw new Error('The separateCheckingHandler must be a type of function')
+                throw new Error('parameter "separateCheckingHandler" must be a type of function')
             @_separateCheckingHandler = settings.separateCheckingHandler
         if settings.finishBtnHandler
             if typeof settings.finishBtnHandler isnt 'function'
-                throw new Error('The finishBtnHandler must be a type of function')
+                throw new Error('parameter "finishBtnHandler" must be a type of function')
             @_finishBtnHandler = settings.finishBtnHandler
 
     @::parse = (source) ->

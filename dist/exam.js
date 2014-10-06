@@ -2205,21 +2205,21 @@ function merge_text_nodes( jsonml ) {
           if (typeof settings.separateChecking === 'boolean') {
             this._separateChecking = settings.separateChecking;
           } else {
-            throw new Error('separateChecking must be a type of boolean');
+            throw new Error('parameter "separateChecking" must be a type of boolean');
           }
         }
         if (settings.finishBtnID != null) {
           if (typeof settings.finishBtnID === 'string') {
             this._finishBtnID = settings.finishBtnID;
           } else {
-            throw new Error('finishBtnID must be a type of string');
+            throw new Error('parameter "finishBtnID" must be a type of string');
           }
         }
         if (settings.lang != null) {
           if (typeof settings.lang === 'function') {
             this._lang = settings.lang;
           } else {
-            throw new Error('lang must be a type of function');
+            throw new Error('parameter "lang" must be a type of function');
           }
         }
         this._setCallbacks(settings);
@@ -2229,13 +2229,13 @@ function merge_text_nodes( jsonml ) {
     Exam.prototype._setCallbacks = function(settings) {
       if (settings.separateCheckingHandler) {
         if (typeof settings.separateCheckingHandler !== 'function') {
-          throw new Error('The separateCheckingHandler must be a type of function');
+          throw new Error('parameter "separateCheckingHandler" must be a type of function');
         }
         this._separateCheckingHandler = settings.separateCheckingHandler;
       }
       if (settings.finishBtnHandler) {
         if (typeof settings.finishBtnHandler !== 'function') {
-          throw new Error('The finishBtnHandler must be a type of function');
+          throw new Error('parameter "finishBtnHandler" must be a type of function');
         }
         return this._finishBtnHandler = settings.finishBtnHandler;
       }
