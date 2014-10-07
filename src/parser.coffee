@@ -23,6 +23,12 @@ class CheckBox extends ExamObject
         @items = items
         @rightAnswers  = rightAnswers
 
+class ImageCheckBox extends ExamObject
+    constructor: (syntaxBlock, helpText, id, items, rightAnswers) ->
+        super(syntaxBlock, helpText, id)
+        @items = items
+        @rightAnswers  = rightAnswers
+
 class Parser
     constructor: (lexer) ->
         @_patterns =
