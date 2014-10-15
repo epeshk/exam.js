@@ -1,5 +1,9 @@
-var gulp = require('gulp');
+var gulp = require('gulp'),
+	coffee = require('gulp-coffee'),
+	gutil = require('gulp-util');
 
 gulp.task('default', function() {
-  // place code for your default task here
+  gulp.src('./src/*.coffee')
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(gulp.dest('./build/'))
 });
