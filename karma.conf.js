@@ -21,9 +21,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/**/*.js',
+            'dist/**/*.js',
             'test/**/*.js',
-            'build/**/*.js',
             'node_modules/markdown/lib/markdown.js'
         ],
 
