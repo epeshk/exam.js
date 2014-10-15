@@ -11,21 +11,37 @@ var gulp = require('gulp'),
 
 gulp.task('default', function() {
   gulp.src('./src/*.coffee')
+	.pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(addsrc('./node_modules/markdown/lib/markdown.js'))
+    .pipe(concat('../dist/exam.js'))
+    .pipe(gulp.dest('./dist'))
+    .pipe(addsrc('./test/*.js'))
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+    }))
+    .on('error', function(err) {
+      throw err;
+    })
+    .pipe(notify("Tests passed!"))
+    .pipe(gulp.dest('./dist'))
+    .pipe(rename('exam.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/'))
+    .pipe(notify("Building completed!"))
+});
+
+gulp.task('test', function(){
+  gulp.src('./src/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(addsrc('./node_modules/markdown/lib/markdown.js'))
     .pipe(concat('../dist/exam.js'))
     .pipe(gulp.dest('./dist'))
     .pipe(addsrc('./test/*.js'))
-    .pipe(notify("Found file: <%= file.relative %>!"))
     .pipe(karma({
       configFile: 'karma.conf.js',
     }))
     .on('error', function(err) {
-      // Make sure failed tests cause gulp to exit non-zero
       throw err;
-    });
-    // .pipe(gulp.dest('./dist'))
-    // .pipe(rename('exam.min.js'))
-    // .pipe(uglify())
-    // .pipe(gulp.dest('./dist/'))
+    })
+    .pipe(notify("Tests passed!"))
 });
