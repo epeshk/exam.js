@@ -133,5 +133,13 @@ describe('Lexer', function() {
             expect(result1).toBeFalsy();
             expect(result2).toBeFalsy();
         });
+
+        it('should return True if a string that passed inot this method is a section token', function(){
+            var result1 = lexer._isToken('--}}');
+            var result2 = lexer._isToken('{{--');
+
+            expect(result1).toBeTruthy();
+            expect(result2).toBeTruthy();
+        });
     });
 });
