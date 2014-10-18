@@ -22,6 +22,7 @@ class Lexer
             START_BLOCK_TOKEN: "{{"
             END_BLOCK_TOKEN: "}}"
             START_SECTION_TOKEN: "{--"
+            END_SECTION_TOKEN: "--}"
 
     @::_clearSyntaxBlock = (syntaxBlock) ->
         if syntaxBlock.substring(0, 2) is @tokens.START_BLOCK_TOKEN

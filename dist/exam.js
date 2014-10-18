@@ -1799,7 +1799,9 @@ function merge_text_nodes( jsonml ) {
         ITEMS_SPTR: ",",
         INPUT_TOKEN: "...",
         START_BLOCK_TOKEN: "{{",
-        END_BLOCK_TOKEN: "}}"
+        END_BLOCK_TOKEN: "}}",
+        START_SECTION_TOKEN: "{--",
+        END_SECTION_TOKEN: "--}"
       };
     }
 
