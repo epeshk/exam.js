@@ -33,6 +33,7 @@ class Parser
     constructor: (lexer) ->
         @_patterns =
             blockPattern: /\{\{(.|\n)*?\}\}/g
+            sectionBlock: /\{\-\-(.|\n)*?\-\-\}/g
             emptyBlock: '{{}}'
         @_currentID = 0
         @lexer = lexer

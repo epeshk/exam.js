@@ -1979,6 +1979,7 @@ function merge_text_nodes( jsonml ) {
     function Parser(lexer) {
       this._patterns = {
         blockPattern: /\{\{(.|\n)*?\}\}/g,
+        sectionBlock: /\{\-\-(.|\n)*?\-\-\}/g,
         emptyBlock: '{{}}'
       };
       this._currentID = 0;
