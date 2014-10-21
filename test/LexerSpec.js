@@ -42,6 +42,10 @@ describe('Lexer', function() {
         it('should return an expresttion that contains StartSection, Item and EndSection', function(){
             var result = lexer.parse('{-- test --}}');
             expect(result.expression.length).toEqual(3);
+
+            expect(result.expression[0] instanceof StartSection).toBeTruthy();
+            expect(result.expression[1] instanceof Item).toBeTruthy();
+            expect(result.expression[2] instanceof EndSection).toBeTruthy();
         });
     });
 
