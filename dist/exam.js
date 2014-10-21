@@ -1849,16 +1849,6 @@ function merge_text_nodes( jsonml ) {
       };
     }
 
-    Lexer.prototype._clearSyntaxBlock = function(syntaxBlock) {
-      if (syntaxBlock.substring(0, 2) === this.tokens.START_BLOCK_TOKEN) {
-        syntaxBlock = syntaxBlock.substring(2);
-      }
-      if (syntaxBlock.substring(syntaxBlock.length - 2) === this.tokens.END_BLOCK_TOKEN) {
-        syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2);
-      }
-      return syntaxBlock;
-    };
-
     Lexer.prototype._isEmpty = function(string) {
       return LEXER_HELPER.trim(string) === "";
     };

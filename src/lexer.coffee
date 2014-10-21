@@ -28,13 +28,6 @@ class Lexer
             START_SECTION_TOKEN: "{--"
             END_SECTION_TOKEN: "--}"
 
-    @::_clearSyntaxBlock = (syntaxBlock) ->
-        if syntaxBlock.substring(0, 2) is @tokens.START_BLOCK_TOKEN
-            syntaxBlock = syntaxBlock.substring(2)
-        if syntaxBlock.substring(syntaxBlock.length - 2) is @tokens.END_BLOCK_TOKEN
-            syntaxBlock = syntaxBlock.substring(0, syntaxBlock.length - 2)
-        syntaxBlock;
-
     @::_isEmpty = (string) ->
         LEXER_HELPER.trim(string) is ""
 
