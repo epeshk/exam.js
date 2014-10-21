@@ -12,13 +12,13 @@ describe('Lexer', function() {
             expect(result.expression.length).toEqual(5);
         });
 
-        it('should return an expression that contains two Items and one ItemsSeparator', function(){
+        it('should return an expression that contains StartBLock, two Items, one ItemsSeparator and EndBlock', function(){
             var result = lexer.parse('{{1,2}}');
 
             expect(result.expression[0] instanceof StartBlock).toBeTruthy();
-            expect(result.expression[1] instanceof ItemsSeparator).toBeTruthy();
-            expect(result.expression[2] instanceof Item).toBeTruthy();
-            expect(result.expression[3] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.expression[1] instanceof Item).toBeTruthy();
+            expect(result.expression[2] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.expression[3] instanceof Item).toBeTruthy();
             expect(result.expression[4] instanceof EndBlock).toBeTruthy();
         });
 
