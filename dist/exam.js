@@ -1827,13 +1827,11 @@ function merge_text_nodes( jsonml ) {
       return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN;
     };
 
-    Lexer.prototype.parse = function(syntaxBlock) {
-      var exp, lastChar, lastToken, source, symbol, tmpToken, tryToAddSeparator, _i, _len;
+    Lexer.prototype.parse = function(source) {
+      var exp, lastChar, lastToken, symbol, tmpToken, tryToAddSeparator, _i, _len;
       exp = [];
       lastToken = "";
       tmpToken = "";
-      source = syntaxBlock;
-      syntaxBlock = this._clearSyntaxBlock(syntaxBlock);
       tryToAddSeparator = (function(_this) {
         return function(exp, token) {
           if (!_this._isEmpty(token)) {
@@ -1852,8 +1850,8 @@ function merge_text_nodes( jsonml ) {
           }
         };
       })(this);
-      for (_i = 0, _len = syntaxBlock.length; _i < _len; _i++) {
-        symbol = syntaxBlock[_i];
+      for (_i = 0, _len = source.length; _i < _len; _i++) {
+        symbol = source[_i];
         lastChar = symbol;
         if (this._isPartOfToken(tmpToken + lastChar)) {
           tmpToken += lastChar;

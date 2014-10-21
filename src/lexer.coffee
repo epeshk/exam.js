@@ -46,13 +46,10 @@ class Lexer
         string is @tokens.HELP_SPTR or
         string is @tokens.INPUT_TOKEN;
 
-    @::parse = (syntaxBlock) ->
+    @::parse = (source) ->
         exp = []
         lastToken = ""
         tmpToken = ""
-        source = syntaxBlock
-
-        syntaxBlock = @_clearSyntaxBlock(syntaxBlock);
 
         tryToAddSeparator = (exp, token) =>
             if not @_isEmpty(token)
@@ -66,7 +63,7 @@ class Lexer
                     exp.push(new InputToken(token))
             return
 
-        for symbol in syntaxBlock
+        for symbol in source
             lastChar = symbol
             if @_isPartOfToken(tmpToken + lastChar)
                 tmpToken += lastChar
