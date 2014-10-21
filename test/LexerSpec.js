@@ -25,16 +25,18 @@ describe('Lexer', function() {
         it('should return an expression that contains all types of a tokens', function(){
             var result = lexer.parse('{{1,2,... :: test text :? help text}}');
             
-            expect(result.expression.length).toEqual(9);
-            expect(result.expression[0] instanceof Item).toBeTruthy();
-            expect(result.expression[1] instanceof ItemsSeparator).toBeTruthy();
-            expect(result.expression[2] instanceof Item).toBeTruthy();
-            expect(result.expression[3] instanceof ItemsSeparator).toBeTruthy();
-            expect(result.expression[4] instanceof InputToken).toBeTruthy();
-            expect(result.expression[5] instanceof AnswerSeparator).toBeTruthy();
-            expect(result.expression[6] instanceof Item).toBeTruthy();
-            expect(result.expression[7] instanceof HelpSeparator).toBeTruthy();
-            expect(result.expression[8] instanceof Item).toBeTruthy();
+            expect(result.expression.length).toEqual(11);
+            expect(result.expression[0] instanceof StartBlock).toBeTruthy();
+            expect(result.expression[1] instanceof Item).toBeTruthy();
+            expect(result.expression[2] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.expression[3] instanceof Item).toBeTruthy();
+            expect(result.expression[4] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.expression[5] instanceof InputToken).toBeTruthy();
+            expect(result.expression[6] instanceof AnswerSeparator).toBeTruthy();
+            expect(result.expression[7] instanceof Item).toBeTruthy();
+            expect(result.expression[8] instanceof HelpSeparator).toBeTruthy();
+            expect(result.expression[9] instanceof Item).toBeTruthy();
+            expect(result.expression[10] instanceof EndBlock).toBeTruthy();
         });
     });
 
