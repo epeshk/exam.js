@@ -9,15 +9,17 @@ describe('Lexer', function() {
         it('should return an expression that contains items and separators', function() {
             var result = lexer.parse('{{1,2}}');
 
-            expect(result.expression.length).toEqual(3);
+            expect(result.expression.length).toEqual(5);
         });
 
         it('should return an expression that contains two Items and one ItemsSeparator', function(){
             var result = lexer.parse('{{1,2}}');
 
-            expect(result.expression[0] instanceof Item).toBeTruthy();
+            expect(result.expression[0] instanceof StartBlock).toBeTruthy();
             expect(result.expression[1] instanceof ItemsSeparator).toBeTruthy();
             expect(result.expression[2] instanceof Item).toBeTruthy();
+            expect(result.expression[3] instanceof ItemsSeparator).toBeTruthy();
+            expect(result.expression[4] instanceof EndBlock).toBeTruthy();
         });
 
         it('should return an expression that contains all types of a tokens', function(){
