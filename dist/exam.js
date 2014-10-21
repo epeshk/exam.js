@@ -1955,6 +1955,14 @@ function merge_text_nodes( jsonml ) {
 
   this.HelpSeparator = HelpSeparator;
 
+  this.StartBlock = StartBlock;
+
+  this.EndBlock = EndBlock;
+
+  this.StartSection = StartSection;
+
+  this.EndSection = EndSection;
+
   this.Lexer = Lexer;
 
 }).call(this);

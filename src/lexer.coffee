@@ -116,4 +116,8 @@ class Lexer
 @AnswerSeparator = AnswerSeparator
 @ItemsSeparator = ItemsSeparator
 @HelpSeparator = HelpSeparator
+@StartBlock = StartBlock
+@EndBlock = EndBlock
+@StartSection = StartSection
+@EndSection = EndSection
 @Lexer = Lexer
