@@ -44,7 +44,11 @@ class Lexer
         string is @tokens.ITEMS_SPTR or
         string is @tokens.ANSWER_SPTR or 
         string is @tokens.HELP_SPTR or
-        string is @tokens.INPUT_TOKEN;
+        string is @tokens.INPUT_TOKEN or
+        string is @tokens.START_BLOCK_TOKEN or
+        string is @tokens.END_BLOCK_TOKEN or
+        string is @tokens.START_SECTION_TOKEN or
+        string is @tokens.END_SECTION_TOKEN;
 
     @::parse = (source) ->
         exp = []

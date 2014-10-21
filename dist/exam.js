@@ -1824,7 +1824,7 @@ function merge_text_nodes( jsonml ) {
     };
 
     Lexer.prototype._isToken = function(string) {
-      return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN;
+      return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN || string === this.tokens.START_BLOCK_TOKEN || string === this.tokens.END_BLOCK_TOKEN || string === this.tokens.START_SECTION_TOKEN || string === this.tokens.END_SECTION_TOKEN;
     };
 
     Lexer.prototype.parse = function(source) {
