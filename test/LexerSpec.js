@@ -34,27 +34,6 @@ describe('Lexer', function() {
             expect(result.expression[7] instanceof HelpSeparator).toBeTruthy();
             expect(result.expression[8] instanceof Item).toBeTruthy();
         });
-
-        it('should return an expression with a lexemes that contains a correct values', function(){
-            var result = lexer.parse('{{1,2}}');
-
-            expect(result.expression[0].value).toEqual('1');
-            expect(result.expression[1].value).toEqual(',');
-            expect(result.expression[2].value).toEqual('2');
-        });
-
-        it('should return an expression with a item lexeme if source contains uncompleted part of a separator token (like this ..)', function(){
-            var result = lexer.parse('{{.. :: test}}');
-
-            expect(result.expression[0].value).toEqual('..');
-            expect(result.expression[0] instanceof Item).toBeTruthy();
-        });
-
-        it('should return an expression that contains 3 items if first item is a uncompleted token', function(){
-            var result = lexer.parse('{{..,2,3 :: answer }}');
-
-            expect(result.expression[0].value).toEqual('..');
-        });
     });
 
     describe('_clearSyntaxBLock()', function(){
