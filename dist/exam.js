@@ -1864,7 +1864,7 @@ function merge_text_nodes( jsonml ) {
     };
 
     Lexer.prototype._isPartOfToken = function(string) {
-      return (this.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (this.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (this.tokens.HELP_SPTR.indexOf(string) !== -1) || (this.tokens.INPUT_TOKEN.indexOf(string) !== -1);
+      return (this.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (this.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (this.tokens.HELP_SPTR.indexOf(string) !== -1) || (this.tokens.INPUT_TOKEN.indexOf(string) !== -1) || (this.tokens.START_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.END_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.START_SECTION_TOKEN.indexOf(string) !== -1) || (this.tokens.END_SECTION_TOKEN.indexOf(string) !== -1);
     };
 
     Lexer.prototype._isToken = function(string) {
@@ -1890,6 +1890,18 @@ function merge_text_nodes( jsonml ) {
             }
             if (token === _this.tokens.INPUT_TOKEN) {
               exp.push(new InputToken(token));
+            }
+            if (token === _this.tokens.START_BLOCK_TOKEN) {
+              exp.push(new StartBlock(token));
+            }
+            if (token === _this.tokens.END_BLOCK_TOKEN) {
+              exp.push(new EndBlock(token));
+            }
+            if (token === _this.tokens.START_SECTION_TOKEN) {
+              exp.push(new StartSection(token));
+            }
+            if (token === _this.tokens.END_SECTION_TOKEN) {
+              exp.push(new EndSection(token));
             }
           }
         };

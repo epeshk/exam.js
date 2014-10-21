@@ -42,7 +42,11 @@ class Lexer
         ((@tokens.ITEMS_SPTR.indexOf(string) isnt -1) or
         (@tokens.ANSWER_SPTR.indexOf(string) isnt -1) or
         (@tokens.HELP_SPTR.indexOf(string) isnt -1) or
-        (@tokens.INPUT_TOKEN.indexOf(string) isnt -1))
+        (@tokens.INPUT_TOKEN.indexOf(string) isnt -1) or
+        (@tokens.START_BLOCK_TOKEN.indexOf(string) isnt -1) or
+        (@tokens.END_BLOCK_TOKEN.indexOf(string) isnt -1) or
+        (@tokens.START_SECTION_TOKEN.indexOf(string) isnt -1) or
+        (@tokens.END_SECTION_TOKEN.indexOf(string) isnt -1))
 
     @::_isToken = (string) -> 
         string is @tokens.ITEMS_SPTR or
@@ -69,6 +73,14 @@ class Lexer
                     exp.push(new HelpSeparator(token))
                 if token is @tokens.INPUT_TOKEN
                     exp.push(new InputToken(token))
+                if token is @tokens.START_BLOCK_TOKEN
+                    exp.push(new StartBlock(token))
+                if token is @tokens.END_BLOCK_TOKEN
+                    exp.push(new EndBlock(token))
+                if token is @tokens.START_SECTION_TOKEN
+                    exp.push(new StartSection(token))
+                if token is @tokens.END_SECTION_TOKEN
+                    exp.push(new EndSection(token))
             return
 
         for symbol in source
