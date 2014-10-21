@@ -40,7 +40,7 @@ describe('Lexer', function() {
         });
 
         it('should return an expression that contains StartSection, Item and EndSection', function(){
-            var result = lexer.parse('{-- test --}}');
+            var result = lexer.parse('{-- test --}');
             expect(result.expression.length).toEqual(3);
 
             expect(result.expression[0] instanceof StartSection).toBeTruthy();
@@ -49,7 +49,7 @@ describe('Lexer', function() {
         });
 
         it('should return an expression that contains StartSection, StartBlock, Item, EndBlock, EndSection', function(){
-            var result = lexer.parse('{-- {{test}} --}}');
+            var result = lexer.parse('{-- {{test}} --}');
             expect(result.expression.length).toEqual(5);
 
             expect(result.expression[0] instanceof StartSection).toBeTruthy();
