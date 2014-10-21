@@ -39,13 +39,24 @@ describe('Lexer', function() {
             expect(result.expression[10] instanceof EndBlock).toBeTruthy();
         });
 
-        it('should return an expresttion that contains StartSection, Item and EndSection', function(){
+        it('should return an expression that contains StartSection, Item and EndSection', function(){
             var result = lexer.parse('{-- test --}}');
             expect(result.expression.length).toEqual(3);
 
             expect(result.expression[0] instanceof StartSection).toBeTruthy();
             expect(result.expression[1] instanceof Item).toBeTruthy();
             expect(result.expression[2] instanceof EndSection).toBeTruthy();
+        });
+
+        it('should return an expression that contains StartSection, StartBlock, Item, EndBlock, EndSection', function(){
+            var result = lexer.parse('{-- {{test}} --}}');
+            expect(result.expression.length).toEqual(5);
+
+            expect(result.expression[0] instanceof StartSection).toBeTruthy();
+            expect(result.expression[1] instanceof StartBlock).toBeTruthy();
+            expect(result.expression[2] instanceof Item).toBeTruthy();
+            expect(result.expression[3] instanceof EndBlock).toBeTruthy();
+            expect(result.expression[4] instanceof EndSection).toBeTruthy();
         });
     });
 
