@@ -1725,7 +1725,7 @@ function merge_text_nodes( jsonml ) {
 } )() );
 
 (function() {
-  var AnswerSeparator, HelpSeparator, InputToken, Item, ItemsSeparator, LEXER_HELPER, Lexer,
+  var AnswerSeparator, EndBlock, EndSection, HelpSeparator, InputToken, Item, ItemsSeparator, LEXER_HELPER, Lexer, StartBlock, StartSection,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -1788,6 +1788,50 @@ function merge_text_nodes( jsonml ) {
     }
 
     return HelpSeparator;
+
+  })(Item);
+
+  StartBlock = (function(_super) {
+    __extends(StartBlock, _super);
+
+    function StartBlock() {
+      return StartBlock.__super__.constructor.apply(this, arguments);
+    }
+
+    return StartBlock;
+
+  })(Item);
+
+  EndBlock = (function(_super) {
+    __extends(EndBlock, _super);
+
+    function EndBlock() {
+      return EndBlock.__super__.constructor.apply(this, arguments);
+    }
+
+    return EndBlock;
+
+  })(Item);
+
+  StartSection = (function(_super) {
+    __extends(StartSection, _super);
+
+    function StartSection() {
+      return StartSection.__super__.constructor.apply(this, arguments);
+    }
+
+    return StartSection;
+
+  })(Item);
+
+  EndSection = (function(_super) {
+    __extends(EndSection, _super);
+
+    function EndSection() {
+      return EndSection.__super__.constructor.apply(this, arguments);
+    }
+
+    return EndSection;
 
   })(Item);
 

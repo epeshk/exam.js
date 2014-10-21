@@ -11,6 +11,10 @@ class InputToken extends Item
 class AnswerSeparator extends Item
 class ItemsSeparator extends Item
 class HelpSeparator extends Item
+class StartBlock extends Item
+class EndBlock extends Item
+class StartSection extends Item
+class EndSection extends Item
 
 class Lexer
     constructor: ->
