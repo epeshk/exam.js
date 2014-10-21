@@ -40,14 +40,6 @@ describe('Lexer', function() {
         });
     });
 
-    describe('_clearSyntaxBLock()', function(){
-        it('should return syntax block without a {{ and }} tokens', function(){
-            var result = lexer._clearSyntaxBlock('{{1,2,3,4}}');
-
-            expect(result).toEqual('1,2,3,4');
-        });
-    });
-
     describe('_isEmpty()', function(){
         it('should return true if string is empty', function(){
             var result = lexer._isEmpty('    ');
