@@ -38,6 +38,11 @@ describe('Lexer', function() {
             expect(result.expression[9] instanceof Item).toBeTruthy();
             expect(result.expression[10] instanceof EndBlock).toBeTruthy();
         });
+
+        it('should return an expresttion that contains StartSection, Item and EndSection', function(){
+            var result = lexer.parse('{-- test --}}');
+            expect(result.expression.length).toEqual(3);
+        });
     });
 
     describe('_isEmpty()', function(){
