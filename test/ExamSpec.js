@@ -1,62 +1,62 @@
-'use strict';
-describe('Exam()',function(){
-    it('should set the settings default', function(){
-        var exam = new Exam();
+// 'use strict';
+// describe('Exam()',function(){
+//     it('should set the settings default', function(){
+//         var exam = new Exam();
 
-        expect(exam._separateChecking).toBe(true);
-        expect(exam._finishBtnID).not.toBeDefined();
-        expect(exam._finishBtnHandler).toBeDefined();
-        expect(exam._separateCheckingHandler).toBeDefined();
-        expect(exam._lang).toBe(markdown.toHTML);
-    });
+//         expect(exam._separateChecking).toBe(true);
+//         expect(exam._finishBtnID).not.toBeDefined();
+//         expect(exam._finishBtnHandler).toBeDefined();
+//         expect(exam._separateCheckingHandler).toBeDefined();
+//         expect(exam._lang).toBe(markdown.toHTML);
+//     });
 
-    it('should leave the btnFinishId unchanged and setting separatorMode on false', function(){
-        var setting = {separateChecking: false};
-        var exam = new Exam(setting);
+//     it('should leave the btnFinishId unchanged and setting separatorMode on false', function(){
+//         var setting = {separateChecking: false};
+//         var exam = new Exam(setting);
 
-        expect(exam._separateChecking).toBe(false);
-        expect(exam._finishBtnID).not.toBeDefined();
-    });
+//         expect(exam._separateChecking).toBe(false);
+//         expect(exam._finishBtnID).not.toBeDefined();
+//     });
 
-    it('should leave the separatorMode unchanged and setting btnFinishId on "button_1"', function(){
-        var setting = {finishBtnID : "button_1"};
-        var exam = new Exam(setting);
+//     it('should leave the separatorMode unchanged and setting btnFinishId on "button_1"', function(){
+//         var setting = {finishBtnID : "button_1"};
+//         var exam = new Exam(setting);
 
-        expect(exam._separateChecking).toBe(true);
-        expect(exam._finishBtnID).toBe("button_1");
-    });
+//         expect(exam._separateChecking).toBe(true);
+//         expect(exam._finishBtnID).toBe("button_1");
+//     });
 
-    it('should set all callback functions', function(){
-        function someFunction1() {}
-        function someFunction2() {}
-        function someFunction3() {}
-        var settings = {
-            lang : someFunction1,
-            separateCheckingHandler: someFunction2,
-            finishBtnHandler: someFunction3,
-        };
+//     it('should set all callback functions', function(){
+//         function someFunction1() {}
+//         function someFunction2() {}
+//         function someFunction3() {}
+//         var settings = {
+//             lang : someFunction1,
+//             separateCheckingHandler: someFunction2,
+//             finishBtnHandler: someFunction3,
+//         };
 
-        var exam = new Exam(settings);
+//         var exam = new Exam(settings);
 
-        expect(exam._lang).toBe(someFunction1);
-        expect(exam._separateCheckingHandler).toBe(someFunction2);
-        expect(exam._finishBtnHandler).toBe(someFunction3);
-    });
+//         expect(exam._lang).toBe(someFunction1);
+//         expect(exam._separateCheckingHandler).toBe(someFunction2);
+//         expect(exam._finishBtnHandler).toBe(someFunction3);
+//     });
 
-});
+// });
 
-describe('Exam', function() {
-    var exam;
-    beforeEach(function() {
-        exam = new Exam();
-    });
+// describe('Exam', function() {
+//     var exam;
+//     beforeEach(function() {
+//         exam = new Exam();
+//     });
 
-    describe('parse()', function(){
-        it('should replace all syntax blocks to HTML tags if _lang is default', function(){
-            var result = exam.parse('bla bla bla {{test1,test2 :: test2}} bla');
+//     describe('parse()', function(){
+//         it('should replace all syntax blocks to HTML tags if _lang is default', function(){
+//             var result = exam.parse('bla bla bla {{test1,test2 :: test2}} bla');
 
-            expect(result).toBe("<p>bla bla bla <div class='examjs-block'><select id='examjsid_1' class='examjs-input'><option></option><option>test1</option><option>test2</option></select></div> bla</p>");
-        });
+//             expect(result).toBe("<p>bla bla bla <div class='examjs-block'><select id='examjsid_1' class='examjs-input'><option></option><option>test1</option><option>test2</option></select></div> bla</p>");
+//         });
 
-    });
-});
+//     });
+// });
