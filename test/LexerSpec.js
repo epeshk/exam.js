@@ -58,6 +58,12 @@ describe('Lexer', function() {
             expect(result.expression[3] instanceof EndBlock).toBeTruthy();
             expect(result.expression[4] instanceof EndSection).toBeTruthy();
         });
+
+        it('should parse all tokens from a source', function(){
+            var result = lexer.parse('{--\n Some text, some text, some text {{1,2::1:?test}} --}');
+
+            expect(result.expression.length).toEqual(16);
+        });
     });
 
     describe('_isEmpty()', function(){
