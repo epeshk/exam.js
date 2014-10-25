@@ -73,7 +73,11 @@ describe('Lexer', function() {
     });
 
     describe('tryToAddSeparator()', function(){
-        
+        it('should return ItemsSeparator', function(){
+            var result = lexer.tryToAddSeparator([], ',');
+
+            expect(result[0] instanceof ItemsSeparator);
+        });
     });
 
     describe('_isEmpty()', function(){
