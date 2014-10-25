@@ -55,7 +55,7 @@ class Lexer
         string is @tokens.END_SECTION_TOKEN or
         string is @tokens.END_OF_LINE;
 
-    @::tryToAddSeparator = (exp, token) ->
+    @::_tryToAddSeparator = (exp, token) ->
         if not @_isEmpty(token)
             if token is @tokens.ITEMS_SPTR
                 exp.push(new ItemsSeparator(token))
@@ -97,7 +97,7 @@ class Lexer
             if @_isToken(tmpToken)
                 if not @_isEmpty(lastToken)
                     exp.push(new Item(lastToken))
-                exp = @tryToAddSeparator(exp, tmpToken)
+                exp = @_tryToAddSeparator(exp, tmpToken)
 
                 lastToken = ""
                 tmpToken = ""
