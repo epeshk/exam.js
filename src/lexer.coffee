@@ -40,7 +40,8 @@ class Lexer
         (@tokens.START_BLOCK_TOKEN.indexOf(string) isnt -1) or
         (@tokens.END_BLOCK_TOKEN.indexOf(string) isnt -1) or
         (@tokens.START_SECTION_TOKEN.indexOf(string) isnt -1) or
-        (@tokens.END_SECTION_TOKEN.indexOf(string) isnt -1))
+        (@tokens.END_SECTION_TOKEN.indexOf(string) isnt -1) or
+        (@tokens.END_OF_LINE.indexOf(string) isnt -1))
 
     @::_isToken = (string) -> 
         string is @tokens.ITEMS_SPTR or
@@ -50,7 +51,8 @@ class Lexer
         string is @tokens.START_BLOCK_TOKEN or
         string is @tokens.END_BLOCK_TOKEN or
         string is @tokens.START_SECTION_TOKEN or
-        string is @tokens.END_SECTION_TOKEN;
+        string is @tokens.END_SECTION_TOKEN or
+        string is @tokens.END_OF_LINE;
 
     @::parse = (source) ->
         exp = []

@@ -1855,11 +1855,11 @@ function merge_text_nodes( jsonml ) {
     };
 
     Lexer.prototype._isPartOfToken = function(string) {
-      return (this.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (this.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (this.tokens.HELP_SPTR.indexOf(string) !== -1) || (this.tokens.INPUT_TOKEN.indexOf(string) !== -1) || (this.tokens.START_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.END_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.START_SECTION_TOKEN.indexOf(string) !== -1) || (this.tokens.END_SECTION_TOKEN.indexOf(string) !== -1);
+      return (this.tokens.ITEMS_SPTR.indexOf(string) !== -1) || (this.tokens.ANSWER_SPTR.indexOf(string) !== -1) || (this.tokens.HELP_SPTR.indexOf(string) !== -1) || (this.tokens.INPUT_TOKEN.indexOf(string) !== -1) || (this.tokens.START_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.END_BLOCK_TOKEN.indexOf(string) !== -1) || (this.tokens.START_SECTION_TOKEN.indexOf(string) !== -1) || (this.tokens.END_SECTION_TOKEN.indexOf(string) !== -1) || (this.tokens.END_OF_LINE.indexOf(string) !== -1);
     };
 
     Lexer.prototype._isToken = function(string) {
-      return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN || string === this.tokens.START_BLOCK_TOKEN || string === this.tokens.END_BLOCK_TOKEN || string === this.tokens.START_SECTION_TOKEN || string === this.tokens.END_SECTION_TOKEN;
+      return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN || string === this.tokens.START_BLOCK_TOKEN || string === this.tokens.END_BLOCK_TOKEN || string === this.tokens.START_SECTION_TOKEN || string === this.tokens.END_SECTION_TOKEN || string === this.tokens.END_OF_LINE;
     };
 
     Lexer.prototype.parse = function(source) {
