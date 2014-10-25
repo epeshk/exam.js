@@ -1894,6 +1894,9 @@ function merge_text_nodes( jsonml ) {
             if (token === _this.tokens.END_SECTION_TOKEN) {
               exp.push(new EndSection(token));
             }
+            if (token === _this.tokens.END_OF_LINE) {
+              exp.push(new EndOfLine(token));
+            }
           }
         };
       })(this);

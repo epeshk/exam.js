@@ -77,6 +77,8 @@ class Lexer
                     exp.push(new StartSection(token))
                 if token is @tokens.END_SECTION_TOKEN
                     exp.push(new EndSection(token))
+                if token is @tokens.END_OF_LINE
+                    exp.push(new EndOfLine(token))
             return
 
         for symbol in source
