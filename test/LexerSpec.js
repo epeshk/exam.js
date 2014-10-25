@@ -62,7 +62,7 @@ describe('Lexer', function() {
         it('should parse all tokens from a source', function(){
             var result = lexer.parse('{--\n Some text, some text, some text {{1,2::1:?test}} --}');
 
-            expect(result.expression.length).toEqual(16);
+            expect(result.expression.length).toEqual(17);
         });
     });
 
