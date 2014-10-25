@@ -1845,7 +1845,8 @@ function merge_text_nodes( jsonml ) {
         START_BLOCK_TOKEN: "{{",
         END_BLOCK_TOKEN: "}}",
         START_SECTION_TOKEN: "{--",
-        END_SECTION_TOKEN: "--}"
+        END_SECTION_TOKEN: "--}",
+        END_OF_LINE: "\n"
       };
     }
 

@@ -27,6 +27,7 @@ class Lexer
             END_BLOCK_TOKEN: "}}"
             START_SECTION_TOKEN: "{--"
             END_SECTION_TOKEN: "--}"
+            END_OF_LINE: "\n"
 
     @::_isEmpty = (string) ->
         LEXER_HELPER.trim(string) is ""
