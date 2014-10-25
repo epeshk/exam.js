@@ -110,6 +110,7 @@ class Lexer
             syntaxBlock: source
         }
 
+#Tokens import
 @Item = Item
 @InputToken = InputToken
 @AnswerSeparator = AnswerSeparator
@@ -120,4 +121,6 @@ class Lexer
 @StartSection = StartSection
 @EndSection = EndSection
 @EndOfLine = EndOfLine
+
+#Lexer import
 @Lexer = Lexer
