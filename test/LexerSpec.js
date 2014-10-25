@@ -64,6 +64,12 @@ describe('Lexer', function() {
 
             expect(result.expression.length).toEqual(17);
         });
+
+        it('should parse "\\n" as token', function(){
+            var result = lexer.parse('\n');
+
+            expect(result.expression[0] instanceof EndOfLine).toBeTruthy();
+        });
     });
 
     describe('_isEmpty()', function(){
