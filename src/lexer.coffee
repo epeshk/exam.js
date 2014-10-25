@@ -119,4 +119,5 @@ class Lexer
 @EndBlock = EndBlock
 @StartSection = StartSection
 @EndSection = EndSection
+@EndOfLine = EndOfLine
 @Lexer = Lexer

@@ -1968,6 +1968,8 @@ function merge_text_nodes( jsonml ) {
 
   this.EndSection = EndSection;
 
+  this.EndOfLine = EndOfLine;
+
   this.Lexer = Lexer;
 
 }).call(this);
