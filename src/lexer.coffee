@@ -1,7 +1,7 @@
 LEXER_HELPER = 
     trim: (string) -> 
         if string
-            string.replace(/^\s+/, "").replace(/\s+$/, "")
+            string.replace(/^[ \t]+/, "").replace(/[ \t]+$/, "")
 
 class Item
     constructor: (@value) ->
@@ -15,6 +15,7 @@ class StartBlock extends Item
 class EndBlock extends Item
 class StartSection extends Item
 class EndSection extends Item
+class EndOfLine extends Item
 
 class Lexer
     constructor: ->

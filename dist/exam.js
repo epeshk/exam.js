@@ -1725,14 +1725,14 @@ function merge_text_nodes( jsonml ) {
 } )() );
 
 (function() {
-  var AnswerSeparator, EndBlock, EndSection, HelpSeparator, InputToken, Item, ItemsSeparator, LEXER_HELPER, Lexer, StartBlock, StartSection,
+  var AnswerSeparator, EndBlock, EndOfLine, EndSection, HelpSeparator, InputToken, Item, ItemsSeparator, LEXER_HELPER, Lexer, StartBlock, StartSection,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   LEXER_HELPER = {
     trim: function(string) {
       if (string) {
-        return string.replace(/^\s+/, "").replace(/\s+$/, "");
+        return string.replace(/^[ \t]+/, "").replace(/[ \t]+$/, "");
       }
     }
   };
@@ -1832,6 +1832,17 @@ function merge_text_nodes( jsonml ) {
     }
 
     return EndSection;
+
+  })(Item);
+
+  EndOfLine = (function(_super) {
+    __extends(EndOfLine, _super);
+
+    function EndOfLine() {
+      return EndOfLine.__super__.constructor.apply(this, arguments);
+    }
+
+    return EndOfLine;
 
   })(Item);
 
