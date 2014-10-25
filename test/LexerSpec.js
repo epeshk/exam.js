@@ -72,6 +72,10 @@ describe('Lexer', function() {
         });
     });
 
+    describe('tryToAddSeparator()', function(){
+        
+    });
+
     describe('_isEmpty()', function(){
         it('should return true if string is empty', function(){
             var result = lexer._isEmpty('    ');
