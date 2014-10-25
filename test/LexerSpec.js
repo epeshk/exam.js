@@ -74,13 +74,13 @@ describe('Lexer', function() {
 
     describe('tryToAddSeparator()', function(){
         it('should return an ItemsSeparator', function(){
-            var result = lexer._tryToAddSeparator([], ',');
+            var result = lexer._tryToAddSeparator([], lexer.tokens.ITEMS_SPTR);
 
             expect(result[0] instanceof ItemsSeparator);
         });
 
         it('should return an AnswerSeparator', function(){
-            var result = lexer._tryToAddSeparator([], '::');
+            var result = lexer._tryToAddSeparator([], lexer.tokens.ANSWER_SPTR);
 
             expect(result[0] instanceof AnswerSeparator);
         });
