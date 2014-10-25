@@ -1873,44 +1873,44 @@ function merge_text_nodes( jsonml ) {
       return string === this.tokens.ITEMS_SPTR || string === this.tokens.ANSWER_SPTR || string === this.tokens.HELP_SPTR || string === this.tokens.INPUT_TOKEN || string === this.tokens.START_BLOCK_TOKEN || string === this.tokens.END_BLOCK_TOKEN || string === this.tokens.START_SECTION_TOKEN || string === this.tokens.END_SECTION_TOKEN || string === this.tokens.END_OF_LINE;
     };
 
+    Lexer.prototype.tryToAddSeparator = function(exp, token) {
+      if (!this._isEmpty(token)) {
+        if (token === this.tokens.ITEMS_SPTR) {
+          exp.push(new ItemsSeparator(token));
+        }
+        if (token === this.tokens.ANSWER_SPTR) {
+          exp.push(new AnswerSeparator(token));
+        }
+        if (token === this.tokens.HELP_SPTR) {
+          exp.push(new HelpSeparator(token));
+        }
+        if (token === this.tokens.INPUT_TOKEN) {
+          exp.push(new InputToken(token));
+        }
+        if (token === this.tokens.START_BLOCK_TOKEN) {
+          exp.push(new StartBlock(token));
+        }
+        if (token === this.tokens.END_BLOCK_TOKEN) {
+          exp.push(new EndBlock(token));
+        }
+        if (token === this.tokens.START_SECTION_TOKEN) {
+          exp.push(new StartSection(token));
+        }
+        if (token === this.tokens.END_SECTION_TOKEN) {
+          exp.push(new EndSection(token));
+        }
+        if (token === this.tokens.END_OF_LINE) {
+          exp.push(new EndOfLine(token));
+        }
+      }
+      return exp;
+    };
+
     Lexer.prototype.parse = function(source) {
-      var exp, lastChar, lastToken, symbol, tmpToken, tryToAddSeparator, _i, _len;
+      var exp, lastChar, lastToken, symbol, tmpToken, _i, _len;
       exp = [];
       lastToken = "";
       tmpToken = "";
-      tryToAddSeparator = (function(_this) {
-        return function(exp, token) {
-          if (!_this._isEmpty(token)) {
-            if (token === _this.tokens.ITEMS_SPTR) {
-              exp.push(new ItemsSeparator(token));
-            }
-            if (token === _this.tokens.ANSWER_SPTR) {
-              exp.push(new AnswerSeparator(token));
-            }
-            if (token === _this.tokens.HELP_SPTR) {
-              exp.push(new HelpSeparator(token));
-            }
-            if (token === _this.tokens.INPUT_TOKEN) {
-              exp.push(new InputToken(token));
-            }
-            if (token === _this.tokens.START_BLOCK_TOKEN) {
-              exp.push(new StartBlock(token));
-            }
-            if (token === _this.tokens.END_BLOCK_TOKEN) {
-              exp.push(new EndBlock(token));
-            }
-            if (token === _this.tokens.START_SECTION_TOKEN) {
-              exp.push(new StartSection(token));
-            }
-            if (token === _this.tokens.END_SECTION_TOKEN) {
-              exp.push(new EndSection(token));
-            }
-            if (token === _this.tokens.END_OF_LINE) {
-              exp.push(new EndOfLine(token));
-            }
-          }
-        };
-      })(this);
       for (_i = 0, _len = source.length; _i < _len; _i++) {
         symbol = source[_i];
         lastChar = symbol;
@@ -1929,7 +1929,7 @@ function merge_text_nodes( jsonml ) {
           if (!this._isEmpty(lastToken)) {
             exp.push(new Item(lastToken));
           }
-          tryToAddSeparator(exp, tmpToken);
+          exp = this.tryToAddSeparator(exp, tmpToken);
           lastToken = "";
           tmpToken = "";
         }

@@ -55,32 +55,32 @@ class Lexer
         string is @tokens.END_SECTION_TOKEN or
         string is @tokens.END_OF_LINE;
 
+    @::tryToAddSeparator = (exp, token) ->
+        if not @_isEmpty(token)
+            if token is @tokens.ITEMS_SPTR
+                exp.push(new ItemsSeparator(token))
+            if token is @tokens.ANSWER_SPTR
+                exp.push(new AnswerSeparator(token))
+            if token is @tokens.HELP_SPTR
+                exp.push(new HelpSeparator(token))
+            if token is @tokens.INPUT_TOKEN
+                exp.push(new InputToken(token))
+            if token is @tokens.START_BLOCK_TOKEN
+                exp.push(new StartBlock(token))
+            if token is @tokens.END_BLOCK_TOKEN
+                exp.push(new EndBlock(token))
+            if token is @tokens.START_SECTION_TOKEN
+                exp.push(new StartSection(token))
+            if token is @tokens.END_SECTION_TOKEN
+                exp.push(new EndSection(token))
+            if token is @tokens.END_OF_LINE
+                exp.push(new EndOfLine(token))
+        return exp
+
     @::parse = (source) ->
         exp = []
         lastToken = ""
         tmpToken = ""
-
-        tryToAddSeparator = (exp, token) =>
-            if not @_isEmpty(token)
-                if token is @tokens.ITEMS_SPTR
-                    exp.push(new ItemsSeparator(token))
-                if token is @tokens.ANSWER_SPTR
-                    exp.push(new AnswerSeparator(token))
-                if token is @tokens.HELP_SPTR
-                    exp.push(new HelpSeparator(token))
-                if token is @tokens.INPUT_TOKEN
-                    exp.push(new InputToken(token))
-                if token is @tokens.START_BLOCK_TOKEN
-                    exp.push(new StartBlock(token))
-                if token is @tokens.END_BLOCK_TOKEN
-                    exp.push(new EndBlock(token))
-                if token is @tokens.START_SECTION_TOKEN
-                    exp.push(new StartSection(token))
-                if token is @tokens.END_SECTION_TOKEN
-                    exp.push(new EndSection(token))
-                if token is @tokens.END_OF_LINE
-                    exp.push(new EndOfLine(token))
-            return
 
         for symbol in source
             lastChar = symbol
@@ -97,7 +97,7 @@ class Lexer
             if @_isToken(tmpToken)
                 if not @_isEmpty(lastToken)
                     exp.push(new Item(lastToken))
-                tryToAddSeparator(exp, tmpToken)
+                exp = @tryToAddSeparator(exp, tmpToken)
 
                 lastToken = ""
                 tmpToken = ""
