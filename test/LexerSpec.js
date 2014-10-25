@@ -84,6 +84,12 @@ describe('Lexer', function() {
 
             expect(result[0] instanceof AnswerSeparator);
         });
+
+        it('should return a HelpSeparator', function(){
+            var result = lexer._tryToAddSeparator([], lexer.tokens.HELP_SPTR);
+
+            expect(result[0] instanceof HelpSeparator);
+        });
     });
 
     describe('_isEmpty()', function(){
