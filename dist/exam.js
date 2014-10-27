@@ -1975,9 +1975,21 @@ function merge_text_nodes( jsonml ) {
 }).call(this);
 
 (function() {
-  var CheckBox, ExamObject, ImageCheckBox, List, Parser, TextInput,
+  var CheckBox, ExamObject, ImageCheckBox, List, Parser, Section, TextInput,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Section = (function() {
+    function Section(source, id) {
+      this.source = source;
+      this.id = id;
+      this.sections = [];
+      this.blocks = [];
+    }
+
+    return Section;
+
+  })();
 
   ExamObject = (function() {
     function ExamObject(syntaxBlock, helpText, id) {

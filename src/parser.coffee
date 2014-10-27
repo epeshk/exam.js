@@ -1,3 +1,10 @@
+class Section
+    constructor: (source, id) ->
+        @source = source
+        @id = id
+        @sections = []
+        @blocks = []
+
 class ExamObject
     constructor: (syntaxBlock, helpText, id) ->
         @syntaxBlock = syntaxBlock
