@@ -2138,18 +2138,14 @@ function merge_text_nodes( jsonml ) {
     };
 
     Parser.prototype._constructBlock = function(token) {
-      if (this.lastBlock.length > 0 && token === EndBlock) {
-        throw new Error('Cannot cunstruct a new syntax block because the old one has no cunstructed');
-        this.lastBlock.length = 0;
-        return null;
-      } else if (this.lastBlock.length === 0 && token !== StartBlock) {
+      if (this.lastBlock.length === 0 && !(token instanceof StartBlock)) {
         throw new Error('Cannot cunstruct a new syntax block because it start without start token');
         this.lastBlock.length = 0;
         return null;
-      } else if (this.lastBlock.length > 0 && token === StartBlock) {
+      } else if (this.lastBlock.length > 0 && token instanceof StartBlock) {
         this.lastBlock.length = 0;
         return null;
-      } else if (token === EndBlock) {
+      } else if (token instanceof EndBlock) {
         this.lastBlock.push(token);
         return this.lastBlock;
       } else {

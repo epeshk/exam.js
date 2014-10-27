@@ -38,6 +38,21 @@ describe('Parser', function() {
         });
     });
 
+    describe('_constructBlock()', function(){
+        it('should iteratively construct a sequence of syntax block tokens', function(){
+            var tokens = [new StartBlock(''), new Item(''), new EndBlock('')];
+
+            tokens.forEach(function(token){
+                parser._constructBlock(token);
+            });
+
+            expect(parser.lastBlock.length).toEqual(3);
+            expect(parser.lastBlock[0] instanceof StartBlock).toBeTruthy();
+            expect(parser.lastBlock[1] instanceof Item).toBeTruthy();
+            expect(parser.lastBlock[2] instanceof EndBlock).toBeTruthy();
+        });
+    });
+
     describe('parse()', function() {
         
     });
