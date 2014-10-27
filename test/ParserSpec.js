@@ -61,6 +61,19 @@ describe('Parser', function() {
                 });
             }).toThrow();
         });
+
+        it('should create a correct sequence of a syntax block tokens', function(){
+            var tokens = [new StartBlock('1'), new Item('1'), new EndBlock('1'), new StartBlock('2'), new Item('2'), new EndBlock('2')];
+
+            tokens.forEach(function(token) {
+                parser._constructBlock(token);
+            });
+
+            expect(parser.lastBlock.length).toEqual(3);
+            expect(parser.lastBlock[0].value).toEqual('2');
+            expect(parser.lastBlock[1].value).toEqual('2');
+            expect(parser.lastBlock[2].value).toEqual('2');
+        });
     });
 
     describe('parse()', function() {
