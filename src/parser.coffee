@@ -104,6 +104,7 @@ class Parser
             return null
         else if @lastBlock.length > 0 and token instanceof StartBlock
             @lastBlock.length = 0
+            @lastBlock.push(token)
             return null
         else if token instanceof EndBlock
             @lastBlock.push token

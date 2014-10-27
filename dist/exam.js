@@ -2144,6 +2144,7 @@ function merge_text_nodes( jsonml ) {
         return null;
       } else if (this.lastBlock.length > 0 && token instanceof StartBlock) {
         this.lastBlock.length = 0;
+        this.lastBlock.push(token);
         return null;
       } else if (token instanceof EndBlock) {
         this.lastBlock.push(token);
