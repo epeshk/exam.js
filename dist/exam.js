@@ -2065,6 +2065,8 @@ function merge_text_nodes( jsonml ) {
       };
       this._currentID = 0;
       this.lexer = lexer;
+      this.lastBlock = [];
+      this.lastSection = [];
     }
 
     Parser.prototype._trim = function(text) {
@@ -2133,6 +2135,27 @@ function merge_text_nodes( jsonml ) {
         }
       }
       return result;
+    };
+
+    Parser.prototype._constructBlock = function(token) {
+      if (this.lastBlock.length > 0 && token === EndBlock) {
+        throw new Error('Cannot cunstruct a new syntax block because the old one has no cunstructed');
+        this.lastBlock.length = 0;
+        return null;
+      } else if (this.lastBlock.length === 0 && token !== StartBlock) {
+        throw new Error('Cannot cunstruct a new syntax block because it start without start token');
+        this.lastBlock.length = 0;
+        return null;
+      } else if (this.lastBlock.length > 0 && token === StartBlock) {
+        this.lastBlock.length = 0;
+        return null;
+      } else if (token === EndBlock) {
+        this.lastBlock.push(token);
+        return this.lastBlock;
+      } else {
+        this.lastBlock.push(token);
+        return null;
+      }
     };
 
     Parser.prototype._parseExpression = function(expression) {

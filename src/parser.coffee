@@ -44,6 +44,8 @@ class Parser
             emptyBlock: '{{}}'
         @_currentID = 0
         @lexer = lexer
+        @lastBlock = []
+        @lastSection = []
 
     @::_trim = (text) ->
         whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g
@@ -94,6 +96,26 @@ class Parser
                     result.push(@_createList(tmpObj, exp.syntaxBlock))
 
         result
+
+    @::_constructBlock = (token) ->
+        if @lastBlock.length > 0 and token is EndBlock
+            throw new Error('Cannot cunstruct a new syntax block because the old one has no cunstructed')
+            @lastBlock.length = 0
+            return null
+        else if @lastBlock.length is 0 and token isnt StartBlock
+            throw new Error('Cannot cunstruct a new syntax block because it start without start token')
+            @lastBlock.length = 0
+            return null
+        else if @lastBlock.length > 0 and token is StartBlock
+            @lastBlock.length = 0
+            return null
+        else if token is EndBlock
+            @lastBlock.push token
+            return @lastBlock
+        else
+            @lastBlock.push token
+            return null
+
 
     @::_parseExpression = (expression) ->
         result = {
