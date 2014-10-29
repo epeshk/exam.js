@@ -113,6 +113,8 @@ class Parser
             @lastBlock.push token
             return null
 
+    @::_constructSection = (token) ->
+
 
     @::_parseExpression = (expression) ->
         result = {
