@@ -10,6 +10,9 @@ class TokenMark
         @token = token
         @level = level
 
+        @isInstanceOf(type) ->
+            return @token instanceof type
+
 class ExamObject
     constructor: (syntaxBlock, helpText, id) ->
         @syntaxBlock = syntaxBlock
