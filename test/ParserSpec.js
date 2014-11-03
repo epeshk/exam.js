@@ -65,6 +65,15 @@ describe('Parser', function() {
             expect(result[5].level).toBe(2);
             expect(result[6].level).toBe(1);
         });
+
+        it('should correcty parse all tokens if they contains a sequence of sections', function(){
+            var tokens = [new StartSection(''), new EndSection(''), new StartSection(''), new EndSection('')];
+            var result = parser._markAllTokens(tokens);
+
+            result.forEach(function(markedToken){
+                expect(markedToken.level).toBe(1);
+            });
+        });
     });
 
     describe('_constructBlock()', function() {
