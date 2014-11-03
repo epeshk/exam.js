@@ -54,6 +54,17 @@ describe('Parser', function() {
                 expect(markedToken.level).toBe(1);
             });
         });
+
+        it('should correctly parse all tokens if they contains two StartSection tokens', function(){
+            var tokens = [new StartSection(''),new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''), new EndSection(''),new EndSection('')];
+
+            var result = parser._markAllTokens(tokens);
+            
+            expect(result[0].level).toBe(1);
+            expect(result[1].level).toBe(2);
+            expect(result[5].level).toBe(2);
+            expect(result[6].level).toBe(1);
+        });
     });
 
     describe('_constructBlock()', function() {
