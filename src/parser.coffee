@@ -121,6 +121,8 @@ class Parser
 
     @::_constructSection = (token) ->
 
+    @::_markAllTokens = (tokens) ->
+
 
     @::_parseExpression = (expression) ->
         result = {
