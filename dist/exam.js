@@ -2075,7 +2075,6 @@ function merge_text_nodes( jsonml ) {
       };
       this._currentID = 0;
       this.lexer = lexer;
-      this.currentLevel = 0;
       this.lastBlock = [];
       this.lastSection = [];
       this.markedTokens = [];
@@ -2169,7 +2168,21 @@ function merge_text_nodes( jsonml ) {
 
     Parser.prototype._constructSection = function(token) {};
 
-    Parser.prototype._markAllTokens = function(tokens) {};
+    Parser.prototype._markAllTokens = function(tokens) {
+      var currentLevel, token, _i, _len, _results;
+      currentLevel = 0;
+      _results = [];
+      for (_i = 0, _len = tokens.length; _i < _len; _i++) {
+        token = tokens[_i];
+        if (token instanceof StartSection) {
+          currentLevel++;
+        } else if (token instanceof EndSection) {
+          currentLevel--;
+        }
+        _results.push(markedTokens.push(new TokenMark(token, currentLevel)));
+      }
+      return _results;
+    };
 
     Parser.prototype._parseExpression = function(expression) {
       var lastSeparator, result, token, _i, _len;

@@ -49,7 +49,6 @@ class Parser
             emptyBlock: '{{}}'
         @_currentID = 0
         @lexer = lexer
-        @currentLevel = 0
         @lastBlock = []
         @lastSection = []
         @markedTokens = []
@@ -123,6 +122,13 @@ class Parser
     @::_constructSection = (token) ->
 
     @::_markAllTokens = (tokens) ->
+        currentLevel = 0
+        for token in tokens
+            if token instanceof StartSection
+                currentLevel++
+            else if token instanceof EndSection
+                currentLevel--
+            markedTokens.push(new TokenMark(token, currentLevel))
 
     @::_parseExpression = (expression) ->
         result = {
