@@ -52,6 +52,7 @@ class Parser
         @currentLevel = 0
         @lastBlock = []
         @lastSection = []
+        @markedTokens = []
 
     @::_trim = (text) ->
         whiteSpacesPattern = /(?:(?:^|\n)\s+|\s+(?:$|\n))/g
@@ -122,7 +123,6 @@ class Parser
     @::_constructSection = (token) ->
 
     @::_markAllTokens = (tokens) ->
-
 
     @::_parseExpression = (expression) ->
         result = {

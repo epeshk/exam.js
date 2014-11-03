@@ -2078,6 +2078,7 @@ function merge_text_nodes( jsonml ) {
       this.currentLevel = 0;
       this.lastBlock = [];
       this.lastSection = [];
+      this.markedTokens = [];
     }
 
     Parser.prototype._trim = function(text) {
