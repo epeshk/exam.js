@@ -1984,7 +1984,7 @@ function merge_text_nodes( jsonml ) {
       this.source = source;
       this.id = id;
       this.sections = [];
-      this.blocks = [];
+      this.tokens = [];
     }
 
     return Section;

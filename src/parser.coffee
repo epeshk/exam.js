@@ -3,7 +3,7 @@ class Section
         @source = source
         @id = id
         @sections = []
-        @blocks = []
+        @tokens = []
 
 class ExamObject
     constructor: (syntaxBlock, helpText, id) ->
