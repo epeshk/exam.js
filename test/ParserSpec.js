@@ -50,6 +50,7 @@ describe('Parser', function() {
             var markedToken = new TokenMark(new Item(''), 0);
 
             expect(markedToken.isInstanceOf(Item)).toBeTruthy();
+            expect(markedToken.isInstanceOf(StartSection)).toBeFalsy();
         });
     });
 
