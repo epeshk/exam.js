@@ -2247,6 +2247,8 @@ function merge_text_nodes( jsonml ) {
 
   this.CheckBox = CheckBox;
 
+  this.TokenMark = TokenMark;
+
 }).call(this);
 
 (function() {
