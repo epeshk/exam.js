@@ -5,6 +5,11 @@ class Section
         @sections = []
         @tokens = []
 
+class TokenMark
+    constructor: (token, level) ->
+        @token = token
+        @level = level
+
 class ExamObject
     constructor: (syntaxBlock, helpText, id) ->
         @syntaxBlock = syntaxBlock
