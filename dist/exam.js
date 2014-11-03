@@ -1995,9 +1995,9 @@ function merge_text_nodes( jsonml ) {
     function TokenMark(token, level) {
       this.token = token;
       this.level = level;
-      this.isInstanceOf(type)(function() {
+      this.isInstanceOf = function(type) {
         return this.token instanceof type;
-      });
+      };
     }
 
     return TokenMark;

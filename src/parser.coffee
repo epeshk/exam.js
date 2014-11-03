@@ -10,7 +10,7 @@ class TokenMark
         @token = token
         @level = level
 
-        @isInstanceOf(type) ->
+        @isInstanceOf = (type) ->
             return @token instanceof type
 
 class ExamObject
