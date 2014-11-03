@@ -2169,19 +2169,22 @@ function merge_text_nodes( jsonml ) {
     Parser.prototype._constructSection = function(token) {};
 
     Parser.prototype._markAllTokens = function(tokens) {
-      var currentLevel, token, _i, _len, _results;
+      var currentLevel, markedTokens, token, _i, _len;
       currentLevel = 0;
-      _results = [];
+      markedTokens = [];
       for (_i = 0, _len = tokens.length; _i < _len; _i++) {
         token = tokens[_i];
         if (token instanceof StartSection) {
-          currentLevel++;
+          currentLevel += 1;
+          markedTokens.push(new TokenMark(token, currentLevel));
         } else if (token instanceof EndSection) {
-          currentLevel--;
+          markedTokens.push(new TokenMark(token, currentLevel));
+          currentLevel -= 1;
+        } else {
+          markedTokens.push(new TokenMark(token, currentLevel));
         }
-        _results.push(markedTokens.push(new TokenMark(token, currentLevel)));
       }
-      return _results;
+      return markedTokens;
     };
 
     Parser.prototype._parseExpression = function(expression) {

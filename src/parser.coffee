@@ -123,12 +123,18 @@ class Parser
 
     @::_markAllTokens = (tokens) ->
         currentLevel = 0
+        markedTokens = []
         for token in tokens
             if token instanceof StartSection
-                currentLevel++
+                currentLevel += 1
+                markedTokens.push(new TokenMark(token, currentLevel))
             else if token instanceof EndSection
-                currentLevel--
-            markedTokens.push(new TokenMark(token, currentLevel))
+                markedTokens.push(new TokenMark(token, currentLevel))
+                currentLevel -= 1
+            else
+                markedTokens.push(new TokenMark(token, currentLevel))
+            
+        markedTokens
 
     @::_parseExpression = (expression) ->
         result = {

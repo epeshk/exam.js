@@ -44,6 +44,18 @@ describe('Parser', function() {
         });
     });
 
+    describe('_markAllTokens()', function(){
+        it('should correctly parse all tokens', function(){
+            var tokens = [new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''),new EndSection('')];
+
+            var result = parser._markAllTokens(tokens);
+            expect(result.length).toBe(tokens.length);
+            result.forEach(function(markedToken){
+                expect(markedToken.level).toBe(1);
+            });
+        });
+    });
+
     describe('_constructBlock()', function() {
         it('should iteratively construct a sequence of syntax block tokens', function() {
             var tokens = [new StartBlock(''), new Item(''), new EndBlock('')];
