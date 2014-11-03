@@ -55,7 +55,7 @@ describe('Parser', function() {
             });
         });
 
-        it('should correctly parse all tokens if they contains two StartSection tokens', function(){
+        it('should correctly parse all tokens if which contains two StartSection tokens', function(){
             var tokens = [new StartSection(''),new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''), new EndSection(''),new EndSection('')];
 
             var result = parser._markAllTokens(tokens);
@@ -66,7 +66,7 @@ describe('Parser', function() {
             expect(result[6].level).toBe(1);
         });
 
-        it('should correcty parse all tokens if they contains a sequence of sections', function(){
+        it('should correcty parse all tokens if which contains a sequence of sections', function(){
             var tokens = [new StartSection(''), new EndSection(''), new StartSection(''), new EndSection('')];
             var result = parser._markAllTokens(tokens);
 
