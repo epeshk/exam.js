@@ -2166,7 +2166,7 @@ function merge_text_nodes( jsonml ) {
       }
     };
 
-    Parser.prototype._constructSection = function(token) {};
+    Parser.prototype._constructSection = function(markedTokens) {};
 
     Parser.prototype._markAllTokens = function(tokens) {
       var currentLevel, markedTokens, token, _i, _len;

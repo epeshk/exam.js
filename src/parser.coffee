@@ -119,7 +119,7 @@ class Parser
             @lastBlock.push token
             return null
 
-    @::_constructSection = (token) ->
+    @::_constructSection = (markedTokens) ->
 
     @::_markAllTokens = (tokens) ->
         currentLevel = 0
