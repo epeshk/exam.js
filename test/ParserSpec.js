@@ -38,6 +38,12 @@ describe('Parser', function() {
         });
     });
 
+    describe('_constructSection()', function(){
+        it('should parse section', function(){
+            var tokens = [new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''),new EndSection('')];
+        });
+    });
+
     describe('_constructBlock()', function() {
         it('should iteratively construct a sequence of syntax block tokens', function() {
             var tokens = [new StartBlock(''), new Item(''), new EndBlock('')];
