@@ -44,6 +44,7 @@ class Parser
             emptyBlock: '{{}}'
         @_currentID = 0
         @lexer = lexer
+        @currentLevel = 0
         @lastBlock = []
         @lastSection = []
 

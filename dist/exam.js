@@ -2065,6 +2065,7 @@ function merge_text_nodes( jsonml ) {
       };
       this._currentID = 0;
       this.lexer = lexer;
+      this.currentLevel = 0;
       this.lastBlock = [];
       this.lastSection = [];
     }
