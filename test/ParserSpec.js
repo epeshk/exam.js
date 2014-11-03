@@ -40,7 +40,7 @@ describe('Parser', function() {
 
     describe('_constructSection()', function(){
         it('should parse section', function(){
-            var tokens = [new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''),new EndSection('')];
+            var markedToken = parser._markAllTokens([new StartSection(''),new StartBlock(''), new Item(''), new EndBlock(''),new EndSection('')]);
         });
     });
 
