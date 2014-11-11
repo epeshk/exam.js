@@ -123,6 +123,7 @@ class Parser
             return null
 
     @::_constructSection = (markedTokens) ->
+        #todo: implement this function
 
     @::_markAllTokens = (tokens) ->
         currentLevel = 0
