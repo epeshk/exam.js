@@ -81,7 +81,7 @@
 Поведение секций вопросов, так же как и обычных секций может быть изменено при помощи модификаторов. Установить модификатор с определенным значением можно аналогичным способом:
 
 ```javascript
-{?-- Section name (modifier: value; modifier: value; ... modifier:value;)
+{?- Section name (modifier: value; modifier: value; ... modifier:value;)
 
 --}
 ```
