@@ -180,7 +180,13 @@
 Вставка видео с youtube:
 
 {-youtube 'http://youtube.com/'
-  Description
+  Описание видео-материала
+--}
+
+Вставка аудои-контента:
+
+{-audio 'http://audio-link.com/'
+  Описание аудио-материала
 --}
 
 
