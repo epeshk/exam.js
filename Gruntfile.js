@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/*.js', 'test/*.js', 'src/*.coffee'],
-                tasks: ['coffee','concat:prebuild', 'concat:build', 'test', 'notify:test']
+                tasks: ['coffee', 'concat:prebuild', 'concat:build', 'test', 'notify:test']
             }
         },
         clean: {
@@ -101,14 +101,21 @@ module.exports = function(grunt) {
                 src: 'coverage/**/*.info'
             }
         },
-        jasmine: {
-            exam: {
-                src: 'dist/exam.js',
-                options: {
-                    specs: 'test/*Spec.js',
-                    helpers: 'test/*Helper.js'
+        jasmine_node: {
+            options: {
+                forceExit: true,
+                match: '.',
+                matchall: false,
+                extensions: 'js',
+                specNameMatcher: 'spec',
+                jUnit: {
+                    report: true,
+                    savePath: "./build/reports/jasmine/",
+                    useDotNotation: true,
+                    consolidate: true
                 }
-            }
+            },
+            all: ['tests/']
         },
         concat: {
             prebuild: {
@@ -124,9 +131,9 @@ module.exports = function(grunt) {
             compile: {
                 files: {
                     'build/lexer.js': 'src/lexer.coffee',
-                    'build/translator.js' : 'src/translator.coffee',
-                    'build/parser.js' : 'src/parser.coffee',
-                    'build/exam.js' : 'src/exam.coffee'
+                    'build/translator.js': 'src/translator.coffee',
+                    'build/parser.js': 'src/parser.coffee',
+                    'build/exam.js': 'src/exam.coffee'
                 }
             },
         }
@@ -143,9 +150,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-coveralls');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-jasmine-node');
 
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['jasmine_node']);
     grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
-    grunt.registerTask('default', ['clean','coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
+    grunt.registerTask('default', ['clean', 'coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
