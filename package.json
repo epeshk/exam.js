@@ -32,7 +32,6 @@
     "grunt-coveralls": "^0.3.0",
     "grunt-karma": "^0.8.3",
     "grunt-karma-coveralls": "^2.5.1",
-    "grunt-mocha": "^0.4.12",
     "grunt-notify": "^0.3.0",
     "gulp": "^3.8.8",
     "gulp-add-src": "^0.1.1",
