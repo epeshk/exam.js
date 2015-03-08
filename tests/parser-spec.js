@@ -1,5 +1,9 @@
-var request = require('request');
+var assert = require("assert");
 
-it("should respond with hello world", function(done) {
-  expect(1)toEqual(1);
-});
+describe('Parser tests', function(){
+  describe('parse()', function(){
+    it('should return proper html', function(){
+      assert.equal(1, 1);
+    })
+  })
+})

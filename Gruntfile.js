@@ -101,21 +101,16 @@ module.exports = function(grunt) {
                 src: 'coverage/**/*.info'
             }
         },
-        jasmine_node: {
-            options: {
-                forceExit: true,
-                match: '.',
-                matchall: false,
-                extensions: 'js',
-                specNameMatcher: 'spec',
-                jUnit: {
-                    report: true,
-                    savePath: "./build/reports/jasmine/",
-                    useDotNotation: true,
-                    consolidate: true
-                }
-            },
-            all: ['tests/']
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    captureFile: 'results.txt', // Optionally capture the reporter output to a file
+                    quiet: false, // Optionally suppress output to standard out (defaults to false)
+                    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                },
+                src: ['tests/**/*.js']
+            }
         },
         concat: {
             prebuild: {
@@ -150,9 +145,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-coveralls');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
-    grunt.registerTask('test', ['jasmine_node']);
+    grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
     grunt.registerTask('default', ['clean', 'coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
