@@ -130,6 +130,13 @@ module.exports = function(grunt) {
                     'build/exam.js': 'src/exam.coffee'
                 }
             },
+        },
+        jison: {
+            my_parser: {
+                files: {
+                    'jison-src/exam.js': 'jison-src/exam.jison'
+                }
+            }
         }
     });
 
@@ -145,6 +152,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-jison');
 
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
