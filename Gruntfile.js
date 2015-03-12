@@ -155,7 +155,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jison');
 
     grunt.registerTask('test', ['mochaTest']);
-    grunt.registerTask('travis-ci-test', ['concat:prebuild', 'jshint', 'concat:build', 'karma:travis', 'coveralls']);
     grunt.registerTask('default', ['clean', 'coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
     grunt.registerTask('dev', ['watch']);
 };
