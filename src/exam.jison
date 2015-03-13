@@ -12,8 +12,8 @@
 "}}"                           return '}}'  //end block
 "{--"                          return '{--' //start section
 "--}"                          return '--}' //end section
+"..."                          return 'INPUT_TOKEN'
 [^\s]                          return 'char'
-"..."                          return '...'
 <<EOF>>                        return 'EOF'
 
 /lex
@@ -58,17 +58,47 @@ answer
   ;
 
 input
-  : '{{' phrase ':?' '...' '::' answer '}}'
-   %{
-    $$ = {
-      answer: $6,
-      question: $2,
-      type: 'input'
-    }
-   %}
+  : '{{' phrase ':?' 'INPUT_TOKEN' '::' answer '}}'
+    %{
+      $$ = {
+        answer: $6,
+        question: $2,
+        type: 'input'
+      }
+    %}
+  | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
+    %{
+      $$ = {
+        answer: $7,
+        question: $2,
+        type: 'input'
+      }
+    %}
+  | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
+    %{
+      $$ = {
+        answer: $7,
+        question: $2,
+        type: 'input'
+      }
+    %}
+  | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
+    %{
+      $$ = {
+        answer: $8,
+        question: $2,
+        type: 'input'
+      }
+    %}
   ;
 
 block
-  : '{{' sequence '}}'
-    {$$ = {items: $2}}
+  : input
+    %{
+      var result = {
+        expressions: [],
+      }
+      result.expressions.push($1);
+      $$ = result;
+    %}
   ;
