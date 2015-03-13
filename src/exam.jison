@@ -65,6 +65,7 @@ input
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
         id: helper.getID(),
+        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
@@ -75,6 +76,7 @@ input
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
         id: helper.getID(),
+        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -85,6 +87,7 @@ input
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
         id: helper.getID(),
+        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -95,6 +98,7 @@ input
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
         id: helper.getID(),
+        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
       }
     }
   ;
