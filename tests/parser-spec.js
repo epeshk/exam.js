@@ -3,9 +3,9 @@ var assert = require('assert'),
 
 describe('Parser tests', function(){
   describe('parse()', function(){
-    it('should return an object with a source', function(){
-      console.log(exam.parse('{{ test? :? ... :: test }}'));
-      assert.equal(1, 1);
+    it('should return an object with a expressions', function(){
+      var result = exam.parse('{{ test? :? ... :: test }}');
+      assert.equal(result.expressions != null, true);
     })
   })
 })
