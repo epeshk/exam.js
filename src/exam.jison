@@ -74,6 +74,7 @@ input
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
+        id: helper.getID(),
       }
     }
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -83,6 +84,7 @@ input
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
+        id: helper.getID(),
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -92,6 +94,7 @@ input
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
+        id: helper.getID(),
       }
     }
   ;

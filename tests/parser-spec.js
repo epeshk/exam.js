@@ -20,8 +20,8 @@ describe('Parser tests', function(){
 
     it('should return expressions which contains IDs', function(){
       var result = exam.parse('{{ question1? :? ... :: answer1 }} {{ question2? :? ... :: answer2 }}');
-      assert.equal(result.expressions[0].id, 'exam-js-0');
-      assert.equal(result.expressions[1].id, 'exam-js-1');
+      assert.equal(result.expressions[0].id != null, true);
+      assert.equal(result.expressions[1].id != null, true);
     });
   });
 })
