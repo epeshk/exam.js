@@ -12,5 +12,10 @@ describe('Parser tests', function(){
       var result = exam.parse('{{ question1? :? ... :: answer1 }} {{ question2? :? ... :: answer2 }}');
       assert.equal(result.expressions.length, 2);
     });
+
+    it('should return a source code', function(){
+      var source = 'hello exam {{question1 ? :? ... :: answer1 }} bla bla bla';
+      assert.equal(exam.parse(source).source, source);
+    });
   });
 })
