@@ -4,7 +4,7 @@ var assert = require('assert'),
 describe('Parser tests', function(){
   describe('parse()', function(){
     it('should return an object with a source', function(){
-      console.log(exam.parse('{{1,2,3,4 :: 1}}'));
+      console.log(exam.parse('{{ test 1, some text |2|3|4 }}'));
       assert.equal(1, 1);
     })
   })
