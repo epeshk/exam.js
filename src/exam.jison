@@ -7,7 +7,7 @@
 \s+                            /* skip whitespace */
 "::"                           return '::'  //answer separator
 ":?"                           return ':?'  //help separator
-","                            return ','   //items separator
+"|"                            return '|'   //items separator
 "{{"                           return '{{'  //start block
 "}}"                           return '}}'  //end block
 "{--"                          return '{--' //start section
@@ -34,7 +34,7 @@ word
     ;
 
 sequence
-    : word ',' word
+    : word '|' word
         {$$ = [$1,$3]}
     | sequence ',' word
         {$1.push($3); $$ = $1;}
