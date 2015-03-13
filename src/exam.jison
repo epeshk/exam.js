@@ -18,13 +18,31 @@
 
 /lex
 
-%start expressions
+%start source
 
 %% /* language grammar */
 
+source
+  : expressions 'EOF'
+    %{
+      var result = {
+        expressions: $1
+      }
+
+      $$ = result;
+      return $$;
+    %}
+  ;
+
 expressions
-  : block EOF
-    {return $$}
+  : expression
+    {$$ = [$1]}
+  | expression 'SP'
+    {$$ = [$1]}
+  | expression phrase
+    {$$ = [$1]}
+  | expressions expression
+    {$1.push($2); $$ = $1}
   ;
 
 word
@@ -92,13 +110,7 @@ input
     %}
   ;
 
-block
+expression
   : input
-    %{
-      var result = {
-        expressions: [],
-      }
-      result.expressions.push($1);
-      $$ = result;
-    %}
+    {$$ = $1}
   ;
