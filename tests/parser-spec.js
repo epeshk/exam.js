@@ -23,5 +23,11 @@ describe('Parser tests', function(){
       assert.equal(result.expressions[0].id != null, true);
       assert.equal(result.expressions[1].id != null, true);
     });
+
+    it('should return expressions which contains html', function(){
+      var result = exam.parse('{{ question1? :? ... :: answer1 }} {{ question2? :? ... :: answer2 }}');
+      assert.equal(result.expressions[0].html != null, true);
+      assert.equal(result.expressions[1].html != null, true);
+    });
   });
 })
