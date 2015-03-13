@@ -54,7 +54,8 @@ input
       $$ = {
         answer: $6,
         question: $2,
-        type: 'input'
+        type: 'input',
+        source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
       }
     %}
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
@@ -62,7 +63,8 @@ input
       $$ = {
         answer: $7,
         question: $2,
-        type: 'input'
+        type: 'input',
+        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
       }
     %}
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -70,7 +72,8 @@ input
       $$ = {
         answer: $7,
         question: $2,
-        type: 'input'
+        type: 'input',
+        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
       }
     %}
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
@@ -78,7 +81,8 @@ input
       $$ = {
         answer: $8,
         question: $2,
-        type: 'input'
+        type: 'input',
+        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
       }
     %}
   ;
@@ -99,13 +103,24 @@ source
   : statement
     %{
       if($1.type){
-        $$ = [$1]
+        $$ = {
+          expressions: [$1],
+          source: $1.source
+        }
+      } else {
+        $$ = {
+          expressions: [],
+          source: $1
+        }
       }
     %}
   | source statement
     %{
       if($2.type){
-        $1.push($2);
+        $1.expressions.push($2);
+        $1.source += $2.source;
+      } else {
+        $1.source += $2;
       }
       $$ = $1;
     %}
@@ -115,7 +130,8 @@ file
   : source 'EOF'
     %{
       var result = {
-        expressions: $1
+        expressions: $1.expressions,
+        source: $1.source
       }
 
       $$ = result;

@@ -103,7 +103,8 @@ case 9:
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-5],
-        type: 'input'
+        type: 'input',
+        source: $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
       }
     
 break;
@@ -112,7 +113,8 @@ case 10: case 11:
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-6],
-        type: 'input'
+        type: 'input',
+        source: $$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
       }
     
 break;
@@ -121,21 +123,33 @@ case 12:
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-7],
-        type: 'input'
+        type: 'input',
+        source: $$[$0-8] + $$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
       }
     
 break;
 case 16:
 
       if($$[$0].type){
-        this.$ = [$$[$0]]
+        this.$ = {
+          expressions: [$$[$0]],
+          source: $$[$0].source
+        }
+      } else {
+        this.$ = {
+          expressions: [],
+          source: $$[$0]
+        }
       }
     
 break;
 case 17:
 
       if($$[$0].type){
-        $$[$0-1].push($$[$0]);
+        $$[$0-1].expressions.push($$[$0]);
+        $$[$0-1].source += $$[$0].source;
+      } else {
+        $$[$0-1].source += $$[$0];
       }
       this.$ = $$[$0-1];
     
@@ -143,7 +157,8 @@ break;
 case 18:
 
       var result = {
-        expressions: $$[$0-1]
+        expressions: $$[$0-1].expressions,
+        source: $$[$0-1].source
       }
 
       this.$ = result;
