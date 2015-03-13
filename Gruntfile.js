@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         },
         watch: {
             dev: {
-                files: ['jison-src/exam.jison'],
+                files: ['src/exam.jison', 'tests/**/*js'],
                 tasks: ['test', 'notify:test']
             }
         },
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
         jison: {
             my_parser: {
                 files: {
-                    'jison-src/exam.js': 'jison-src/exam.jison'
+                    'src/exam.js': 'src/exam.jison'
                 }
             }
         }
