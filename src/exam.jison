@@ -50,41 +50,41 @@ answer
 
 input
   : '{{' phrase ':?' 'INPUT_TOKEN' '::' answer '}}'
-    %{
+    {
       $$ = {
         answer: $6,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
       }
-    %}
+    }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
-    %{
+    {
       $$ = {
         answer: $7,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
       }
-    %}
+    }
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
-    %{
+    {
       $$ = {
         answer: $7,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
       }
-    %}
+    }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
-    %{
+    {
       $$ = {
         answer: $8,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
       }
-    %}
+    }
   ;
 
 expression
@@ -101,7 +101,7 @@ statement
 
 source
   : statement
-    %{
+    {
       if($1.type){
         $$ = {
           expressions: [$1],
@@ -113,9 +113,9 @@ source
           source: $1
         }
       }
-    %}
+    }
   | source statement
-    %{
+    {
       if($2.type){
         $1.expressions.push($2);
         $1.source += $2.source;
@@ -123,12 +123,12 @@ source
         $1.source += $2;
       }
       $$ = $1;
-    %}
+    }
   ;
 
 file
   : source 'EOF'
-    %{
+    {
       var result = {
         expressions: $1.expressions,
         source: $1.source
@@ -136,5 +136,5 @@ file
 
       $$ = result;
       return $$;
-    %}
+    }
   ;
