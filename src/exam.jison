@@ -1,5 +1,13 @@
 /* description: Parses end executes mathematical expressions. */
 
+%{var helper = {
+    currentId: 0,
+    getID: function(){
+      return 'exam-js-' + this.currentId++;
+    }
+  }
+%}
+
 /* lexical grammar */
 %lex
 %%
@@ -56,6 +64,7 @@ input
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
+        id: helper.getID(),
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
