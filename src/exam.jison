@@ -18,48 +18,21 @@
 
 /lex
 
-%start source
+%start file
 
 %% /* language grammar */
 
-source
-  : expressions 'EOF'
-    %{
-      var result = {
-        expressions: $1
-      }
-
-      $$ = result;
-      return $$;
-    %}
-  ;
-
-expressions
-  : expression
-    {$$ = [$1]}
-  | expression 'SP'
-    {$$ = [$1]}
-  | expression phrase
-    {$$ = [$1]}
-  | expressions expression
-    {$1.push($2); $$ = $1}
-  ;
-
-word
-  : char
-    {$$ = ('' + $1)}
-  | word char
-    {$$ = ($1 + $2)}
-  | word 'SP'
-   {$$ = $1 + $2}
-  | 'SP' word
-   {$$ = $1 + $2}
+symbol
+  : 'char'
+    {$$ = $1}
+  | 'SP'
+    {$$ = $1}
   ;
 
 phrase
-  : word
+  : symbol
    {$$ = '' + $1}
-  | phrase word
+  | phrase symbol
    {$$ = $1 + $2}
   ;
 
@@ -113,4 +86,39 @@ input
 expression
   : input
     {$$ = $1}
+  ;
+
+statement
+  : expression
+    {$$ = $1}
+  | phrase
+    {$$ = $1}
+  ;
+
+source
+  : statement
+    %{
+      if($1.type){
+        $$ = [$1]
+      }
+    %}
+  | source statement
+    %{
+      if($2.type){
+        $1.push($2);
+      }
+      $$ = $1;
+    %}
+  ;
+
+file
+  : source 'EOF'
+    %{
+      var result = {
+        expressions: $1
+      }
+
+      $$ = result;
+      return $$;
+    %}
   ;
