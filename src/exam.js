@@ -601,12 +601,14 @@ case 7:return '--}' //end section
 break;
 case 8:return 7
 break;
-case 9:return 5
+case 9:return '...'
+break;
+case 10:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:::)/,/^(?::\?)/,/^(?:\|)/,/^(?:\{\{)/,/^(?:\}\})/,/^(?:\{--)/,/^(?:--\})/,/^(?:[^\s])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:::)/,/^(?::\?)/,/^(?:\|)/,/^(?:\{\{)/,/^(?:\}\})/,/^(?:\{--)/,/^(?:--\})/,/^(?:[^\s])/,/^(?:\.\.\.)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10],"inclusive":true}}
 });
 return lexer;
 })();

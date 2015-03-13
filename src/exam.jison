@@ -13,6 +13,7 @@
 "{--"                          return '{--' //start section
 "--}"                          return '--}' //end section
 [^\s]                          return 'char'
+"..."                          return '...'
 <<EOF>>                        return 'EOF'
 
 /lex
