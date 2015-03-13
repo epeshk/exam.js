@@ -33,11 +33,6 @@ word
         {$$ = ($1 + $2)}
     ;
 
-answer
-    : word
-    | sequence
-    ;
-
 sequence
     : word ',' word
         {$$ = [$1,$3]}
@@ -45,11 +40,21 @@ sequence
         {$1.push($3); $$ = $1;}
     ;
 
+answer
+    : word
+    | sequence
+    ;
+
 block
     : '{{' sequence '}}'
-        {$$ = { items: $2 }}
-    | '{{' sequence '::' answer '}}'
-        {$$ = {items: $2, answer: $4}}
-    | '{{' sequence '::' answer ':?' word '}}'
-        {$$ = {items: $2, answer: $4, help: $6}}
+        {$$ = {items: $2}}
+    | '{{' option '::' word '}}'
+        {$$ = {items: '<select>' + '<option>' + 'select answer' + $2 + '</option>' + '</select>', word: $4}}
+    | '{{' char '::' answer '}}'
+        {$$ = {items: '<input>', answer: $4}}
+    ;
+
+option
+    : sequence
+        {var opts = $1.map(function(item) {return '<option>' + item + '</option>';}); $$ = opts}
     ;
