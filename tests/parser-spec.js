@@ -17,5 +17,11 @@ describe('Parser tests', function(){
       var source = 'hello exam {{question1 ? :? ... :: answer1 }} bla bla bla';
       assert.equal(exam.parse(source).source, source);
     });
+
+    it('should return expressions which contains IDs', function(){
+      var result = exam.parse('{{ question1? :? ... :: answer1 }} {{ question2? :? ... :: answer2 }}');
+      assert.equal(result.expressions[0].id, 'exam-js-0');
+      assert.equal(result.expressions[1].id, 'exam-js-1');
+    });
   });
 })
