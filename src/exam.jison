@@ -57,6 +57,17 @@ answer
   | sequence
   ;
 
+input
+  : '{{' phrase ':?' '...' '::' answer '}}'
+   %{
+    $$ = {
+      answer: $6,
+      question: $2,
+      type: 'input'
+    }
+   %}
+  ;
+
 block
   : '{{' sequence '}}'
     {$$ = {items: $2}}
