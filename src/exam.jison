@@ -4,7 +4,18 @@
     currentId: 0,
     getID: function(){
       return 'exam-js-' + this.currentId++;
-    }
+    },
+    getInputObject: function(source, answer, question){
+      var tmpId = helper.getID();
+      return {
+        answer: answer,
+        question: question,
+        type: 'input',
+        source: source,
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
+      }
+    },
   }
 %}
 
@@ -59,51 +70,19 @@ answer
 input
   : '{{' phrase ':?' 'INPUT_TOKEN' '::' answer '}}'
     {
-      var tmpId = helper.getID();
-      $$ = {
-        answer: $6,
-        question: $2,
-        type: 'input',
-        source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
-        id: tmpId,
-        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
-      }
+      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
     {
-      var tmpId = helper.getID();
-      $$ = {
-        answer: $7,
-        question: $2,
-        type: 'input',
-        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
-        id: tmpId,
-        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
-      }
+      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8, $7, $2);
     }
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
     {
-      var tmpId = helper.getID();
-      $$ = {
-        answer: $7,
-        question: $2,
-        type: 'input',
-        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
-        id: tmpId,
-        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
-      }
+      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8, $7, $2);
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
     {
-      var tmpId = helper.getID();
-      $$ = {
-        answer: $8,
-        question: $2,
-        type: 'input',
-        source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
-        id: tmpId,
-        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
-      }
+      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9, $8, $2);
     }
   ;
 
