@@ -59,46 +59,50 @@ answer
 input
   : '{{' phrase ':?' 'INPUT_TOKEN' '::' answer '}}'
     {
+      var tmpId = helper.getID();
       $$ = {
         answer: $6,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7,
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
     {
+      var tmpId = helper.getID();
       $$ = {
         answer: $7,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
     {
+      var tmpId = helper.getID();
       $$ = {
         answer: $7,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8,
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     }
   | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
     {
+      var tmpId = helper.getID();
       $$ = {
         answer: $8,
         question: $2,
         type: 'input',
         source: $1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9,
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     }
   ;

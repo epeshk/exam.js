@@ -100,37 +100,40 @@ $$[$0-2].push($$[$0]); this.$ = $$[$0-2];
 break;
 case 9:
 
+      var tmpId = helper.getID();
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-5],
         type: 'input',
         source: $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     
 break;
 case 10: case 11:
 
+      var tmpId = helper.getID();
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-6],
         type: 'input',
         source: $$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     
 break;
 case 12:
 
+      var tmpId = helper.getID();
       this.$ = {
         answer: $$[$0-1],
         question: $$[$0-7],
         type: 'input',
         source: $$[$0-8] + $$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0],
-        id: helper.getID(),
-        html: '<input type="text" id="' + this.id + '" class="exam-js-input">'
+        id: tmpId,
+        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     
 break;
