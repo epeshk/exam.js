@@ -30,10 +30,21 @@ describe('Parser tests', function(){
       assert.equal(result.expressions[1].html != null, true);
     });
 
-    it('should return expressions wich contains proper IDs (strings "exam-js-...")', function(){
+    it('should return expressions which contains proper IDs (strings "exam-js-...")', function(){
       var result = exam.parse('{{ question1? :? ... :: answer1 }} {{ question2? :? ... :: answer2 }}');
       assert.equal(result.expressions[0].id.indexOf('exam-js-') >= 0, true);
       assert.equal(result.expressions[1].id.indexOf('exam-js-') >= 0, true);
     });
+
+    // it('should parse list expressions', function(){
+    //   var result = exam.parse('{{ question1? :? 1,2,3 :: 2 }}');
+    //   assert.equal(result.expressions[0] != null, true);
+    // });
+
+    // it('should return object which contains expressions with type "list"',function(){
+    //   var result = exam.parse('{{ question1? :? 1,2,3 :: 2 }} {{ question2? :? 1,2,3:: 3 }}');
+    //   assert.equal(result.expressions[0].type, 'list');
+    //   assert.equal(result.expressions[1].type, 'list');
+    // });
   });
 })
