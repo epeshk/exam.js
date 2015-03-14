@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         },
         watch: {
             dev: {
-                files: ['src/exam.jison', 'tests/**/*js'],
+                files: ['src/**/*.js', 'tests/**/*js'],
                 tasks: ['jison','test', 'notify:test']
             }
         },
