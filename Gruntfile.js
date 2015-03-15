@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         },
         watch: {
             dev: {
-                files: ['src/**/*.js', 'tests/**/*js'],
+                files: ['src/**/*', 'test/**/*js'],
                 tasks: ['jison','test', 'notify:test']
             }
         },
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                     quiet: false, // Optionally suppress output to standard out (defaults to false)
                     clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
                 },
-                src: ['tests/**/*.js']
+                src: ['test/**/*.js']
             }
         },
         concat: {

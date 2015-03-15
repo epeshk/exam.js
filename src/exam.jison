@@ -9,8 +9,8 @@
     option: function(item){
       return '<option>' + item + '</option>';
     },
-    checkbox: function(item){
-      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item;
+    toCheckboxItem: function(item){
+      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item </input>;
     },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
