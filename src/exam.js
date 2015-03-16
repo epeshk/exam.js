@@ -120,7 +120,7 @@ case 13:
 break;
 case 14:
 
-      this.$ = helper.getCheckboxObject($$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-1], $$[$0-5]);
+      this.$ = helper.getCheckboxObject($$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-3], $$[$0-1], $$[$0-5]);
     
 break;
 case 20:
@@ -317,7 +317,7 @@ parse: function parse(input) {
       return '<option>' + item + '</option>';
     },
     toCheckboxItem: function(item){
-      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item </input>;
+      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item + '</input>';
     },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
@@ -330,11 +330,11 @@ parse: function parse(input) {
         html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     },
-    getOptionObject: function(source, answer, question){
+    getOptionObject: function(source, answers, question){
       var tmpId = helper.getID();
       var toOption = Array.prototype.map(helper.option);
       return {
-        answer: answer,
+        answer: answers,
         question: question,
         type: 'list',
         source: source,
@@ -342,16 +342,17 @@ parse: function parse(input) {
         html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
       }
     },
-    getCheckboxObject: function(source, answer, question){
+    getCheckboxObject: function(source, items, answers, question){
       var tmpId = helper.getID();
-      var toCheckbox = Array.prototype.map(helper.checkbox);
+      console.log(answers);
       return {
-        answer: answer,
+        answers: answers,
+        items: items,
         question: question,
         type: 'checkbox',
         source: source,
         id: tmpId,
-        html: toCheckbox
+        html: helper.toCheckbox(question, items),
       }
     }
   }

@@ -10,7 +10,7 @@
       return '<option>' + item + '</option>';
     },
     toCheckboxItem: function(item){
-      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item </input>;
+      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item + '</input>';
     },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
@@ -23,11 +23,11 @@
         html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     },
-    getOptionObject: function(source, answer, question){
+    getOptionObject: function(source, answers, question){
       var tmpId = helper.getID();
       var toOption = Array.prototype.map(helper.option);
       return {
-        answer: answer,
+        answer: answers,
         question: question,
         type: 'list',
         source: source,
@@ -35,16 +35,17 @@
         html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
       }
     },
-    getCheckboxObject: function(source, answer, question){
+    getCheckboxObject: function(source, items, answers, question){
       var tmpId = helper.getID();
-      var toCheckbox = Array.prototype.map(helper.checkbox);
+      console.log(answers);
       return {
-        answer: answer,
+        answers: answers,
+        items: items,
         question: question,
         type: 'checkbox',
         source: source,
         id: tmpId,
-        html: toCheckbox
+        html: helper.toCheckbox(question, items),
       }
     }
   }
@@ -127,7 +128,7 @@ list
 checkbox
   : '{{' phrase ':?' sequence '::' sequence '}}'
     {
-      $$ = helper.getCheckboxObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
+      $$ = helper.getCheckboxObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $4, $6, $2);
     }
   ;
 
