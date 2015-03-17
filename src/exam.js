@@ -316,8 +316,10 @@ parse: function parse(input) {
     option: function(item){
       return '<option>' + item + '</option>';
     },
-    toCheckboxItem: function(item){
-      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item + '</input>';
+    toCheckbox: function(question, items, id){
+      return '<div id="' + id +'">' + question + items.map(function(item){
+        return '<input type="checkbox" class="exam-js-input">' + item + '</input>';
+      }) + '</div>';
     },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
@@ -352,7 +354,7 @@ parse: function parse(input) {
         type: 'checkbox',
         source: source,
         id: tmpId,
-        html: helper.toCheckbox(question, items),
+        html: helper.toCheckbox(question, items, tmpId),
       }
     }
   }
