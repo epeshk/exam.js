@@ -318,7 +318,7 @@ parse: function parse(input) {
     },
     toCheckbox: function(question, items, id){
       return '<div id="' + id +'">' + question + items.map(function(item){
-        return '<input type="checkbox" class="exam-js-input">' + item + '</input>';
+        return '<input id="' + helper.getID() + '" type="checkbox" class="exam-js-input">' + item + '</input>';
       }) + '</div>';
     },
     getInputObject: function(source, answer, question){
