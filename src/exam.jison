@@ -9,7 +9,7 @@
     option: function(item){
       return '<option>' + item + '</option>';
     },
-    toCheckbox: function(question, items, id){
+    toCheckboxHtml: function(question, items, id){
       return '<div id="' + id +'">' + question + items.map(function(item){
         return '<input id="' + helper.getID() + '" type="checkbox" class="exam-js-input">' + item + '</input>';
       }) + '</div>';
@@ -39,7 +39,6 @@
     },
     getCheckboxObject: function(source, items, answers, question){
       var tmpId = helper.getID();
-      console.log(answers);
       return {
         answers: answers,
         items: items,
@@ -47,7 +46,7 @@
         type: 'checkbox',
         source: source,
         id: tmpId,
-        html: helper.toCheckbox(question, items, tmpId),
+        html: helper.toCheckboxHtml(question, items, tmpId),
       }
     }
   }

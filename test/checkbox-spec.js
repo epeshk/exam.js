@@ -10,9 +10,9 @@ describe('Checkbox tests', function() {
     });
 
     it('should return object with proper count of answers', function(){
-      var result = exam.parse('{{ question1? :? 1,2,3 :: 1,3 }} {{ question2? :? 1,2,3 :: 1 }}');
-      assert.equal(result.expressions[0].answers.count, 2);
-      assert.equal(result.expressions[0].answers.count, 1);
+      var result = exam.parse('{{ question1? :? 1,2,3 :: 1,3 }} {{ question2? :? 1,2,3,4 :: 1,2,3 }}');
+      assert.equal(result.expressions[0].answers.length, 2);
+      assert.equal(result.expressions[1].answers.length, 3);
     });
   });
 })
