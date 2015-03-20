@@ -17,7 +17,6 @@
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
       return {
-        answer: answer,
         question: question,
         type: 'input',
         source: source,
