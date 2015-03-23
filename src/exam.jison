@@ -13,17 +13,12 @@
 %lex
 %%
 
-\s+                            return 'SP'
-"ТЕСТ"                         return '::'  //answer separator
-":?"                           return ':?'  //help separator
-","                            return ','   //items separator
-"{{"                           return '{{'  //start block
-"}}"                           return '}}'  //end block
-"{--"                          return '{--' //start section
-"--}"                          return '--}' //end section
-"..."                          return 'INPUT_TOKEN'
-[^\s]                          return 'char'
-<<EOF>>                        return 'EOF'
+\s+                                return 'SP'
+[(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)]     return 'TEST'  //start test block
+(\n|\r|\r\n)                       return 'SEP'  //separator
+(\n|\r|\r\n){2}                    return '--}' //end section
+[^\s]                              return 'char'
+<<EOF>>                            return 'EOF'
 
 /lex
 

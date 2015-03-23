@@ -644,30 +644,20 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 5
 break;
-case 1:return 14  //answer separator
+case 1:return 'TEST'  //start test block
 break;
-case 2:return 12  //help separator
+case 2:return 'SEP'  //separator
 break;
-case 3:return 8   //items separator
+case 3:return '--}' //end section
 break;
-case 4:return 11  //start block
+case 4:return 4
 break;
-case 5:return 15  //end block
-break;
-case 6:return '{--' //start section
-break;
-case 7:return '--}' //end section
-break;
-case 8:return 13
-break;
-case 9:return 4
-break;
-case 10:return 22
+case 5:return 22
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:ТЕСТ)/,/^(?::\?)/,/^(?:,)/,/^(?:\{\{)/,/^(?:\}\})/,/^(?:\{--)/,/^(?:--\})/,/^(?:\.\.\.)/,/^(?:[^\s])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)])/,/^(?:(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n){2})/,/^(?:[^\s])/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
 });
 return lexer;
 })();
