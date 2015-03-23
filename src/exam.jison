@@ -25,6 +25,18 @@
         html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     },
+    getOptionObject: function(source, answers, question){
+      var tmpId = helper.getID();
+      var toOption = Array.prototype.map(helper.option);
+      return {
+        answer: answers,
+        question: question,
+        type: 'list',
+        source: source,
+        id: tmpId,
+        html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
+      }
+    },
     getCheckboxObject: function(source, items, answers, question){
       var tmpId = helper.getID();
       return {
