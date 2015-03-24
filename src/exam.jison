@@ -6,49 +6,6 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
-    option: function(item){
-      return '<option>' + item + '</option>';
-    },
-    toCheckboxHtml: function(question, items, id){
-      return '<div id="' + id +'">' + question + items.map(function(item){
-        return '<input id="' + helper.getID() + '" type="checkbox" class="exam-js-input">' + item + '</input>';
-      }) + '</div>';
-    },
-    getInputObject: function(source, answer, question){
-      var tmpId = this.getID();
-      return {
-        answer: answer,
-        question: question,
-        type: 'input',
-        source: source,
-        id: tmpId,
-        html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
-      }
-    },
-    getOptionObject: function(source, answers, question){
-      var tmpId = helper.getID();
-      var toOption = Array.prototype.map(helper.option);
-      return {
-        answer: answers,
-        question: question,
-        type: 'list',
-        source: source,
-        id: tmpId,
-        html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
-      }
-    },
-    getCheckboxObject: function(source, items, answers, question){
-      var tmpId = helper.getID();
-      return {
-        answers: answers,
-        items: items,
-        question: question,
-        type: 'checkbox',
-        source: source,
-        id: tmpId,
-        html: helper.toCheckboxHtml(question, items, tmpId),
-      }
-    }
   }
 %}
 
@@ -57,7 +14,7 @@
 %%
 
 \s+                            return 'SP'
-"::"                           return '::'  //answer separator
+"ТЕСТ"                         return '::'  //answer separator
 ":?"                           return ':?'  //help separator
 ","                            return ','   //items separator
 "{{"                           return '{{'  //start block
