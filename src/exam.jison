@@ -16,7 +16,8 @@
 \s+                                return 'SP'
 [(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)]     return 'TEST'  //start test block
 (\n|\r|\r\n)                       return 'SEP'  //separator
-(\n|\r|\r\n){2}                    return '--}' //end section
+(\n|\r|\r\n){2}                    return 'TEST_END' //end section
+"+"                                return 'AM' //answer marker
 [^\s]                              return 'char'
 <<EOF>>                            return 'EOF'
 
@@ -40,50 +41,8 @@ phrase
     {$$ = $1 + $2}
   ;
 
-sequence
-  : phrase ',' phrase
-    {$$ = [$1,$3]}
-  | sequence ',' phrase
-    {$1.push($3); $$ = $1;}
-  ;
-
-answer
-  : phrase
-  | sequence
-  ;
-
 input
-  : '{{' phrase ':?' 'INPUT_TOKEN' '::' answer '}}'
-    {
-      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
-    }
-  | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' '::' answer '}}'
-    {
-      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8, $7, $2);
-    }
-  | '{{' phrase ':?' 'INPUT_TOKEN' 'SP' '::' answer '}}'
-    {
-      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8, $7, $2);
-    }
-  | '{{' phrase ':?' 'SP' 'INPUT_TOKEN' 'SP' '::' answer '}}'
-    {
-      $$ = helper.getInputObject($1 + $2 + $3 + $4 + $5 + $6 + $7 + $8 + $9, $8, $2);
-    }
-  ;
-
-list
-  : '{{' phrase ':?' sequence '::' phrase '}}'
-    {
-      $$ = helper.getOptionObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
-    }
-  ;
-
-checkbox
-  : '{{' phrase ':?' sequence '::' sequence '}}'
-    {
-      $$ = helper.getCheckboxObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $4, $6, $2);
-    }
-  ;
+  : 'TEST' phrase TEST
 
 expression
   : input
