@@ -72,18 +72,18 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,12],$V2=[1,10],$V3=[4,5,11,22],$V4=[4,5,8,11,12,14,15,22],$V5=[2,2],$V6=[1,26],$V7=[1,27],$V8=[8,14,15];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,8],$V3=[4,5,8,16],$V4=[4,5,8,9,11,16];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"phrase":6,"sequence":7,",":8,"answer":9,"input":10,"{{":11,":?":12,"INPUT_TOKEN":13,"::":14,"}}":15,"list":16,"checkbox":17,"expression":18,"statement":19,"source":20,"file":21,"EOF":22,"$accept":0,"$end":1},
-terminals_: {2:"error",4:"char",5:"SP",8:",",11:"{{",12:":?",13:"INPUT_TOKEN",14:"::",15:"}}",22:"EOF"},
-productions_: [0,[3,1],[3,1],[6,1],[6,2],[7,3],[7,3],[9,1],[9,1],[10,7],[10,8],[10,8],[10,9],[16,7],[17,7],[18,1],[18,1],[18,1],[19,1],[19,1],[20,1],[20,2],[21,2]],
+symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"phrase":6,"input":7,"TEST":8,"SEP":9,"AM":10,"TEST_END":11,"expression":12,"statement":13,"source":14,"file":15,"EOF":16,"$accept":0,"$end":1},
+terminals_: {2:"error",4:"char",5:"SP",8:"TEST",9:"SEP",10:"AM",11:"TEST_END",16:"EOF"},
+productions_: [0,[3,1],[3,1],[6,1],[6,2],[7,6],[12,1],[13,1],[13,1],[14,1],[14,2],[15,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 15: case 16: case 17: case 18: case 19:
+case 1: case 2: case 6: case 7: case 8:
 this.$ = $$[$0]
 break;
 case 3:
@@ -93,37 +93,9 @@ case 4:
 this.$ = $$[$0-1] + $$[$0]
 break;
 case 5:
-this.$ = [$$[$0-2],$$[$0]]
-break;
-case 6:
-$$[$0-2].push($$[$0]); this.$ = $$[$0-2];
+this.$ = {answer: $$[$0-1], sourse: ''}
 break;
 case 9:
-
-      this.$ = helper.getInputObject($$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-1], $$[$0-5]);
-    
-break;
-case 10: case 11:
-
-      this.$ = helper.getInputObject($$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-1], $$[$0-6]);
-    
-break;
-case 12:
-
-      this.$ = helper.getInputObject($$[$0-8] + $$[$0-7] + $$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-1], $$[$0-7]);
-    
-break;
-case 13:
-
-      this.$ = helper.getOptionObject($$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-1], $$[$0-5]);
-    
-break;
-case 14:
-
-      this.$ = helper.getCheckboxObject($$[$0-6] + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], $$[$0-3], $$[$0-1], $$[$0-5]);
-    
-break;
-case 20:
 
       if($$[$0].type){
         this.$ = {
@@ -138,7 +110,7 @@ case 20:
       }
     
 break;
-case 21:
+case 10:
 
       if($$[$0].type){
         $$[$0-1].expressions.push($$[$0]);
@@ -149,7 +121,7 @@ case 21:
       this.$ = $$[$0-1];
     
 break;
-case 22:
+case 11:
 
       var result = {
         expressions: $$[$0-1].expressions,
@@ -161,8 +133,8 @@ case 22:
 break;
 }
 },
-table: [{3:9,4:$V0,5:$V1,6:5,10:6,11:$V2,16:7,17:8,18:4,19:3,20:2,21:1},{1:[3]},{3:9,4:$V0,5:$V1,6:5,10:6,11:$V2,16:7,17:8,18:4,19:14,22:[1,13]},o($V3,[2,20]),o($V3,[2,18]),o([11,22],[2,19],{3:15,4:$V0,5:$V1}),o($V3,[2,15]),o($V3,[2,16]),o($V3,[2,17]),o($V4,[2,3]),{3:9,4:$V0,5:$V1,6:16},o($V4,[2,1]),o($V4,$V5),{1:[2,22]},o($V3,[2,21]),o($V4,[2,4]),{3:15,4:$V0,5:$V1,12:[1,17]},{3:9,4:$V0,5:[1,19],6:21,7:20,13:[1,18]},{5:[1,23],14:[1,22]},o([4,5,8],$V5,{13:[1,24]}),{8:$V6,14:[1,25]},{3:15,4:$V0,5:$V1,8:$V7},{3:9,4:$V0,5:$V1,6:29,7:30,9:28},{14:[1,31]},{5:[1,33],14:[1,32]},{3:9,4:$V0,5:$V1,6:34,7:35},{3:9,4:$V0,5:$V1,6:36},{3:9,4:$V0,5:$V1,6:37},{15:[1,38]},{3:15,4:$V0,5:$V1,8:$V7,15:[2,7]},{8:$V6,15:[2,8]},{3:9,4:$V0,5:$V1,6:29,7:30,9:39},{3:9,4:$V0,5:$V1,6:29,7:30,9:40},{14:[1,41]},{3:15,4:$V0,5:$V1,8:$V7,15:[1,42]},{8:$V6,15:[1,43]},o($V8,[2,6],{3:15,4:$V0,5:$V1}),o($V8,[2,5],{3:15,4:$V0,5:$V1}),o($V3,[2,9]),{15:[1,44]},{15:[1,45]},{3:9,4:$V0,5:$V1,6:29,7:30,9:46},o($V3,[2,13]),o($V3,[2,14]),o($V3,[2,11]),o($V3,[2,10]),{15:[1,47]},o($V3,[2,12])],
-defaultActions: {13:[2,22]},
+table: [{3:7,4:$V0,5:$V1,6:5,7:6,8:$V2,12:4,13:3,14:2,15:1},{1:[3]},{3:7,4:$V0,5:$V1,6:5,7:6,8:$V2,12:4,13:12,16:[1,11]},o($V3,[2,9]),o($V3,[2,7]),o([8,16],[2,8],{3:13,4:$V0,5:$V1}),o($V3,[2,6]),o($V4,[2,3]),{3:7,4:$V0,5:$V1,6:14},o($V4,[2,1]),o($V4,[2,2]),{1:[2,11]},o($V3,[2,10]),o($V4,[2,4]),{3:13,4:$V0,5:$V1,9:[1,15]},{10:[1,16]},{3:7,4:$V0,5:$V1,6:17},{3:13,4:$V0,5:$V1,11:[1,18]},o($V3,[2,5])],
+defaultActions: {11:[2,11]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -644,20 +616,22 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 5
 break;
-case 1:return 'TEST'  //start test block
+case 1:return 8  //start test block
 break;
-case 2:return 'SEP'  //separator
+case 2:return 9  //separator
 break;
-case 3:return '--}' //end section
+case 3:return 11 //end section
 break;
-case 4:return 4
+case 4:return 10 //right answer marker
 break;
-case 5:return 22
+case 5:return 4
+break;
+case 6:return 16
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)])/,/^(?:(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n){2})/,/^(?:[^\s])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:[(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)])/,/^(?:(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n){2})/,/^(?:\+)/,/^(?:[^\s])/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}
 });
 return lexer;
 })();

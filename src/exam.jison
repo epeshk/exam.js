@@ -17,7 +17,7 @@
 [(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)]     return 'TEST'  //start test block
 (\n|\r|\r\n)                       return 'SEP'  //separator
 (\n|\r|\r\n){2}                    return 'TEST_END' //end section
-"+"                                return 'AM' //answer marker
+"+"                                return 'AM' //right answer marker
 [^\s]                              return 'char'
 <<EOF>>                            return 'EOF'
 
@@ -42,14 +42,12 @@ phrase
   ;
 
 input
-  : 'TEST' phrase TEST
+  : TEST phrase SEP AM phrase TEST_END
+   {$$ = {answer: $5, sourse: ''}}
+  ;
 
 expression
   : input
-    {$$ = $1}
-  | list
-    {$$ = $1}
-  | checkbox
     {$$ = $1}
   ;
 
