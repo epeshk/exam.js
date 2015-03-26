@@ -42,7 +42,7 @@ phrase
   ;
 
 input
-  : TEST phrase SEP AM phrase TEST_END
+  : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
    {$$ = {answer: $5, sourse: ''}}
   ;
 
