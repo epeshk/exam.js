@@ -14,10 +14,10 @@
 %%
 
 \s+                                return 'SP'
-[(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)]     return 'TEST'  //start test block
+(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)       return 'TEST'  //start test block
 (\n|\r|\r\n)                       return 'SEP'  //separator
 (\n|\r|\r\n){2}                    return 'TEST_END' //end section
-"+"                                return 'AM' //right answer marker
+\^\+                               return 'AM' //right answer marker
 [^\s]                              return 'char'
 <<EOF>>                            return 'EOF'
 
