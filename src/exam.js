@@ -93,7 +93,7 @@ case 4:
 this.$ = $$[$0-1] + $$[$0]
 break;
 case 5:
-this.$ = {answer: $$[$0-1], sourse: $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], type: 'input'}
+this.$ = {answer: $$[$0-1], source: '' + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], type: 'input'}
 break;
 case 9:
 
@@ -614,13 +614,13 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 5
+case 0:return 8  //start test block
 break;
-case 1:return 8  //start test block
+case 1:return 11 //end section
 break;
 case 2:return 9  //separator
 break;
-case 3:return 11 //end section
+case 3:return 5
 break;
 case 4:return 10 //right answer marker
 break;
@@ -630,7 +630,7 @@ case 6:return 16
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:(\n|\r|\r\n)(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n){2})/,/^(?:\^\+)/,/^(?:[^\s])/,/^(?:$)/],
+rules: [/^(?:(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n))/,/^(?:(\n|\r|\r\n){2})/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^\s])/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}
 });
 return lexer;

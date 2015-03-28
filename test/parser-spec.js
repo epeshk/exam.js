@@ -4,14 +4,14 @@ var assert = require('assert'),
 describe('Parser tests', function(){
   describe('Simple expressions parser', function(){
     it('should return an object with a expressions', function(){
-      var result = exam.parse('\rТЕСТ\rWhat is your name?\r+Exam.js\r\r');
+      var result = exam.parse('\nТЕСТ\nWhat is your name?\n+Exam.js\n\n');
       assert.equal(result.expressions != null, true);
     });
 
-    it('should return an object with a input object', function(){
-      var result = exam.parse('\rТЕСТ\rWhat is your name?\r+Exam.js\r\r');
+    it('should return an object with an input object', function(){
+      var result = exam.parse('\nТЕСТ\nWhat is your name?\n+Exam.js\n\n');
       console.log(result);
-      assert.equal(result.expressions[0].type === 'input');
+      assert.equal(result.expressions[0].type === 'input', true);
     });
   });
 })

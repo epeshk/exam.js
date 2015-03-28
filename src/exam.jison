@@ -13,11 +13,11 @@
 %lex
 %%
 
-\s+                                return 'SP'
-(\n|\r|\r\n)ТЕСТ(\n|\r|\r\n)       return 'TEST'  //start test block
-(\n|\r|\r\n)                       return 'SEP'  //separator
+(\n|\r|\r\n)"ТЕСТ"(\n|\r|\r\n)     return 'TEST'  //start test block
 (\n|\r|\r\n){2}                    return 'TEST_END' //end section
-\^\+                               return 'AM' //right answer marker
+(\n|\r|\r\n)                       return 'SEP'  //separator
+\s+                                return 'SP'
+^"+"                               return 'AM' //right answer marker
 [^\s]                              return 'char'
 <<EOF>>                            return 'EOF'
 
@@ -43,7 +43,7 @@ phrase
 
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
-   {$$ = {answer: $5, sourse: $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
+    {$$ = {answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
   ;
 
 expression
