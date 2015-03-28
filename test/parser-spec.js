@@ -7,5 +7,11 @@ describe('Parser tests', function(){
       var result = exam.parse('\rТЕСТ\rWhat is your name?\r+Exam.js\r\r');
       assert.equal(result.expressions != null, true);
     });
+
+    it('should return an object with a input object', function(){
+      var result = exam.parse('\rТЕСТ\rWhat is your name?\r+Exam.js\r\r');
+      console.log(result);
+      assert.equal(result.expressions[0].type === 'input');
+    });
   });
 })

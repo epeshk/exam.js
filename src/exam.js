@@ -93,7 +93,7 @@ case 4:
 this.$ = $$[$0-1] + $$[$0]
 break;
 case 5:
-this.$ = {answer: $$[$0-1], sourse: ''}
+this.$ = {answer: $$[$0-1], sourse: $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], type: 'input'}
 break;
 case 9:
 

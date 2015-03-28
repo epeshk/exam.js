@@ -43,7 +43,7 @@ phrase
 
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
-   {$$ = {answer: $5, sourse: ''}}
+   {$$ = {answer: $5, sourse: $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
   ;
 
 expression
