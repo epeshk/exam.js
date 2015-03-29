@@ -41,6 +41,13 @@ phrase
     {$$ = $1 + $2}
   ;
 
+answer
+  : phrase
+    {$$ = {answer: $1, isRight: false}}
+  | 'AM' phrase
+    {$$ = {answer: $1, isRight: true}}
+  ;
+
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
     {$$ = {answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
