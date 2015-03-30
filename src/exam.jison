@@ -9,6 +9,9 @@
     option: function(item){
       return '<option>' + item + '</option>';
     },
+    checkbox: function(item){
+      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item;
+    },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
       return {
@@ -30,6 +33,18 @@
         source: source,
         id: tmpId,
         html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
+      }
+    },
+    getCheckboxObject: function(source, answer, question){
+      var tmpId = helper.getID();
+      var toCheckbox = Array.prototype.map(helper.checkbox);
+      return {
+        answer: answer,
+        question: question,
+        type: 'checkbox',
+        source: source,
+        id: tmpId,
+        html: toCheckbox
       }
     }
   }
@@ -103,9 +118,16 @@ input
   ;
 
 list
-  : '{{' phrase ':?' sequence '::' answer '}}'
+  : '{{' phrase ':?' sequence '::' phrase '}}'
     {
       $$ = helper.getOptionObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
+    }
+  ;
+
+checkbox
+  : '{{' phrase ':?' sequence '::' sequence '}}'
+    {
+      $$ = helper.getCheckboxObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
     }
   ;
 
@@ -113,6 +135,8 @@ expression
   : input
     {$$ = $1}
   | list
+    {$$ = $1}
+  | checkbox
     {$$ = $1}
   ;
 
