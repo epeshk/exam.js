@@ -48,6 +48,13 @@ answer
     {$$ = {answer: $1, isRight: true}}
   ;
 
+answers
+  : answer 'SEP'
+    {$$ = {answers: [$1]}}
+  | answers answer
+    {$$.answers.push($2)}
+  ;
+
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
     {$$ = {answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
