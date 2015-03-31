@@ -6,6 +6,15 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
+    createList: function(question,answers){
+      var answersHtml = answers.map(function(a){
+        return '<option value="' + a.answer + '">' + a.answer + '</option>\n';
+      }).reduce(function(a,b){
+        return a + b;
+      });
+
+      return '<div id="' + helper.getID() + '" class="exam-js-question"><select>' + answersHtml + '</select></div>';
+    },
   }
 %}
 
@@ -51,13 +60,20 @@ answer
 answers
   : answer 'SEP'
     {$$ = {answers: [$1]}}
+  | answer
+    {$$ = {answers: [$1]}}
   | answers answer
     {$$.answers.push($2)}
   ;
 
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
-    {$$ = {answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
+    {$$ = {question: $2, answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
+  ;
+
+list
+  : 'TEST' phrase 'SEP' answers 'TEST_END'
+    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createList($2, $4)}}
   ;
 
 expression
@@ -78,12 +94,14 @@ source
       if($1.type){
         $$ = {
           expressions: [$1],
-          source: $1.source
+          source: $1.source,
+          html: $1.html
         }
       } else {
         $$ = {
           expressions: [],
-          source: $1
+          source: $1,
+          html: '<div>' + $1 + '</div>'
         }
       }
     }
@@ -92,8 +110,10 @@ source
       if($2.type){
         $1.expressions.push($2);
         $1.source += $2.source;
+        $1.html += $2.html;
       } else {
         $1.source += $2;
+        $1.html += $2;
       }
       $$ = $1;
     }
@@ -104,7 +124,8 @@ file
     {
       var result = {
         expressions: $1.expressions,
-        source: $1.source
+        source: $1.source,
+        html: $1.html
       }
       $$ = result;
       return $$;
