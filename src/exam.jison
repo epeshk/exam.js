@@ -6,6 +6,9 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
+    createInput: function(question){
+      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<input type="text" class="exam-js-input"/></div>';
+    },
     createList: function(question,answers){
       var answersHtml = answers.map(function(a){
         return '<option value="' + a.answer + '">' + a.answer + '</option>\n';
@@ -68,7 +71,7 @@ answers
 
 input
   : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
-    {$$ = {question: $2, answer: $5, source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
+    {$$ = {question: $2, answer: $5, html: helper.createInput($2), source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
   ;
 
 list

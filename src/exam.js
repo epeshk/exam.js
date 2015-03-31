@@ -108,7 +108,7 @@ case 9:
 this.$.answers.push($$[$0])
 break;
 case 10:
-this.$ = {question: $$[$0-4], answer: $$[$0-1], source: '' + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], type: 'input'}
+this.$ = {question: $$[$0-4], answer: $$[$0-1], html: helper.createInput($$[$0-4]), source: '' + $$[$0-5] + $$[$0-4] + $$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0], type: 'input'}
 break;
 case 11:
 this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createList($$[$0-3], $$[$0-1])}
@@ -307,6 +307,9 @@ parse: function parse(input) {
     currentId: 0,
     getID: function(){
       return 'exam-js-' + this.currentId++;
+    },
+    createInput: function(question){
+      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<input type="text" class="exam-js-input"/></div>';
     },
     createList: function(question,answers){
       var answersHtml = answers.map(function(a){
