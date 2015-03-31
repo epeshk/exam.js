@@ -1,9 +1,16 @@
 /* description: Parses end executes mathematical expressions. */
 
-%{var helper = {
+%{
+  var helper = {
     currentId: 0,
     getID: function(){
       return 'exam-js-' + this.currentId++;
+    },
+    option: function(item){
+      return '<option>' + item + '</option>';
+    },
+    checkbox: function(item){
+      return '<input type="checkbox" id="' + tmpId + '" class="exam-js-input">' + item;
     },
     getInputObject: function(source, answer, question){
       var tmpId = helper.getID();
@@ -16,6 +23,30 @@
         html: '<input type="text" id="' + tmpId + '" class="exam-js-input">'
       }
     },
+    getOptionObject: function(source, answer, question){
+      var tmpId = helper.getID();
+      var toOption = Array.prototype.map(helper.option);
+      return {
+        answer: answer,
+        question: question,
+        type: 'list',
+        source: source,
+        id: tmpId,
+        html: '<select id="' + tmpId + '" class="exam-js-list>' + toOption + '</select>'
+      }
+    },
+    getCheckboxObject: function(source, answer, question){
+      var tmpId = helper.getID();
+      var toCheckbox = Array.prototype.map(helper.checkbox);
+      return {
+        answer: answer,
+        question: question,
+        type: 'checkbox',
+        source: source,
+        id: tmpId,
+        html: toCheckbox
+      }
+    }
   }
 %}
 
@@ -26,7 +57,7 @@
 \s+                            return 'SP'
 "::"                           return '::'  //answer separator
 ":?"                           return ':?'  //help separator
-"|"                            return '|'   //items separator
+","                            return ','   //items separator
 "{{"                           return '{{'  //start block
 "}}"                           return '}}'  //end block
 "{--"                          return '{--' //start section
@@ -50,15 +81,15 @@ symbol
 
 phrase
   : symbol
-   {$$ = '' + $1}
+    {$$ = '' + $1}
   | phrase symbol
-   {$$ = $1 + $2}
+    {$$ = $1 + $2}
   ;
 
 sequence
-  : phrase '|' phrase
+  : phrase ',' phrase
     {$$ = [$1,$3]}
-  | sequence '|' phrase
+  | sequence ',' phrase
     {$1.push($3); $$ = $1;}
   ;
 
@@ -86,8 +117,26 @@ input
     }
   ;
 
+list
+  : '{{' phrase ':?' sequence '::' phrase '}}'
+    {
+      $$ = helper.getOptionObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
+    }
+  ;
+
+checkbox
+  : '{{' phrase ':?' sequence '::' sequence '}}'
+    {
+      $$ = helper.getCheckboxObject($1 + $2 + $3 + $4 + $5 + $6 + $7, $6, $2);
+    }
+  ;
+
 expression
   : input
+    {$$ = $1}
+  | list
+    {$$ = $1}
+  | checkbox
     {$$ = $1}
   ;
 
@@ -132,7 +181,6 @@ file
         expressions: $1.expressions,
         source: $1.source
       }
-
       $$ = result;
       return $$;
     }
