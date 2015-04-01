@@ -10,8 +10,12 @@ describe('Parser tests', function(){
 
     it('should return an object with an input object', function(){
       var result = exam.parse('\nТЕСТ\nWhat is your name?\n+Exam.js\n\n');
-      console.log(result);
       assert.equal(result.expressions[0].type === 'input', true);
+    });
+
+    it('should return an object with an input html', function(){
+      var result = exam.parse('\nТЕСТ\nWhat is your name?\n+Exam.js\n\n');
+      assert.equal(result.expressions[0].html.length > 0, true);
     });
   });
 })
