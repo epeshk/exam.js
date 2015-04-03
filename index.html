@@ -27,24 +27,16 @@
             <div id="result" class="text-pane"></div>
         </div>
     </div>
-    <script type="text/javascript" src="dist/exam.js"></script>
+    <script type="text/javascript" src="src/exam.js"></script>
     <script type="text/javascript">
-    var exam = new Exam({
-        finishBtnID: 'finishBtn'
-    });
     var resultDiv = document.getElementById('result');
     var editor = document.getElementById('editor');
     var answersDiv = document.getElementById('answers');
     var testsDiv = document.getElementById('tests');
 
-    exam.onAnswer('result', function(tests, rightAnswers) {
-        answersDiv.innerHTML = ('Answers: ' + rightAnswers);
-        testsDiv.innerHTML = ('Tests: ' + tests);
-    });
-
     function update() {
         var source = editor.value;
-        var resultHTML = exam.parse(source);
+        var resultHTML = parser.parse(source).html;
         resultDiv.innerHTML = resultHTML;
         exam.startExam();
     }

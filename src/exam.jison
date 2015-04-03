@@ -26,7 +26,6 @@
 %%
 
 (\n|\r|\r\n)"ТЕСТ"(\n|\r|\r\n)     return 'TEST'  //start test block
-(\n|\r|\r\n){2}                    return 'TEST_END' //end section
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker
@@ -43,6 +42,8 @@ symbol
   : 'char'
     {$$ = $1}
   | 'SP'
+    {$$ = $1}
+  | 'SEP'
     {$$ = $1}
   ;
 
@@ -70,12 +71,12 @@ answers
   ;
 
 input
-  : 'TEST' phrase 'SEP' 'AM' phrase 'TEST_END'
+  : 'TEST' phrase 'SEP' 'AM' phrase 'SEP'
     {$$ = {question: $2, answer: $5, html: helper.createInput($2), source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'input'}}
   ;
 
 list
-  : 'TEST' phrase 'SEP' answers 'TEST_END'
+  : 'TEST' phrase 'SEP' answers 'SEP'
     {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createList($2, $4)}}
   ;
 
