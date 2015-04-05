@@ -6,6 +6,11 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
+    createQuestion: function(question, answers){
+      if(answers.length === 1){
+        return helper.createInput(question);
+      }
+    },
     createInput: function(question){
       return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<input type="text" class="exam-js-input"/></div>';
     },
@@ -15,7 +20,6 @@
       }).reduce(function(a,b){
         return a + b;
       });
-
       return '<div id="' + helper.getID() + '" class="exam-js-question"><select>' + answersHtml + '</select></div>';
     },
   }
@@ -29,7 +33,7 @@
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker
-[^\s]                              return 'char'
+[^(\s|\n|\r|\n\r)]                 return 'char'
 <<EOF>>                            return 'EOF'
 
 /lex
@@ -62,28 +66,21 @@ answer
   ;
 
 answers
-  : answer 'SEP'
+  : answer
     {$$ = {answers: [$1]}}
-  | answer
+  | answer 'SEP'
     {$$ = {answers: [$1]}}
   | answers answer
     {$$.answers.push($2)}
   ;
 
 complex_question
-  : 'TEST' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createList($2, $4)}}
-  ;
-
-simple_question
-  : 'TEST' phrase 'SEP' 'AM' phrase 'SEP'
-    {$$ = {question: $2, answer: $5, html: helper.createInput($2), source: '' + $1 + $2 + $3 + $4 + $5 + $6, type: 'simple-question'}}
+  : 'TEST' phrase 'SEP' answers
+    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4)}}
   ;
 
 expression
-  : simple_question
-    {$$ = $1}
-  | complex_question
+  : complex_question
     {$$ = $1}
   ;
 
