@@ -47,8 +47,6 @@ symbol
     {$$ = $1}
   | 'SP'
     {$$ = $1}
-  | 'SEP'
-    {$$ = $1}
   ;
 
 phrase
@@ -59,29 +57,22 @@ phrase
   ;
 
 answer
-  : phrase
+  : phrase 'SEP'
     {$$ = {answer: $1, isRight: false}}
-  | 'AM' phrase
+  | 'AM' phrase 'SEP'
     {$$ = {answer: $1, isRight: true}}
   ;
 
 answers
   : answer
     {$$ = {answers: [$1]}}
-  | answer 'SEP'
-    {$$ = {answers: [$1]}}
   | answers answer
     {$$.answers.push($2)}
   ;
 
-complex_question
-  : 'TEST' phrase 'SEP' answers
-    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4)}}
-  ;
-
 expression
-  : complex_question
-    {$$ = $1}
+  : 'TEST' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4.answers)}}
   ;
 
 statement

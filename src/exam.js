@@ -72,45 +72,42 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,11],$V3=[1,8],$V4=[4,5,6,12,17],$V5=[12,17],$V6=[4,5,6,9,12,17],$V7=[1,20],$V8=[9,12,17];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8],$V1=[1,9],$V2=[1,6],$V3=[4,5,12,16],$V4=[4,5,8,12,16],$V5=[1,18],$V6=[4,5,8,9];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"SEP":6,"phrase":7,"answer":8,"AM":9,"answers":10,"complex_question":11,"TEST":12,"expression":13,"statement":14,"source":15,"file":16,"EOF":17,"$accept":0,"$end":1},
-terminals_: {2:"error",4:"char",5:"SP",6:"SEP",9:"AM",12:"TEST",17:"EOF"},
-productions_: [0,[3,1],[3,1],[3,1],[7,1],[7,2],[8,1],[8,2],[10,1],[10,2],[10,2],[11,4],[13,1],[14,1],[14,1],[15,1],[15,2],[16,2]],
+symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"phrase":6,"answer":7,"SEP":8,"AM":9,"answers":10,"expression":11,"TEST":12,"statement":13,"source":14,"file":15,"EOF":16,"$accept":0,"$end":1},
+terminals_: {2:"error",4:"char",5:"SP",8:"SEP",9:"AM",12:"TEST",16:"EOF"},
+productions_: [0,[3,1],[3,1],[6,1],[6,2],[7,2],[7,3],[10,1],[10,2],[11,5],[13,1],[13,1],[14,1],[14,2],[15,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 3: case 12: case 13: case 14:
+case 1: case 2: case 10: case 11:
 this.$ = $$[$0]
 break;
-case 4:
+case 3:
 this.$ = '' + $$[$0]
 break;
-case 5:
+case 4:
 this.$ = $$[$0-1] + $$[$0]
 break;
+case 5:
+this.$ = {answer: $$[$0-1], isRight: false}
+break;
 case 6:
-this.$ = {answer: $$[$0], isRight: false}
+this.$ = {answer: $$[$0-2], isRight: true}
 break;
 case 7:
-this.$ = {answer: $$[$0-1], isRight: true}
-break;
-case 8:
 this.$ = {answers: [$$[$0]]}
 break;
-case 9:
-this.$ = {answers: [$$[$0-1]]}
-break;
-case 10:
+case 8:
 this.$.answers.push($$[$0])
 break;
-case 11:
-this.$ = {question: $$[$0-2], answers: $$[$0].answers, sourse: '', html: helper.createQuestion($$[$0-2], $$[$0])}
+case 9:
+this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers)}
 break;
-case 15:
+case 12:
 
       if($$[$0].type){
         this.$ = {
@@ -127,7 +124,7 @@ case 15:
       }
     
 break;
-case 16:
+case 13:
 
       if($$[$0].type){
         $$[$0-1].expressions.push($$[$0]);
@@ -140,7 +137,7 @@ case 16:
       this.$ = $$[$0-1];
     
 break;
-case 17:
+case 14:
 
       var result = {
         expressions: $$[$0-1].expressions,
@@ -153,8 +150,8 @@ case 17:
 break;
 }
 },
-table: [{3:7,4:$V0,5:$V1,6:$V2,7:5,11:6,12:$V3,13:4,14:3,15:2,16:1},{1:[3]},{3:7,4:$V0,5:$V1,6:$V2,7:5,11:6,12:$V3,13:4,14:13,17:[1,12]},o($V4,[2,15]),o($V4,[2,13]),o($V5,[2,14],{3:14,4:$V0,5:$V1,6:$V2}),o($V4,[2,12]),o($V6,[2,4]),{3:7,4:$V0,5:$V1,6:$V2,7:15},o($V6,[2,1]),o($V6,[2,2]),o($V6,[2,3]),{1:[2,17]},o($V4,[2,16]),o($V6,[2,5]),{3:14,4:$V0,5:$V1,6:[1,16]},{3:7,4:$V0,5:$V1,6:$V2,7:19,8:18,9:$V7,10:17},o($V5,[2,11],{3:7,7:19,8:21,4:$V0,5:$V1,6:$V2,9:$V7}),o([4,5,9,12,17],[2,8],{6:[1,22]}),o($V8,[2,6],{3:14,4:$V0,5:$V1,6:$V2}),{3:7,4:$V0,5:$V1,6:$V2,7:23},o($V6,[2,10]),o($V6,[2,9]),o($V8,[2,7],{3:14,4:$V0,5:$V1,6:$V2})],
-defaultActions: {12:[2,17]},
+table: [{3:7,4:$V0,5:$V1,6:5,11:4,12:$V2,13:3,14:2,15:1},{1:[3]},{3:7,4:$V0,5:$V1,6:5,11:4,12:$V2,13:11,16:[1,10]},o($V3,[2,12]),o($V3,[2,10]),o([12,16],[2,11],{3:12,4:$V0,5:$V1}),{3:7,4:$V0,5:$V1,6:13},o($V4,[2,3]),o($V4,[2,1]),o($V4,[2,2]),{1:[2,14]},o($V3,[2,13]),o($V4,[2,4]),{3:12,4:$V0,5:$V1,8:[1,14]},{3:7,4:$V0,5:$V1,6:17,7:16,9:$V5,10:15},{3:7,4:$V0,5:$V1,6:17,7:20,8:[1,19],9:$V5},o($V6,[2,7]),{3:12,4:$V0,5:$V1,8:[1,21]},{3:7,4:$V0,5:$V1,6:22},o($V3,[2,9]),o($V6,[2,8]),o($V6,[2,5]),{3:12,4:$V0,5:$V1,8:[1,23]},o($V6,[2,6])],
+defaultActions: {10:[2,14]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -652,7 +649,7 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 12  //start test block
 break;
-case 1:return 6  //separator
+case 1:return 8  //separator
 break;
 case 2:return 5
 break;
@@ -660,7 +657,7 @@ case 3:return 9 //right answer marker
 break;
 case 4:return 4
 break;
-case 5:return 17
+case 5:return 16
 break;
 }
 },
