@@ -105,11 +105,11 @@ case 8:
 this.$.answers.push($$[$0])
 break;
 case 9:
-this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers)}
+this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: 'question'}
 break;
 case 12:
 
-      if($$[$0].type){
+      if($$[$0].type === 'question'){
         this.$ = {
           expressions: [$$[$0]],
           source: $$[$0].source,
@@ -126,7 +126,7 @@ case 12:
 break;
 case 13:
 
-      if($$[$0].type){
+      if($$[$0].type === 'question'){
         $$[$0-1].expressions.push($$[$0]);
         $$[$0-1].source += $$[$0].source;
         $$[$0-1].html += $$[$0].html;

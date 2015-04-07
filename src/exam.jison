@@ -72,7 +72,7 @@ answers
 
 expression
   : 'TEST' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4.answers)}}
+    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4.answers), type: 'question'}}
   ;
 
 statement
@@ -85,7 +85,7 @@ statement
 source
   : statement
     {
-      if($1.type){
+      if($1.type === 'question'){
         $$ = {
           expressions: [$1],
           source: $1.source,
@@ -101,7 +101,7 @@ source
     }
   | source statement
     {
-      if($2.type){
+      if($2.type === 'question'){
         $1.expressions.push($2);
         $1.source += $2.source;
         $1.html += $2.html;
