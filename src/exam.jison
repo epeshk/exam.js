@@ -7,6 +7,7 @@
       return 'exam-js-' + this.currentId++;
     },
     createQuestion: function(question, answers){
+      console.log(answers);
       if(answers.length === 1){
         return helper.createInput(question);
       }
@@ -57,10 +58,10 @@ phrase
   ;
 
 answer
-  : phrase 'SEP'
+  : 'AM' phrase 'SEP'
+    {$$ = {answer: $2, isRight: true}}
+  | phrase 'SEP'
     {$$ = {answer: $1, isRight: false}}
-  | 'AM' phrase 'SEP'
-    {$$ = {answer: $1, isRight: true}}
   ;
 
 answers
