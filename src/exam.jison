@@ -30,7 +30,7 @@
 %lex
 %%
 
-(\n|\r|\r\n)"ТЕСТ"(\n|\r|\r\n)     return 'TEST'  //start test block
+"ТЕСТ"                             return 'TEST'  //start test block
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker
@@ -72,14 +72,14 @@ answers
   ;
 
 expression
-  : 'TEST' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $2, answers: $4.answers, sourse: '', html: helper.createQuestion($2, $4.answers), type: 'question'}}
+  : 'SEP' 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'question'}}
   ;
 
 statement
-  : expression
+  : phrase
     {$$ = $1}
-  | phrase
+  | expression
     {$$ = $1}
   ;
 
