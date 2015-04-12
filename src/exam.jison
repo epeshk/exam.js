@@ -10,6 +10,8 @@
       console.log(answers);
       if(answers.length === 1){
         return helper.createInput(question);
+      } else if(answers.length > 1){
+        return helper.createList(question, answers);
       }
     },
     createInput: function(question){
@@ -21,7 +23,7 @@
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<div id="' + helper.getID() + '" class="exam-js-question"><select>' + answersHtml + '</select></div>';
+      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<select>' + answersHtml + '</select></div>';
     },
   }
 %}
