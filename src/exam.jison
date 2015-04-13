@@ -38,7 +38,6 @@
 ^"+"                               return 'AM' //right answer marker
 [^(\s|\n|\r|\n\r)]                 return 'char'
 <<EOF>>                            return 'EOF'
-
 /lex
 
 %start file
@@ -74,8 +73,8 @@ answers
   ;
 
 expression
-  : 'SEP' 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'question'}}
+  : 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $3, answers: $5.answers, sourse: '', html: helper.createQuestion($3, $5.answers), type: 'question'}}
   ;
 
 statement
