@@ -12,5 +12,10 @@ describe('Media question tests', function() {
       var result = exam.parse('ТЕСТ АУДИО\rWhat is your name?\r+Exam.js\rTest\r\r');
       assert.equal(result.expressions[0].type === 'AUDIO-QUESTION', true);
     });
+
+    it('should return proper type of expression', function() {
+      var result = exam.parse('ТЕСТ РИСУНОК\rWhat is your name?\r+Exam.js\rTest\r\r');
+      assert.equal(result.expressions[0].type === 'IMAGE-QUESTION', true);
+    });
   });
 })
