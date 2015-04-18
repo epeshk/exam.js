@@ -307,7 +307,14 @@ parse: function parse(input) {
       if(answers.length === 1){
         return helper.createInput(question);
       } else if(answers.length > 1){
-        return helper.createList(question, answers);
+        var rightAnswersCount = answers.filter(function(a){
+          return a.isRight;
+        }).length || 0;
+        if(rightAnswersCount > 1){
+          return helper.createCheckbox(question, answers);
+        } else {
+          return helper.createList(question, answers);
+        }
       }
     },
     createInput: function(question){
