@@ -72,42 +72,45 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,8],$V3=[1,7],$V4=[4,5,9,12,16],$V5=[1,22],$V6=[4,5,8,9];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,8],$V3=[1,7],$V4=[4,5,6,12,16],$V5=[1,14],$V6=[2,3],$V7=[1,23],$V8=[4,5,6,9];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"phrase":6,"answer":7,"AM":8,"SEP":9,"answers":10,"expression":11,"TEST":12,"statement":13,"source":14,"file":15,"EOF":16,"$accept":0,"$end":1},
-terminals_: {2:"error",4:"char",5:"SP",8:"AM",9:"SEP",12:"TEST",16:"EOF"},
-productions_: [0,[3,1],[3,1],[6,1],[6,2],[7,3],[7,2],[10,1],[10,2],[11,6],[11,7],[13,1],[13,1],[14,1],[14,2],[15,2]],
+symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"SEP":6,"phrase":7,"answer":8,"AM":9,"answers":10,"expression":11,"TEST":12,"statement":13,"source":14,"file":15,"EOF":16,"$accept":0,"$end":1},
+terminals_: {2:"error",4:"char",5:"SP",6:"SEP",9:"AM",12:"TEST",16:"EOF"},
+productions_: [0,[3,1],[3,1],[3,1],[7,1],[7,2],[8,3],[8,2],[10,1],[10,2],[11,6],[11,7],[13,1],[13,1],[14,1],[14,2],[15,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 11: case 12:
+case 1: case 2: case 12: case 13:
 this.$ = $$[$0]
 break;
 case 3:
-this.$ = '' + $$[$0]
+this.$ = '<br/>'
 break;
 case 4:
-this.$ = $$[$0-1] + $$[$0]
+this.$ = '' + $$[$0]
 break;
 case 5:
-this.$ = {answer: $$[$0-1], isRight: true}
+this.$ = $$[$0-1] + $$[$0]
 break;
 case 6:
-this.$ = {answer: $$[$0-1], isRight: false}
+this.$ = {answer: $$[$0-1], isRight: true}
 break;
 case 7:
-this.$ = {answers: [$$[$0]]}
+this.$ = {answer: $$[$0-1], isRight: false}
 break;
 case 8:
+this.$ = {answers: [$$[$0]]}
+break;
+case 9:
 this.$.answers.push($$[$0])
 break;
-case 9: case 10:
+case 10: case 11:
 this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: 'question'}
 break;
-case 13:
+case 14:
 
       if($$[$0].type === 'question'){
         this.$ = {
@@ -124,7 +127,7 @@ case 13:
       }
     
 break;
-case 14:
+case 15:
 
       if($$[$0].type === 'question'){
         $$[$0-1].expressions.push($$[$0]);
@@ -137,7 +140,7 @@ case 14:
       this.$ = $$[$0-1];
     
 break;
-case 15:
+case 16:
 
       var result = {
         expressions: $$[$0-1].expressions,
@@ -150,8 +153,8 @@ case 15:
 break;
 }
 },
-table: [{3:6,4:$V0,5:$V1,6:4,9:$V2,11:5,12:$V3,13:3,14:2,15:1},{1:[3]},{3:6,4:$V0,5:$V1,6:4,9:$V2,11:5,12:$V3,13:12,16:[1,11]},o($V4,[2,13]),o([9,12,16],[2,11],{3:13,4:$V0,5:$V1}),o($V4,[2,12]),o($V4,[2,3]),{9:[1,14]},{12:[1,15]},o($V4,[2,1]),o($V4,[2,2]),{1:[2,15]},o($V4,[2,14]),o($V4,[2,4]),{3:6,4:$V0,5:$V1,6:16},{9:[1,17]},{3:13,4:$V0,5:$V1,9:[1,18]},{3:6,4:$V0,5:$V1,6:19},{3:6,4:$V0,5:$V1,6:23,7:21,8:$V5,10:20},{3:13,4:$V0,5:$V1,9:[1,24]},{3:6,4:$V0,5:$V1,6:23,7:26,8:$V5,9:[1,25]},o($V6,[2,7]),{3:6,4:$V0,5:$V1,6:27},{3:13,4:$V0,5:$V1,9:[1,28]},{3:6,4:$V0,5:$V1,6:23,7:21,8:$V5,10:29},o($V4,[2,9]),o($V6,[2,8]),{3:13,4:$V0,5:$V1,9:[1,30]},o($V6,[2,6]),{3:6,4:$V0,5:$V1,6:23,7:26,8:$V5,9:[1,31]},o($V6,[2,5]),o($V4,[2,10])],
-defaultActions: {11:[2,15]},
+table: [{3:6,4:$V0,5:$V1,6:$V2,7:4,11:5,12:$V3,13:3,14:2,15:1},{1:[3]},{3:6,4:$V0,5:$V1,6:$V2,7:4,11:5,12:$V3,13:12,16:[1,11]},o($V4,[2,14]),o([12,16],[2,12],{3:13,4:$V0,5:$V1,6:$V5}),o($V4,[2,13]),o($V4,[2,4]),{6:[1,15]},o([4,5,6,16],$V6,{12:[1,16]}),o($V4,[2,1]),o($V4,[2,2]),{1:[2,16]},o($V4,[2,15]),o($V4,[2,5]),o($V4,$V6),{3:6,4:$V0,5:$V1,6:$V5,7:17},{6:[1,18]},{3:13,4:$V0,5:$V1,6:[1,19]},{3:6,4:$V0,5:$V1,6:$V5,7:20},{3:6,4:$V0,5:$V1,6:$V5,7:24,8:22,9:$V7,10:21},{3:13,4:$V0,5:$V1,6:[1,25]},{3:6,4:$V0,5:$V1,6:[1,26],7:24,8:27,9:$V7},o($V8,[2,8]),{3:6,4:$V0,5:$V1,6:$V5,7:28},{3:13,4:$V0,5:$V1,6:[1,29]},{3:6,4:$V0,5:$V1,6:$V5,7:24,8:22,9:$V7,10:30},o($V4,[2,10]),o($V8,[2,9]),{3:13,4:$V0,5:$V1,6:[1,31]},o($V8,[2,7]),{3:6,4:$V0,5:$V1,6:[1,32],7:24,8:27,9:$V7},o($V8,[2,6]),o($V4,[2,11])],
+defaultActions: {11:[2,16]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -668,11 +671,11 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 12  //start test block
 break;
-case 1:return 9  //separator
+case 1:return 6  //separator
 break;
 case 2:return 5
 break;
-case 3:return 8 //right answer marker
+case 3:return 9 //right answer marker
 break;
 case 4:return 4
 break;
