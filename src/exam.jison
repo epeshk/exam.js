@@ -49,6 +49,7 @@
 %%
 
 "ТЕСТ"                             return 'TEST'  //start test block
+"ВИДЕО"                            return 'VIDEO'
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker
