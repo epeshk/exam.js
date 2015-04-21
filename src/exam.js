@@ -671,20 +671,24 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 12  //start test block
 break;
-case 1:return 6  //separator
+case 1:return 'VIDEO'
 break;
-case 2:return 5
+case 2:return 'AUDIO'
 break;
-case 3:return 9 //right answer marker
+case 3:return 6  //separator
 break;
-case 4:return 4
+case 4:return 5
 break;
-case 5:return 16
+case 5:return 9 //right answer marker
+break;
+case 6:return 4
+break;
+case 7:return 16
 break;
 }
 },
-rules: [/^(?:ТЕСТ)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
+rules: [/^(?:ТЕСТ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
 });
 return lexer;
 })();
