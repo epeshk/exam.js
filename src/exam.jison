@@ -93,6 +93,12 @@ answers
     {$$.answers.push($2)}
   ;
 
+type
+  | 'VIDEO'
+  | 'AUDIO'
+  | 'IMAGE'
+  ;
+
 expression
   : 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $3, answers: $5.answers, sourse: '', html: helper.createQuestion($3, $5.answers), type: 'question'}}
