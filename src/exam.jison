@@ -51,6 +51,7 @@
 "ТЕСТ"                             return 'TEST'  //start test block
 "ВИДЕО"                            return 'VIDEO'
 "АУДИО"                            return 'AUDIO'
+"РИСУНОК"                          return 'IMAGE'
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker

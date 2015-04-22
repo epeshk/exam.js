@@ -675,20 +675,22 @@ case 1:return 'VIDEO'
 break;
 case 2:return 'AUDIO'
 break;
-case 3:return 6  //separator
+case 3:return 'IMAGE'
 break;
-case 4:return 5
+case 4:return 6  //separator
 break;
-case 5:return 9 //right answer marker
+case 5:return 5
 break;
-case 6:return 4
+case 6:return 9 //right answer marker
 break;
-case 7:return 16
+case 7:return 4
+break;
+case 8:return 16
 break;
 }
 },
-rules: [/^(?:ТЕСТ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
+rules: [/^(?:ТЕСТ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:РИСУНОК)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true}}
 });
 return lexer;
 })();
