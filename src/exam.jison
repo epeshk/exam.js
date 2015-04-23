@@ -104,6 +104,10 @@ expression
     {$$ = {question: $3, answers: $5.answers, sourse: '', html: helper.createQuestion($3, $5.answers), type: 'question'}}
   | 'SEP' 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'question'}}
+  | 'SEP' 'TEST' type 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $5, answers: $7.answers, sourse: '', html: helper.createQuestion($5, $7.answers), type: 'question'}}
+  | 'TEST' type 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'question'}}
   ;
 
 statement
