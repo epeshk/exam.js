@@ -6,7 +6,7 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
-    createQuestion: function(question, answers){
+    createQuestion: function(question, answers, type){
       console.log(answers);
       if(answers.length === 1){
         return helper.createInput(question);
