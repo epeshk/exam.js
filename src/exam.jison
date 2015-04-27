@@ -48,9 +48,9 @@
 %%
 
 "ТЕСТ"                             return 'TEST'  //start test block
-"ВИДЕО"                            return 'VIDEO'
-"АУДИО"                            return 'AUDIO'
-"РИСУНОК"                          return 'IMAGE'
+"ВИДЕО"                            return 'VIDEO' //type "video" marker
+"АУДИО"                            return 'AUDIO' //type "audio" marker
+"РИСУНОК"                          return 'IMAGE' //type "image" marker
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker

@@ -670,11 +670,11 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:return 16  //start test block
 break;
-case 1:return 12
+case 1:return 12 //type "video" marker
 break;
-case 2:return 13
+case 2:return 13 //type "audio" marker
 break;
-case 3:return 14
+case 3:return 14 //type "image" marker
 break;
 case 4:return 6  //separator
 break;
