@@ -40,6 +40,15 @@
 
       return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + answersHtml + '</div>'
     },
+    createVideoTest: function(question, answers){
+     return '';
+    },
+    createAudioTest: function(question, answers){
+     return '';
+    },
+    createImageTest: function(question, answers){
+     return '';
+    },
   }
 %}
 
