@@ -112,7 +112,7 @@ this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helpe
 break;
 case 19:
 
-      if($$[$0].type === 'question'){
+      if($$[$0].type){
         this.$ = {
           expressions: [$$[$0]],
           source: $$[$0].source,
@@ -129,7 +129,7 @@ case 19:
 break;
 case 20:
 
-      if($$[$0].type === 'question'){
+      if($$[$0].type){
         $$[$0-1].expressions.push($$[$0]);
         $$[$0-1].source += $$[$0].source;
         $$[$0-1].html += $$[$0].html;

@@ -131,7 +131,7 @@ statement
 source
   : statement
     {
-      if($1.type === 'question'){
+      if($1.type){
         $$ = {
           expressions: [$1],
           source: $1.source,
@@ -147,7 +147,7 @@ source
     }
   | source statement
     {
-      if($2.type === 'question'){
+      if($2.type){
         $1.expressions.push($2);
         $1.source += $2.source;
         $1.html += $2.html;
