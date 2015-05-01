@@ -10,7 +10,7 @@ describe('Parser tests', function(){
 
     it('should return an object with an question object', function(){
       var result = exam.parse('ТЕСТ\rWhat is your name?\r+Exam.js\r\r');
-      assert.equal(result.expressions[0].type === 'question', true);
+      assert.equal(result.expressions[0].type === 'QUESTION', true);
     });
 
     it('should return an object with an question html', function(){

@@ -107,8 +107,11 @@ break;
 case 9:
 this.$.answers.push($$[$0])
 break;
-case 13: case 14: case 15: case 16:
-this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: 'question'}
+case 13: case 14:
+this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: $$[$0-5] + '-QUESTION'}
+break;
+case 15: case 16:
+this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: 'QUESTION'}
 break;
 case 19:
 
