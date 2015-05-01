@@ -83,7 +83,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 10: case 11: case 12: case 17: case 18:
+case 1: case 2: case 17: case 18:
 this.$ = $$[$0]
 break;
 case 3:
@@ -106,6 +106,15 @@ this.$ = {answers: [$$[$0]]}
 break;
 case 9:
 this.$.answers.push($$[$0])
+break;
+case 10:
+this.$ = 'VIDEO'
+break;
+case 11:
+this.$ = 'AUDIO'
+break;
+case 12:
+this.$ = 'IMAGE'
 break;
 case 13: case 14:
 this.$ = {question: $$[$0-3], answers: $$[$0-1].answers, sourse: '', html: helper.createQuestion($$[$0-3], $$[$0-1].answers), type: $$[$0-5] + '-QUESTION'}

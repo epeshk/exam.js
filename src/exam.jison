@@ -103,11 +103,11 @@ answers
 
 type
   : 'SP' 'VIDEO'
-    {$$ = $2}
+    {$$ = 'VIDEO'}
   | 'SP' 'AUDIO'
-    {$$ = $2}
+    {$$ = 'AUDIO'}
   | 'SP' 'IMAGE'
-    {$$ = $2}
+    {$$ = 'IMAGE'}
   ;
 
 expression
