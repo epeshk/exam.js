@@ -20,7 +20,6 @@ describe('Parser tests', function(){
 
     it('should return an object with an question html which contains some text except expressions', function(){
       var result = exam.parse('bla bla bla\rТЕСТ\rWhat is your name?\r+Exam.js\r\rblah blah blah');
-      console.log(result.html);
       assert.equal(result.html.indexOf('bla bla bla') > 0, true);
       assert.equal(result.html.indexOf('blah blah blah') > 0, true);
     });
