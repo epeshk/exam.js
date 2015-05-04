@@ -64,6 +64,7 @@
 \s+                                return 'SP'
 ^"+"                               return 'AM' //right answer marker
 [^(\s|\n|\r|\n\r)]                 return 'char'
+"|"                                return '|'
 <<EOF>>                            return 'EOF'
 /lex
 
@@ -78,6 +79,8 @@ symbol
     {$$ = $1}
   | 'SEP'
     {$$ = '<br/>'}
+  | '|'
+    {$$ = $1}
   ;
 
 phrase
