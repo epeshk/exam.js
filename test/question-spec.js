@@ -8,6 +8,11 @@ describe('Question tests', function(){
       assert.equal(result.expressions[0].answers.length === 2, true);
     });
 
+    it('should return an object with 3 answers when rigth answer is not first', function(){
+      var result = exam.parse('ТЕСТ\rWhat is your name?\rtest1\r+test2\rtest3\r\r');
+      assert.equal(result.expressions[0].answers.length === 3, true);
+    });
+
     it('should return an object with 2 right answers', function(){
       var result = exam.parse('ТЕСТ\rWhat is your name?\r+Exam.js\r+Test1\rTest2\r\r');
       var count = result.expressions[0].answers.filter(function(a){
