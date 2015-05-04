@@ -29,7 +29,7 @@
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<select>' + answersHtml + '</select></div>';
+      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<select class="exam-js-input">' + answersHtml + '</select></div>';
     },
     createCheckbox: function(question, answers){
       var answersHtml = answers.map(function(a){

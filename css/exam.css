@@ -80,6 +80,6 @@
     background: rgba(0, 0, 0, 0);
     border-bottom: solid 1px;
 }
-.examjs-input:focus {
+.exam-js-input:focus {
     outline: 0;
 }
