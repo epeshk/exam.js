@@ -114,21 +114,21 @@ type
     {$$ = 'IMAGE'}
   ;
 
-expression
-  : 'SEP' 'TEST' type 'SEP' phrase 'SEP' answers 'SEP'
+question
+  : 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $5, answers: $7.answers, sourse: '', html: helper.createQuestion($5, $7.answers), type: $3 + '-QUESTION'}}
-  | 'TEST' type 'SEP' phrase 'SEP' answers 'SEP'
+  | 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: $2 + '-QUESTION'}}
-  | 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
+  | 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $3, answers: $5.answers, sourse: '', html: helper.createQuestion($3, $5.answers), type: 'QUESTION'}}
-  | 'SEP' 'TEST' 'SEP' phrase 'SEP' answers 'SEP'
+  | 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'QUESTION'}}
   ;
 
 statement
   : phrase
     {$$ = $1}
-  | expression
+  | question
     {$$ = $1}
   ;
 
