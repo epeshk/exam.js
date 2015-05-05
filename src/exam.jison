@@ -56,7 +56,7 @@
 %lex
 %%
 
-"ТЕСТ"                             return 'TEST'  //start test block
+"ТЕСТЫ"                            return 'TESTS'  //start test block
 "ВИДЕО"                            return 'VIDEO' //type "video" marker
 "АУДИО"                            return 'AUDIO' //type "audio" marker
 "РИСУНОК"                          return 'IMAGE' //type "image" marker

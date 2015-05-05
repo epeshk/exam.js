@@ -2,44 +2,52 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Exam.js</title>
+  <meta charset="UTF-8">
+  <title>Exam.js</title>
 </head>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/exam.css">
 
 <body>
-    <div class="top-panel">Exam.js</div>
-    <br>
-    <br>
-    <br>
-    <div class="button" id="finishBtn">Finish</div>
-    <div class="answers-box">
-        <div class="counter" id="answers">Answers: 0</div>
-        <div class="counter" id="tests">Tests: 0</div>
+  <div class="top-panel">Exam.js</div>
+  <br>
+  <br>
+  <br>
+  <div class="button" id="finishBtn">Finish</div>
+  <div class="answers-box">
+    <div class="counter" id="answers">Answers: 0</div>
+    <div class="counter" id="tests">Tests: 0</div>
+    <div id="error-box" style="color: #FF4C4C"></div>
+  </div>
+  <div class="box">
+    <div class="result result-box">
+      <textarea id="editor" class="text-pane"></textarea>
+      <div id="result" class="text-pane"></div>
     </div>
-    <div class="box">
-        <div class="result result-box">
-            <textarea id="editor" class="text-pane"></textarea>
-            <div id="result" class="text-pane"></div>
-        </div>
-    </div>
-    <script type="text/javascript" src="src/exam.js"></script>
-    <script type="text/javascript">
-    var resultDiv = document.getElementById('result');
-    var editor = document.getElementById('editor');
-    var answersDiv = document.getElementById('answers');
-    var testsDiv = document.getElementById('tests');
+  </div>
+  <script type="text/javascript" src="src/exam.js"></script>
+  <script type="text/javascript">
+  var resultDiv = document.getElementById('result');
+  var editor = document.getElementById('editor');
+  var answersDiv = document.getElementById('answers');
+  var testsDiv = document.getElementById('tests');
+  var errorBox = document.getElementById('error-box');
 
-    function update() {
-        var source = editor.value;
-        var resultHTML = parser.parse(source).html;
-        resultDiv.innerHTML = resultHTML;
+  function update() {
+    var source = editor.value;
+    try {
+      var resultHTML = parser.parse(source).html;
+      resultDiv.innerHTML = resultHTML;
+      errorBox.innerHTML = '';
+    } catch (e){
+      if(e){
+        errorBox.innerHTML = e;
+      }
     }
+  }
 
-    editor.oninput = update;
-    </script>
-
+  editor.oninput = update;
+  </script>
 </body>
 
 </html>

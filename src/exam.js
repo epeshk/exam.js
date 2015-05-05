@@ -689,7 +689,7 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 17  //start test block
+case 0:return 'TESTS'  //start test block
 break;
 case 1:return 13 //type "video" marker
 break;
@@ -711,7 +711,7 @@ case 9:return 21
 break;
 }
 },
-rules: [/^(?:ТЕСТ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:РИСУНОК)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:\|)/,/^(?:$)/],
+rules: [/^(?:ТЕСТЫ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:РИСУНОК)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:\|)/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9],"inclusive":true}}
 });
 return lexer;
