@@ -689,30 +689,32 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 'TESTS'  //start test block
+case 0:return 'TESTS'  //start tests block
 break;
-case 1:return 13 //type "video" marker
+case 1:return 'TEXT'  //start text block
 break;
-case 2:return 14 //type "audio" marker
+case 2:return 13 //type "video" marker
 break;
-case 3:return 15 //type "image" marker
+case 3:return 14 //type "audio" marker
 break;
-case 4:return 6  //separator
+case 4:return 15 //type "image" marker
 break;
-case 5:return 5
+case 5:return 6  //separator
 break;
-case 6:return 10 //right answer marker
+case 6:return 5
 break;
-case 7:return 4
+case 7:return 10 //right answer marker
 break;
-case 8:return 7
+case 8:return 4
 break;
-case 9:return 21
+case 9:return 7
+break;
+case 10:return 21
 break;
 }
 },
-rules: [/^(?:ТЕСТЫ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:РИСУНОК)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:\|)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9],"inclusive":true}}
+rules: [/^(?:ТЕСТЫ)/,/^(?:ТЕКСТ)/,/^(?:ВИДЕО)/,/^(?:АУДИО)/,/^(?:РИСУНОК)/,/^(?:(\n|\r|\r\n))/,/^(?:\s+)/,/^(?:^\+)/,/^(?:[^(\s|\n|\r|\n\r)])/,/^(?:\|)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10],"inclusive":true}}
 });
 return lexer;
 })();
