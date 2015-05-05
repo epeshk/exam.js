@@ -3,19 +3,6 @@ var assert = require('assert'),
 
 describe('Media question tests', function() {
   describe('common media type question', function() {
-    it('should return proper type of expression', function() {
-      var result = exam.parse('ТЕСТ ВИДЕО\rWhat is your name?\r+Exam.js\rTest\r\r');
-      assert.equal(result.expressions[0].type === 'VIDEO-QUESTION', true);
-    });
 
-    it('should return proper type of expression', function() {
-      var result = exam.parse('ТЕСТ АУДИО\rWhat is your name?\r+Exam.js\rTest\r\r');
-      assert.equal(result.expressions[0].type === 'AUDIO-QUESTION', true);
-    });
-
-    it('should return proper type of expression', function() {
-      var result = exam.parse('ТЕСТ РИСУНОК\rWhat is your name?\r+Exam.js\rTest\r\r');
-      assert.equal(result.expressions[0].type === 'IMAGE-QUESTION', true);
-    });
   });
 })

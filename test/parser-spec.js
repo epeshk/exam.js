@@ -7,21 +7,5 @@ describe('Parser tests', function(){
       var result = exam.parse('ТЕСТ\rWhat is your name?\r+Exam.js\r\r');
       assert.equal(result.expressions != null, true);
     });
-
-    it('should return an object with an question object', function(){
-      var result = exam.parse('ТЕСТ\rWhat is your name?\r+Exam.js\r\r');
-      assert.equal(result.expressions[0].type === 'QUESTION', true);
-    });
-
-    it('should return an object with an question html', function(){
-      var result = exam.parse('ТЕСТ\rWhat is your name?\r+Exam.js\r\r');
-      assert.equal(result.expressions[0].html.length > 0, true);
-    });
-
-    it('should return an object with an question html which contains some text except expressions', function(){
-      var result = exam.parse('bla bla bla\rТЕСТ\rWhat is your name?\r+Exam.js\r\rblah blah blah');
-      assert.equal(result.html.indexOf('bla bla bla') > 0, true);
-      assert.equal(result.html.indexOf('blah blah blah') > 0, true);
-    });
   });
 })
