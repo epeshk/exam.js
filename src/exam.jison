@@ -122,6 +122,19 @@ question
     {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'QUESTION'}}
   ;
 
+questions
+  : question
+    {$$ = [$1]}
+  | questions question
+    {$$.push($1)}
+  ;
+
+type_section
+  : 'TEXT' 'SEP'
+
+tests_section
+  : 'TESTS' 'SEP'
+
 statement
   : phrase
     {$$ = $1}
