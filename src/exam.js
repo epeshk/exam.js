@@ -83,7 +83,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 4: case 7: case 8: case 17: case 18:
+case 1: case 2: case 4: case 17: case 18:
 this.$ = $$[$0]
 break;
 case 3:
@@ -94,6 +94,12 @@ this.$ = '' + $$[$0]
 break;
 case 6:
 this.$ = $$[$0-1] + $$[$0]
+break;
+case 7:
+this.$ = true
+break;
+case 8:
+this.$ = false
 break;
 case 9:
 this.$ = {answer: $$[$0-1], isRight: true}

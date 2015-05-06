@@ -94,13 +94,13 @@ phrase
 
 AM
   : '+'
-    {$$ = $1}
+    {$$ = true}
   | '-'
-    {$$ = $1}
+    {$$ = false}
   ;
 
 answer
-  : 'AM' phrase 'SEP'
+  : AM phrase 'SEP'
     {$$ = {answer: $2, isRight: true}}
   | phrase 'SEP'
     {$$ = {answer: $1, isRight: false}}
