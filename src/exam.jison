@@ -113,13 +113,13 @@ answers
 
 question
   : 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $5, answers: $7.answers, sourse: '', html: helper.createQuestion($5, $7.answers), type: $3 + '-QUESTION'}}
+    {$$ = {question: $5, answers: $7.answers}}
   | 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: $2 + '-QUESTION'}}
+    {$$ = {question: $4, answers: $6.answers}}
   | 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $3, answers: $5.answers, sourse: '', html: helper.createQuestion($3, $5.answers), type: 'QUESTION'}}
+    {$$ = {question: $3, answers: $5.answers}}
   | 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $4, answers: $6.answers, sourse: '', html: helper.createQuestion($4, $6.answers), type: 'QUESTION'}}
+    {$$ = {question: $4, answers: $6.answers}}
   ;
 
 questions
@@ -130,7 +130,8 @@ questions
   ;
 
 type_section
-  : 'TEXT' 'SEP'
+  : 'TEXT' 'SEP' questions 'SEP'
+    {$$ = }
 
 tests_section
   : 'TESTS' 'SEP'
