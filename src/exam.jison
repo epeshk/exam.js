@@ -105,15 +105,6 @@ answers
     {$$.answers.push($2)}
   ;
 
-type
-  : 'SP' 'VIDEO'
-    {$$ = 'VIDEO'}
-  | 'SP' 'AUDIO'
-    {$$ = 'AUDIO'}
-  | 'SP' 'IMAGE'
-    {$$ = 'IMAGE'}
-  ;
-
 question
   : 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $5, answers: $7.answers, sourse: '', html: helper.createQuestion($5, $7.answers), type: $3 + '-QUESTION'}}
