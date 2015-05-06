@@ -101,9 +101,7 @@ AM
 
 answer
   : AM phrase 'SEP'
-    {$$ = {answer: $2, isRight: true}}
-  | phrase 'SEP'
-    {$$ = {answer: $1, isRight: false}}
+    {$$ = {answer: $2, isRight: $1}}
   ;
 
 answers
