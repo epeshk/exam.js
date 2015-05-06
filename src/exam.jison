@@ -6,6 +6,9 @@
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
+    createQuestions: function(questions, type){
+      return {test: 'test'};
+    },
     createQuestion: function(question, answers, type){
       if(answers.length === 1){
         return helper.createInput(question);
@@ -113,40 +116,42 @@ answers
 
 question
   : 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $5, answers: $7.answers}}
-  | 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $4, answers: $6.answers}}
-  | 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $3, answers: $5.answers}}
+  | 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $2, answers: $4.answers}}
+  | 'SEP' phrase 'SEP' answers 'SEP'
+    {$$ = {question: $2, answers: $4.answers}}
   | 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $4, answers: $6.answers}}
+    {$$ = {question: $3, answers: $5.answers}}
   ;
 
 questions
   : question
-    {$$ = [$1]}
+    {$$ = {questions: [$1]}}
   | questions question
-    {$$.push($1)}
+    {$$.questions.push($2)}
   ;
 
 type_section
-  : 'TEXT' 'SEP' questions 'SEP'
-    {$$ = helper.createQuestions($3, 'TEXT')}
-  | 'VIDEO' 'SEP' questions 'SEP'
-    {$$ = helper.createQuestions($3, 'VIDEO')}
-  | 'AUDIO' 'SEP' questions 'SEP'
-    {$$ = helper.createQuestions($3, 'AUDIO')}
-  | 'IMAGE' 'SEP' questions 'SEP'
-    {$$ = helper.createQuestions($3, 'IMAGE')}
+  : 'TEXT' 'SEP' questions
+    {$$ = {questions: helper.createQuestions($3.questions, 'TEXT')}}
+  | 'VIDEO' 'SEP' questions
+    {$$ = {questions: helper.createQuestions($3.questions, 'VIDEO')}}
+  | 'AUDIO' 'SEP' questions
+    {$$ = {questions: helper.createQuestions($3.questions, 'AUDIO')}}
+  | 'IMAGE' 'SEP' questions
+    {$$ = {questions: helper.createQuestions($3.questions, 'IMAGE')}}
   ;
 
 tests_section
-  : 'TESTS' 'SEP'
+  : 'TESTS' 'SEP' type_section
+    {$$ = $3}
+  ;
 
 statement
   : phrase
     {$$ = $1}
-  | question
+  | tests_section
     {$$ = $1}
   ;
 
