@@ -63,7 +63,8 @@
 "РИСУНОК"                          return 'IMAGE' //type "image" marker
 (\n|\r|\r\n)                       return 'SEP'  //separator
 \s+                                return 'SP'
-^"+"                               return 'AM' //right answer marker
+^"+"                               return '+' //right answer marker
+^"-"                               return '-' //wrong answer marker
 [^(\s|\n|\r|\n\r)]                 return 'char'
 "|"                                return '|'
 <<EOF>>                            return 'EOF'
@@ -89,6 +90,13 @@ phrase
     {$$ = '' + $1}
   | phrase symbol
     {$$ = $1 + $2}
+  ;
+
+AM
+  : '+'
+    {$$ = $1}
+  | '-'
+    {$$ = $1}
   ;
 
 answer
