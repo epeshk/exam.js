@@ -131,7 +131,14 @@ questions
 
 type_section
   : 'TEXT' 'SEP' questions 'SEP'
-    {$$ = }
+    {$$ = helper.createQuestions($3, 'TEXT')}
+  | 'VIDEO' 'SEP' questions 'SEP'
+    {$$ = helper.createQuestions($3, 'VIDEO')}
+  | 'AUDIO' 'SEP' questions 'SEP'
+    {$$ = helper.createQuestions($3, 'AUDIO')}
+  | 'IMAGE' 'SEP' questions 'SEP'
+    {$$ = helper.createQuestions($3, 'IMAGE')}
+  ;
 
 tests_section
   : 'TESTS' 'SEP'
