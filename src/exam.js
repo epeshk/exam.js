@@ -363,13 +363,13 @@ parse: function parse(input) {
       }
     },
     createVideoQuestion: function(question, answers){
-      return '<div>MOCK</div>';
+      return '<div>VIDEO MOCK</div>';
     },
     createAudioQuestion: function(question, answers){
-      return '<div>MOCK</div>';
+      return '<div>AUDIO MOCK</div>';
     },
     createImageQuestion: function(question, answers){
-      return '<div>MOCK</div>';
+      return '<div>IMAGE MOCK</div>';
     },
     createTextQuestion: function(question, answers){
       if(answers.length === 1){
