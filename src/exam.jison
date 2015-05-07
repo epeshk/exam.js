@@ -115,14 +115,8 @@ answers
   ;
 
 question
-  : 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $3, answers: $5.answers}}
-  | 'SEP' phrase 'SEP' answers 'SEP'
+  : 'SEP' phrase 'SEP' answers
     {$$ = {question: $2, answers: $4.answers}}
-  | 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $2, answers: $4.answers}}
-  | 'SEP' 'SEP' phrase 'SEP' answers 'SEP'
-    {$$ = {question: $3, answers: $5.answers}}
   ;
 
 questions
