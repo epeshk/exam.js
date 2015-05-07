@@ -21,7 +21,7 @@ describe('Parser tests', function(){
     });
 
     it('should return an object with one type section and two questions', function(){
-      var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r\rTest quesion?\r+test\rВИДЕО\r\rWhat is your name?\r+http://link.com\r\rTest quesion?\r+http://link.com\r');
+      var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rq1?\r+t1\r\rq2?\r+t2\rВИДЕО\r\rq3?\r+http://link.com\r\rq4?\r+http://link.com\r');
       assert.equal(result.expressions.length === 1, true);
       assert.equal(result.expressions[0].questions.length === 4, true);
     });

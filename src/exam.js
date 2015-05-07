@@ -132,7 +132,7 @@ case 18:
 this.$ = helper.createQuestions($$[$0].questions, 'IMAGE')
 break;
 case 20:
-this.$.concat($$[$0])
+this.$ = this.$.concat($$[$0]);
 break;
 case 21:
 this.$ = {questions: $$[$0], type: 'tests-section'}
@@ -343,6 +343,8 @@ parse: function parse(input) {
           q.html = helper.createTextQuestion(q.question, q.answers,'');
           return q;
         });
+      } else {
+        return questions;
       }
     },
     createTextQuestion: function(question, answers, type){

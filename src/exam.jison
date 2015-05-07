@@ -12,6 +12,8 @@
           q.html = helper.createTextQuestion(q.question, q.answers,'');
           return q;
         });
+      } else {
+        return questions;
       }
     },
     createTextQuestion: function(question, answers, type){
@@ -146,7 +148,7 @@ type_sections
   : type_section
     {$$ = $1}
   | type_sections type_section
-    {$$.concat($2)}
+    {$$ = $$.concat($2);}
   ;
 
 
