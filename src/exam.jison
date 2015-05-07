@@ -91,6 +91,7 @@
 %%
 
 "ТЕСТЫ"                            return 'TESTS'  //start tests block
+"КОНЕЦ ТЕСТОВ"                     return 'TESTS_END'
 "ТЕКСТ"                            return 'TEXT'  //start text block
 "ВИДЕО"                            return 'VIDEO' //type "video" marker
 "АУДИО"                            return 'AUDIO' //type "audio" marker
@@ -116,6 +117,8 @@ symbol
   | 'SEP'
     {$$ = '<br/>'}
   | '|'
+    {$$ = $1}
+  | <<EOF>>
     {$$ = $1}
   ;
 
@@ -146,7 +149,7 @@ answers
   ;
 
 question
-  : 'SEP' phrase 'SEP' answers
+  : 'SEP' phrase 'SEP' answers 'SEP'
     {$$ = {question: $2, answers: $4.answers}}
   ;
 
@@ -171,8 +174,6 @@ type
 type_marker
   : type
     {$$ = $1}
-  | 'SEP' type
-    {$$ = $2}
   ;
 
 type_section
@@ -189,7 +190,7 @@ type_sections
 
 
 tests_section
-  : 'TESTS' 'SEP' type_sections
+  : 'TESTS' 'SEP' type_sections 'TESTS_END'
     {$$ = {questions: $3, type: 'tests-section'}}
   ;
 
