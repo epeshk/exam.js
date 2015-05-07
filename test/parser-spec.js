@@ -11,7 +11,6 @@ describe('Parser tests', function(){
 
     it('should return a question without simple text in answers', function(){
       var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rTest question2?\r+test2\rbla bla bla');
-      console.log(result);
       assert.equal(result.expressions[0].questions[0].answers.indexOf('bla bla bla') < 0, true);
     });
 
