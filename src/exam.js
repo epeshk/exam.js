@@ -149,7 +149,6 @@ case 24:
           html: tmpHtml
         }
       } else {
-        console.log($$[$0]);
         this.$ = {
           expressions: [],
           html: '<div>' + $$[$0] + '</div>'

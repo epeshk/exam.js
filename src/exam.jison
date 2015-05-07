@@ -201,7 +201,6 @@ source
           html: tmpHtml
         }
       } else {
-        console.log($1);
         $$ = {
           expressions: [],
           html: '<div>' + $1 + '</div>'
