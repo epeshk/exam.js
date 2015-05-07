@@ -371,7 +371,7 @@ parse: function parse(input) {
     createImageQuestion: function(question, answers){
       return '<div>MOCK</div>';
     },
-    createTextQuestion: function(question, answers, type){
+    createTextQuestion: function(question, answers){
       if(answers.length === 1){
         return helper.createInput(question);
       } else if(answers.length > 1){
