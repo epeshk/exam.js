@@ -343,8 +343,14 @@ parse: function parse(input) {
           q.html = helper.createTextQuestion(q.question, q.answers,'');
           return q;
         });
-      } else {
+      } else if(type === 'VIDEO') {
         return questions;
+      } else if(type === 'AUDIO') {
+        return questions;
+      } else if(type === 'IMAGE') {
+        return questions;
+      } else {
+        throw new Error('Wrong section type!');
       }
     },
     createTextQuestion: function(question, answers, type){
