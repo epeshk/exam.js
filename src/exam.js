@@ -140,11 +140,16 @@ break;
 case 24:
 
       if($$[$0].type){
+        var tmpHtml = '';
+        $$[$0].questions.forEach(function(q){
+            return tmpHtml += q.html;
+        });
         this.$ = {
           expressions: [$$[$0]],
-          html: $$[$0].html
+          html: tmpHtml
         }
       } else {
+        console.log($$[$0]);
         this.$ = {
           expressions: [],
           html: '<div>' + $$[$0] + '</div>'
@@ -155,10 +160,15 @@ break;
 case 25:
 
       if($$[$0].type){
+        var tmpHtml = '';
+        $$[$0-1].questions.forEach(function(q){
+            return tmpHtml += q.html;
+        });
         $$[$0-1].expressions.push($$[$0]);
-        $$[$0-1].html += $$[$0].html;
+        $$[$0-1].html += tmpHtml
       } else {
-        $$[$0-1].html += $$[$0];
+        console.log($$[$0-1]);
+        $$[$0-1].html += '<div>' + $$[$0] + '</div>';
       }
       this.$ = $$[$0-1];
     
@@ -328,9 +338,14 @@ parse: function parse(input) {
       return 'exam-js-' + this.currentId++;
     },
     createQuestions: function(questions, type){
-      return questions;
+      if(type === 'TEXT'){
+        return questions.map(function(q){
+          q.html = helper.createTextQuestion(q.question, q.answers,'');
+          return q;
+        });
+      }
     },
-    createQuestion: function(question, answers, type){
+    createTextQuestion: function(question, answers, type){
       if(answers.length === 1){
         return helper.createInput(question);
       } else if(answers.length > 1){

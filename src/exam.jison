@@ -7,9 +7,14 @@
       return 'exam-js-' + this.currentId++;
     },
     createQuestions: function(questions, type){
-      return questions;
+      if(type === 'TEXT'){
+        return questions.map(function(q){
+          q.html = helper.createTextQuestion(q.question, q.answers,'');
+          return q;
+        });
+      }
     },
-    createQuestion: function(question, answers, type){
+    createTextQuestion: function(question, answers, type){
       if(answers.length === 1){
         return helper.createInput(question);
       } else if(answers.length > 1){
@@ -161,11 +166,16 @@ source
   : statement
     {
       if($1.type){
+        var tmpHtml = '';
+        $1.questions.forEach(function(q){
+            return tmpHtml += q.html;
+        });
         $$ = {
           expressions: [$1],
-          html: $1.html
+          html: tmpHtml
         }
       } else {
+        console.log($1);
         $$ = {
           expressions: [],
           html: '<div>' + $1 + '</div>'
@@ -175,10 +185,15 @@ source
   | source statement
     {
       if($2.type){
+        var tmpHtml = '';
+        $1.questions.forEach(function(q){
+            return tmpHtml += q.html;
+        });
         $1.expressions.push($2);
-        $1.html += $2.html;
+        $1.html += tmpHtml
       } else {
-        $1.html += $2;
+        console.log($1);
+        $1.html += '<div>' + $2 + '</div>';
       }
       $$ = $1;
     }

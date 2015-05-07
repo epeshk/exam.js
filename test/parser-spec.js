@@ -10,14 +10,14 @@ describe('Parser tests', function(){
     });
 
     it('should return a question without simple text in answers', function(){
-      var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r bla bla bla');
+      var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rTest question2?\r+test2\rbla bla bla');
+      console.log(result);
       assert.equal(result.expressions[0].questions[0].answers.indexOf('bla bla bla') < 0, true);
     });
 
     it('should return an object with one type section and two questions', function(){
       var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r\rTest quesion?\r+test\r');
       assert.equal(result.expressions.length === 1, true);
-      console.log(result.expressions[0]);
       assert.equal(result.expressions[0].questions.length === 2, true);
     });
   });
