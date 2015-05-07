@@ -19,5 +19,11 @@ describe('Parser tests', function(){
       assert.equal(result.expressions.length === 1, true);
       assert.equal(result.expressions[0].questions.length === 2, true);
     });
+
+    it('should return an object with one type section and two questions', function(){
+      var result = exam.parse('ТЕСТЫ\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r\rTest quesion?\r+test\rВИДЕО\r\rWhat is your name?\r+http://link.com\r\rTest quesion?\r+http://link.com\r');
+      assert.equal(result.expressions.length === 1, true);
+      assert.equal(result.expressions[0].questions.length === 4, true);
+    });
   });
 })
