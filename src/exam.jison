@@ -157,15 +157,27 @@ questions
     {$$.questions.push($2)}
   ;
 
+type
+  : 'TEXT'
+    {$$ = 'TEXT'}
+  | 'VIDEO'
+    {$$ = 'VIDEO'}
+  | 'AUDIO'
+    {$$ = 'AUDIO'}
+  | 'IMAGE'
+    {$$ = 'IMAGE'}
+  ;
+
+type_marker
+  : type
+    {$$ = $1}
+  | 'SEP' type
+    {$$ = $2}
+  ;
+
 type_section
-  : 'TEXT' 'SEP' questions
-    {$$ = helper.createQuestions($3.questions, 'TEXT')}
-  | 'VIDEO' 'SEP' questions
-    {$$ = helper.createQuestions($3.questions, 'VIDEO')}
-  | 'AUDIO' 'SEP' questions
-    {$$ = helper.createQuestions($3.questions, 'AUDIO')}
-  | 'IMAGE' 'SEP' questions
-    {$$ = helper.createQuestions($3.questions, 'IMAGE')}
+  : type_marker questions
+    {$$ = helper.createQuestions($2.questions, $1)}
   ;
 
 type_sections
