@@ -143,8 +143,16 @@ type_section
     {$$ = {questions: helper.createQuestions($3.questions, 'IMAGE')}}
   ;
 
+type_sections
+  : type_section
+    {$$ = [$1]}
+  | type_sections type_section
+    {$$.push($2)}
+  ;
+
+
 tests_section
-  : 'TESTS' 'SEP' type_section
+  : 'TESTS' 'SEP' type_sections
     {$$ = $3}
   ;
 
