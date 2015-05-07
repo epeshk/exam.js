@@ -7,7 +7,7 @@
       return 'exam-js-' + this.currentId++;
     },
     createQuestions: function(questions, type){
-      return {test: 'test'};
+      return questions;
     },
     createQuestion: function(question, answers, type){
       if(answers.length === 1){
@@ -145,15 +145,15 @@ type_section
 
 type_sections
   : type_section
-    {$$ = [$1]}
+    {$$ = $1}
   | type_sections type_section
-    {$$.push($2)}
+    {$$.concat($2)}
   ;
 
 
 tests_section
   : 'TESTS' 'SEP' type_sections
-    {$$ = $3}
+    {$$ = {questions: $3, type: 'tests-section'}}
   ;
 
 statement
@@ -169,13 +169,11 @@ source
       if($1.type){
         $$ = {
           expressions: [$1],
-          source: $1.source,
           html: $1.html
         }
       } else {
         $$ = {
           expressions: [],
-          source: $1,
           html: '<div>' + $1 + '</div>'
         }
       }
@@ -184,10 +182,8 @@ source
     {
       if($2.type){
         $1.expressions.push($2);
-        $1.source += $2.source;
         $1.html += $2.html;
       } else {
-        $1.source += $2;
         $1.html += $2;
       }
       $$ = $1;
@@ -199,7 +195,6 @@ file
     {
       var result = {
         expressions: $1.expressions,
-        source: $1.source,
         html: $1.html
       }
       $$ = result;

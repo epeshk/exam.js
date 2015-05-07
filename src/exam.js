@@ -83,7 +83,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 4: case 24: case 25: case 26:
+case 1: case 2: case 4: case 22: case 25: case 26:
 this.$ = $$[$0]
 break;
 case 3:
@@ -131,24 +131,22 @@ break;
 case 21:
 this.$ = {questions: helper.createQuestions($$[$0].questions, 'IMAGE')}
 break;
-case 22:
-this.$ = [$$[$0]]
-break;
 case 23:
-this.$.push($$[$0])
+this.$.concat($$[$0])
+break;
+case 24:
+this.$ = {questions: $$[$0], type: 'tests-section'}
 break;
 case 27:
 
       if($$[$0].type){
         this.$ = {
           expressions: [$$[$0]],
-          source: $$[$0].source,
           html: $$[$0].html
         }
       } else {
         this.$ = {
           expressions: [],
-          source: $$[$0],
           html: '<div>' + $$[$0] + '</div>'
         }
       }
@@ -158,10 +156,8 @@ case 28:
 
       if($$[$0].type){
         $$[$0-1].expressions.push($$[$0]);
-        $$[$0-1].source += $$[$0].source;
         $$[$0-1].html += $$[$0].html;
       } else {
-        $$[$0-1].source += $$[$0];
         $$[$0-1].html += $$[$0];
       }
       this.$ = $$[$0-1];
@@ -171,7 +167,6 @@ case 29:
 
       var result = {
         expressions: $$[$0-1].expressions,
-        source: $$[$0-1].source,
         html: $$[$0-1].html
       }
       this.$ = result;
@@ -333,7 +328,7 @@ parse: function parse(input) {
       return 'exam-js-' + this.currentId++;
     },
     createQuestions: function(questions, type){
-      return {test: 'test'};
+      return questions;
     },
     createQuestion: function(question, answers, type){
       if(answers.length === 1){
