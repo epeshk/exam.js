@@ -169,7 +169,6 @@ case 28:
         $$[$0-1].expressions.push($$[$0]);
         $$[$0-1].html += tmpHtml
       } else {
-        console.log($$[$0-1]);
         $$[$0-1].html += '<div>' + $$[$0] + '</div>';
       }
       this.$ = $$[$0-1];

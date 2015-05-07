@@ -230,7 +230,6 @@ source
         $1.expressions.push($2);
         $1.html += tmpHtml
       } else {
-        console.log($1);
         $1.html += '<div>' + $2 + '</div>';
       }
       $$ = $1;
