@@ -344,7 +344,10 @@ parse: function parse(input) {
           return q;
         });
       } else if(type === 'VIDEO') {
-        return questions;
+        return questions.map(function(q){
+          q.html = helper.createVideoQuestion(q.question, q.answers);
+          return q;
+        });
       } else if(type === 'AUDIO') {
         return questions;
       } else if(type === 'IMAGE') {
@@ -352,6 +355,9 @@ parse: function parse(input) {
       } else {
         throw new Error('Wrong section type!');
       }
+    },
+    createVideoQuestion: function(question, answers){
+      return '<div>MOCK</div>';
     },
     createTextQuestion: function(question, answers, type){
       if(answers.length === 1){
