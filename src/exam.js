@@ -120,16 +120,16 @@ case 17:
 this.$.questions.push($$[$0])
 break;
 case 18:
-this.$ = {questions: helper.createQuestions($$[$0].questions, 'TEXT')}
+this.$ = helper.createQuestions($$[$0].questions, 'TEXT')
 break;
 case 19:
-this.$ = {questions: helper.createQuestions($$[$0].questions, 'VIDEO')}
+this.$ = helper.createQuestions($$[$0].questions, 'VIDEO')
 break;
 case 20:
-this.$ = {questions: helper.createQuestions($$[$0].questions, 'AUDIO')}
+this.$ = helper.createQuestions($$[$0].questions, 'AUDIO')
 break;
 case 21:
-this.$ = {questions: helper.createQuestions($$[$0].questions, 'IMAGE')}
+this.$ = helper.createQuestions($$[$0].questions, 'IMAGE')
 break;
 case 23:
 this.$.concat($$[$0])
