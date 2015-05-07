@@ -18,14 +18,26 @@
           return q;
         });
       } else if(type === 'AUDIO') {
-        return questions;
+        return questions.map(function(q){
+          q.html = helper.createAudioQuestion(q.question, q.answers);
+          return q;
+        });
       } else if(type === 'IMAGE') {
-        return questions;
+        return questions.map(function(q){
+          q.html = helper.createImageQuestion(q.question, q.answers);
+          return q;
+        });
       } else {
         throw new Error('Wrong section type!');
       }
     },
     createVideoQuestion: function(question, answers){
+      return '<div>MOCK</div>';
+    },
+    createAudioQuestion: function(question, answers){
+      return '<div>MOCK</div>';
+    },
+    createImageQuestion: function(question, answers){
       return '<div>MOCK</div>';
     },
     createTextQuestion: function(question, answers, type){
