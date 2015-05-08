@@ -383,7 +383,7 @@ parse: function parse(input) {
       return '<div>AUDIO MOCK</div>';
     },
     createImageQuestion: function(question, answers){
-      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ question + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div>';
+      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div></div>';
     },
     createTextQuestion: function(question, answers){
       if(answers.length === 1){
