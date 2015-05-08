@@ -100,7 +100,7 @@
 ^"+"                               return '+' //right answer marker
 ^"-"                               return '-' //wrong answer marker
 [^(\s|\n|\r|\n\r)]                 return 'char'
-"|"                                return '|'
+[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/] return 'special_symbol'
 <<EOF>>                            return 'EOF'
 /lex
 
@@ -115,7 +115,11 @@ symbol
     {$$ = $1}
   | 'SEP'
     {$$ = '<br/>'}
-  | '|'
+  | 'special_symbol'
+    {$$ = $1}
+  | '-'
+    {$$ = $1}
+  | '+'
     {$$ = $1}
   ;
 
