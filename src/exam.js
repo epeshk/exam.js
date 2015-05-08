@@ -374,7 +374,7 @@ parse: function parse(input) {
       }
     },
     createImgAnswer: function(answer){
-      return '<img src="' + answer.answer + '" class="exam-js-img"/>';
+      return '<div><div><input type="checkbox" class="exam-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
