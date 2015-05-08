@@ -180,7 +180,7 @@ test_blocks
   ;
 
 tests_section
-  : 'TESTS' 'SEP' test_blocks 'TESTS_END'
+  : 'TESTS' 'SEP' test_blocks 'SEP' 'TESTS_END'
     {$$ = {questions: $3.questions, type: 'tests-section'}}
   ;
 
