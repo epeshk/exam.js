@@ -373,6 +373,9 @@ parse: function parse(input) {
         throw new Error('Wrong section type!');
       }
     },
+    createImgAnswer: function(answer){
+      return '<img src="' + answer.answer + '" class="exam-js-img"/>';
+    },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
     },
@@ -380,7 +383,7 @@ parse: function parse(input) {
       return '<div>AUDIO MOCK</div>';
     },
     createImageQuestion: function(question, answers){
-      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ question + answers.map(function(a){return '<img src="' + a.answer + '"/>'}).reduce(function(a,b){return a + b}) +'</div>';
+      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ question + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div>';
     },
     createTextQuestion: function(question, answers){
       if(answers.length === 1){
