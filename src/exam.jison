@@ -36,6 +36,9 @@
     createAudioQuestion: function(question, answers){
       return '<div>AUDIO MOCK</div>';
     },
+    createImageCheckbox: function(question, answers){
+      return;
+    },
     createImageQuestion: function(question, answers){
       return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div></div>';
     },
