@@ -37,7 +37,7 @@
       return '<div>AUDIO MOCK</div>';
     },
     createImageCheckbox: function(question, answers){
-      return;
+      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div></div>';
     },
     createImageRadio: function(question, answers){
       return;
@@ -46,15 +46,17 @@
       return;
     },
     createImageQuestion: function(question, answers){
-      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div></div>';
+        var rightAnswersCount = answers.filter(function(a){return a.isRight}).length;
+        if(answers.length > 1 && rightAnswersCount > 1){
+            return helper.createImageCheckbox(question, answers);
+        }
     },
     createTextQuestion: function(question, answers){
       if(answers.length === 1){
         return helper.createInput(question);
       } else if(answers.length > 1){
         var rightAnswersCount = answers.filter(function(a){
-          return a.isRight;
-        }).length || 0;
+          return a.isRight; }).length || 0;
         if(rightAnswersCount > 1){
           return helper.createCheckbox(question, answers);
         } else {
