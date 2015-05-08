@@ -3,9 +3,13 @@
 %{
   var helper = {
     currentId: 0,
+    currentGroudId: 0,
     currentType: '',
     getID: function(){
       return 'exam-js-' + this.currentId++;
+    },
+    getGroudID: function(){
+      return 'exam-js-group-' + this.currentGroudId++;
     },
     setCurrentType: function(type){
       helper.currentType = type;
@@ -27,8 +31,9 @@
         throw new Error('Wrong section type!');
       }
     },
-    createImgAnswer: function(answer){
-      return '<div class="exam-js-img-question"><div><input type="checkbox" class="exam-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+    createImgAnswer: function(answer, type, groupID){
+      var tmpId = helper.getID();
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exa m-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
@@ -36,19 +41,16 @@
     createAudioQuestion: function(question, answers){
       return '<div>AUDIO MOCK</div>';
     },
-    createImageCheckbox: function(question, answers){
-      return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a)}).reduce(function(a,b){return a + b}) +'</div></div>';
-    },
-    createImageRadio: function(question, answers){
-      return;
-    },
-    createImageInput: function(question, answers){
-      return;
+    createImageTypedQuestion: function(question, answers, type){
+        var groupID = helper.getGroudID();
+        return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></div>';
     },
     createImageQuestion: function(question, answers){
         var rightAnswersCount = answers.filter(function(a){return a.isRight}).length;
         if(answers.length > 1 && rightAnswersCount > 1){
-            return helper.createImageCheckbox(question, answers);
+            return helper.createImageTypedQuestion(question, answers, 'checkbox');
+        } else if(answers.length > 1 && rightAnswersCount === 1){
+            return helper.createImageTypedQuestion(question, answers, 'radio');
         }
     },
     createTextQuestion: function(question, answers){
