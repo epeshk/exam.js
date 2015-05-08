@@ -174,9 +174,19 @@ test_block
 
 test_blocks
   : test_block
-    {$$ = {questions: [$1]}}
+    {
+      if($1.html){
+        $$ = {questions: [$1]};
+      } else {
+        $$ = {questions: []};
+      }
+    }
   | test_blocks test_block
-    {$$.questions.push($2)}
+    {
+      if($2.html){
+        $$.questions.push($2);
+      }
+    }
   ;
 
 tests_section

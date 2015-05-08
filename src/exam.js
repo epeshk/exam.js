@@ -132,10 +132,20 @@ case 20:
 helper.setCurrentType($$[$0])
 break;
 case 21:
-this.$ = {questions: [$$[$0]]}
+
+      if($$[$0].html){
+        this.$ = {questions: [$$[$0]]};
+      } else {
+        this.$ = {questions: []};
+      }
+    
 break;
 case 22:
-this.$.questions.push($$[$0])
+
+      if($$[$0].html){
+        this.$.questions.push($$[$0]);
+      }
+    
 break;
 case 23:
 this.$ = {questions: $$[$0-2].questions, type: 'tests-section'}
