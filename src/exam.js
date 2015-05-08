@@ -72,18 +72,18 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8],$V1=[1,9],$V2=[1,10],$V3=[1,11],$V4=[1,7],$V5=[4,5,6,7,25,30],$V6=[2,3],$V7=[1,20],$V8=[1,21],$V9=[1,22],$Va=[1,23],$Vb=[17,18,19,20,26],$Vc=[1,28],$Vd=[6,17,18,19,20,26],$Ve=[4,5,6,7],$Vf=[1,35],$Vg=[1,36],$Vh=[6,10,11],$Vi=[2,10];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,8],$V1=[1,9],$V2=[1,10],$V3=[1,11],$V4=[1,7],$V5=[4,5,6,7,24,29],$V6=[2,3],$V7=[1,20],$V8=[6,25],$V9=[4,5,6,7],$Va=[1,33],$Vb=[1,34],$Vc=[6,10,11,25];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"SEP":6,"|":7,"phrase":8,"AM":9,"+":10,"-":11,"answer":12,"answers":13,"question":14,"questions":15,"type":16,"TEXT":17,"VIDEO":18,"AUDIO":19,"IMAGE":20,"type_marker":21,"type_section":22,"type_sections":23,"tests_section":24,"TESTS":25,"TESTS_END":26,"statement":27,"source":28,"file":29,"EOF":30,"$accept":0,"$end":1},
-terminals_: {2:"error",4:"char",5:"SP",6:"SEP",7:"|",10:"+",11:"-",17:"TEXT",18:"VIDEO",19:"AUDIO",20:"IMAGE",25:"TESTS",26:"TESTS_END",30:"EOF"},
-productions_: [0,[3,1],[3,1],[3,1],[3,1],[3,0],[8,1],[8,2],[9,1],[9,1],[12,3],[13,1],[13,2],[14,5],[15,1],[15,2],[16,1],[16,1],[16,1],[16,1],[21,1],[22,2],[23,1],[23,2],[24,4],[27,1],[27,1],[28,1],[28,2],[29,2]],
+symbols_: {"error":2,"symbol":3,"char":4,"SP":5,"SEP":6,"|":7,"phrase":8,"AM":9,"+":10,"-":11,"answer":12,"answers":13,"question":14,"type":15,"TEXT":16,"VIDEO":17,"AUDIO":18,"IMAGE":19,"type_marker":20,"test_block":21,"test_blocks":22,"tests_section":23,"TESTS":24,"TESTS_END":25,"statement":26,"source":27,"file":28,"EOF":29,"$accept":0,"$end":1},
+terminals_: {2:"error",4:"char",5:"SP",6:"SEP",7:"|",10:"+",11:"-",16:"TEXT",17:"VIDEO",18:"AUDIO",19:"IMAGE",24:"TESTS",25:"TESTS_END",29:"EOF"},
+productions_: [0,[3,1],[3,1],[3,1],[3,1],[3,0],[8,1],[8,2],[9,1],[9,1],[12,3],[13,1],[13,2],[14,4],[15,1],[15,1],[15,1],[15,1],[20,2],[21,1],[21,1],[22,1],[22,2],[23,4],[26,1],[26,1],[27,1],[27,2],[28,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 4: case 5: case 20: case 22: case 25: case 26:
+case 1: case 2: case 4: case 5: case 18: case 24: case 25:
 this.$ = $$[$0]
 break;
 case 3:
@@ -111,41 +111,43 @@ case 12:
 this.$.answers.push($$[$0])
 break;
 case 13:
-this.$ = {question: $$[$0-3], answers: $$[$0-1].answers}
+this.$ = {question: $$[$0-2], answers: $$[$0].answers}
 break;
 case 14:
-this.$ = {questions: [$$[$0]]}
-break;
-case 15:
-this.$.questions.push($$[$0])
-break;
-case 16:
 this.$ = 'TEXT'
 break;
-case 17:
+case 15:
 this.$ = 'VIDEO'
 break;
-case 18:
+case 16:
 this.$ = 'AUDIO'
 break;
-case 19:
+case 17:
 this.$ = 'IMAGE'
 break;
+case 19:
+this.$ = helper.createQuestions($$[$0])
+break;
+case 20:
+helper.setCurrentType($$[$0])
+break;
 case 21:
-this.$ = helper.createQuestions($$[$0].questions, $$[$0-1])
+this.$ = {questions: [$$[$0]]}
+break;
+case 22:
+this.$.questions.push($$[$0])
 break;
 case 23:
-this.$ = this.$.concat($$[$0]);
+this.$ = {questions: $$[$0-1].questions, type: 'tests-section'}
 break;
-case 24:
-this.$ = {questions: $$[$0-1], type: 'tests-section'}
-break;
-case 27:
+case 26:
 
       if($$[$0].type){
         var tmpHtml = '';
         $$[$0].questions.forEach(function(q){
+          if(q.html){
             return tmpHtml += q.html;
+          }
         });
         this.$ = {
           expressions: [$$[$0]],
@@ -159,12 +161,14 @@ case 27:
       }
     
 break;
-case 28:
+case 27:
 
       if($$[$0].type){
         var tmpHtml = '';
         $$[$0-1].questions.forEach(function(q){
+          if(q.html){
             return tmpHtml += q.html;
+          }
         });
         $$[$0-1].expressions.push($$[$0]);
         $$[$0-1].html += tmpHtml
@@ -174,7 +178,7 @@ case 28:
       this.$ = $$[$0-1];
     
 break;
-case 29:
+case 28:
 
       var result = {
         expressions: $$[$0-1].expressions,
@@ -186,8 +190,8 @@ case 29:
 break;
 }
 },
-table: [{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:4,24:5,25:$V4,27:3,28:2,29:1,30:[2,5]},{1:[3]},{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:4,24:5,25:$V4,27:13,30:[1,12]},o($V5,[2,27]),o([25,30],[2,25],{3:14,4:$V0,5:$V1,6:$V2,7:$V3}),o($V5,[2,26]),o($V5,[2,6]),{6:[1,15]},o($V5,[2,1]),o($V5,[2,2]),o($V5,$V6),o($V5,[2,4]),{1:[2,29]},o($V5,[2,28]),o($V5,[2,7]),{16:19,17:$V7,18:$V8,19:$V9,20:$Va,21:18,22:17,23:16},{16:19,17:$V7,18:$V8,19:$V9,20:$Va,21:18,22:25,26:[1,24]},o($Vb,[2,22]),{6:$Vc,14:27,15:26},{6:[2,20]},{6:[2,16]},{6:[2,17]},{6:[2,18]},{6:[2,19]},o($V5,[2,24]),o($Vb,[2,23]),o($Vb,[2,21],{14:29,6:$Vc}),o($Vd,[2,14]),{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:30},o($Vd,[2,15]),{3:14,4:$V0,5:$V1,6:[1,31],7:$V3},o($Ve,$V6,{13:32,12:33,9:34,10:$Vf,11:$Vg}),{6:[1,37],9:34,10:$Vf,11:$Vg,12:38},o($Vh,[2,11]),{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:39},o($Ve,[2,8]),o($Ve,[2,9]),o($Vd,[2,13]),o($Vh,[2,12]),{3:14,4:$V0,5:$V1,6:[1,40],7:$V3},o([4,5,7],$V6,{6:$Vi,10:$Vi,11:$Vi})],
-defaultActions: {12:[2,29],19:[2,20],20:[2,16],21:[2,17],22:[2,18],23:[2,19]},
+table: [{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:4,23:5,24:$V4,26:3,27:2,28:1,29:[2,5]},{1:[3]},{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:4,23:5,24:$V4,26:13,29:[1,12]},o($V5,[2,26]),o([24,29],[2,24],{3:14,4:$V0,5:$V1,6:$V2,7:$V3}),o($V5,[2,25]),o($V5,[2,6]),{6:[1,15]},o($V5,[2,1]),o($V5,[2,2]),o($V5,$V6),o($V5,[2,4]),{1:[2,28]},o($V5,[2,27]),o($V5,[2,7]),{6:$V7,14:18,20:19,21:17,22:16},{6:$V7,14:18,20:19,21:22,25:[1,21]},o($V8,[2,21]),o($V8,[2,19]),o($V8,[2,20]),{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:23,15:24,16:[1,25],17:[1,26],18:[1,27],19:[1,28]},o($V5,[2,23]),o($V8,[2,22]),{3:14,4:$V0,5:$V1,6:[1,29],7:$V3},o($V8,[2,18]),o($V8,[2,14]),o($V8,[2,15]),o($V8,[2,16]),o($V8,[2,17]),o($V9,$V6,{13:30,12:31,9:32,10:$Va,11:$Vb}),o($V8,[2,13],{9:32,12:35,10:$Va,11:$Vb}),o($Vc,[2,11]),{3:6,4:$V0,5:$V1,6:$V2,7:$V3,8:36},o($V9,[2,8]),o($V9,[2,9]),o($Vc,[2,12]),{3:14,4:$V0,5:$V1,6:[1,37],7:$V3},o($Vc,[2,10],{4:$V6,5:$V6,7:$V6})],
+defaultActions: {12:[2,28]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -335,30 +339,26 @@ parse: function parse(input) {
 
   var helper = {
     currentId: 0,
+    currentType: '',
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
-    createQuestions: function(questions, type){
-      if(type === 'TEXT'){
-        return questions.map(function(q){
-          q.html = helper.createTextQuestion(q.question, q.answers,'');
-          return q;
-        });
-      } else if(type === 'VIDEO') {
-        return questions.map(function(q){
-          q.html = helper.createVideoQuestion(q.question, q.answers);
-          return q;
-        });
-      } else if(type === 'AUDIO') {
-        return questions.map(function(q){
-          q.html = helper.createAudioQuestion(q.question, q.answers);
-          return q;
-        });
-      } else if(type === 'IMAGE') {
-        return questions.map(function(q){
-          q.html = helper.createImageQuestion(q.question, q.answers);
-          return q;
-        });
+    setCurrentType: function(type){
+      helper.currentType = type;
+    },
+    createQuestions: function(question){
+      if(helper.currentType === 'TEXT'){
+        question.html = helper.createTextQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'VIDEO') {
+        question.html = helper.createVideoQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'AUDIO') {
+        question.html = helper.createAudioQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'IMAGE') {
+        question.html = helper.createImageQuestion(question.question, question.answers,'');
+        return question;
       } else {
         throw new Error('Wrong section type!');
       }
@@ -744,17 +744,17 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 25  //start tests block
+case 0:return 24  //start tests block
 break;
-case 1:return 26
+case 1:return 25
 break;
-case 2:return 17  //start text block
+case 2:return 16  //start text block
 break;
-case 3:return 18 //type "video" marker
+case 3:return 17 //type "video" marker
 break;
-case 4:return 19 //type "audio" marker
+case 4:return 18 //type "audio" marker
 break;
-case 5:return 20 //type "image" marker
+case 5:return 19 //type "image" marker
 break;
 case 6:return 6  //separator
 break;
@@ -768,7 +768,7 @@ case 10:return 4
 break;
 case 11:return 7
 break;
-case 12:return 30
+case 12:return 29
 break;
 }
 },

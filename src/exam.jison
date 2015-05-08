@@ -3,30 +3,26 @@
 %{
   var helper = {
     currentId: 0,
+    currentType: '',
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
-    createQuestions: function(questions, type){
-      if(type === 'TEXT'){
-        return questions.map(function(q){
-          q.html = helper.createTextQuestion(q.question, q.answers,'');
-          return q;
-        });
-      } else if(type === 'VIDEO') {
-        return questions.map(function(q){
-          q.html = helper.createVideoQuestion(q.question, q.answers);
-          return q;
-        });
-      } else if(type === 'AUDIO') {
-        return questions.map(function(q){
-          q.html = helper.createAudioQuestion(q.question, q.answers);
-          return q;
-        });
-      } else if(type === 'IMAGE') {
-        return questions.map(function(q){
-          q.html = helper.createImageQuestion(q.question, q.answers);
-          return q;
-        });
+    setCurrentType: function(type){
+      helper.currentType = type;
+    },
+    createQuestions: function(question){
+      if(helper.currentType === 'TEXT'){
+        question.html = helper.createTextQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'VIDEO') {
+        question.html = helper.createVideoQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'AUDIO') {
+        question.html = helper.createAudioQuestion(question.question, question.answers,'');
+        return question;
+      } else if(helper.currentType === 'IMAGE') {
+        question.html = helper.createImageQuestion(question.question, question.answers,'');
+        return question;
       } else {
         throw new Error('Wrong section type!');
       }
@@ -149,15 +145,8 @@ answers
   ;
 
 question
-  : 'SEP' phrase 'SEP' answers 'SEP'
+  : 'SEP' phrase 'SEP' answers
     {$$ = {question: $2, answers: $4.answers}}
-  ;
-
-questions
-  : question
-    {$$ = {questions: [$1]}}
-  | questions question
-    {$$.questions.push($2)}
   ;
 
 type
@@ -172,26 +161,27 @@ type
   ;
 
 type_marker
-  : type
-    {$$ = $1}
+  : 'SEP' type
+    {$$ = $2}
   ;
 
-type_section
-  : type_marker questions
-    {$$ = helper.createQuestions($2.questions, $1)}
+test_block
+  : question
+    {$$ = helper.createQuestions($1)}
+  | type_marker
+    {helper.setCurrentType($1)}
   ;
 
-type_sections
-  : type_section
-    {$$ = $1}
-  | type_sections type_section
-    {$$ = $$.concat($2);}
+test_blocks
+  : test_block
+    {$$ = {questions: [$1]}}
+  | test_blocks test_block
+    {$$.questions.push($2)}
   ;
-
 
 tests_section
-  : 'TESTS' 'SEP' type_sections 'TESTS_END'
-    {$$ = {questions: $3, type: 'tests-section'}}
+  : 'TESTS' 'SEP' test_blocks 'TESTS_END'
+    {$$ = {questions: $3.questions, type: 'tests-section'}}
   ;
 
 statement
@@ -207,7 +197,9 @@ source
       if($1.type){
         var tmpHtml = '';
         $1.questions.forEach(function(q){
+          if(q.html){
             return tmpHtml += q.html;
+          }
         });
         $$ = {
           expressions: [$1],
@@ -225,7 +217,9 @@ source
       if($2.type){
         var tmpHtml = '';
         $1.questions.forEach(function(q){
+          if(q.html){
             return tmpHtml += q.html;
+          }
         });
         $1.expressions.push($2);
         $1.html += tmpHtml
