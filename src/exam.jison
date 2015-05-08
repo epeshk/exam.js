@@ -28,7 +28,7 @@
       }
     },
     createImgAnswer: function(answer){
-      return '<div><div><input type="checkbox" class="exam-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input type="checkbox" class="exam-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
