@@ -33,7 +33,7 @@
     },
     createImgAnswer: function(answer, type, groupID){
       var tmpId = helper.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exa m-js-img-checkbox"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
@@ -51,6 +51,8 @@
             return helper.createImageTypedQuestion(question, answers, 'checkbox');
         } else if(answers.length > 1 && rightAnswersCount === 1){
             return helper.createImageTypedQuestion(question, answers, 'radio');
+        } else if(answers.length === 1){
+            return helper.createImageTypedQuestion(question, answers, 'input');
         }
     },
     createTextQuestion: function(question, answers){
