@@ -200,7 +200,10 @@ case 29:
               e.questions.forEach(function(q){
                 var elem = document.getElementById(q.htmlID);
                 if(elem){
-                  elem.onchange = q.onAnswer;
+                  if(elem.type === 'text'){
+                    elem.onkeypress = q.onAnswer.bind(q);
+                  }
+                  elem.onchange = q.onAnswer.bind(q);
                 }
               });
             }
@@ -376,6 +379,7 @@ parse: function parse(input) {
     createQuestions: function(question){
       question.htmlID = examjs.getID();
       question.onAnswer = function(e){
+        console.log(this);
         console.log(e);
       };
       if(examjs.currentType === 'TEXT'){
@@ -432,7 +436,7 @@ parse: function parse(input) {
       }
     },
     createInput: function(question){
-      return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + '<input type="text" class="exam-js-input"/></from>';
+      return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></from>';
     },
     createList: function(question){
       var answersHtml = question.answers.map(function(a){
