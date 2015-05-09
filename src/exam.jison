@@ -14,6 +14,9 @@
     },
     createQuestions: function(question){
       question.htmlID = examjs.getID();
+      question.onAnswer = function(e){
+        console.log(e);
+      };
       if(examjs.currentType === 'TEXT'){
         question.html = examjs.createTextQuestion(question);
         return question;
@@ -226,7 +229,6 @@ source
       if($1.type){
         var tmpHtml = '';
         $1.questions.forEach(function(q){
-                    console.log(q);
           if(q.html){
             return tmpHtml += q.html;
           }
@@ -265,7 +267,20 @@ file
     {
       var result = {
         expressions: $1.expressions,
-        html: $1.html
+        html: $1.html,
+        initQuestions: function(){
+          var self = this;
+          self.expressions.forEach(function(e){
+            if(e.questions){
+              e.questions.forEach(function(q){
+                var elem = document.getElementById(q.htmlID);
+                if(elem){
+                  elem.onchange = q.onAnswer;
+                }
+              });
+            }
+          });
+        },
       }
       $$ = result;
       return $$;

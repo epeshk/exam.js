@@ -155,7 +155,6 @@ case 27:
       if($$[$0].type){
         var tmpHtml = '';
         $$[$0].questions.forEach(function(q){
-                    console.log(q);
           if(q.html){
             return tmpHtml += q.html;
           }
@@ -193,7 +192,20 @@ case 29:
 
       var result = {
         expressions: $$[$0-1].expressions,
-        html: $$[$0-1].html
+        html: $$[$0-1].html,
+        initQuestions: function(){
+          var self = this;
+          self.expressions.forEach(function(e){
+            if(e.questions){
+              e.questions.forEach(function(q){
+                var elem = document.getElementById(q.htmlID);
+                if(elem){
+                  elem.onchange = q.onAnswer;
+                }
+              });
+            }
+          });
+        },
       }
       this.$ = result;
       return this.$;
@@ -363,6 +375,9 @@ parse: function parse(input) {
     },
     createQuestions: function(question){
       question.htmlID = examjs.getID();
+      question.onAnswer = function(e){
+        console.log(e);
+      };
       if(examjs.currentType === 'TEXT'){
         question.html = examjs.createTextQuestion(question);
         return question;

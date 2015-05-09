@@ -36,14 +36,15 @@
   function update() {
     var source = editor.value;
     try {
-      var resultHTML = parser.parse(source).html;
-      resultDiv.innerHTML = resultHTML;
+      var examjs = parser.parse(source);
+      resultDiv.innerHTML = examjs.html;
       errorBox.innerHTML = '';
-    } catch (e){
-      if(e){
+    } catch (e) {
+      if (e) {
         errorBox.innerHTML = e;
       }
     }
+    examjs.initQuestions();
   }
 
   editor.oninput = update;
