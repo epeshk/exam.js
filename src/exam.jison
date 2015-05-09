@@ -1,5 +1,3 @@
-/* description: Parses end executes mathematical expressions. */
-
 %{
   var examjs = {
     currentId: 0,
