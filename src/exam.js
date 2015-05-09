@@ -126,10 +126,10 @@ case 18:
 this.$ = 'IMAGE'
 break;
 case 20:
-this.$ = helper.createQuestions($$[$0])
+this.$ = examjs.createQuestions($$[$0])
 break;
 case 21:
-helper.setCurrentType($$[$0])
+examjs.setCurrentType($$[$0])
 break;
 case 22:
 
@@ -347,7 +347,7 @@ parse: function parse(input) {
     return true;
 }};
 
-  var helper = {
+  var examjs = {
     currentId: 0,
     currentGroudId: 0,
     currentType: '',
@@ -358,27 +358,27 @@ parse: function parse(input) {
       return 'exam-js-group-' + this.currentGroudId++;
     },
     setCurrentType: function(type){
-      helper.currentType = type;
+      examjs.currentType = type;
     },
     createQuestions: function(question){
-      if(helper.currentType === 'TEXT'){
-        question.html = helper.createTextQuestion(question.question, question.answers,'');
+      if(examjs.currentType === 'TEXT'){
+        question.html = examjs.createTextQuestion(question.question, question.answers,'');
         return question;
-      } else if(helper.currentType === 'VIDEO') {
-        question.html = helper.createVideoQuestion(question.question, question.answers,'');
+      } else if(examjs.currentType === 'VIDEO') {
+        question.html = examjs.createVideoQuestion(question.question, question.answers,'');
         return question;
-      } else if(helper.currentType === 'AUDIO') {
-        question.html = helper.createAudioQuestion(question.question, question.answers,'');
+      } else if(examjs.currentType === 'AUDIO') {
+        question.html = examjs.createAudioQuestion(question.question, question.answers,'');
         return question;
-      } else if(helper.currentType === 'IMAGE') {
-        question.html = helper.createImageQuestion(question.question, question.answers,'');
+      } else if(examjs.currentType === 'IMAGE') {
+        question.html = examjs.createImageQuestion(question.question, question.answers,'');
         return question;
       } else {
         throw new Error('Wrong section type!');
       }
     },
     createImgAnswer: function(answer, type, groupID){
-      var tmpId = helper.getID();
+      var tmpId = examjs.getID();
       return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
@@ -388,34 +388,34 @@ parse: function parse(input) {
       return '<div>AUDIO MOCK</div>';
     },
     createImageTypedQuestion: function(question, answers, type){
-        var groupID = helper.getGroudID();
-        return '<div id="' + helper.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return helper.createImgAnswer(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></div>';
+        var groupID = examjs.getGroudID();
+        return '<div id="' + examjs.getID() + '" class="exam-js-question">'+ '<div>' + question + '</div><div>' + answers.map(function(a){return examjs.createImgAnswer(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></div>';
     },
     createImageQuestion: function(question, answers){
         var rightAnswersCount = answers.filter(function(a){return a.isRight}).length;
         if(answers.length > 1 && rightAnswersCount > 1){
-            return helper.createImageTypedQuestion(question, answers, 'checkbox');
+            return examjs.createImageTypedQuestion(question, answers, 'checkbox');
         } else if(answers.length > 1 && rightAnswersCount === 1){
-            return helper.createImageTypedQuestion(question, answers, 'radio');
+            return examjs.createImageTypedQuestion(question, answers, 'radio');
         } else if(answers.length === 1){
-            return helper.createImageTypedQuestion(question, answers, 'input');
+            return examjs.createImageTypedQuestion(question, answers, 'input');
         }
     },
     createTextQuestion: function(question, answers){
       if(answers.length === 1){
-        return helper.createInput(question);
+        return examjs.createInput(question);
       } else if(answers.length > 1){
         var rightAnswersCount = answers.filter(function(a){
           return a.isRight; }).length || 0;
         if(rightAnswersCount > 1){
-          return helper.createCheckbox(question, answers);
+          return examjs.createCheckbox(question, answers);
         } else {
-          return helper.createList(question, answers);
+          return examjs.createList(question, answers);
         }
       }
     },
     createInput: function(question){
-      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<input type="text" class="exam-js-input"/></div>';
+      return '<div id="' + examjs.getID() + '" class="exam-js-question">' + question + '<input type="text" class="exam-js-input"/></div>';
     },
     createList: function(question,answers){
       var answersHtml = answers.map(function(a){
@@ -423,7 +423,7 @@ parse: function parse(input) {
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + '<select class="exam-js-input">' + answersHtml + '</select></div>';
+      return '<div id="' + examjs.getID() + '" class="exam-js-question">' + question + '<select class="exam-js-input">' + answersHtml + '</select></div>';
     },
     createCheckbox: function(question, answers){
       var answersHtml = answers.map(function(a){
@@ -432,7 +432,7 @@ parse: function parse(input) {
         return a + b;
       });
 
-      return '<div id="' + helper.getID() + '" class="exam-js-question">' + question + answersHtml + '</div>'
+      return '<div id="' + examjs.getID() + '" class="exam-js-question">' + question + answersHtml + '</div>'
     },
     createVideoTest: function(question, answers){
      return '';
