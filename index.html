@@ -32,11 +32,12 @@
   var answersDiv = document.getElementById('answers');
   var testsDiv = document.getElementById('tests');
   var errorBox = document.getElementById('error-box');
+  var examjs = null;
 
   function update() {
     var source = editor.value;
     try {
-      var examjs = parser.parse(source);
+      examjs = parser.parse(source);
       resultDiv.innerHTML = examjs.html;
       errorBox.innerHTML = '';
     } catch (e) {
@@ -48,6 +49,9 @@
   }
 
   editor.oninput = update;
+  resultDiv.onkeyup = function(){
+    console.log(examjs);
+  }
   </script>
 </body>
 

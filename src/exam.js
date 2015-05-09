@@ -193,6 +193,7 @@ case 29:
       var result = {
         expressions: $$[$0-1].expressions,
         html: $$[$0-1].html,
+        answers: {},
         initQuestions: function(){
           var self = this;
           self.expressions.forEach(function(e){
@@ -201,12 +202,44 @@ case 29:
                 var elem = document.getElementById(q.htmlID);
                 if(elem){
                   if(elem.type === 'text'){
-                    elem.onkeypress = q.onAnswer.bind(q);
+                    elem.onkeyup = q.onAnswer.bind(self);
                   }
-                  elem.onchange = q.onAnswer.bind(q);
+                  elem.onchange = q.onAnswer.bind(self);
                 }
               });
             }
+          });
+        },
+        checkAnswer: function(e){
+          var self = this,
+              value = e.target.value;
+          self.getQuestionByHtmlID(e.target.id, function(question){
+            var answer = question.answers[0].answer;
+            if(e.target.type === 'text'){
+              var answerObj = {
+                answer: value,
+                rightAnswer: answer,
+                question: question.question,
+                htmlID: question.htmlID
+              }
+              if(value === answer){
+                answerObj.isRight = true;
+              } else {
+                answerObj.isRight = false;
+              }
+              self.answers[answerObj.htmlID] = answerObj;
+            }
+          });
+        },
+        getQuestionByHtmlID: function(htmlID, callback){
+          var self = this,
+              result = null;
+          var tmpExp = self.expressions.forEach(function(e){
+            e.questions.forEach(function(q){
+              if(q.htmlID === htmlID){
+                callback(q);
+              }
+            });
           });
         },
       }
@@ -379,8 +412,7 @@ parse: function parse(input) {
     createQuestions: function(question){
       question.htmlID = examjs.getID();
       question.onAnswer = function(e){
-        console.log(this);
-        console.log(e);
+        this.checkAnswer(e);
       };
       if(examjs.currentType === 'TEXT'){
         question.html = examjs.createTextQuestion(question);
