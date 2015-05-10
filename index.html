@@ -46,12 +46,14 @@
       }
     }
     examjs.initQuestions();
-    examjs.getResults();
   }
 
   editor.oninput = update;
-  resultDiv.onkeyup = function(){
-    console.log(examjs.answers);
+  resultDiv.onchange = function(){
+    var results = examjs.getResults();
+    answersDiv.innerHTML = 'Answers: ' + results.rightAnswersCount;
+    testsDiv.innerHTML = 'Tests: ' + results.questionsCount;
+    console.log(results);
   }
   </script>
 </body>

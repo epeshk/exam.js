@@ -201,8 +201,26 @@ case 29:
         html: $$[$0-1].html,
         answers: {},
         getResults: function(){
-          var self = this;
-          console.log(self.questionsCount);
+          var self = this,
+              answers = [],
+              rightAnswersCount = 0;
+
+          for(var i in self.answers) {
+            if (self.answers.hasOwnProperty(i)) {
+              var answer = self.answers[i];
+              answers.push(answer);
+              if(answer.isRight){
+                rightAnswersCount++;
+              }
+            }
+          }
+
+          return {
+            questionsCount: self.questionsCount,
+            answers: answers,
+            rightAnswersCount: rightAnswersCount,
+            percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
+          }
         },
         initQuestions: function(){
           var self = this;
