@@ -33,24 +33,27 @@
   var testsDiv = document.getElementById('tests');
   var errorBox = document.getElementById('error-box');
   var examjs = null;
+  var oldSource = '';
 
   function update() {
-    var source = editor.value;
-          examjs = parser.parse(source);
-      resultDiv.innerHTML = examjs.html;
-      errorBox.innerHTML = '';
-    // try {
-
-    // } catch (e) {
-    //   if (e) {
-    //     errorBox.innerHTML = e;
-    //   }
-    // }
-    examjs.initQuestions();
+    if (oldSource !== editor.value) {
+      var source = editor.value;
+      try {
+        examjs = parser.parse(source);
+        resultDiv.innerHTML = examjs.html;
+        errorBox.innerHTML = '';
+      } catch (e) {
+        if (e) {
+          errorBox.innerHTML = e;
+        }
+      }
+      examjs.initQuestions();
+      oldSource = source;
+    }
   }
 
-  editor.oninput = update;
-  resultDiv.onkeyup = function(){
+  setInterval(update, 500);
+  resultDiv.onkeyup = function() {
     console.log(examjs.answers);
   }
   </script>

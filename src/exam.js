@@ -484,11 +484,11 @@ parse: function parse(input) {
     },
     createAudioAnswer: function(answer, type, groupID){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><audio controls src="' + answer.answer + '"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><audio controls src="' + answer.answer + '" preload="none"/></div></div>';
     },
     createVideoAnswer: function(answer, type, groupID){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><video controls width="400" height="300" src="' + answer.answer + '"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none"/></div></div>';
     },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
