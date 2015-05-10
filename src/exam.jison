@@ -41,28 +41,32 @@
       var tmpId = examjs.getID();
       return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><audio controls src="' + answer.answer + '"/></div></div>';
     },
-    createVideoQuestion: function(question, answers){
-      return '<div>VIDEO MOCK</div>';
+    createVideoAnswer: function(answer, type, groupID){
+      var tmpId = examjs.getID();
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><video controls width="400" height="300" src="' + answer.answer + '"/></div></div>';
     },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
         return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return answerGenerator(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></form>';
     },
-    createMediaQuestion: function(question, questionGenerator, answerGenerator){
+    createMediaQuestion: function(question, answerGenerator){
         var rightAnswersCount = question.answers.filter(function(a){return a.isRight}).length;
         if(question.answers.length > 1 && rightAnswersCount > 1){
-            return questionGenerator(question, 'checkbox', answerGenerator);
+            return examjs.createMediaTypedQuestion(question, 'checkbox', answerGenerator);
         } else if(question.answers.length > 1 && rightAnswersCount === 1){
-            return questionGenerator(question, 'radio', answerGenerator);
+            return examjs.createMediaTypedQuestion(question, 'radio', answerGenerator);
         } else {
-          throw new Error('Unknown image question type!');
+          throw new Error('Unknown media question type!');
         }
     },
+    createVideoQuestion: function(question, answers){
+      return examjs.createMediaQuestion(question, examjs.createVideoAnswer);
+    },
     createImageQuestion: function(question){
-        return examjs.createMediaQuestion(question, examjs.createMediaTypedQuestion, examjs.createImgAnswer);
+        return examjs.createMediaQuestion(question, examjs.createImgAnswer);
     },
     createAudioQuestion: function(question){
-      return examjs.createMediaQuestion(question, examjs.createMediaTypedQuestion, examjs.createAudioAnswer);
+      return examjs.createMediaQuestion(question, examjs.createAudioAnswer);
     },
     createTextQuestion: function(question){
       if(question.answers.length === 1){
