@@ -90,7 +90,7 @@
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + answersHtml + '</select></form>';
+      return '<form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form>';
     },
     createCheckbox: function(question){
       var answersHtml = question.answers.map(function(a){
