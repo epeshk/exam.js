@@ -290,8 +290,8 @@ file
           var self = this;
           if(e.target.type === 'text'){
             self.checkInputAnswer(e);
-          }else if(e.target.type === 'checkbox'){
-            self.checkCheckboxAnswer(e);
+          }else if(e.target.type === 'checkbox' || e.target.type === 'radio'){
+            self.checkComplexAnswer(e);
           }else if(e.target.type === 'select-one'){
             self.checkSelectAnswer(e);
           }
@@ -301,19 +301,19 @@ file
               value = e.target.value;
           self.getQuestionByHtmlID(e.target.id, function(question){
             var answer = question.answers[0].answer,
-                answerObj = self.createAnswerObject(question, [answer]);
+                answerObj = self.createAnswerObject(question, [value]);
 
             self.answers[answerObj.htmlID] = answerObj;
           });
         },
-        checkCheckboxAnswer: function(e){
+        checkComplexAnswer: function(e){
           var self = this,
               id = e.target.form.id,
               childNodes = e.target.form.elements;
           self.getQuestionByHtmlID(id, function(question){
             var tmpChildArray = Array.prototype.slice.call(childNodes);
             var answers = tmpChildArray.filter(function(elem){
-              return (elem.type === 'checkbox' && elem.checked);
+              return ((elem.type === 'checkbox' || elem.type === 'radio') && elem.checked);
             }).map(function(a){
               return self.getAnswerFromAttribute(a);
             });
