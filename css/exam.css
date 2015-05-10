@@ -113,3 +113,10 @@
 .exam-js-video-answer{
   background-color: #1B1B1B;
 }
+.exam-js-question{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.exam-js-text-checkbox{
+  margin-left: 25px;
+}

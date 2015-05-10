@@ -557,7 +557,7 @@ parse: function parse(input) {
       }
     },
     createInput: function(question){
-      return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></from>';
+      return '<div><form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></from></div>';
     },
     createList: function(question){
       var answersHtml = question.answers.map(function(a){
@@ -565,11 +565,11 @@ parse: function parse(input) {
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form>';
+      return '<div><form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form><div>';
     },
     createCheckbox: function(question){
       var answersHtml = question.answers.map(function(a){
-        return '<input type="checkbox" data-answer="' + a.answer + '">' + a.answer + '</input>\n';
+        return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox">  ' + a.answer + '</input></div>';
       }).reduce(function(a,b){
         return a + b;
       });
