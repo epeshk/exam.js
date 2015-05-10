@@ -37,25 +37,32 @@
       var tmpId = examjs.getID();
       return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
+    createAudioAnswer: function(answer, type, groupID){
+      var tmpId = examjs.getID();
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><audio controls src="' + answer.answer + '"/></div></div>';
+    },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
     },
-    createAudioQuestion: function(question, answers){
-      return '<div>AUDIO MOCK</div>';
-    },
-    createImageTypedQuestion: function(question, type){
+    createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
-        return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return examjs.createImgAnswer(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></form>';
+        return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return answerGenerator(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></form>';
     },
-    createImageQuestion: function(question){
+    createMediaQuestion: function(question, questionGenerator, answerGenerator){
         var rightAnswersCount = question.answers.filter(function(a){return a.isRight}).length;
         if(question.answers.length > 1 && rightAnswersCount > 1){
-            return examjs.createImageTypedQuestion(question, 'checkbox');
+            return questionGenerator(question, 'checkbox', answerGenerator);
         } else if(question.answers.length > 1 && rightAnswersCount === 1){
-            return examjs.createImageTypedQuestion(question, 'radio');
+            return questionGenerator(question, 'radio', answerGenerator);
         } else {
           throw new Error('Unknown image question type!');
         }
+    },
+    createImageQuestion: function(question){
+        return examjs.createMediaQuestion(question, examjs.createMediaTypedQuestion, examjs.createImgAnswer);
+    },
+    createAudioQuestion: function(question){
+      return examjs.createMediaQuestion(question, examjs.createMediaTypedQuestion, examjs.createAudioAnswer);
     },
     createTextQuestion: function(question){
       if(question.answers.length === 1){
