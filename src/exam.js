@@ -500,8 +500,8 @@ parse: function parse(input) {
             return examjs.createImageTypedQuestion(question, 'checkbox');
         } else if(question.answers.length > 1 && rightAnswersCount === 1){
             return examjs.createImageTypedQuestion(question, 'radio');
-        } else if(question.answers.length === 1){
-            return examjs.createImageTypedQuestion(question, 'input');
+        } else {
+          throw new Error('Unknown image question type!');
         }
     },
     createTextQuestion: function(question){
