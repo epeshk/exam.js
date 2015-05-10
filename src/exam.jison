@@ -33,21 +33,21 @@
         throw new Error('Wrong section type!');
       }
     },
-    createImgAnswer: function(answer, type, groupID){
+    createImgAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/>  ' + answerNumber + ' </div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
-    createAudioAnswer: function(answer, type, groupID){
+    createAudioAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><audio controls src="' + answer.answer + '" preload="none"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/> ' + answerNumber + ' </div><div><audio controls src="' + answer.answer + '" preload="none"/></div></div>';
     },
-    createVideoAnswer: function(answer, type, groupID){
+    createVideoAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/> ' + answerNumber + ' </div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div></div>';
     },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
-        return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return answerGenerator(a, type, groupID)}).reduce(function(a,b){return a + b}) +'</div></form>';
+        return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return answerGenerator(a, type, groupID, (question.answers.indexOf(a) + 1))}).reduce(function(a,b){return a + b}) +'</div></form>';
     },
     createMediaQuestion: function(question, answerGenerator){
         var rightAnswersCount = question.answers.filter(function(a){return a.isRight}).length;
