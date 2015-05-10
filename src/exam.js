@@ -213,12 +213,16 @@ case 29:
         checkAnswer: function(e){
           var self = this,
               value = e.target.value;
+
+          if(e.target.type === 'checkbox'){
+              this.checkCheckboxAnswer(e);
+          }
           self.getQuestionByHtmlID(e.target.id, function(question){
             var answer = question.answers[0].answer;
             if(e.target.type === 'text'){
               var answerObj = {
-                answer: value,
-                rightAnswer: answer,
+                answers: [value],
+                rightAnswers: [answer],
                 question: question.question,
                 htmlID: question.htmlID
               }
@@ -230,6 +234,48 @@ case 29:
               self.answers[answerObj.htmlID] = answerObj;
             }
           });
+        },
+        checkCheckboxAnswer: function(e){
+          var self = this,
+              id = e.target.parentElement.id,
+              childNodes = e.target.parentElement.childNodes;
+          self.getQuestionByHtmlID(id, function(question){
+            var tmpChildArray = Array.prototype.slice.call(childNodes);
+            var answers = tmpChildArray.filter(function(elem){
+              return (elem.type === 'checkbox' && elem.checked);
+            }).map(function(a){
+              return self.getAnswerFromAttribute(a);
+            });
+
+            var answerObj = self.createAnswerObject(question, answers);
+            self.answers[answerObj.htmlID] = answerObj;
+          });
+        },
+        createAnswerObject: function(question, answers){
+          var rightAnswers = question.answers.filter(function(a){
+            return a.isRight;
+          });
+          var isRight = rightAnswers.length === answers.length;
+
+          rightAnswers.forEach(function(ra){
+            var tmpResult = false;
+            answers.forEach(function(a){
+              tmpResult = tmpResult || (a === ra.answer);
+            });
+            isRight = isRight && tmpResult;
+          });
+          console.log(isRight);
+          var obj = {
+            answers: answers,
+            rightAnswers: rightAnswers,
+            question: question.question,
+            htmlID: question.htmlID,
+            isRight: isRight
+          }
+          return obj;
+        },
+        getAnswerFromAttribute: function(node){
+          return node.getAttribute('data-answer');
         },
         getQuestionByHtmlID: function(htmlID, callback){
           var self = this,
@@ -480,7 +526,7 @@ parse: function parse(input) {
     },
     createCheckbox: function(question){
       var answersHtml = question.answers.map(function(a){
-        return '<input type="checkbox">' + a.answer + '</input>\n';
+        return '<input type="checkbox" data-answer="' + a.answer + '">' + a.answer + '</input>\n';
       }).reduce(function(a,b){
         return a + b;
       });
