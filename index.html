@@ -36,15 +36,16 @@
 
   function update() {
     var source = editor.value;
-    try {
-      examjs = parser.parse(source);
+          examjs = parser.parse(source);
       resultDiv.innerHTML = examjs.html;
       errorBox.innerHTML = '';
-    } catch (e) {
-      if (e) {
-        errorBox.innerHTML = e;
-      }
-    }
+    // try {
+
+    // } catch (e) {
+    //   if (e) {
+    //     errorBox.innerHTML = e;
+    //   }
+    // }
     examjs.initQuestions();
   }
 

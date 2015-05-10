@@ -228,16 +228,16 @@ tests_section
   ;
 
 statement
-  : phrase
+  : tests_section
     {$$ = $1}
-  | tests_section
+  | phrase
     {$$ = $1}
   ;
 
 source
   : statement
     {
-      if($1.type){
+      if($1.type === 'tests-section'){
         var tmpHtml = '';
         $1.questions.forEach(function(q){
           if(q.html){
@@ -257,15 +257,13 @@ source
     }
   | source statement
     {
-      if($2.type){
-        var tmpHtml = '';
-        $1.questions.forEach(function(q){
+      if($2.type === 'tests-section'){
+        $2.questions.forEach(function(q){
           if(q.html){
-            return tmpHtml += q.html;
+            $1.html += q.html;
           }
         });
         $1.expressions.push($2);
-        $1.html += tmpHtml
       } else {
         $1.html += '<div>' + $2 + '</div>';
       }
