@@ -211,16 +211,20 @@ case 29:
           });
         },
         checkAnswer: function(e){
-          var self = this,
-              value = e.target.value;
-
+          var self = this;
+          if(e.target.type === 'text'){
+            self.checkInputAnswer(e);
+          }
           if(e.target.type === 'checkbox'){
               this.checkCheckboxAnswer(e);
           }
+        },
+        checkInputAnswer: function(e){
+          var self = this,
+              value = e.target.value;
           self.getQuestionByHtmlID(e.target.id, function(question){
             var answer = question.answers[0].answer;
-            if(e.target.type === 'text'){
-              var answerObj = {
+            var answerObj = {
                 answers: [value],
                 rightAnswers: [answer],
                 question: question.question,
@@ -232,7 +236,6 @@ case 29:
                 answerObj.isRight = false;
               }
               self.answers[answerObj.htmlID] = answerObj;
-            }
           });
         },
         checkCheckboxAnswer: function(e){
