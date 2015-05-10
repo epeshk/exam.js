@@ -35,7 +35,7 @@
     },
     createImgAnswer: function(answer, type, groupID){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/></div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createVideoQuestion: function(question, answers){
       return '<div>VIDEO MOCK</div>';
@@ -278,8 +278,9 @@ file
                 if(elem){
                   if(elem.type === 'text'){
                     elem.onkeyup = q.onAnswer.bind(self);
+                  } else {
+                    elem.onchange = q.onAnswer.bind(self);
                   }
-                  elem.onchange = q.onAnswer.bind(self);
                 }
               });
             }
@@ -307,8 +308,8 @@ file
         },
         checkCheckboxAnswer: function(e){
           var self = this,
-              id = e.target.parentElement.id,
-              childNodes = e.target.parentElement.childNodes;
+              id = e.target.form.id,
+              childNodes = e.target.form.elements;
           self.getQuestionByHtmlID(id, function(question){
             var tmpChildArray = Array.prototype.slice.call(childNodes);
             var answers = tmpChildArray.filter(function(elem){
