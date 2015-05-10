@@ -153,19 +153,23 @@ break;
 case 27:
 
       if($$[$0].type === 'tests-section'){
-        var tmpHtml = '';
+        var tmpHtml = '',
+            questionsCount = 0;
         $$[$0].questions.forEach(function(q){
           if(q.html){
+            questionsCount++;
             return tmpHtml += q.html;
           }
         });
         this.$ = {
           expressions: [$$[$0]],
+          questionsCount: questionsCount,
           html: tmpHtml
         }
       } else {
         this.$ = {
           expressions: [],
+          questionsCount: 0,
           html: '<div>' + $$[$0] + '</div>'
         }
       }
@@ -174,12 +178,15 @@ break;
 case 28:
 
       if($$[$0].type === 'tests-section'){
+        var questionsCount = 0;
         $$[$0].questions.forEach(function(q){
           if(q.html){
+            questionsCount++;
             $$[$0-1].html += q.html;
           }
         });
         $$[$0-1].expressions.push($$[$0]);
+        $$[$0-1].questionsCount + questionsCount;
       } else {
         $$[$0-1].html += '<div>' + $$[$0] + '</div>';
       }
@@ -190,8 +197,13 @@ case 29:
 
       var result = {
         expressions: $$[$0-1].expressions,
+        questionsCount: $$[$0-1].questionsCount,
         html: $$[$0-1].html,
         answers: {},
+        getResults: function(){
+          var self = this;
+          console.log(self.questionsCount);
+        },
         initQuestions: function(){
           var self = this;
           self.expressions.forEach(function(e){

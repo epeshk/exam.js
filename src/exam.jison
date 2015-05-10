@@ -238,19 +238,23 @@ source
   : statement
     {
       if($1.type === 'tests-section'){
-        var tmpHtml = '';
+        var tmpHtml = '',
+            questionsCount = 0;
         $1.questions.forEach(function(q){
           if(q.html){
+            questionsCount++;
             return tmpHtml += q.html;
           }
         });
         $$ = {
           expressions: [$1],
+          questionsCount: questionsCount,
           html: tmpHtml
         }
       } else {
         $$ = {
           expressions: [],
+          questionsCount: 0,
           html: '<div>' + $1 + '</div>'
         }
       }
@@ -258,12 +262,15 @@ source
   | source statement
     {
       if($2.type === 'tests-section'){
+        var questionsCount = 0;
         $2.questions.forEach(function(q){
           if(q.html){
+            questionsCount++;
             $1.html += q.html;
           }
         });
         $1.expressions.push($2);
+        $1.questionsCount + questionsCount;
       } else {
         $1.html += '<div>' + $2 + '</div>';
       }
@@ -276,8 +283,13 @@ file
     {
       var result = {
         expressions: $1.expressions,
+        questionsCount: $1.questionsCount,
         html: $1.html,
         answers: {},
+        getResults: function(){
+          var self = this;
+          console.log(self.questionsCount);
+        },
         initQuestions: function(){
           var self = this;
           self.expressions.forEach(function(e){
