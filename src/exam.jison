@@ -79,7 +79,7 @@
       }).reduce(function(a,b){
         return a + b;
       });
-      return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + '<select class="exam-js-input">' + answersHtml + '</select></form>';
+      return '<form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + answersHtml + '</select></form>';
     },
     createCheckbox: function(question){
       var answersHtml = question.answers.map(function(a){
@@ -289,28 +289,20 @@ file
           var self = this;
           if(e.target.type === 'text'){
             self.checkInputAnswer(e);
-          }
-          if(e.target.type === 'checkbox'){
-              this.checkCheckboxAnswer(e);
+          }else if(e.target.type === 'checkbox'){
+            self.checkCheckboxAnswer(e);
+          }else if(e.target.type === 'select-one'){
+            self.checkSelectAnswer(e);
           }
         },
         checkInputAnswer: function(e){
           var self = this,
               value = e.target.value;
           self.getQuestionByHtmlID(e.target.id, function(question){
-            var answer = question.answers[0].answer;
-            var answerObj = {
-                answers: [value],
-                rightAnswers: [answer],
-                question: question.question,
-                htmlID: question.htmlID
-              }
-              if(value === answer){
-                answerObj.isRight = true;
-              } else {
-                answerObj.isRight = false;
-              }
-              self.answers[answerObj.htmlID] = answerObj;
+            var answer = question.answers[0].answer,
+                answerObj = self.createAnswerObject(question, [answer]);
+
+            self.answers[answerObj.htmlID] = answerObj;
           });
         },
         checkCheckboxAnswer: function(e){
@@ -329,6 +321,15 @@ file
             self.answers[answerObj.htmlID] = answerObj;
           });
         },
+        checkSelectAnswer: function(e){
+          var self = this;
+              id = e.target.id,
+              answer = e.target.selectedOptions[0].value;
+          self.getQuestionByHtmlID(id, function(question){
+            var answerObj = self.createAnswerObject(question, [answer]);
+            self.answers[answerObj.htmlID] = answerObj;
+          });
+        },
         createAnswerObject: function(question, answers){
           var rightAnswers = question.answers.filter(function(a){
             return a.isRight;
@@ -342,7 +343,6 @@ file
             });
             isRight = isRight && tmpResult;
           });
-          console.log(isRight);
           var obj = {
             answers: answers,
             rightAnswers: rightAnswers,
