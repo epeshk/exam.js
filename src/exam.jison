@@ -153,6 +153,26 @@ symbol
     {$$ = $1}
   | 'special_symbol'
     {$$ = $1}
+  | '+'
+    {$$ = $1}
+  | '-'
+    {$$ = $1}
+  ;
+
+question_symbol
+  : 'char'
+    {$$ = $1}
+  | 'SP'
+    {$$ = $1}
+  | 'SEP'
+    {$$ = '<br/>'}
+  | 'special_symbol'
+    {$$ = $1}
+  | '+'
+    {$$ = $1}
+  | '-'
+    {$$ = $1}
+
   ;
 
 phrase
@@ -162,6 +182,15 @@ phrase
     {$$ = $1 + $2}
   ;
 
+question_phrase
+  : question_symbol
+    {$$ = '' + $1}
+  | question_phrase question_symbol
+    {$$ = $1 + $2}
+  ;
+
+
+
 AM
   : '+'
     {$$ = true}
@@ -170,7 +199,7 @@ AM
   ;
 
 answer
-  : AM phrase 'SEP'
+  : AM question_phrase 'SEP'
     {$$ = {answer: $2, isRight: $1}}
   ;
 
@@ -182,7 +211,7 @@ answers
   ;
 
 question
-  : 'SEP' phrase 'SEP' answers
+  : 'SEP' question_phrase 'SEP' answers
     {$$ = {question: $2, answers: $4.answers}}
   ;
 
