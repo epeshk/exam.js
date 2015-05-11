@@ -1,4 +1,12 @@
 %{
+  //mock of a markdonw parser (for testing)
+  if(this.markdown == null){;
+    markdown = {
+     toHTML: function(text){
+        return text;
+     }
+    }
+  }
   var examjs = {
     currentId: 0,
     currentGroudId: 0,
@@ -142,7 +150,7 @@ symbol
   | 'SP'
     {$$ = $1}
   | 'SEP'
-    {$$ = '<br/>'}
+    {$$ = $1}
   | 'special_symbol'
     {$$ = $1}
   | '-'
@@ -231,7 +239,7 @@ statement
   : tests_section
     {$$ = $1}
   | phrase
-    {$$ = $1}
+    {$$ = markdown.toHTML($1)}
   ;
 
 source

@@ -1809,11 +1809,8 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 4: case 5: case 6: case 19: case 25: case 26:
+case 1: case 2: case 3: case 4: case 5: case 6: case 19: case 25:
 this.$ = $$[$0]
-break;
-case 3:
-this.$ = '<br/>'
 break;
 case 7:
 this.$ = '' + $$[$0]
@@ -1875,6 +1872,9 @@ case 23:
 break;
 case 24:
 this.$ = {questions: $$[$0-2].questions, type: 'tests-section'}
+break;
+case 26:
+this.$ = markdown.toHTML($$[$0])
 break;
 case 27:
 
@@ -2200,6 +2200,14 @@ parse: function parse(input) {
     return true;
 }};
 
+  //mock of a markdonw parser (for testing)
+  if(this.markdown == null){;
+    markdown = {
+     toHTML: function(text){
+        return text;
+     }
+    }
+  }
   var examjs = {
     currentId: 0,
     currentGroudId: 0,

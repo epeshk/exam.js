@@ -5,7 +5,7 @@ module.exports = function(grunt) {
                 mangle: true,
                 compress: true,
                 sourceMap: 'dest/exam.js.map',
-                banner: '/* Nightingale Studio 2014 golovim@gmail.com */\n'
+                banner: '/* Nightingale Studio 2015 golovim@gmail.com */\n'
             },
             target: {
                 src: 'dist/exam.js',
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/**/*', 'test/**/*js'],
-                tasks: ['jison', 'concat', 'test', 'notify:test']
+                tasks: ['clean','jison', 'concat', 'test', 'notify:test']
             }
         },
         clean: {
