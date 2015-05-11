@@ -310,7 +310,7 @@ source
           }
         });
         $1.expressions.push($2);
-        $1.questionsCount + questionsCount;
+        $1.questionsCount = $1.questionsCount + questionsCount;
       } else {
         $1.html += '<div>' + $2 + '</div>';
       }

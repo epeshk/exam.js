@@ -1915,7 +1915,7 @@ case 36:
           }
         });
         $$[$0-1].expressions.push($$[$0]);
-        $$[$0-1].questionsCount + questionsCount;
+        $$[$0-1].questionsCount = $$[$0-1].questionsCount + questionsCount;
       } else {
         $$[$0-1].html += '<div>' + $$[$0] + '</div>';
       }
