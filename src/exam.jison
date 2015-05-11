@@ -17,12 +17,16 @@
   var examjs = {
     currentId: 0,
     currentGroudId: 0,
+    currentMathId: 0,
     currentType: '',
     getID: function(){
       return 'exam-js-' + this.currentId++;
     },
     getGroudID: function(){
       return 'exam-js-group-' + this.currentGroudId++;
+    },
+    getMathID: function(){
+      return 'exam-js-math-' + this.currentMathId++; 
     },
     setCurrentType: function(type){
       examjs.currentType = type;
@@ -124,6 +128,29 @@
     },
     createImageTest: function(question, answers){
      return '';
+    },
+    parseMarkdown: function(phrase){
+      var self = this,
+          regexp = /\{\{[^\}\}]*\}\}/gi,
+          matches = {},
+          found;
+      var tmpMatches = phrase.match(regexp);
+      if(tmpMatches && tmpMatches.length && tmpMatches.length > 0){
+        tmpMatches.forEach(function(match){
+          var mock = self.getMathID();
+          matches[mock] = match;
+          phrase = phrase.replace(match,mock);
+        });
+        if(window.markdown){
+          phrase = markdown.toHTML(phrase);
+        } 
+        for(var index in matches) { 
+          if (matches.hasOwnProperty(index)) {
+              phrase = phrase.replace(new RegExp(index,'g'), matches[index]);
+          }
+        }
+      }
+      return phrase;
     },
   }
 %}
@@ -271,7 +298,7 @@ statement
   : tests_section
     {$$ = $1}
   | phrase
-    {$$ = markdown.toHTML($1)}
+    {$$ = examjs.parseMarkdown($1)}
   ;
 
 source
