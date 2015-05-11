@@ -1,122 +1,116 @@
 .examjs-help-popup {
-  position: relative;
-  display: inline-block;
-  background-color: #fff;
-  text-align: center;
-  margin-right: 5px;
-  width: 20px;
-  height: 20px;
-  text-size: .6px;
-  bottom: -5px;
-  color: #252525;
-  cursor: pointer;
-  padding: 3px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    background-color: #fff;
+    text-align: center;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    text-size: .6px;
+    bottom: -5px;
+    color: #252525;
+    cursor: pointer;
+    padding: 3px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }
-
 .examjs-help-popup:before,
 .examjs-help-popup:after {
-  display: block;
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  margin-bottom: 15px;
-  left: 50%;
-  -webkit-transition: opacity .7s, margin-bottom .7s;
-  -moz-transition: opacity .7s, margin-bottom .7s;
-  transition: opacity .7s, margin-bottom .7s;
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    margin-bottom: 15px;
+    left: 50%;
+    -webkit-transition: opacity .7s, margin-bottom .7s;
+    -moz-transition: opacity .7s, margin-bottom .7s;
+    transition: opacity .7s, margin-bottom .7s;
 }
-
 .examjs-help-popup:before {
-  width: 200px;
-  text-align: center;
-  font-size: .8em;
-  color: #252525;
-  background-color: rgba(255, 255, 255, .95);
-  bottom: 30px;
-  margin-left: -100px;
-  padding: 10px;
-  content: attr(data-help);
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    font-size: .8em;
+    color: #252525;
+    background-color: rgba(255, 255, 255, .95);
+    bottom: 30px;
+    margin-left: -100px;
+    padding: 10px;
+    content: attr(data-help);
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
-
 .examjs-help-popup:after {
-  content: "";
-  border-top: 10px solid rgba(255, 255, 255, .95);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  bottom: 20px;
-  margin-left: -10px;
+    content: "";
+    border-top: 10px solid rgba(255, 255, 255, .95);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    bottom: 20px;
+    margin-left: -10px;
 }
-
 .examjs-help-popup:hover:before,
 .examjs-help-popup:hover:after {
-  opacity: 1;
-  visibility: visible;
-  margin-bottom: 0;
-  z-index: 10;
-  position: absolute;
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 0;
+    z-index: 10;
+    position: absolute;
 }
-
 .examjs-block {
-  display: inline-block;
-  vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 }
-
 .examjs-checkbox-popup {
-  margin: 5%;
+    margin: 5%;
 }
-
 .examjs-checkbox-block {
-  width: 90%;
-  vertical-align: middle;
-  text-align: left;
+    width: 90%;
+    vertical-align: middle;
+    text-align: left;
 }
-
 .exam-js-input {
-  margin-left: 5px;
-  margin-right: 5px;
-  outline: 0;
-  border: 0;
-  font-size: .8em;
-  color: #fff;
-  background: rgba(0, 0, 0, 0);
-  border-bottom: solid 1px;
+    margin-left: 5px;
+    margin-right: 5px;
+    outline: 0;
+    border: 0;
+    font-size: .8em;
+    color: #fff;
+    background: rgba(0, 0, 0, 0);
+    border-bottom: solid 1px;
 }
-
 .exam-js-input:focus {
-  outline: 0;
+    outline: 0;
 }
-
 .exam-js-img {
-  max-width: 250px;
-  background-color: #fff;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 5px;
+    max-width: 250px;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
 }
-.exam-js-img-checkbox{
-  top: 10px;
+.exam-js-img-checkbox {
+    top: 10px;
 }
-.exam-js-img-question{
-  display: inline-block;
+.exam-js-img-question {
+    display: inline-block;
 }
-.exam-js-video-answer{
-  background-color: #1B1B1B;
+.exam-js-video-answer {
+    background-color: #1B1B1B;
 }
-.exam-js-question{
-  margin-top: 10px;
-  margin-bottom: 10px;
+.exam-js-question {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.exam-js-text-checkbox{
-  margin-left: 25px;
+.exam-js-media-question {
+    display: inline-block;
+    margin: 5px;
+}
+.exam-js-text-checkbox {
+    margin-left: 25px;
 }
