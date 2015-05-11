@@ -3,7 +3,6 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 mangle: true,
-                compress: true,
                 sourceMap: 'dest/exam.js.map',
                 banner: '/* Nightingale Studio 2015 golovim@gmail.com */\n'
             },
@@ -12,49 +11,7 @@ module.exports = function(grunt) {
                 dest: 'dist/exam.min.js'
             }
         },
-        jshint: {
-            build: {
-                src: 'dist/exam.js',
-                options: {
-                    "eqeqeq": true,
-                    "curly": true,
-                    "eqnull": true,
-                    "browser": true,
-                    "undef": true,
-                    "indent": 4,
-                    "latedef": true,
-                    "camelcase": true,
-                    "maxdepth": 3,
-                    "funcscope": true,
-                    "notypeof": true,
-                    "globals": {
-                        $: true,
-                        markdown: true
-                    }
-                }
-            },
-            dev: {
-                src: 'dist/exam.js',
-                options: {
-                    "eqeqeq": true,
-                    "curly": true,
-                    "undef": true,
-                    "eqnull": true,
-                    "browser": true,
-                    "indent": 4,
-                    "latedef": true,
-                    "camelcase": true,
-                    "maxdepth": 3,
-                    "funcscope": true,
-                    "notypeof": true,
-                    "globals": {
-                        $: true,
-                        markdown: true
-                    }
-                }
-            }
-        },
-        watch: {
+       watch: {
             dev: {
                 files: ['src/**/*', 'test/**/*js'],
                 tasks: ['clean','jison', 'concat', 'test', 'notify:test']
@@ -63,31 +20,7 @@ module.exports = function(grunt) {
         clean: {
             target: ['dist']
         },
-        karma: {
-            dev: {
-                configFile: 'karma.conf.js',
-                browsers: ['Firefox']
-            },
-            travis: {
-                configFile: 'karma.conf.js',
-                browsers: ['Firefox']
-            },
-            build: {
-                configFile: 'karma.conf.js',
-                browsers: ['Safari', 'Chrome', 'Firefox']
-            }
-        },
-        connect: {
-            server: {
-                options: {
-                    port: 3333,
-                    open: {
-                        target: 'http://localhost:3333'
-                    }
-                }
-            }
-        },
-        notify: {
+       notify: {
             test: {
                 options: {
                     title: 'Exam.js',
@@ -95,13 +28,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        coveralls: {
-            options: {
-                // LCOV coverage file relevant to every target
-                src: 'coverage/**/*.info'
-            }
-        },
-        mochaTest: {
+       mochaTest: {
             test: {
                 options: {
                     reporter: 'spec',
@@ -117,17 +44,7 @@ module.exports = function(grunt) {
                 dest: 'dist/exam.js',
             }
         },
-        coffee: {
-            compile: {
-                files: {
-                    'build/lexer.js': 'src/lexer.coffee',
-                    'build/translator.js': 'src/translator.coffee',
-                    'build/parser.js': 'src/parser.coffee',
-                    'build/exam.js': 'src/exam.coffee'
-                }
-            },
-        },
-        jison: {
+       jison: {
             my_parser: {
                 files: {
                     'build/parser.js': 'src/exam.jison'
@@ -151,6 +68,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jison');
 
     grunt.registerTask('test', ['mochaTest']);
-    grunt.registerTask('default', ['clean', 'coffee', 'concat:prebuild', 'concat:build', 'test', 'uglify', 'concat', 'coveralls']);
+    grunt.registerTask('build', ['clean', 'concat', 'test', 'uglify']);
     grunt.registerTask('dev', ['watch']);
 };
