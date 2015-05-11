@@ -1967,6 +1967,9 @@ case 37:
               });
             }
           });
+          if(MathJax && MathJax.Hub){
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+          }
         },
         checkAnswer: function(e){
           var self = this;
@@ -2203,6 +2206,13 @@ parse: function parse(input) {
     return true;
 }};
 
+   if(this.MathJax != null){
+     MathJax.Hub.Config({
+       asciimath2jax: {
+         delimiters: [['{{','}}']]
+       }
+     });
+   }
   //mock of a markdonw parser (for testing)
   if(this.markdown == null){;
     markdown = {
