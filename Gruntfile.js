@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['src/**/*', 'test/**/*js'],
-                tasks: ['jison','test', 'notify:test']
+                tasks: ['jison', 'concat', 'test', 'notify:test']
             }
         },
         clean: {
@@ -112,12 +112,8 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            prebuild: {
-                src: ['build/lexer.js', 'build/parser.js', 'build/translator.js', 'build/exam.js'],
-                dest: 'dist/exam.js',
-            },
             build: {
-                src: ['node_modules/markdown/lib/markdown.js', 'build/lexer.js', 'build/parser.js', 'build/translator.js', 'build/exam.js'],
+                src: ['node_modules/markdown/lib/markdown.js', 'build/parser.js'],
                 dest: 'dist/exam.js',
             }
         },
@@ -134,7 +130,7 @@ module.exports = function(grunt) {
         jison: {
             my_parser: {
                 files: {
-                    'src/exam.js': 'src/exam.jison'
+                    'build/parser.js': 'src/exam.jison'
                 }
             }
         }
