@@ -149,6 +149,8 @@
               phrase = phrase.replace(new RegExp(index,'g'), matches[index]);
           }
         }
+      } else {
+        return markdown.toHTML(phrase);
       }
       return phrase;
     },
