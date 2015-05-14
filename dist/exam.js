@@ -2036,7 +2036,7 @@ case 37:
             answers: answers.map(function(a){return a.answer}),
             type: answers[0].type,
             rightAnswers: rightAnswers,
-            question: question.question,
+            question: question.question.replace(/<br\/>/g,''),
             htmlID: question.htmlID,
             isRight: isRight
           }
