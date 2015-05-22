@@ -29,7 +29,6 @@ describe('Parser tests', function(){
     it('should return an object with html which contains html code for a video section', function(){
       var result = exam.parse('ТЕСТЫ\r\rТЕКСТ\r\rq1?\r+t1\r\rq2?\r+t2\r\rВИДЕО\r\rq3?\r+http://link.com\r-http://link.com\r\rq4?\r+http://link.com\r-http://link.com\r\rКОНЕЦ ТЕСТОВ');
       assert.equal(result.expressions.length === 1, true);
-      // assert.equal(result.html.indexOf('VIDEO MOCK') !== -1, true);
     });
   });
 })
