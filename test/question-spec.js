@@ -11,8 +11,13 @@ describe('Question tests', function(){
     it('should contain "on answer" callback', function(){
       var result = exam.parse('ТЕСТЫ\r\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r\rКОНЕЦ ТЕСТОВ');
       var cb = result.expressions[0].questions[0].onAnswer;
-      console.log(result.expressions[0].question[0]);
       assert.equal(cb != null && typeof cb === 'function', true);
+    });
+
+    it('should contain html markup of a question', function(){
+      var result = exam.parse('ТЕСТЫ\r\rТЕКСТ\r\rWhat is your name?\r+Exam.js\r\rКОНЕЦ ТЕСТОВ');
+      var html = result.expressions[0].questions[0].html;
+      assert.equal(html != null && typeof html === 'string', true);
     });
   });
 })
