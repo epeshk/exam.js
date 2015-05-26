@@ -19,5 +19,3 @@
 Данный пример будет преобразован в это:
 
 ![simple text test](http://dl2.joxi.net/drive/0001/2547/129523/150607/8e3abf44db.png)
-
-
