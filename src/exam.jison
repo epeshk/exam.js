@@ -1,17 +1,19 @@
 %{
-   if(this.MathJax != null){
+   try{
      MathJax.Hub.Config({
-       asciimath2jax: {
-         delimiters: [['{{','}}']]
-       }
-     });
-   }
+         asciimath2jax: {
+           delimiters: [['{{','}}']]
+         }
+       });
+   } catch(e){}
   //mock of a markdonw parser (for testing)
-  if(this.markdown == null){;
+  try{
+   markdown.test;
+  } catch(e){
     markdown = {
-     toHTML: function(text){
-        return text;
-     }
+       toHTML: function(text){
+          return text;
+       }
     }
   }
   var examjs = {
@@ -26,7 +28,7 @@
       return 'exam-js-group-' + this.currentGroudId++;
     },
     getMathID: function(){
-      return 'exam-js-math-' + this.currentMathId++; 
+      return 'exam-js-math-' + this.currentMathId++;
     },
     setCurrentType: function(type){
       examjs.currentType = type;
@@ -54,15 +56,15 @@
     },
     createImgAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/>  ' + answerNumber + ' </div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="image"/>  ' + answerNumber + ' </div><div><img src="' + answer.answer + '" class="exam-js-img"/></div></div>';
     },
     createAudioAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-media-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/> ' + answerNumber + ' </div><div><audio controls src="' + answer.answer + '" preload="none"/></div></div>';
+      return '<div class="exam-js-media-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="audio"/> ' + answerNumber + ' </div><div><audio controls src="' + answer.answer + '" preload="none"/></div></div>';
     },
     createVideoAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-media-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '"/> ' + answerNumber + ' </div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div></div>';
+      return '<div class="exam-js-media-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="video"/> ' + answerNumber + ' </div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div></div>';
     },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
@@ -113,7 +115,7 @@
     },
     createCheckbox: function(question){
       var answersHtml = question.answers.map(function(a){
-        return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox">  ' + a.answer + '</input></div>';
+        return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
       }).reduce(function(a,b){
         return a + b;
       });
@@ -143,8 +145,8 @@
         });
         if(window.markdown){
           phrase = markdown.toHTML(phrase);
-        } 
-        for(var index in matches) { 
+        }
+        for(var index in matches) {
           if (matches.hasOwnProperty(index)) {
               phrase = phrase.replace(new RegExp(index,'g'), matches[index]);
           }
@@ -372,7 +374,7 @@ file
 
           return {
             questionsCount: self.questionsCount,
-            answers: answers,
+            results: answers,
             rightAnswersCount: rightAnswersCount,
             percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
           }
@@ -412,7 +414,7 @@ file
               value = e.target.value;
           self.getQuestionByHtmlID(e.target.id, function(question){
             var answer = question.answers[0].answer,
-                answerObj = self.createAnswerObject(question, [value]);
+                answerObj = self.createAnswerObject(question, [{answer: value, type: 'text'}]);
 
             self.answers[answerObj.htmlID] = answerObj;
           });
@@ -426,7 +428,10 @@ file
             var answers = tmpChildArray.filter(function(elem){
               return ((elem.type === 'checkbox' || elem.type === 'radio') && elem.checked);
             }).map(function(a){
-              return self.getAnswerFromAttribute(a);
+              return {
+                      answer: self.getAnswerFromAttribute(a),
+                      type: self.getMediaTypeFromAttribute(a)
+                    };
             });
 
             var answerObj = self.createAnswerObject(question, answers);
@@ -438,7 +443,7 @@ file
               id = e.target.id,
               answer = e.target.selectedOptions[0].value;
           self.getQuestionByHtmlID(id, function(question){
-            var answerObj = self.createAnswerObject(question, [answer]);
+            var answerObj = self.createAnswerObject(question, [{answer: answer, type: 'text'}]);
             self.answers[answerObj.htmlID] = answerObj;
           });
         },
@@ -451,12 +456,13 @@ file
           rightAnswers.forEach(function(ra){
             var tmpResult = false;
             answers.forEach(function(a){
-              tmpResult = tmpResult || (a === ra.answer);
+              tmpResult = tmpResult || (a.answer === ra.answer);
             });
             isRight = isRight && tmpResult;
           });
           var obj = {
-            answers: answers,
+            answers: answers.map(function(a){return a.answer}),
+            type: answers[0].type,
             rightAnswers: rightAnswers,
             question: question.question,
             htmlID: question.htmlID,
@@ -466,6 +472,9 @@ file
         },
         getAnswerFromAttribute: function(node){
           return node.getAttribute('data-answer');
+        },
+        getMediaTypeFromAttribute: function(node){
+          return node.getAttribute('data-answer-type');
         },
         getQuestionByHtmlID: function(htmlID, callback){
           var self = this,
