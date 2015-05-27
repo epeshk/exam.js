@@ -66,6 +66,10 @@
       var tmpId = examjs.getID();
       return '<div class="exam-js-media-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="video"/> ' + answerNumber + ' </div><div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div></div>';
     },
+    createTextAnswer: function(answer, type, groupID, answerNumber){
+      var tmpId = examjs.getID();
+      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="text"/>  ' + answerNumber + ' </div><div>' + answer.answer + '</div></div>';
+    },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
         return '<form id="' + question.htmlID + '" class="exam-js-question">'+ '<div>' + question.question + '</div><div>' + question.answers.map(function(a){return answerGenerator(a, type, groupID, (question.answers.indexOf(a) + 1))}).reduce(function(a,b){return a + b}) +'</div></form>';
@@ -89,17 +93,14 @@
     createAudioQuestion: function(question){
       return examjs.createMediaQuestion(question, examjs.createAudioAnswer);
     },
+    createComplexTextQuestion: function(question){
+      return examjs.createMediaQuestion(question, examjs.createTextAnswer);
+    },
     createTextQuestion: function(question){
       if(question.answers.length === 1){
         return examjs.createInput(question);
-      } else if(question.answers.length > 1){
-        var rightAnswersCount = question.answers.filter(function(a){
-          return a.isRight; }).length || 0;
-        if(rightAnswersCount > 1){
-          return examjs.createCheckbox(question);
-        } else {
-          return examjs.createList(question);
-        }
+      } else {
+        return examjs.createComplexTextQuestion(question);
       }
     },
     createInput: function(question){
