@@ -2282,7 +2282,7 @@ parse: function parse(input) {
     },
     createTextAnswer: function(answer, type, groupID, answerNumber){
       var tmpId = examjs.getID();
-      return '<div class="exam-js-img-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="text"/>  ' + answerNumber + ' </div><div>' + answer.answer + '</div></div>';
+      return '<div class="exam-js-text-question"><div><input id="' + tmpId + '" type="'+ type  +'" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="text"/>  ' + answerNumber + ' </div><div>' + answer.answer + '</div></div>';
     },
     createMediaTypedQuestion: function(question, type, answerGenerator){
         var groupID = examjs.getGroudID();
