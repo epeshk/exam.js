@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/NightingaleStudio/exam.js.svg?branch=master)](https://travis-ci.org/NightingaleStudio/exam.js)
+
 ###Exam.js - библиотека для написания интерактивных вопросов (тестов)
 
 При помощи данной библиотеки вы можете создавать интерактивные вопросы (тесты), используя простой человекочитаемый язык разметки. Вот простой пример:
