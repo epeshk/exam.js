@@ -19,7 +19,7 @@ var examjs = parser.parse(source);
 examjs.html // результирующий HTML, нужно поместить в любой тэг DOM'a
 ...
 
- examjs.initQuestions(); //инициализация вопросов
+examjs.initQuestions(); //инициализация вопросов
 ```
 
 ###Примеры синтаксиса языка
