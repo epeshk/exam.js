@@ -1,5 +1,5 @@
 {
-  "name": "Exam.js",
+  "name": "exam.js",
   "version": "0.4.1",
   "description": "Exam.js is simple markup language library for creating an interactive questions with markdown and mathjax support",
   "main": "exam.js",
