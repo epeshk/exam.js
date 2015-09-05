@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   try {
     MathJax.Hub.Config({
@@ -10,13 +11,13 @@
   } catch (e) {}
   //mock of a markdonw parser (for testing)
   try {
-    markdown.test;
+    var tmp = markdown.test;
   } catch (e) {
     markdown = {
       toHTML: function(text) {
         return text;
       }
-    }
+    };
   }
   this.examjs = {
     currentId: 0,
@@ -75,14 +76,14 @@
     createMediaTypedQuestion: function(question, type, answerGenerator) {
       var groupID = examjs.getGroudID();
       return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
-        return answerGenerator(a, type, groupID, (question.answers.indexOf(a) + 1))
+        return answerGenerator(a, type, groupID, (question.answers.indexOf(a) + 1));
       }).reduce(function(a, b) {
-        return a + b
+        return a + b;
       }) + '</div></form>';
     },
     createMediaQuestion: function(question, answerGenerator) {
       var rightAnswersCount = question.answers.filter(function(a) {
-        return a.isRight
+        return a.isRight;
       }).length;
       if (question.answers.length > 1 && rightAnswersCount > 1) {
         return examjs.createMediaTypedQuestion(question, 'checkbox', answerGenerator);
@@ -129,7 +130,7 @@
         return a + b;
       });
 
-      return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>'
+      return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
     },
     createVideoTest: function(question, answers) {
       return '';
@@ -165,6 +166,6 @@
       }
       return phrase;
     },
-  }
+  };
 })();
 

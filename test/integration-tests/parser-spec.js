@@ -1,3 +1,4 @@
+'use strict';
 var assert = require('assert'),
     exam = require('../../dist/exam.js');
 
@@ -31,4 +32,4 @@ describe('Parser tests', function(){
       assert.equal(result.expressions.length === 1, true);
     });
   });
-})
+});

@@ -1,3 +1,4 @@
+'use strict';
 var assert = require('assert'),
     exam = require('../../dist/exam.js');
 
@@ -26,4 +27,4 @@ describe('Question tests', function(){
       assert.equal(id != null && typeof id === 'string', true);
     });
   });
-})
+});

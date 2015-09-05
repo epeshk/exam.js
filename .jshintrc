@@ -1,0 +1,26 @@
+{
+  "node": true,
+  "eqnull": true,
+  "browser": true,
+  "esnext": true,
+  "bitwise": true,
+  "expr": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "regexp": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true,
+  "globals": {
+    "markdown": true,
+    "MathJax": true,
+    "examjs": true,
+    "it": true,
+    "describe": true
+  }
+}

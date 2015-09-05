@@ -1,3 +1,4 @@
+'use strict';
 var assert = require('assert'),
     exam = require('../../dist/exam.js');
 
@@ -18,4 +19,4 @@ describe('Media question tests', function() {
       assert.equal(result.html,'<form id="exam-js-6" class="exam-js-question"><div><br/>Test question?</div><div><div class="exam-js-img-question"><div><input id="exam-js-7" type="checkbox" name="exam-js-group-2" class="exam-js-input" data-answer="a1" data-answer-type="image"/>  1 </div><div><img src="a1" class="exam-js-img"/></div></div><div class="exam-js-img-question"><div><input id="exam-js-8" type="checkbox" name="exam-js-group-2" class="exam-js-input" data-answer="a2" data-answer-type="image"/>  2 </div><div><img src="a2" class="exam-js-img"/></div></div></div></form>', true);
     });
   });
-})
+});

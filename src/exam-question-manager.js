@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   function QuestionManager(parsedSource) {
     this.expressions = parsedSource.expressions;
@@ -26,7 +27,7 @@
       results: answers,
       rightAnswersCount: rightAnswersCount,
       percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
-    }
+    };
   };
   QuestionManager.prototype.initQuestions = function() {
     var self = this;
@@ -92,8 +93,8 @@
   };
   QuestionManager.prototype.checkSelectAnswer = function(e) {
     var self = this;
-    id = e.target.id,
-      answer = e.target.selectedOptions[0].value;
+    var id = e.target.id;
+    var answer = e.target.selectedOptions[0].value;
     self.getQuestionByHtmlID(id, function(question) {
       var answerObj = self.createAnswerObject(question, [{
         answer: answer,
@@ -117,20 +118,20 @@
     });
     var obj = {
       answers: answers.map(function(a) {
-        return a.answer
+        return a.answer;
       }),
       type: answers[0].type,
       rightAnswers: rightAnswers,
       question: question.question.replace(/<br\/>/g, ''),
       htmlID: question.htmlID,
       isRight: isRight
-    }
+    };
     return obj;
   };
   QuestionManager.prototype.getAnswerFromAttribute = function(node) {
     return node.getAttribute('data-answer');
   };
-  QuestionManager.prototype.getMediaTypeFromAttribute= function(node) {
+  QuestionManager.prototype.getMediaTypeFromAttribute = function(node) {
     return node.getAttribute('data-answer-type');
   };
   QuestionManager.prototype.getQuestionByHtmlID = function(htmlID, callback) {
