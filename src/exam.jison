@@ -190,8 +190,6 @@ source
 file
   : source 'EOF'
     {
-      var result = new QuestionManager($1);
-      $$ = result;
-      return $$;
+      return new QuestionManager($1);
     }
   ;

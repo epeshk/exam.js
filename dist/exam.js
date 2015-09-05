@@ -2246,9 +2246,7 @@ case 36:
 break;
 case 37:
 
-      var result = new QuestionManager($$[$0-1]);
-      this.$ = result;
-      return this.$;
+      return new QuestionManager($$[$0-1]);
     
 break;
 }
