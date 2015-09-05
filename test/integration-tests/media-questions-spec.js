@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    exam = require('../dist/exam.js');
+    exam = require('../../dist/exam.js');
 
 describe('Media question tests', function() {
   describe('common media type question', function() {

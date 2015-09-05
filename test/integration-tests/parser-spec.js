@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    exam = require('../dist/exam.js');
+    exam = require('../../dist/exam.js');
 
 describe('Parser tests', function(){
   describe('Simple expressions parser', function(){

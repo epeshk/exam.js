@@ -1725,10 +1725,10 @@ function merge_text_nodes( jsonml ) {
 } )() );
 
 (function() {
-  function QuestionManager(parsedExpressions) {
-    this.expressions = parsedExpressions.expressions;
-    this.questionsCount = parsedExpressions.questionsCount;
-    this.html = parsedExpressions.html;
+  function QuestionManager(parsedSource) {
+    this.expressions = parsedSource.expressions;
+    this.questionsCount = parsedSource.questionsCount;
+    this.html = parsedSource.html;
     this.answers = {};
   }
 
