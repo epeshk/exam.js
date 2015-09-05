@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-jison');
 
-    grunt.registerTask('test', ['mochaTest']);
-    grunt.registerTask('build', ['clean', 'jison', 'concat', 'test', 'uglify']);
+    grunt.registerTask('test', ['build','mochaTest']);
+    grunt.registerTask('build', ['clean', 'jison', 'concat', 'mochaTest', 'uglify']);
     grunt.registerTask('dev', ['watch']);
 };
