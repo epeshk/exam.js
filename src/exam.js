@@ -18,7 +18,7 @@
       }
     }
   }
-  examjs = {
+  this.examjs = {
     currentId: 0,
     currentGroudId: 0,
     currentMathId: 0,
