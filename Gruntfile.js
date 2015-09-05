@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         },
         concat: {
             build: {
-                src: ['node_modules/markdown/lib/markdown.js', 'build/parser.js'],
+                src: ['node_modules/markdown/lib/markdown.js','src/exam.js', 'build/parser.js'],
                 dest: 'dist/exam.js',
             }
         },
