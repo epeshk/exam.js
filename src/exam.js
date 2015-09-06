@@ -136,15 +136,6 @@
 
       return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
     },
-    createVideoTest: function(question, answers) {
-      return '';
-    },
-    createAudioTest: function(question, answers) {
-      return '';
-    },
-    createImageTest: function(question, answers) {
-      return '';
-    },
     parseMarkdown: function(phrase) {
       var self = this,
         regexp = /\{\{[^\}\}]*\}\}/gi,
