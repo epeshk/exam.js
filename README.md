@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/NightingaleStudio/exam.js.svg?branch=master)](https://travis-ci.org/NightingaleStudio/exam.js)
+[![Code Climate](https://codeclimate.com/github/NightingaleStudio/exam.js/badges/gpa.svg)](https://codeclimate.com/github/NightingaleStudio/exam.js)
 
 ###Exam.js - библиотека для написания интерактивных вопросов (тестов)
 
@@ -108,11 +109,11 @@ Exam.js позволяет создавать не только текстовы
 На каком рисунке изображен график функции {{y = sin(x)}}?
 -http://dl2.joxi.net/drive/0001/2547/129523/150527/27d5954b08.jpg
 +http://dl1.joxi.net/drive/0001/2547/129523/150527/af2ed6be13.jpg
-	
+
 КОНЕЦ ТЕСТОВ
 ```
-	
-	
+
+
 Данный вопрос будет преобразован в это:
 
 ![image question](http://dl2.joxi.net/drive/0001/2547/129523/150607/2d3f6b0ec5.png)
