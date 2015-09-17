@@ -132,39 +132,39 @@
     return '<div><form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form><div>';
   };
   ExamJS.prototype.createCheckbox = function(question) {
-      var answersHtml = question.answers.map(function(a) {
-        return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
-      }).reduce(function(a, b) {
-        return a + b;
-      });
+    var answersHtml = question.answers.map(function(a) {
+      return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
+    }).reduce(function(a, b) {
+      return a + b;
+    });
 
-      return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
-    },
-    ExamJS.prototype.parseMarkdown = function(phrase) {
-      var self = this,
-        regexp = /\{\{[^\}\}]*\}\}/gi,
-        matches = {},
-        found;
-      var tmpMatches = phrase.match(regexp);
-      if (tmpMatches && tmpMatches.length && tmpMatches.length > 0) {
-        tmpMatches.forEach(function(match) {
-          var mock = self.getMathID();
-          matches[mock] = match;
-          phrase = phrase.replace(match, mock);
-        });
-        if (window.markdown) {
-          phrase = markdown.toHTML(phrase);
-        }
-        for (var index in matches) {
-          if (matches.hasOwnProperty(index)) {
-            phrase = phrase.replace(new RegExp(index, 'g'), matches[index]);
-          }
-        }
-      } else {
-        return markdown.toHTML(phrase);
+    return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
+  };
+  ExamJS.prototype.parseMarkdown = function(phrase) {
+    var self = this,
+      regexp = /\{\{[^\}\}]*\}\}/gi,
+      matches = {},
+      found;
+    var tmpMatches = phrase.match(regexp);
+    if (tmpMatches && tmpMatches.length && tmpMatches.length > 0) {
+      tmpMatches.forEach(function(match) {
+        var mock = self.getMathID();
+        matches[mock] = match;
+        phrase = phrase.replace(match, mock);
+      });
+      if (window.markdown) {
+        phrase = markdown.toHTML(phrase);
       }
-      return phrase;
-    };
+      for (var index in matches) {
+        if (matches.hasOwnProperty(index)) {
+          phrase = phrase.replace(new RegExp(index, 'g'), matches[index]);
+        }
+      }
+    } else {
+      return markdown.toHTML(phrase);
+    }
+    return phrase;
+  };
 
   this.ExamJS = ExamJS;
 })();

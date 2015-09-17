@@ -120,6 +120,16 @@ tests_section
     {$$ = {questions: $3.questions, type: 'tests-section'}}
   | 'TESTS' test_blocks empty_lines 'TESTS_END'
     {$$ = {questions: $2.questions, type: 'tests-section'}}
+  | 'TESTS' empty_lines 'TESTS_END'
+    {$$ = {questions: [], type: 'tests-section'}}
+  | 'TESTS'
+    {$$ = {questions: [], type: 'tests-section'}}
+  | 'TESTS_END'
+    {$$ = {questions: [], type: 'tests-section'}}
+  | 'TESTS' empty_lines
+    {$$ = {questions: [], type: 'tests-section'}}
+  | 'TESTS_END' empty_lines
+    {$$ = {questions: [], type: 'tests-section'}}
   ;
 
 statement

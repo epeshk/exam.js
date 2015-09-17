@@ -1,6 +1,6 @@
 'use strict';
-var assert = require('assert'),
-    exam = require('../../dist/exam.js');
+var assert = require('assert');
+var exam = require('../../dist/exam.js');
 
 describe('Media question tests', function() {
   describe('common media type question', function() {
