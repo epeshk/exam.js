@@ -1,3 +1,6 @@
+%{
+  _examjsParser = new ExamJS();
+%}
 /* lexical grammar */
 %lex
 %%
@@ -90,9 +93,9 @@ type_marker
 
 test_block
   : question
-    {$$ = examjs.createQuestions($1)}
+    {$$ = _examjsParser.createQuestions($1)}
   | type_marker
-    {examjs.setCurrentType($1)}
+    {_examjsParser.setCurrentType($1)}
   ;
 
 test_blocks
@@ -123,7 +126,7 @@ statement
   : tests_section
     {$$ = $1}
   | phrase
-    {$$ = examjs.parseMarkdown($1)}
+    {$$ = _examjsParser.parseMarkdown($1)}
   ;
 
 source
