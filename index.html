@@ -10,10 +10,6 @@
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>
 
 <body>
-  <div class="top-panel">Exam.js</div>
-  <br>
-  <br>
-  <br>
   <div class="button" id="finishBtn">Finish</div>
   <div class="answers-box">
     <div class="counter" id="answers">Answers: 0</div>
@@ -25,7 +21,6 @@
       <textarea id="editor" class="text-pane"></textarea>
       <div id="result" class="text-pane"></div>
     </div>
-    <div> {{sum_(i=1)^n i^3=((n(n+1))/2)^2}}</div>
   </div>
   <script type="text/javascript" src="dist/exam.js"></script>
   <script type="text/javascript">
@@ -34,25 +29,25 @@
   var answersDiv = document.getElementById('answers');
   var testsDiv = document.getElementById('tests');
   var errorBox = document.getElementById('error-box');
-  var examjs = null;
+  var exam = null;
 
   function update() {
     var source = editor.value;
     try {
-      examjs = parser.parse(source);
-      resultDiv.innerHTML = examjs.html;
+      exam = parser.parse(source);
+      resultDiv.innerHTML = exam.html;
       errorBox.innerHTML = '';
     } catch (e) {
       if (e) {
         errorBox.innerHTML = e;
       }
     }
-    examjs.initQuestions();
+    exam.initQuestions();
   }
 
   editor.oninput = update;
   resultDiv.onchange = function(){
-    var results = examjs.getResults();
+    var results = exam.getResults();
     answersDiv.innerHTML = 'Answers: ' + results.rightAnswersCount;
     testsDiv.innerHTML = 'Tests: ' + results.questionsCount;
     console.log(results);

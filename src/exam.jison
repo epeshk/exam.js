@@ -22,24 +22,9 @@
 %% /* language grammar */
 
 symbol
-  : 'char'
+  : 'SP'
     {$$ = $1}
-  | 'SP'
-    {$$ = $1}
-  | 'SEP'
-    {$$ = $1}
-  | 'special_symbol'
-    {$$ = $1}
-  | '+'
-    {$$ = $1}
-  | '-'
-    {$$ = $1}
-  ;
-
-question_symbol
-  : 'char'
-    {$$ = $1}
-  | 'SP'
+  | 'char'
     {$$ = $1}
   | 'SEP'
     {$$ = '<br/>'}
@@ -60,9 +45,9 @@ phrase
   ;
 
 question_phrase
-  : question_symbol
+  : symbol
     {$$ = '' + $1}
-  | question_phrase question_symbol
+  | question_phrase symbol
     {$$ = $1 + $2}
   ;
 
