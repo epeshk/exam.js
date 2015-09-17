@@ -43,6 +43,11 @@ phrase
     {$$ = $1 + $2}
   ;
 
+empty_lines
+  : 'SEP'
+  | empty_lines 'SEP'
+  ;
+
 AM
   : '+'
     {$$ = true}
@@ -63,7 +68,7 @@ answers
   ;
 
 question
-  : 'SEP' phrase 'SEP' answers
+  : empty_lines phrase 'SEP' answers
     {$$ = {question: $2, answers: $4.answers}}
   ;
 
@@ -79,7 +84,7 @@ type
   ;
 
 type_marker
-  : 'SEP' type
+  : empty_lines type
     {$$ = $2}
   ;
 
@@ -108,8 +113,10 @@ test_blocks
   ;
 
 tests_section
-  : 'TESTS' 'SEP' test_blocks 'SEP' 'TESTS_END'
+  : 'TESTS' empty_lines test_blocks empty_lines 'TESTS_END'
     {$$ = {questions: $3.questions, type: 'tests-section'}}
+  | 'TESTS' test_blocks empty_lines 'TESTS_END'
+    {$$ = {questions: $2.questions, type: 'tests-section'}}
   ;
 
 statement
