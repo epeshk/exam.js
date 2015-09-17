@@ -54,8 +54,6 @@ body {
     font-size: 20pt;
 }
 .text-pane {
-    background: #353535;
-    color: #e3e4fa;
     font-size: 18pt;
     width: 40%;
     height: 600px;
@@ -78,6 +76,5 @@ body {
     margin: 5px;
     text-align: center;
     vertical-align: middle;
-    color: #fff;
     display: inline-block;
 }

@@ -27,7 +27,7 @@ symbol
   | 'char'
     {$$ = $1}
   | 'SEP'
-    {$$ = '<br/>'}
+    {$$ = $1}
   | 'special_symbol'
     {$$ = $1}
   | '+'
