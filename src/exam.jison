@@ -9,7 +9,7 @@
 "АУДИО"                            return 'AUDIO' //type "audio" marker
 "РИСУНОК"                          return 'IMAGE' //type "image" marker
 (\n|\r|\r\n)                       return 'SEP'  //separator
-\s+                                return 'SP'
+\s                                 return 'SP'
 ^"+"                               return '+' //right answer marker
 ^"-"                               return '-' //wrong answer marker
 [^(\s|\n|\r|\n\r)]                 return 'char'
@@ -42,7 +42,6 @@ phrase
   | phrase symbol
     {$$ = $1 + $2}
   ;
-
 
 AM
   : '+'
