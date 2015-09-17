@@ -34,20 +34,12 @@ symbol
     {$$ = $1}
   | '-'
     {$$ = $1}
-
   ;
 
 phrase
   : symbol
     {$$ = '' + $1}
   | phrase symbol
-    {$$ = $1 + $2}
-  ;
-
-question_phrase
-  : symbol
-    {$$ = '' + $1}
-  | question_phrase symbol
     {$$ = $1 + $2}
   ;
 
@@ -60,7 +52,7 @@ AM
   ;
 
 answer
-  : AM question_phrase 'SEP'
+  : AM phrase 'SEP'
     {$$ = {answer: $2, isRight: $1}}
   ;
 
@@ -72,7 +64,7 @@ answers
   ;
 
 question
-  : 'SEP' question_phrase 'SEP' answers
+  : 'SEP' phrase 'SEP' answers
     {$$ = {question: $2, answers: $4.answers}}
   ;
 
