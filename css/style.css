@@ -6,6 +6,13 @@ body {
   background-color: #009989;
   height: 100%;
 }
+pre{
+  font-size: 0.8em;
+  background-color: #434d53;
+  border: 1px dashed #fff;
+  color: #fffbf7;
+  padding: 0.6em;
+}
 .service-buttons a:link{
   color: #009989;
 }

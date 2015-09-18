@@ -24,7 +24,11 @@ rel='stylesheet' type='text/css'>
     <div class="promo-content">
       <p>Exam.js - язык разметки интерактивных тестовых заданий с поддержкой <a href="https://ru.wikipedia.org/wiki/Markdown">Markdown</a>
         и <a href="http://asciimath.org/">AsciiMath</a>, парсер которого написан
+<<<<<<< HEAD
         на JavaScript</p>
+=======
+        на JavaScript и <a href="http://zaach.github.io/jison/">Jison</a></p>
+>>>>>>> gh-pages
       <div class="service-buttons">
         <a class="github-button" href="https://github.com/NightingaleStudio/exam.js" data-icon="octicon-eye"
         data-style="mega" data-count-href="/NightingaleStudio/exam.js/watchers"
@@ -84,15 +88,15 @@ rel='stylesheet' type='text/css'>
 +http://dl1.joxi.net/drive/0001/2547/129523/150527/af2ed6be13.jpg
 
 На какой картинке изображен А.С. Пушкин?
--https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Fet_by_Repin.jpg/267px-Fet_by_Repin.jpg
--https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Fyodor_Tyutchev.jpg/250px-Fyodor_Tyutchev.jpg
-+https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Portrait_of_Alexander_Pushkin_%28Orest_Kiprensky%2C_1827%29.PNG/250px-Portrait_of_Alexander_Pushkin_%28Orest_Kiprensky%2C_1827%29.PNG
--https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Mikhail_lermontov.jpg/267px-Mikhail_lermontov.jpg
+-http://bit.ly/1KWoVi9
+-http://bit.ly/1OEfEuX
++http://bit.ly/1JfnfJe
+-http://bit.ly/1LDaSIM
 
 АУДИО
 Какое из этих произведений является Лунной сонатой Бетховена?
--http://www.audiopoisk.com/file/IVQb4Lev9v/vol_fgang-amadei-mocart/muzika-angelov-2157447.mp3
-+http://www.audiopoisk.com/file/IVQb4Lev9v/ludvig-van-bethoven/ludvg-van-bethoven-lunnaa-sonata-1331614.mp3
+-http://bit.ly/1ioashV
++http://bit.ly/1MhwBZv
 
 ВИДЕО
 В каком видео представлен курс MIT по компьютерным системам?
@@ -103,6 +107,21 @@ rel='stylesheet' type='text/css'>
 
 ---
 *\*Секций с тестами может быть неограниченное количество в рамках одного исходного текста*
+
+####Установка
+
+    npm i exam.js
+
+####Подключение
+
+Для начала работы нужно подключить скрипт **exam.js** или **exam.min.js**, а так же стиль **exam.css**.
+
+    var examjs = parser.parse(source);
+    examjs.html // результирующий HTML,
+                //нужно поместить в любой тэг DOM'a
+    ...
+
+    examjs.initQuestions(); //инициализация вопросов
 
     </textarea>
     <div id="result" class="text-pane text-pane-right"></div>
