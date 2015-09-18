@@ -1,0 +1,67 @@
+.examjs-block {
+  display: inline-block;
+  vertical-align: top;
+}
+.examjs-checkbox-popup {
+  margin: 5%;
+}
+.examjs-checkbox-block {
+  width: 90%;
+  vertical-align: middle;
+  text-align: left;
+}
+.exam-js-input {
+  margin-left: 5px;
+  margin-right: 5px;
+  outline: 0;
+  border: 0;
+  font-size: .8em;
+  border-bottom: solid 1px;
+  vertical-align: top;
+}
+.exam-js-input:focus {
+  outline: 0;
+}
+.exam-js-img {
+  max-width: 250px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}
+.exam-js-img-checkbox {
+  top: 10px;
+}
+.exam-js-img-question {
+  display: inline-block;
+  vertical-align: top;
+}
+.exam-js-video-answer {
+  background-color: #1B1B1B;
+}
+.exam-js-question {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.exam-js-media-question {
+  display: inline-block;
+  margin: 10px;
+  min-height: 50px;
+}
+.exam-js-text-checkbox {
+  display: inline;
+  margin-left: 25px;
+}
+.exam-js-answer {
+  display: inline-block;
+  margin-left: 25px;
+}
+.exam-js-answer-container{
+  margin-top: 20px;
+  display: inline-block;
+}
+.exam-js-answer-number{
+  display: inline-block;
+  vertical-align: top;
+}
+
