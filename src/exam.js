@@ -66,28 +66,28 @@ var ExamjsTranslator = (function() {
     var youtubeId = youtubeLink.substring(idx + 1);
     return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
   };
-  ExamjsTranslator.prototype.getBasePartOfAnswer = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
+  ExamjsTranslator.prototype._createAnswerHtml = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
     var tmpId = this.getID();
     return '<div class="' + answerClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + type + '" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="' + dataType + '"/> ' + answerNumber + ')' + '</div>' + '<div class="exam-js-answer">' + answerHTML + '</div></div></div>';
   };
   ExamjsTranslator.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><img src="' + answer.answer + '" class="exam-js-img"/></div>';
-    return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html);
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html);
   };
   ExamjsTranslator.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><audio controls src="' + answer.answer + '" preload="none"/></div>';
-    return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
   };
   ExamjsTranslator.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div>';
     if(answer.answer.indexOf('youtu') >= 0){
       html = this._createYoutubeHtml(answer.answer);
     }
-    return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
   };
   ExamjsTranslator.prototype.createTextAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div>' + answer.answer + '</div>';
-    return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
   };
   ExamjsTranslator.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
     var groupID = this.getGroudID();
