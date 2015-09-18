@@ -21,6 +21,7 @@
     "MathJax": true,
     "it": true,
     "describe": true,
-    "ExamJS": true
+    "ExamJS": true,
+    "beforeEach": true
   }
 }
