@@ -1,5 +1,5 @@
 %{
-  _examjsParser = new ExamJS();
+  _examjsTranslator = new ExamjsTranslator();
 %}
 /* lexical grammar */
 %lex
@@ -93,9 +93,9 @@ type_marker
 
 test_block
   : question
-    {$$ = _examjsParser.createQuestions($1)}
+    {$$ = _examjsTranslator.createQuestions($1)}
   | type_marker
-    {_examjsParser.setCurrentType($1)}
+    {_examjsTranslator.setCurrentType($1)}
   ;
 
 test_blocks
@@ -136,7 +136,7 @@ statement
   : tests_section
     {$$ = $1}
   | phrase
-    {$$ = _examjsParser.parseMarkdown($1)}
+    {$$ = _examjsTranslator.parseMarkdown($1)}
   ;
 
 source

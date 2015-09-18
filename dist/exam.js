@@ -1725,7 +1725,7 @@ function merge_text_nodes( jsonml ) {
 } )() );
 
 'use strict';
-(function() {
+var QuestionManager = (function() {
   function QuestionManager(parsedSource) {
     this.expressions = parsedSource.expressions;
     this.questionsCount = parsedSource.questionsCount;
@@ -1872,12 +1872,12 @@ function merge_text_nodes( jsonml ) {
     });
   };
 
-  this.QuestionManager = QuestionManager;
+  return QuestionManager;
 })();
 
 
 'use strict';
-(function() {
+var ExamjsTranslator = (function() {
   try {
     MathJax.Hub.Config({
       asciimath2jax: {
@@ -1898,27 +1898,27 @@ function merge_text_nodes( jsonml ) {
     };
   }
 
-  function ExamJS() {
+  function ExamjsTranslator() {
     this.currentId = 0;
     this.currentGroudId = 0;
     this.currentMathId = 0;
     this.currentType = '';
   }
 
-  ExamJS.prototype.getID = function() {
+  ExamjsTranslator.prototype.getID = function() {
     return 'exam-js-' + this.currentId++;
   };
 
-  ExamJS.prototype.getGroudID = function() {
+  ExamjsTranslator.prototype.getGroudID = function() {
     return 'exam-js-group-' + this.currentGroudId++;
   };
-  ExamJS.prototype.getMathID = function() {
+  ExamjsTranslator.prototype.getMathID = function() {
     return 'exam-js-math-' + this.currentMathId++;
   };
-  ExamJS.prototype.setCurrentType = function(type) {
+  ExamjsTranslator.prototype.setCurrentType = function(type) {
     this.currentType = type;
   };
-  ExamJS.prototype.createQuestions = function(question) {
+  ExamjsTranslator.prototype.createQuestions = function(question) {
     question.htmlID = this.getID();
     question.onAnswer = function(e) {
       this.checkAnswer(e);
@@ -1939,35 +1939,35 @@ function merge_text_nodes( jsonml ) {
       throw new Error('Wrong section type!');
     }
   };
-  ExamJS.prototype.createYoutubeHtml = function(answer){
-    var idx = answer.lastIndexOf('/');
-    var youtubeId = answer.substring(idx);
+  ExamjsTranslator.prototype._createYoutubeHtml = function(youtubeLink){
+    var idx = youtubeLink.lastIndexOf('/');
+    var youtubeId = youtubeLink.substring(idx + 1);
     return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
   };
-  ExamJS.prototype.getBasePartOfAnswer = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
+  ExamjsTranslator.prototype.getBasePartOfAnswer = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
     var tmpId = this.getID();
     return '<div class="' + answerClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + type + '" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="' + dataType + '"/> ' + answerNumber + ')' + '</div>' + '<div class="exam-js-answer">' + answerHTML + '</div></div></div>';
   };
-  ExamJS.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
+  ExamjsTranslator.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><img src="' + answer.answer + '" class="exam-js-img"/></div>';
     return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html);
   };
-  ExamJS.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
+  ExamjsTranslator.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><audio controls src="' + answer.answer + '" preload="none"/></div>';
     return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
   };
-  ExamJS.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
+  ExamjsTranslator.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div>';
     if(answer.answer.indexOf('youtu') >= 0){
-      html = this.createYoutubeHtml(answer.answer);
+      html = this._createYoutubeHtml(answer.answer);
     }
     return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
   };
-  ExamJS.prototype.createTextAnswer = function(answer, type, groupID, answerNumber) {
+  ExamjsTranslator.prototype.createTextAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div>' + answer.answer + '</div>';
     return this.getBasePartOfAnswer(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
   };
-  ExamJS.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
+  ExamjsTranslator.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
     var groupID = this.getGroudID();
     var self = this;
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
@@ -1976,7 +1976,7 @@ function merge_text_nodes( jsonml ) {
       return a + b;
     }) + '</div></form>';
   };
-  ExamJS.prototype.createMediaQuestion = function(question, answerGenerator) {
+  ExamjsTranslator.prototype.createMediaQuestion = function(question, answerGenerator) {
     var rightAnswersCount = question.answers.filter(function(a) {
       return a.isRight;
     }).length;
@@ -1988,29 +1988,29 @@ function merge_text_nodes( jsonml ) {
       throw new Error('Unknown media question type!');
     }
   };
-  ExamJS.prototype.createVideoQuestion = function(question, answers) {
+  ExamjsTranslator.prototype.createVideoQuestion = function(question, answers) {
     return this.createMediaQuestion(question, this.createVideoAnswer);
   };
-  ExamJS.prototype.createImageQuestion = function(question) {
+  ExamjsTranslator.prototype.createImageQuestion = function(question) {
     return this.createMediaQuestion(question, this.createImgAnswer);
   };
-  ExamJS.prototype.createAudioQuestion = function(question) {
+  ExamjsTranslator.prototype.createAudioQuestion = function(question) {
     return this.createMediaQuestion(question, this.createAudioAnswer);
   };
-  ExamJS.prototype.createComplexTextQuestion = function(question) {
+  ExamjsTranslator.prototype.createComplexTextQuestion = function(question) {
     return this.createMediaQuestion(question, this.createTextAnswer);
   };
-  ExamJS.prototype.createTextQuestion = function(question) {
+  ExamjsTranslator.prototype.createTextQuestion = function(question) {
     if (question.answers.length === 1) {
       return this.createInput(question);
     } else {
       return this.createComplexTextQuestion(question);
     }
   };
-  ExamJS.prototype.createInput = function(question) {
+  ExamjsTranslator.prototype.createInput = function(question) {
     return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></form>';
   };
-  ExamJS.prototype.createList = function(question) {
+  ExamjsTranslator.prototype.createList = function(question) {
     var answersHtml = question.answers.map(function(a) {
       return '<option value="' + a.answer + '">' + a.answer + '</option>\n';
     }).reduce(function(a, b) {
@@ -2018,7 +2018,7 @@ function merge_text_nodes( jsonml ) {
     });
     return '<div><form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form><div>';
   };
-  ExamJS.prototype.createCheckbox = function(question) {
+  ExamjsTranslator.prototype.createCheckbox = function(question) {
     var answersHtml = question.answers.map(function(a) {
       return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
     }).reduce(function(a, b) {
@@ -2027,7 +2027,7 @@ function merge_text_nodes( jsonml ) {
 
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
   };
-  ExamJS.prototype.parseMarkdown = function(phrase) {
+  ExamjsTranslator.prototype.parseMarkdown = function(phrase) {
     var self = this,
       regexp = /\{\{[^\}\}]*\}\}/gi,
       matches = {},
@@ -2053,8 +2053,11 @@ function merge_text_nodes( jsonml ) {
     return phrase;
   };
 
-  this.ExamJS = ExamJS;
+  return ExamjsTranslator;
 })();
+if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+  exports.ExamjsTranslator = ExamjsTranslator;
+}
 
 
 /* parser generated by jison 0.4.15 */
@@ -2182,10 +2185,10 @@ case 20:
 this.$ = 'IMAGE'
 break;
 case 22:
-this.$ = _examjsParser.createQuestions($$[$0])
+this.$ = _examjsTranslator.createQuestions($$[$0])
 break;
 case 23:
-_examjsParser.setCurrentType($$[$0])
+_examjsTranslator.setCurrentType($$[$0])
 break;
 case 24:
 
@@ -2210,7 +2213,7 @@ case 28: case 29: case 30: case 31: case 32:
 this.$ = {questions: [], type: 'tests-section'}
 break;
 case 34:
-this.$ = _examjsParser.parseMarkdown($$[$0])
+this.$ = _examjsTranslator.parseMarkdown($$[$0])
 break;
 case 35:
 
@@ -2409,7 +2412,7 @@ parse: function parse(input) {
     return true;
 }};
 
-  _examjsParser = new ExamJS();
+  _examjsTranslator = new ExamjsTranslator();
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({

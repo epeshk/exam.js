@@ -1,5 +1,5 @@
 'use strict';
-(function() {
+var QuestionManager = (function() {
   function QuestionManager(parsedSource) {
     this.expressions = parsedSource.expressions;
     this.questionsCount = parsedSource.questionsCount;
@@ -146,6 +146,6 @@
     });
   };
 
-  this.QuestionManager = QuestionManager;
+  return QuestionManager;
 })();
 

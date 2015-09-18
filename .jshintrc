@@ -19,8 +19,8 @@
   "globals": {
     "markdown": true,
     "MathJax": true,
-    "examjs": true,
     "it": true,
-    "describe": true
+    "describe": true,
+    "ExamJS": true
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
-var assert = require('assert'),
-    exam = require('../../dist/exam.js');
+var assert = require('assert');
+var exam = require('../../dist/exam.js');
 
 describe('Parser tests', function(){
   describe('Simple expressions parser', function(){
