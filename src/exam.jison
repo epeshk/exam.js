@@ -31,8 +31,6 @@ symbol
     {$$ = $1}
   | 'SEP'
     {$$ = $1}
-  | 'special_symbol'
-    {$$ = $1}
   ;
 
 phrase

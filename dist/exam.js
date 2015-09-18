@@ -2134,63 +2134,63 @@ if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,11],$V3=[1,12],$V4=[1,6],$V5=[1,7],$V6=[4,5,6,7,25,26,30],$V7=[4,5,7,25,26,30],$V8=[1,18],$V9=[2,3],$Va=[1,28],$Vb=[1,29],$Vc=[1,30],$Vd=[1,31],$Ve=[4,5,6,7,17,18,19,20,25,26,30],$Vf=[2,8],$Vg=[1,38],$Vh=[4,5,6,7],$Vi=[1,44],$Vj=[1,45],$Vk=[6,11,12],$Vl=[2,11];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,11],$V3=[1,6],$V4=[1,7],$V5=[4,5,6,24,25,29],$V6=[4,5,24,25,29],$V7=[1,17],$V8=[2,3],$V9=[1,27],$Va=[1,28],$Vb=[1,29],$Vc=[1,30],$Vd=[4,5,6,16,17,18,19,24,25,29],$Ve=[2,7],$Vf=[1,37],$Vg=[4,5,6],$Vh=[1,43],$Vi=[1,44],$Vj=[6,10,11];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"symbol":3,"SP":4,"char":5,"SEP":6,"special_symbol":7,"phrase":8,"empty_lines":9,"AM":10,"+":11,"-":12,"answer":13,"answers":14,"question":15,"type":16,"TEXT":17,"VIDEO":18,"AUDIO":19,"IMAGE":20,"type_marker":21,"test_block":22,"test_blocks":23,"tests_section":24,"TESTS":25,"TESTS_END":26,"statement":27,"source":28,"file":29,"EOF":30,"$accept":0,"$end":1},
-terminals_: {2:"error",4:"SP",5:"char",6:"SEP",7:"special_symbol",11:"+",12:"-",17:"TEXT",18:"VIDEO",19:"AUDIO",20:"IMAGE",25:"TESTS",26:"TESTS_END",30:"EOF"},
-productions_: [0,[3,1],[3,1],[3,1],[3,1],[8,1],[8,2],[9,1],[9,2],[10,1],[10,1],[13,3],[14,1],[14,2],[15,4],[16,1],[16,1],[16,1],[16,1],[21,2],[22,1],[22,1],[23,1],[23,2],[24,5],[24,4],[24,3],[24,1],[24,1],[24,2],[24,2],[27,1],[27,1],[28,1],[28,2],[29,2]],
+symbols_: {"error":2,"symbol":3,"SP":4,"char":5,"SEP":6,"phrase":7,"empty_lines":8,"AM":9,"+":10,"-":11,"answer":12,"answers":13,"question":14,"type":15,"TEXT":16,"VIDEO":17,"AUDIO":18,"IMAGE":19,"type_marker":20,"test_block":21,"test_blocks":22,"tests_section":23,"TESTS":24,"TESTS_END":25,"statement":26,"source":27,"file":28,"EOF":29,"$accept":0,"$end":1},
+terminals_: {2:"error",4:"SP",5:"char",6:"SEP",10:"+",11:"-",16:"TEXT",17:"VIDEO",18:"AUDIO",19:"IMAGE",24:"TESTS",25:"TESTS_END",29:"EOF"},
+productions_: [0,[3,1],[3,1],[3,1],[7,1],[7,2],[8,1],[8,2],[9,1],[9,1],[12,3],[13,1],[13,2],[14,4],[15,1],[15,1],[15,1],[15,1],[20,2],[21,1],[21,1],[22,1],[22,2],[23,5],[23,4],[23,3],[23,1],[23,1],[23,2],[23,2],[26,1],[26,1],[27,1],[27,2],[28,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 3: case 4: case 19: case 31:
+case 1: case 2: case 3: case 18: case 30:
 this.$ = $$[$0]
 break;
-case 5:
+case 4:
 this.$ = '' + $$[$0]
 break;
-case 6:
+case 5:
 this.$ = $$[$0-1] + $$[$0]
 break;
-case 9:
+case 8:
 this.$ = true
 break;
-case 10:
+case 9:
 this.$ = false
 break;
-case 11:
+case 10:
 this.$ = {answer: $$[$0-1], isRight: $$[$0-2]}
 break;
-case 12:
+case 11:
 this.$ = {answers: [$$[$0]]}
 break;
-case 13:
+case 12:
 this.$.answers.push($$[$0])
 break;
-case 14:
+case 13:
 this.$ = {question: $$[$0-2], answers: $$[$0].answers}
 break;
-case 15:
+case 14:
 this.$ = 'TEXT'
 break;
-case 16:
+case 15:
 this.$ = 'VIDEO'
 break;
-case 17:
+case 16:
 this.$ = 'AUDIO'
 break;
-case 18:
+case 17:
 this.$ = 'IMAGE'
 break;
-case 20:
+case 19:
 this.$ = _examjsTranslator.createQuestions($$[$0])
 break;
-case 21:
+case 20:
 _examjsTranslator.setCurrentType($$[$0])
 break;
-case 22:
+case 21:
 
       if($$[$0].html){
         this.$ = {questions: [$$[$0]]};
@@ -2199,23 +2199,23 @@ case 22:
       }
     
 break;
-case 23:
+case 22:
 
       if($$[$0].html){
         this.$.questions.push($$[$0]);
       }
     
 break;
-case 24: case 25:
+case 23: case 24:
 this.$ = {questions: $$[$0-2].questions, type: 'tests-section'}
 break;
-case 26: case 27: case 28: case 29: case 30:
+case 25: case 26: case 27: case 28: case 29:
 this.$ = {questions: [], type: 'tests-section'}
 break;
-case 32:
+case 31:
 this.$ = _examjsTranslator.parseMarkdown($$[$0])
 break;
-case 33:
+case 32:
 
       if($$[$0].type === 'tests-section'){
         var tmpHtml = '',
@@ -2240,7 +2240,7 @@ case 33:
       }
     
 break;
-case 34:
+case 33:
 
       if($$[$0].type === 'tests-section'){
         var questionsCount = 0;
@@ -2258,15 +2258,15 @@ case 34:
       this.$ = $$[$0-1];
     
 break;
-case 35:
+case 34:
 
       return new QuestionManager($$[$0-1]);
     
 break;
 }
 },
-table: [{3:8,4:$V0,5:$V1,6:$V2,7:$V3,8:5,24:4,25:$V4,26:$V5,27:3,28:2,29:1},{1:[3]},{3:8,4:$V0,5:$V1,6:$V2,7:$V3,8:5,24:4,25:$V4,26:$V5,27:14,30:[1,13]},o($V6,[2,33]),o($V6,[2,31]),o([25,26,30],[2,32],{3:15,4:$V0,5:$V1,6:$V2,7:$V3}),o($V7,[2,27],{9:16,23:17,22:19,15:20,21:21,6:$V8}),o($V7,[2,28],{9:22,6:$V8}),o($V6,[2,5]),o($V6,[2,1]),o($V6,[2,2]),o($V6,$V9),o($V6,[2,4]),{1:[2,35]},o($V6,[2,34]),o($V6,[2,6]),o([25,30],[2,29],{3:8,22:19,15:20,21:21,23:23,8:26,16:27,9:32,4:$V0,5:$V1,6:[1,25],7:$V3,17:$Va,18:$Vb,19:$Vc,20:$Vd,26:[1,24]}),{6:$V8,9:33,15:20,21:21,22:34},o($Ve,[2,7]),{6:[2,22]},{6:[2,20]},{6:[2,21]},o($V7,[2,30],{6:[1,35]}),{6:$V8,9:36,15:20,21:21,22:34},o($V6,[2,26]),o($Ve,$Vf),{3:15,4:$V0,5:$V1,6:[1,37],7:$V3},{6:[2,19]},{6:[2,15]},{6:[2,16]},{6:[2,17]},{6:[2,18]},{3:8,4:$V0,5:$V1,6:$Vg,7:$V3,8:26,16:27,17:$Va,18:$Vb,19:$Vc,20:$Vd},{3:8,4:$V0,5:$V1,6:$Vg,7:$V3,8:26,16:27,17:$Va,18:$Vb,19:$Vc,20:$Vd,26:[1,39]},{6:[2,23]},o($V6,$Vf),{3:8,4:$V0,5:$V1,6:$Vg,7:$V3,8:26,16:27,17:$Va,18:$Vb,19:$Vc,20:$Vd,26:[1,40]},o($Vh,$V9,{14:41,13:42,10:43,11:$Vi,12:$Vj}),o([4,5,6,7,17,18,19,20,26],$Vf),o($V6,[2,25]),o($V6,[2,24]),{6:[2,14],10:43,11:$Vi,12:$Vj,13:46},o($Vk,[2,12]),{3:8,4:$V0,5:$V1,6:$V2,7:$V3,8:47},o($Vh,[2,9]),o($Vh,[2,10]),o($Vk,[2,13]),{3:15,4:$V0,5:$V1,6:[1,48],7:$V3},o([4,5,7],$V9,{6:$Vl,11:$Vl,12:$Vl})],
-defaultActions: {13:[2,35],19:[2,22],20:[2,20],21:[2,21],27:[2,19],28:[2,15],29:[2,16],30:[2,17],31:[2,18],34:[2,23]},
+table: [{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:3,27:2,28:1},{1:[3]},{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:13,29:[1,12]},o($V5,[2,32]),o($V5,[2,30]),o([24,25,29],[2,31],{3:14,4:$V0,5:$V1,6:$V2}),o($V6,[2,26],{8:15,22:16,21:18,14:19,20:20,6:$V7}),o($V6,[2,27],{8:21,6:$V7}),o($V5,[2,4]),o($V5,[2,1]),o($V5,[2,2]),o($V5,$V8),{1:[2,34]},o($V5,[2,33]),o($V5,[2,5]),o([24,29],[2,28],{3:8,21:18,14:19,20:20,22:22,7:25,15:26,8:31,4:$V0,5:$V1,6:[1,24],16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,23]}),{6:$V7,8:32,14:19,20:20,21:33},o($Vd,[2,6]),{6:[2,21]},{6:[2,19]},{6:[2,20]},o($V6,[2,29],{6:[1,34]}),{6:$V7,8:35,14:19,20:20,21:33},o($V5,[2,25]),o($Vd,$Ve),{3:14,4:$V0,5:$V1,6:[1,36]},{6:[2,18]},{6:[2,14]},{6:[2,15]},{6:[2,16]},{6:[2,17]},{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc},{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,38]},{6:[2,22]},o($V5,$Ve),{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,39]},o($Vg,$V8,{13:40,12:41,9:42,10:$Vh,11:$Vi}),o([4,5,6,16,17,18,19,25],$Ve),o($V5,[2,24]),o($V5,[2,23]),{6:[2,13],9:42,10:$Vh,11:$Vi,12:45},o($Vj,[2,11]),{3:8,4:$V0,5:$V1,6:$V2,7:46},o($Vg,[2,8]),o($Vg,[2,9]),o($Vj,[2,12]),{3:14,4:$V0,5:$V1,6:[1,47]},o($Vj,[2,10],{4:$V8,5:$V8})],
+defaultActions: {12:[2,34],18:[2,21],19:[2,19],20:[2,20],26:[2,18],27:[2,14],28:[2,15],29:[2,16],30:[2,17],33:[2,22]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -2741,31 +2741,31 @@ options: {},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 25  //start tests block
+case 0:return 24  //start tests block
 break;
-case 1:return 26
+case 1:return 25
 break;
-case 2:return 17  //start text block
+case 2:return 16  //start text block
 break;
-case 3:return 18 //type "video" marker
+case 3:return 17 //type "video" marker
 break;
-case 4:return 19 //type "audio" marker
+case 4:return 18 //type "audio" marker
 break;
-case 5:return 20 //type "image" marker
+case 5:return 19 //type "image" marker
 break;
 case 6:return 6  //separator
 break;
 case 7:return 4
 break;
-case 8:return 11 //right answer marker
+case 8:return 10 //right answer marker
 break;
-case 9:return 12 //wrong answer marker
+case 9:return 11 //wrong answer marker
 break;
 case 10:return 5
 break;
-case 11:return 7
+case 11:return 'special_symbol'
 break;
-case 12:return 30
+case 12:return 29
 break;
 }
 },
