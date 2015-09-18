@@ -8,8 +8,6 @@
 
 [Демо](http://nightingale-studio.com/exam.js/)
 
->>>>>>> gh-pages
-
 ###Установка
 
 ```bash
