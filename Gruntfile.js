@@ -28,16 +28,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    mochaTest: {
-      test: {
-        options: {
-          reporter: 'spec',
-          quiet: false, // Optionally suppress output to standard out (defaults to false)
-          clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
-        },
-        src: ['test/**/*.js']
-      }
-    },
     concat: {
       build: {
         src: ['node_modules/markdown/lib/markdown.js', 'src/exam-question-manager.js', 'src/exam-translator.js', 'build/parser.js'],
@@ -56,6 +46,13 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       },
       all: ['src/**/*.js', 'test/**/*.js']
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        autoWatch: false,
+        singleRun: true
+      }
     }
   });
 
@@ -67,9 +64,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-jison');
+  grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('test', ['build', 'mochaTest']);
-  grunt.registerTask('build', ['clean', 'jshint', 'jison', 'concat', 'mochaTest', 'uglify']);
+  grunt.registerTask('test', ['karma']);
+  grunt.registerTask('build', ['clean', 'jshint', 'jison', 'concat', 'test','uglify']);
   grunt.registerTask('dev', ['watch']);
 };
 

@@ -20,8 +20,11 @@
     "markdown": true,
     "MathJax": true,
     "it": true,
-    "describe": true,
+    "expect": true,
     "ExamJS": true,
-    "beforeEach": true
+    "parser": true,
+    "beforeEach": true,
+    "describe": true,
+    "ExamjsTranslator": true
   }
 }
