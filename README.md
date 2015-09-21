@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/NightingaleStudio/exam.js.svg?branch=master)](https://travis-ci.org/NightingaleStudio/exam.js)
 [![Code Climate](https://codeclimate.com/github/NightingaleStudio/exam.js/badges/gpa.svg)](https://codeclimate.com/github/NightingaleStudio/exam.js)
 [![Test Coverage](https://codeclimate.com/github/NightingaleStudio/exam.js/badges/coverage.svg)](https://codeclimate.com/github/NightingaleStudio/exam.js/coverage)
+[![npm version](https://badge.fury.io/js/exam.js.svg)](http://badge.fury.io/js/exam.js)
 
 ###Exam.js - библиотека для написания интерактивных вопросов (тестов)
 
