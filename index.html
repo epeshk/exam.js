@@ -141,8 +141,13 @@ rel='stylesheet' type='text/css'>
     var update = function()
     {
       var source = editor.value;
+      try
+      {
         exam = parser.parse(source);
         resultDiv.innerHTML = exam.html;
+      }
+      catch (e)
+      {}
       exam.initQuestions();
       updateAnswers();
     }
