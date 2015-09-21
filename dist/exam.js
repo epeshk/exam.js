@@ -1963,13 +1963,13 @@ var ExamjsTranslator = (function() {
       html: '<div>' + answerData.answer + '</div>'
     });
   };
-  ExamjsTranslator.prototype._createTypedQuestion = function(question, type, answerGenerator) {
+  ExamjsTranslator.prototype._createTypedQuestion = function(question, inputType, answerGenerator) {
     var groupID = this._getGroupId();
     var self = this;
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
       return answerGenerator.call(self, {
         answer: a.answer,
-        inputType: type,
+        inputType: inputType,
         groupID: groupID,
         number: question.answers.indexOf(a) + 1
       });
