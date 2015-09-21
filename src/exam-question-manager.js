@@ -1,34 +1,18 @@
 'use strict';
 var QuestionManager = (function() {
   function QuestionManager(parsedSource) {
-    this.expressions = parsedSource.expressions;
-    this.questionsCount = parsedSource.questionsCount;
-    this.html = parsedSource.html;
+    if (parsedSource) {
+      this.expressions = parsedSource.expressions;
+      this.questionsCount = parsedSource.questionsCount;
+      this.html = parsedSource.html;
+    } else {
+      this.expressions = [];
+      this.questionsCount = 0;
+      this.html = '';
+    }
     this.answers = {};
   }
 
-  QuestionManager.prototype.getResults = function() {
-    var self = this,
-      answers = [],
-      rightAnswersCount = 0;
-
-    for (var i in self.answers) {
-      if (self.answers.hasOwnProperty(i)) {
-        var answer = self.answers[i];
-        answers.push(answer);
-        if (answer.isRight) {
-          rightAnswersCount++;
-        }
-      }
-    }
-
-    return {
-      questionsCount: self.questionsCount,
-      results: answers,
-      rightAnswersCount: rightAnswersCount,
-      percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
-    };
-  };
   QuestionManager.prototype.initQuestions = function() {
     var self = this;
     self.expressions.forEach(function(e) {
@@ -146,6 +130,35 @@ var QuestionManager = (function() {
     });
   };
 
+  /**
+   * Returns an answers' results
+   */
+  QuestionManager.prototype.getResults = function() {
+    var self = this,
+      answers = [],
+      rightAnswersCount = 0;
+
+    for (var i in self.answers) {
+      if (self.answers.hasOwnProperty(i)) {
+        var answer = self.answers[i];
+        answers.push(answer);
+        if (answer.isRight) {
+          rightAnswersCount++;
+        }
+      }
+    }
+
+    return {
+      questionsCount: self.questionsCount,
+      results: answers,
+      rightAnswersCount: rightAnswersCount,
+      percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
+    };
+  };
+
   return QuestionManager;
 })();
+if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+  exports.QuestionManager = QuestionManager;
+}
 

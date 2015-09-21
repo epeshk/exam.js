@@ -25,6 +25,7 @@
     "parser": true,
     "beforeEach": true,
     "describe": true,
-    "ExamjsTranslator": true
+    "ExamjsTranslator": true,
+    "QuestionManager": true
   }
 }
