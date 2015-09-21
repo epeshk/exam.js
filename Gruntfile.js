@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     watch: {
       dev: {
-        files: ['src/**/*', 'test/**/*js'],
+        files: ['karma.conf.js','src/**/*', 'test/**/*js'],
         tasks: ['clean', 'jshint', 'jison', 'concat', 'karma', 'notify:test']
       }
     },
