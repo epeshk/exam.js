@@ -21,66 +21,41 @@ var ExamjsTranslator = (function() {
   }
 
   function ExamjsTranslator() {
-    this.currentId = 0;
-    this.currentGroudId = 0;
-    this.currentMathId = 0;
-    this.currentType = '';
+    this._currentId = 0;
+    this._currentGroundId = 0;
+    this._currentMathId = 0;
+    this._currentType = '';
   }
 
-  ExamjsTranslator.prototype.getID = function() {
-    return 'exam-js-' + this.currentId++;
+  ExamjsTranslator.prototype._getId = function() {
+    return 'exam-js-' + this._currentId++;
   };
 
-  ExamjsTranslator.prototype.getGroudID = function() {
-    return 'exam-js-group-' + this.currentGroudId++;
+  ExamjsTranslator.prototype._getGroupId = function() {
+    return 'exam-js-group-' + this._currentGroundId++;
   };
-  ExamjsTranslator.prototype.getMathID = function() {
-    return 'exam-js-math-' + this.currentMathId++;
+  ExamjsTranslator.prototype._getMathId = function() {
+    return 'exam-js-math-' + this._currentMathId++;
   };
-  ExamjsTranslator.prototype.setCurrentType = function(type) {
-    this.currentType = type;
-  };
-  ExamjsTranslator.prototype.createQuestions = function(question) {
-    question.htmlID = this.getID();
-    question.onAnswer = function(e) {
-      this.checkAnswer(e);
-    };
-    if (this.currentType === 'TEXT') {
-      question.html = this.createTextQuestion(question);
-      return question;
-    } else if (this.currentType === 'VIDEO') {
-      question.html = this.createVideoQuestion(question);
-      return question;
-    } else if (this.currentType === 'AUDIO') {
-      question.html = this.createAudioQuestion(question);
-      return question;
-    } else if (this.currentType === 'IMAGE') {
-      question.html = this.createImageQuestion(question);
-      return question;
-    } else {
-      throw new Error('Wrong section type!');
-    }
-  };
-  ExamjsTranslator.prototype._createYoutubeHtml = function(youtubeLink){
+  ExamjsTranslator.prototype._createYoutubeHtml = function(youtubeLink) {
     var idx = youtubeLink.lastIndexOf('/');
     var youtubeId = youtubeLink.substring(idx + 1);
     return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
   };
   ExamjsTranslator.prototype._createAnswerHtml = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
-    var tmpId = this.getID();
+    var tmpId = this._getId();
     return '<div class="' + answerClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + type + '" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="' + dataType + '"/> ' + answerNumber + ')' + '</div>' + '<div class="exam-js-answer">' + answerHTML + '</div></div></div>';
   };
   ExamjsTranslator.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><img src="' + answer.answer + '" class="exam-js-img"/></div>';
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html);
-  };
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html); };
   ExamjsTranslator.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><audio controls src="' + answer.answer + '" preload="none"/></div>';
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
   };
   ExamjsTranslator.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div>';
-    if(answer.answer.indexOf('youtu') >= 0){
+    if (answer.answer.indexOf('youtu') >= 0) {
       html = this._createYoutubeHtml(answer.answer);
     }
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
@@ -90,7 +65,7 @@ var ExamjsTranslator = (function() {
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
   };
   ExamjsTranslator.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
-    var groupID = this.getGroudID();
+    var groupID = this._getGroupId();
     var self = this;
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
       return answerGenerator.call(self, a, type, groupID, (question.answers.indexOf(a) + 1));
@@ -149,6 +124,30 @@ var ExamjsTranslator = (function() {
 
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
   };
+  ExamjsTranslator.prototype.setCurrentType = function(type) {
+    this._currentType = type;
+  };
+  ExamjsTranslator.prototype.createQuestions = function(question) {
+    question.htmlID = this._getId();
+    question.onAnswer = function(e) {
+      this.checkAnswer(e);
+    };
+    if (this._currentType === 'TEXT') {
+      question.html = this.createTextQuestion(question);
+      return question;
+    } else if (this._currentType === 'VIDEO') {
+      question.html = this.createVideoQuestion(question);
+      return question;
+    } else if (this._currentType === 'AUDIO') {
+      question.html = this.createAudioQuestion(question);
+      return question;
+    } else if (this._currentType === 'IMAGE') {
+      question.html = this.createImageQuestion(question);
+      return question;
+    } else {
+      throw new Error('Wrong section type!');
+    }
+  };
   ExamjsTranslator.prototype.parseMarkdown = function(phrase) {
     var self = this,
       regexp = /\{\{[^\}\}]*\}\}/gi,
@@ -157,7 +156,7 @@ var ExamjsTranslator = (function() {
     var tmpMatches = phrase.match(regexp);
     if (tmpMatches && tmpMatches.length && tmpMatches.length > 0) {
       tmpMatches.forEach(function(match) {
-        var mock = self.getMathID();
+        var mock = self._getMathId();
         matches[mock] = match;
         phrase = phrase.replace(match, mock);
       });

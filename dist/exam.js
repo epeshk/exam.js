@@ -1899,66 +1899,41 @@ var ExamjsTranslator = (function() {
   }
 
   function ExamjsTranslator() {
-    this.currentId = 0;
-    this.currentGroudId = 0;
-    this.currentMathId = 0;
-    this.currentType = '';
+    this._currentId = 0;
+    this._currentGroundId = 0;
+    this._currentMathId = 0;
+    this._currentType = '';
   }
 
-  ExamjsTranslator.prototype.getID = function() {
-    return 'exam-js-' + this.currentId++;
+  ExamjsTranslator.prototype._getId = function() {
+    return 'exam-js-' + this._currentId++;
   };
 
-  ExamjsTranslator.prototype.getGroudID = function() {
-    return 'exam-js-group-' + this.currentGroudId++;
+  ExamjsTranslator.prototype._getGroupId = function() {
+    return 'exam-js-group-' + this._currentGroundId++;
   };
-  ExamjsTranslator.prototype.getMathID = function() {
-    return 'exam-js-math-' + this.currentMathId++;
+  ExamjsTranslator.prototype._getMathId = function() {
+    return 'exam-js-math-' + this._currentMathId++;
   };
-  ExamjsTranslator.prototype.setCurrentType = function(type) {
-    this.currentType = type;
-  };
-  ExamjsTranslator.prototype.createQuestions = function(question) {
-    question.htmlID = this.getID();
-    question.onAnswer = function(e) {
-      this.checkAnswer(e);
-    };
-    if (this.currentType === 'TEXT') {
-      question.html = this.createTextQuestion(question);
-      return question;
-    } else if (this.currentType === 'VIDEO') {
-      question.html = this.createVideoQuestion(question);
-      return question;
-    } else if (this.currentType === 'AUDIO') {
-      question.html = this.createAudioQuestion(question);
-      return question;
-    } else if (this.currentType === 'IMAGE') {
-      question.html = this.createImageQuestion(question);
-      return question;
-    } else {
-      throw new Error('Wrong section type!');
-    }
-  };
-  ExamjsTranslator.prototype._createYoutubeHtml = function(youtubeLink){
+  ExamjsTranslator.prototype._createYoutubeHtml = function(youtubeLink) {
     var idx = youtubeLink.lastIndexOf('/');
     var youtubeId = youtubeLink.substring(idx + 1);
     return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
   };
   ExamjsTranslator.prototype._createAnswerHtml = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
-    var tmpId = this.getID();
+    var tmpId = this._getId();
     return '<div class="' + answerClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + type + '" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="' + dataType + '"/> ' + answerNumber + ')' + '</div>' + '<div class="exam-js-answer">' + answerHTML + '</div></div></div>';
   };
   ExamjsTranslator.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><img src="' + answer.answer + '" class="exam-js-img"/></div>';
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html);
-  };
+    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html); };
   ExamjsTranslator.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><audio controls src="' + answer.answer + '" preload="none"/></div>';
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
   };
   ExamjsTranslator.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
     var html = '<div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div>';
-    if(answer.answer.indexOf('youtu') >= 0){
+    if (answer.answer.indexOf('youtu') >= 0) {
       html = this._createYoutubeHtml(answer.answer);
     }
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
@@ -1968,7 +1943,7 @@ var ExamjsTranslator = (function() {
     return this._createAnswerHtml(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
   };
   ExamjsTranslator.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
-    var groupID = this.getGroudID();
+    var groupID = this._getGroupId();
     var self = this;
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
       return answerGenerator.call(self, a, type, groupID, (question.answers.indexOf(a) + 1));
@@ -2027,6 +2002,30 @@ var ExamjsTranslator = (function() {
 
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
   };
+  ExamjsTranslator.prototype.setCurrentType = function(type) {
+    this._currentType = type;
+  };
+  ExamjsTranslator.prototype.createQuestions = function(question) {
+    question.htmlID = this._getId();
+    question.onAnswer = function(e) {
+      this.checkAnswer(e);
+    };
+    if (this._currentType === 'TEXT') {
+      question.html = this.createTextQuestion(question);
+      return question;
+    } else if (this._currentType === 'VIDEO') {
+      question.html = this.createVideoQuestion(question);
+      return question;
+    } else if (this._currentType === 'AUDIO') {
+      question.html = this.createAudioQuestion(question);
+      return question;
+    } else if (this._currentType === 'IMAGE') {
+      question.html = this.createImageQuestion(question);
+      return question;
+    } else {
+      throw new Error('Wrong section type!');
+    }
+  };
   ExamjsTranslator.prototype.parseMarkdown = function(phrase) {
     var self = this,
       regexp = /\{\{[^\}\}]*\}\}/gi,
@@ -2035,7 +2034,7 @@ var ExamjsTranslator = (function() {
     var tmpMatches = phrase.match(regexp);
     if (tmpMatches && tmpMatches.length && tmpMatches.length > 0) {
       tmpMatches.forEach(function(match) {
-        var mock = self.getMathID();
+        var mock = self._getMathId();
         matches[mock] = match;
         phrase = phrase.replace(match, mock);
       });
@@ -2134,18 +2133,18 @@ if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,11],$V3=[1,6],$V4=[1,7],$V5=[4,5,6,24,25,29],$V6=[4,5,24,25,29],$V7=[1,17],$V8=[2,3],$V9=[1,27],$Va=[1,28],$Vb=[1,29],$Vc=[1,30],$Vd=[4,5,6,16,17,18,19,24,25,29],$Ve=[2,7],$Vf=[1,37],$Vg=[4,5,6],$Vh=[1,43],$Vi=[1,44],$Vj=[6,10,11];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,9],$V1=[1,10],$V2=[1,11],$V3=[1,6],$V4=[1,7],$V5=[4,5,6,24,25,29],$V6=[4,5,24,25,29],$V7=[1,17],$V8=[1,22],$V9=[1,23],$Va=[1,24],$Vb=[1,25],$Vc=[2,3],$Vd=[4,5,6,16,17,18,19,24,25,29],$Ve=[2,6],$Vf=[6,16,17,18,19],$Vg=[1,35],$Vh=[2,7],$Vi=[2,19],$Vj=[1,40],$Vk=[1,46],$Vl=[1,47],$Vm=[6,10,11,16,17,18,19],$Vn=[4,5,6];
 var parser = {trace: function trace() { },
 yy: {},
 symbols_: {"error":2,"symbol":3,"SP":4,"char":5,"SEP":6,"phrase":7,"empty_lines":8,"AM":9,"+":10,"-":11,"answer":12,"answers":13,"question":14,"type":15,"TEXT":16,"VIDEO":17,"AUDIO":18,"IMAGE":19,"type_marker":20,"test_block":21,"test_blocks":22,"tests_section":23,"TESTS":24,"TESTS_END":25,"statement":26,"source":27,"file":28,"EOF":29,"$accept":0,"$end":1},
 terminals_: {2:"error",4:"SP",5:"char",6:"SEP",10:"+",11:"-",16:"TEXT",17:"VIDEO",18:"AUDIO",19:"IMAGE",24:"TESTS",25:"TESTS_END",29:"EOF"},
-productions_: [0,[3,1],[3,1],[3,1],[7,1],[7,2],[8,1],[8,2],[9,1],[9,1],[12,3],[13,1],[13,2],[14,4],[15,1],[15,1],[15,1],[15,1],[20,2],[21,1],[21,1],[22,1],[22,2],[23,5],[23,4],[23,3],[23,1],[23,1],[23,2],[23,2],[26,1],[26,1],[27,1],[27,2],[28,2]],
+productions_: [0,[3,1],[3,1],[3,1],[7,1],[7,2],[8,1],[8,2],[9,1],[9,1],[12,3],[13,1],[13,2],[14,4],[15,1],[15,1],[15,1],[15,1],[20,1],[20,2],[21,1],[21,1],[22,1],[22,2],[23,5],[23,4],[23,3],[23,1],[23,1],[23,2],[23,2],[26,1],[26,1],[27,1],[27,2],[28,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: case 2: case 3: case 18: case 30:
+case 1: case 2: case 3: case 18: case 19: case 31:
 this.$ = $$[$0]
 break;
 case 4:
@@ -2184,13 +2183,13 @@ break;
 case 17:
 this.$ = 'IMAGE'
 break;
-case 19:
+case 20:
 this.$ = _examjsTranslator.createQuestions($$[$0])
 break;
-case 20:
+case 21:
 _examjsTranslator.setCurrentType($$[$0])
 break;
-case 21:
+case 22:
 
       if($$[$0].html){
         this.$ = {questions: [$$[$0]]};
@@ -2199,23 +2198,23 @@ case 21:
       }
     
 break;
-case 22:
+case 23:
 
       if($$[$0].html){
         this.$.questions.push($$[$0]);
       }
     
 break;
-case 23: case 24:
+case 24: case 25:
 this.$ = {questions: $$[$0-2].questions, type: 'tests-section'}
 break;
-case 25: case 26: case 27: case 28: case 29:
+case 26: case 27: case 28: case 29: case 30:
 this.$ = {questions: [], type: 'tests-section'}
 break;
-case 31:
+case 32:
 this.$ = _examjsTranslator.parseMarkdown($$[$0])
 break;
-case 32:
+case 33:
 
       if($$[$0].type === 'tests-section'){
         var tmpHtml = '',
@@ -2240,7 +2239,7 @@ case 32:
       }
     
 break;
-case 33:
+case 34:
 
       if($$[$0].type === 'tests-section'){
         var questionsCount = 0;
@@ -2258,15 +2257,15 @@ case 33:
       this.$ = $$[$0-1];
     
 break;
-case 34:
+case 35:
 
       return new QuestionManager($$[$0-1]);
     
 break;
 }
 },
-table: [{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:3,27:2,28:1},{1:[3]},{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:13,29:[1,12]},o($V5,[2,32]),o($V5,[2,30]),o([24,25,29],[2,31],{3:14,4:$V0,5:$V1,6:$V2}),o($V6,[2,26],{8:15,22:16,21:18,14:19,20:20,6:$V7}),o($V6,[2,27],{8:21,6:$V7}),o($V5,[2,4]),o($V5,[2,1]),o($V5,[2,2]),o($V5,$V8),{1:[2,34]},o($V5,[2,33]),o($V5,[2,5]),o([24,29],[2,28],{3:8,21:18,14:19,20:20,22:22,7:25,15:26,8:31,4:$V0,5:$V1,6:[1,24],16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,23]}),{6:$V7,8:32,14:19,20:20,21:33},o($Vd,[2,6]),{6:[2,21]},{6:[2,19]},{6:[2,20]},o($V6,[2,29],{6:[1,34]}),{6:$V7,8:35,14:19,20:20,21:33},o($V5,[2,25]),o($Vd,$Ve),{3:14,4:$V0,5:$V1,6:[1,36]},{6:[2,18]},{6:[2,14]},{6:[2,15]},{6:[2,16]},{6:[2,17]},{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc},{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,38]},{6:[2,22]},o($V5,$Ve),{3:8,4:$V0,5:$V1,6:$Vf,7:25,15:26,16:$V9,17:$Va,18:$Vb,19:$Vc,25:[1,39]},o($Vg,$V8,{13:40,12:41,9:42,10:$Vh,11:$Vi}),o([4,5,6,16,17,18,19,25],$Ve),o($V5,[2,24]),o($V5,[2,23]),{6:[2,13],9:42,10:$Vh,11:$Vi,12:45},o($Vj,[2,11]),{3:8,4:$V0,5:$V1,6:$V2,7:46},o($Vg,[2,8]),o($Vg,[2,9]),o($Vj,[2,12]),{3:14,4:$V0,5:$V1,6:[1,47]},o($Vj,[2,10],{4:$V8,5:$V8})],
-defaultActions: {12:[2,34],18:[2,21],19:[2,19],20:[2,20],26:[2,18],27:[2,14],28:[2,15],29:[2,16],30:[2,17],33:[2,22]},
+table: [{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:3,27:2,28:1},{1:[3]},{3:8,4:$V0,5:$V1,6:$V2,7:5,23:4,24:$V3,25:$V4,26:13,29:[1,12]},o($V5,[2,33]),o($V5,[2,31]),o([24,25,29],[2,32],{3:14,4:$V0,5:$V1,6:$V2}),o($V6,[2,27],{8:15,22:16,21:18,14:19,20:20,15:21,6:$V7,16:$V8,17:$V9,18:$Va,19:$Vb}),o($V6,[2,28],{8:26,6:$V7}),o($V5,[2,4]),o($V5,[2,1]),o($V5,[2,2]),o($V5,$Vc),{1:[2,35]},o($V5,[2,34]),o($V5,[2,5]),o([24,29],[2,29],{3:8,21:18,14:19,20:20,22:27,7:30,15:31,8:32,4:$V0,5:$V1,6:[1,29],16:$V8,17:$V9,18:$Va,19:$Vb,25:[1,28]}),{6:$V7,8:33,14:19,15:21,16:$V8,17:$V9,18:$Va,19:$Vb,20:20,21:34},o($Vd,$Ve),o($Vf,[2,22]),o($Vf,[2,20]),o($Vf,[2,21]),o($Vf,[2,18]),o($Vf,[2,14]),o($Vf,[2,15]),o($Vf,[2,16]),o($Vf,[2,17]),o($V6,[2,30],{6:$Vg}),{6:$V7,8:36,14:19,15:21,16:$V8,17:$V9,18:$Va,19:$Vb,20:20,21:34},o($V5,[2,26]),o($Vd,$Vh),{3:14,4:$V0,5:$V1,6:[1,38],8:37},o($Vf,$Vi),{3:8,4:$V0,5:$V1,6:$Vj,7:30,15:39,16:$V8,17:$V9,18:$Va,19:$Vb},{3:8,4:$V0,5:$V1,6:$Vj,7:30,15:39,16:$V8,17:$V9,18:$Va,19:$Vb,25:[1,41]},o($Vf,[2,23]),o([4,5,6,10,11,24,25,29],$Vh),{3:8,4:$V0,5:$V1,6:$Vj,7:30,15:39,16:$V8,17:$V9,18:$Va,19:$Vb,25:[1,42]},{6:$Vg,9:45,10:$Vk,11:$Vl,12:44,13:43},o([4,5,6,10,11],$Ve),o($Vf,$Vi),o([4,5,6,16,17,18,19,25],$Vh),o($V5,[2,25]),o($V5,[2,24]),o($Vf,[2,13],{9:45,12:48,10:$Vk,11:$Vl}),o($Vm,[2,11]),{3:8,4:$V0,5:$V1,6:$V2,7:49},o($Vn,[2,8]),o($Vn,[2,9]),o($Vm,[2,12]),{3:14,4:$V0,5:$V1,6:[1,50]},o($Vm,[2,10],{4:$Vc,5:$Vc})],
+defaultActions: {12:[2,35]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);

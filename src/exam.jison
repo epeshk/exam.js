@@ -65,7 +65,7 @@ answers
   ;
 
 question
-  : empty_lines phrase 'SEP' answers
+  : empty_lines phrase empty_lines answers
     {$$ = {question: $2, answers: $4.answers}}
   ;
 
@@ -81,7 +81,9 @@ type
   ;
 
 type_marker
-  : empty_lines type
+  : type
+    {$$ = $1}
+  | empty_lines type
     {$$ = $2}
   ;
 
