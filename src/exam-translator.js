@@ -44,17 +44,28 @@ var ExamjsTranslator = (function() {
   };
   ExamjsTranslator.prototype._createAnswerHtml = function(answerData, htmlMeta) {
     var tmpId = this._getId();
-    return '<div class="' + htmlMeta.answerCssClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + answerData.inputType + '" name="' + answerData.groupID + '" class="exam-js-input" data-answer="' + answerData.answer + '" data-answer-type="' + answerData.type + '"/> ' + answerData.number + ')' + '</div>' + '<div class="exam-js-answer">' + htmlMeta.html + '</div></div></div>';
+    return '<div class="' + htmlMeta.answerCssClass + '">' +
+      '<div class="exam-js-answer-container"><div class="exam-js-answer-number">' +
+      '<input id="' + tmpId + '" type="' + answerData.inputType + '" name="' +
+      answerData.groupID + '" class="exam-js-input" data-answer="' + answerData.answer +
+      '" data-answer-type="' + answerData.type + '"/> ' +
+      answerData.number + ')' + '</div>' + '<div class="exam-js-answer">' + htmlMeta.html + '</div></div></div>';
   };
   ExamjsTranslator.prototype._createImgAnswer = function(answerData) {
     var html = '<div><img src="' + answerData.answer + '" class="exam-js-img"/></div>';
     answerData.type = 'image';
-    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-img-question', html: html});
+    return this._createAnswerHtml(answerData, {
+      answerCssClass: 'exam-js-img-question',
+      html: html
+    });
   };
   ExamjsTranslator.prototype._createAudioAnswer = function(answerData) {
-    var html = '<div><audio controls src="' +answerData.answer + '" preload="none"/></div>';
+    var html = '<div><audio controls src="' + answerData.answer + '" preload="none"/></div>';
     answerData.type = 'audio';
-    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-media-question', html: html});
+    return this._createAnswerHtml(answerData, {
+      answerCssClass: 'exam-js-media-question',
+      html: html
+    });
   };
   ExamjsTranslator.prototype._createVideoAnswer = function(answerData) {
     var html = '<div><video controls width="400" height="300" src="' + answerData.answer + '" preload="none" class="exam-js-video-answer"/></div>';
@@ -62,7 +73,10 @@ var ExamjsTranslator = (function() {
     if (answerData.answer.indexOf('youtu') >= 0) {
       html = this._createYoutubeHtml(answerData.answer);
     }
-    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-media-question', html: html});
+    return this._createAnswerHtml(answerData, {
+      answerCssClass: 'exam-js-media-question',
+      html: html
+    });
   };
   ExamjsTranslator.prototype._createTextAnswer = function(answerData) {
     answerData.type = 'text';
