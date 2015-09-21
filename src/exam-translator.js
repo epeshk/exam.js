@@ -42,72 +42,80 @@ var ExamjsTranslator = (function() {
     var youtubeId = youtubeLink.substring(idx + 1);
     return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
   };
-  ExamjsTranslator.prototype._createAnswerHtml = function(answer, type, groupID, answerNumber, dataType, answerClass, answerHTML) {
+  ExamjsTranslator.prototype._createAnswerHtml = function(answerData, htmlMeta) {
     var tmpId = this._getId();
-    return '<div class="' + answerClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + type + '" name="' + groupID + '" class="exam-js-input" data-answer="' + answer.answer + '" data-answer-type="' + dataType + '"/> ' + answerNumber + ')' + '</div>' + '<div class="exam-js-answer">' + answerHTML + '</div></div></div>';
+    return '<div class="' + htmlMeta.answerCssClass + '"><div class="exam-js-answer-container"><div class="exam-js-answer-number"><input id="' + tmpId + '" type="' + answerData.type + '" name="' + answerData.groupID + '" class="exam-js-input" data-answer="' + answerData.answer + '" data-answer-type="' + answerData.type + '"/> ' + answerData.number + ')' + '</div>' + '<div class="exam-js-answer">' + htmlMeta.html + '</div></div></div>';
   };
-  ExamjsTranslator.prototype.createImgAnswer = function(answer, type, groupID, answerNumber) {
-    var html = '<div><img src="' + answer.answer + '" class="exam-js-img"/></div>';
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'image', 'exam-js-img-question', html); };
-  ExamjsTranslator.prototype.createAudioAnswer = function(answer, type, groupID, answerNumber) {
-    var html = '<div><audio controls src="' + answer.answer + '" preload="none"/></div>';
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'audio', 'exam-js-media-question', html);
+  ExamjsTranslator.prototype._createImgAnswer = function(answerData) {
+    var html = '<div><img src="' + answerData.answer + '" class="exam-js-img"/></div>';
+    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-img-question', html: html});
   };
-  ExamjsTranslator.prototype.createVideoAnswer = function(answer, type, groupID, answerNumber) {
-    var html = '<div><video controls width="400" height="300" src="' + answer.answer + '" preload="none" class="exam-js-video-answer"/></div>';
-    if (answer.answer.indexOf('youtu') >= 0) {
-      html = this._createYoutubeHtml(answer.answer);
+  ExamjsTranslator.prototype._createAudioAnswer = function(answerData) {
+    var html = '<div><audio controls src="' +answerData.answer + '" preload="none"/></div>';
+    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-media-question', html: html});
+  };
+  ExamjsTranslator.prototype._createVideoAnswer = function(answerData) {
+    var html = '<div><video controls width="400" height="300" src="' + answerData.answer + '" preload="none" class="exam-js-video-answer"/></div>';
+    if (answerData.answer.indexOf('youtu') >= 0) {
+      html = this._createYoutubeHtml(answerData.answer);
     }
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'video', 'exam-js-media-question', html);
+    return this._createAnswerHtml(answerData,{answerCssClass: 'exam-js-media-quesion', html: html});
   };
-  ExamjsTranslator.prototype.createTextAnswer = function(answer, type, groupID, answerNumber) {
-    var html = '<div>' + answer.answer + '</div>';
-    return this._createAnswerHtml(answer, type, groupID, answerNumber, 'text', 'exam-js-text-question', html);
+  ExamjsTranslator.prototype._createTextAnswer = function(answerData) {
+    return this._createAnswerHtml(answerData, {
+      answerCssClass: 'exam-js-text-question',
+      html: '<div>' + answerData.answer.answer + '</div>'
+    });
   };
-  ExamjsTranslator.prototype.createMediaTypedQuestion = function(question, type, answerGenerator) {
+  ExamjsTranslator.prototype._createTypedQuestion = function(question, type, answerGenerator) {
     var groupID = this._getGroupId();
     var self = this;
     return '<form id="' + question.htmlID + '" class="exam-js-question">' + '<div>' + question.question + '</div><div>' + question.answers.map(function(a) {
-      return answerGenerator.call(self, a, type, groupID, (question.answers.indexOf(a) + 1));
+      return answerGenerator.call(self, {
+        answer: a.answer,
+        type: type,
+        groupID: groupID,
+        number: question.answers.indexOf(a) + 1
+      });
     }).reduce(function(a, b) {
       return a + b;
     }) + '</div></form>';
   };
-  ExamjsTranslator.prototype.createMediaQuestion = function(question, answerGenerator) {
+  ExamjsTranslator.prototype._createMediaQuesion = function(question, answerGenerator) {
     var rightAnswersCount = question.answers.filter(function(a) {
       return a.isRight;
     }).length;
     if (question.answers.length > 1 && rightAnswersCount > 1) {
-      return this.createMediaTypedQuestion(question, 'checkbox', answerGenerator);
+      return this._createTypedQuestion(question, 'checkbox', answerGenerator);
     } else if (question.answers.length > 1 && rightAnswersCount === 1) {
-      return this.createMediaTypedQuestion(question, 'radio', answerGenerator);
+      return this._createTypedQuestion(question, 'radio', answerGenerator);
     } else {
       throw new Error('Unknown media question type!');
     }
   };
-  ExamjsTranslator.prototype.createVideoQuestion = function(question, answers) {
-    return this.createMediaQuestion(question, this.createVideoAnswer);
+  ExamjsTranslator.prototype._createVideoQuestion = function(question, answers) {
+    return this._createMediaQuesion(question, this._createVideoAnswer);
   };
-  ExamjsTranslator.prototype.createImageQuestion = function(question) {
-    return this.createMediaQuestion(question, this.createImgAnswer);
+  ExamjsTranslator.prototype._createImageQuestion = function(question) {
+    return this._createMediaQuesion(question, this._createImgAnswer);
   };
-  ExamjsTranslator.prototype.createAudioQuestion = function(question) {
-    return this.createMediaQuestion(question, this.createAudioAnswer);
+  ExamjsTranslator.prototype._createAudioQuestion = function(question) {
+    return this._createMediaQuesion(question, this._createAudioAnswer);
   };
   ExamjsTranslator.prototype.createComplexTextQuestion = function(question) {
-    return this.createMediaQuestion(question, this.createTextAnswer);
+    return this._createMediaQuesion(question, this._createTextAnswer);
   };
-  ExamjsTranslator.prototype.createTextQuestion = function(question) {
+  ExamjsTranslator.prototype._createTextQuestion = function(question) {
     if (question.answers.length === 1) {
-      return this.createInput(question);
+      return this._createInput(question);
     } else {
       return this.createComplexTextQuestion(question);
     }
   };
-  ExamjsTranslator.prototype.createInput = function(question) {
+  ExamjsTranslator.prototype._createInput = function(question) {
     return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></form>';
   };
-  ExamjsTranslator.prototype.createList = function(question) {
+  ExamjsTranslator.prototype._createList = function(question) {
     var answersHtml = question.answers.map(function(a) {
       return '<option value="' + a.answer + '">' + a.answer + '</option>\n';
     }).reduce(function(a, b) {
@@ -115,7 +123,7 @@ var ExamjsTranslator = (function() {
     });
     return '<div><form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form><div>';
   };
-  ExamjsTranslator.prototype.createCheckbox = function(question) {
+  ExamjsTranslator.prototype._createCheckbox = function(question) {
     var answersHtml = question.answers.map(function(a) {
       return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
     }).reduce(function(a, b) {
@@ -133,16 +141,16 @@ var ExamjsTranslator = (function() {
       this.checkAnswer(e);
     };
     if (this._currentType === 'TEXT') {
-      question.html = this.createTextQuestion(question);
+      question.html = this._createTextQuestion(question);
       return question;
     } else if (this._currentType === 'VIDEO') {
-      question.html = this.createVideoQuestion(question);
+      question.html = this._createVideoQuestion(question);
       return question;
     } else if (this._currentType === 'AUDIO') {
-      question.html = this.createAudioQuestion(question);
+      question.html = this._createAudioQuestion(question);
       return question;
     } else if (this._currentType === 'IMAGE') {
-      question.html = this.createImageQuestion(question);
+      question.html = this._createImageQuestion(question);
       return question;
     } else {
       throw new Error('Wrong section type!');

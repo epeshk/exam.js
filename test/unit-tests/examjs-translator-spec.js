@@ -18,9 +18,7 @@ describe('ExamjsTranslator', function() {
 
   describe('_createAnswerHtml', function() {
     it('should properly creates base part of result answers\' html', function() {
-      var result = transtaltor._createAnswerHtml({
-        answer: 'test'
-      }, 'text', '123', 1, 'text', 'test-class', '<div></div>');
+      var result = transtaltor._createAnswerHtml({answer: 'test', type: 'text', groupID: 123, number: 1}, {answerCssClass: 'test-class',html: '<div></div>'});
 
       assert.equal(result, '<div class=\"test-class\"><div class=\"exam-js-answer-container\"><div class=\"exam-js-answer-number\"><input id=\"exam-js-0\" type=\"text\" name=\"123\" class=\"exam-js-input\" data-answer=\"test\" data-answer-type=\"text\"/> 1)</div><div class=\"exam-js-answer\"><div></div></div></div></div>');
     });
