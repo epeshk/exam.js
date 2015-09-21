@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      target: ['dist']
+      target: ['dist','build']
     },
     notify: {
       test: {

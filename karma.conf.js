@@ -23,7 +23,9 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {},
+    preprocessors: {
+      'dist/exam.js': ['coverage']
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -51,10 +53,12 @@ module.exports = function(config) {
     ],
     coverageReporter: {
       // specify a common output directory
-      dir: 'build/reports/coverage',
+      dir: 'build/',
       reporters: [
         {
           type: 'lcov',
+          subdir: 'coverage',
+          file: 'lcov.info'
         },
       ]
     },
