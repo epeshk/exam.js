@@ -2011,23 +2011,6 @@ var ExamjsTranslator = (function() {
   ExamjsTranslator.prototype._createInput = function(question) {
     return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></form>';
   };
-  ExamjsTranslator.prototype._createList = function(question) {
-    var answersHtml = question.answers.map(function(a) {
-      return '<option value="' + a.answer + '">' + a.answer + '</option>\n';
-    }).reduce(function(a, b) {
-      return a + b;
-    });
-    return '<div><form class="exam-js-question">' + question.question + '<select id="' + question.htmlID + '" class="exam-js-input">' + '<option></option>' + answersHtml + '</select></form><div>';
-  };
-  ExamjsTranslator.prototype._createCheckbox = function(question) {
-    var answersHtml = question.answers.map(function(a) {
-      return '<div><input type="checkbox" data-answer="' + a.answer + '" class="exam-js-text-checkbox" data-answer-type="text">  ' + a.answer + '</input></div>';
-    }).reduce(function(a, b) {
-      return a + b;
-    });
-
-    return '<form id="' + question.htmlID + '" class="exam-js-question">' + question.question + answersHtml + '</form>';
-  };
   ExamjsTranslator.prototype.setCurrentType = function(type) {
     this._currentType = type;
   };
