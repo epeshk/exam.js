@@ -38,7 +38,7 @@ var QuestionManager = (function() {
       window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
     }
   };
-  QuestionManager.prototype.checkInputAnswer = function(e) {
+  QuestionManager.prototype._checkInputAnswer = function(e) {
     var self = this,
       value = e.target.value;
     self.getQuestionByHtmlID(e.target.id, function(question) {
@@ -51,7 +51,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype.checkComplexAnswer = function(e) {
+  QuestionManager.prototype._checkComplexAnswer = function(e) {
     var self = this,
       id = e.target.form.id,
       childNodes = e.target.form.elements;
@@ -70,7 +70,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype.checkSelectAnswer = function(e) {
+  QuestionManager.prototype._checkSelectAnswer = function(e) {
     var self = this;
     var id = e.target.id;
     var answer = e.target.selectedOptions[0].value;
@@ -84,12 +84,13 @@ var QuestionManager = (function() {
   };
   QuestionManager.prototype.checkAnswer = function(e) {
     var self = this;
-    if (e.target.type === 'text') {
-      self.checkInputAnswer(e);
-    } else if (e.target.type === 'checkbox' || e.target.type === 'radio') {
-      self.checkComplexAnswer(e);
-    } else if (e.target.type === 'select-one') {
-      self.checkSelectAnswer(e);
+    var type = e.target.type;
+    if (type === 'text') {
+      self._checkInputAnswer(e);
+    } else if (type === 'checkbox' || type === 'radio') {
+      self._checkComplexAnswer(e);
+    } else if (type === 'select-one') {
+      self._checkSelectAnswer(e);
     }
   };
   QuestionManager.prototype.createAnswerObject = function(question, answers) {
