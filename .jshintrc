@@ -21,10 +21,12 @@
     "MathJax": true,
     "it": true,
     "expect": true,
+    "spyOn": true,
     "ExamJS": true,
     "parser": true,
     "beforeEach": true,
     "describe": true,
-    "ExamjsTranslator": true
+    "ExamjsTranslator": true,
+    "QuestionManager": true
   }
 }

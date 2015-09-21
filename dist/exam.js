@@ -1727,47 +1727,36 @@ function merge_text_nodes( jsonml ) {
 'use strict';
 var QuestionManager = (function() {
   function QuestionManager(parsedSource) {
-    this.expressions = parsedSource.expressions;
-    this.questionsCount = parsedSource.questionsCount;
-    this.html = parsedSource.html;
+    if (parsedSource) {
+      this.expressions = parsedSource.expressions;
+      this.questionsCount = parsedSource.questionsCount;
+      this.html = parsedSource.html;
+    } else {
+      this.expressions = [];
+      this.questionsCount = 0;
+      this.html = '';
+    }
     this.answers = {};
   }
 
-  QuestionManager.prototype.getResults = function() {
-    var self = this,
-      answers = [],
-      rightAnswersCount = 0;
-
-    for (var i in self.answers) {
-      if (self.answers.hasOwnProperty(i)) {
-        var answer = self.answers[i];
-        answers.push(answer);
-        if (answer.isRight) {
-          rightAnswersCount++;
-        }
+  QuestionManager.prototype._bindEvent = function(htmlNode, callback) {
+    var self = this;
+    if (htmlNode) {
+      if (htmlNode.type === 'text') {
+        htmlNode.onkeyup = callback.bind(self);
+      } else {
+        htmlNode.onchange = callback.bind(self);
       }
     }
-
-    return {
-      questionsCount: self.questionsCount,
-      results: answers,
-      rightAnswersCount: rightAnswersCount,
-      percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
-    };
   };
+
   QuestionManager.prototype.initQuestions = function() {
     var self = this;
     self.expressions.forEach(function(e) {
       if (e.questions) {
         e.questions.forEach(function(q) {
           var elem = document.getElementById(q.htmlID);
-          if (elem) {
-            if (elem.type === 'text') {
-              elem.onkeyup = q.onAnswer.bind(self);
-            } else {
-              elem.onchange = q.onAnswer.bind(self);
-            }
-          }
+          self._bindEvent(elem, q.onAnswer);
         });
       }
     });
@@ -1775,17 +1764,7 @@ var QuestionManager = (function() {
       window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
     }
   };
-  QuestionManager.prototype.checkAnswer = function(e) {
-    var self = this;
-    if (e.target.type === 'text') {
-      self.checkInputAnswer(e);
-    } else if (e.target.type === 'checkbox' || e.target.type === 'radio') {
-      self.checkComplexAnswer(e);
-    } else if (e.target.type === 'select-one') {
-      self.checkSelectAnswer(e);
-    }
-  };
-  QuestionManager.prototype.checkInputAnswer = function(e) {
+  QuestionManager.prototype._checkInputAnswer = function(e) {
     var self = this,
       value = e.target.value;
     self.getQuestionByHtmlID(e.target.id, function(question) {
@@ -1798,7 +1777,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype.checkComplexAnswer = function(e) {
+  QuestionManager.prototype._checkComplexAnswer = function(e) {
     var self = this,
       id = e.target.form.id,
       childNodes = e.target.form.elements;
@@ -1817,7 +1796,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype.checkSelectAnswer = function(e) {
+  QuestionManager.prototype._checkSelectAnswer = function(e) {
     var self = this;
     var id = e.target.id;
     var answer = e.target.selectedOptions[0].value;
@@ -1828,6 +1807,17 @@ var QuestionManager = (function() {
       }]);
       self.answers[answerObj.htmlID] = answerObj;
     });
+  };
+  QuestionManager.prototype.checkAnswer = function(e) {
+    var self = this;
+    var type = e.target.type;
+    if (type === 'text') {
+      self._checkInputAnswer(e);
+    } else if (type === 'checkbox' || type === 'radio') {
+      self._checkComplexAnswer(e);
+    } else if (type === 'select-one') {
+      self._checkSelectAnswer(e);
+    }
   };
   QuestionManager.prototype.createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
@@ -1872,8 +1862,37 @@ var QuestionManager = (function() {
     });
   };
 
+  /**
+   * Returns an answers' results
+   */
+  QuestionManager.prototype.getResults = function() {
+    var self = this,
+      answers = [],
+      rightAnswersCount = 0;
+
+    for (var i in self.answers) {
+      if (self.answers.hasOwnProperty(i)) {
+        var answer = self.answers[i];
+        answers.push(answer);
+        if (answer.isRight) {
+          rightAnswersCount++;
+        }
+      }
+    }
+
+    return {
+      questionsCount: self.questionsCount,
+      results: answers,
+      rightAnswersCount: rightAnswersCount,
+      percent: Math.round((rightAnswersCount / self.questionsCount) * 100)
+    };
+  };
+
   return QuestionManager;
 })();
+if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+  exports.QuestionManager = QuestionManager;
+}
 
 
 'use strict';
