@@ -2011,9 +2011,19 @@ var ExamjsTranslator = (function() {
   ExamjsTranslator.prototype._createInput = function(question) {
     return '<form class="exam-js-question">' + question.question + '<input id="' + question.htmlID + '" type="text" class="exam-js-input"/></form>';
   };
+
+  /**
+   * Set type of current section for translator. Use it only from exam.jison
+   * @param {string} type - question's section type
+   */
   ExamjsTranslator.prototype.setCurrentType = function(type) {
     this._currentType = type;
   };
+
+  /**
+   * Build question HTML from question JS-object
+   * @param {Object} question - object that creates by examjs parser
+   */
   ExamjsTranslator.prototype.createQuestions = function(question) {
     question.htmlID = this._getId();
     question.onAnswer = function(e) {
@@ -2035,6 +2045,11 @@ var ExamjsTranslator = (function() {
       throw new Error('Wrong section type!');
     }
   };
+
+  /**
+   * Return HTML from markdown text
+   * @param {string} phrase - markdown source
+   */
   ExamjsTranslator.prototype.parseMarkdown = function(phrase) {
     var self = this,
       regexp = /\{\{[^\}\}]*\}\}/gi,
