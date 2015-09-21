@@ -21,6 +21,7 @@
     "MathJax": true,
     "it": true,
     "expect": true,
+    "spyOn": true,
     "ExamJS": true,
     "parser": true,
     "beforeEach": true,

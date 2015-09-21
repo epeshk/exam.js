@@ -83,5 +83,14 @@ describe('QuestionManager', function() {
       expect(result.isRight).toBeFalsy();
     });
   });
+
+  describe('initQuestions()', function() {
+    it('should bind onAnswerEvent', function() {
+        spyOn(questionManager, '_bindEvent');
+
+        questionManager.initQuestions();
+        expect(questionManager._bindEvent.calls.count()).toBe(1);
+    });
+  });
 });
 

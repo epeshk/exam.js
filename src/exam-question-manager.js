@@ -13,34 +13,29 @@ var QuestionManager = (function() {
     this.answers = {};
   }
 
+  QuestionManager.prototype._bindEvent = function(htmlNode, callback) {
+    var self = this;
+    if (htmlNode) {
+      if (htmlNode.type === 'text') {
+        htmlNode.onkeyup = callback.bind(self);
+      } else {
+        htmlNode.onchange = callback.bind(self);
+      }
+    }
+  };
+
   QuestionManager.prototype.initQuestions = function() {
     var self = this;
     self.expressions.forEach(function(e) {
       if (e.questions) {
         e.questions.forEach(function(q) {
           var elem = document.getElementById(q.htmlID);
-          if (elem) {
-            if (elem.type === 'text') {
-              elem.onkeyup = q.onAnswer.bind(self);
-            } else {
-              elem.onchange = q.onAnswer.bind(self);
-            }
-          }
+          self._bindEvent(elem, q.onAnswer);
         });
       }
     });
     if (window.MathJax && window.MathJax.Hub) {
       window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
-    }
-  };
-  QuestionManager.prototype.checkAnswer = function(e) {
-    var self = this;
-    if (e.target.type === 'text') {
-      self.checkInputAnswer(e);
-    } else if (e.target.type === 'checkbox' || e.target.type === 'radio') {
-      self.checkComplexAnswer(e);
-    } else if (e.target.type === 'select-one') {
-      self.checkSelectAnswer(e);
     }
   };
   QuestionManager.prototype.checkInputAnswer = function(e) {
@@ -86,6 +81,16 @@ var QuestionManager = (function() {
       }]);
       self.answers[answerObj.htmlID] = answerObj;
     });
+  };
+  QuestionManager.prototype.checkAnswer = function(e) {
+    var self = this;
+    if (e.target.type === 'text') {
+      self.checkInputAnswer(e);
+    } else if (e.target.type === 'checkbox' || e.target.type === 'radio') {
+      self.checkComplexAnswer(e);
+    } else if (e.target.type === 'select-one') {
+      self.checkSelectAnswer(e);
+    }
   };
   QuestionManager.prototype.createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
