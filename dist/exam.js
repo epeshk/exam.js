@@ -2047,7 +2047,7 @@ var ExamjsTranslator = (function() {
   };
 
   /**
-   * Return HTML from markdown text
+   * Return HTML from markdown text. Use it only from exam.jison
    * @param {string} phrase - markdown source
    */
   ExamjsTranslator.prototype.parseMarkdown = function(phrase) {
