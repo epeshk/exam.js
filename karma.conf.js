@@ -14,18 +14,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        './dist/exam.js',
-        './test/**/*.js'
+      './dist/exam.js',
+      './test/**/*.js'
     ],
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
+    preprocessors: {},
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -46,10 +44,10 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-        'PhantomJS'
-        // , 'Chrome'
-        // , 'Firefox'
-        // , 'Safari'
+      'PhantomJS'
+      // , 'Chrome'
+      // , 'Firefox'
+      // , 'Safari'
     ],
 
 
@@ -58,3 +56,4 @@ module.exports = function(config) {
     singleRun: true
   });
 };
+
