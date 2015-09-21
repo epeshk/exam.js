@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     watch: {
       dev: {
         files: ['src/**/*', 'test/**/*js'],
-        tasks: ['clean', 'jshint', 'jison', 'concat', 'test', 'notify:test']
+        tasks: ['clean', 'jshint', 'jison', 'concat', 'karma', 'notify:test']
       }
     },
     clean: {
@@ -66,8 +66,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jison');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('test', ['karma']);
-  grunt.registerTask('build', ['clean', 'jshint', 'jison', 'concat', 'test','uglify']);
+  grunt.registerTask('test', ['build']);
+  grunt.registerTask('build', ['clean', 'jshint', 'jison', 'concat', 'karma','uglify']);
   grunt.registerTask('dev', ['watch']);
 };
 
