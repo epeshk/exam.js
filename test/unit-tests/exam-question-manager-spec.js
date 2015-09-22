@@ -124,6 +124,74 @@ describe('QuestionManager', function() {
     });
   });
 
+  describe('_bindEvent()', function() {
+    it('should bind callback if node type is text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        spyOn(mockObj, 'bind');
+
+        questionManager._bindEvent({type: 'text'}, mockObj);
+        expect(mockObj.bind.calls.count()).toBe(1);
+    });
+
+    it('should bind callback if node type is not text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        spyOn(mockObj, 'bind');
+
+        questionManager._bindEvent({}, mockObj);
+        expect(mockObj.bind.calls.count()).toBe(1);
+    });
+
+    it('should bind callback with "onkeyup" event if node type is text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        var nodeObj = {
+          type: 'text'
+        };
+
+        questionManager._bindEvent(nodeObj,mockObj);
+        expect(nodeObj.onkeyup).not.toBe(null);
+    });
+
+    it('should bind callback with "onchange" event if node type is not text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        var nodeObj = {
+        };
+
+        questionManager._bindEvent(nodeObj,mockObj);
+        expect(nodeObj.onchange).not.toBe(null);
+    });
+
+    it('should not bind callback with "onkeyup" event if node type is not text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        var nodeObj = {
+        };
+
+        questionManager._bindEvent(nodeObj,mockObj);
+        expect(nodeObj.onkeyup).not.toBeDefined();
+    });
+
+    it('should not bind callback with "onchange" event if node type is text', function() {
+        var mockObj = {
+          bind: function(context){}
+        };
+        var nodeObj = {
+          type: 'text'
+        };
+
+        questionManager._bindEvent(nodeObj,mockObj);
+        expect(nodeObj.onchange).not.toBeDefined();
+    });
+  });
+
   describe('_getQuestionByHtmlId()', function() {
     it('should call callback', function() {
         var spy = jasmine.createSpy('spy');
