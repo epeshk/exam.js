@@ -226,5 +226,24 @@ describe('QuestionManager', function() {
       expect(questionManager.answers['exam-js-2']).not.toBe(null);
     });
   });
+
+  describe('_checkComplexAnswer()', function() {
+    it('should create answer obj', function() {
+      questionManager._checkInputAnswer({
+        target: {
+          value: 'yes',
+          id: 'exam-js-2',
+          form: {
+            elements: [{
+              type: 'checkbox',
+              checked: true
+            }]
+          }
+        }
+      });
+
+      expect(questionManager.answers['exam-js-2']).not.toBe(null);
+    });
+  });
 });
 
