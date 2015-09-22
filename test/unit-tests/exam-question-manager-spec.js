@@ -131,6 +131,13 @@ describe('QuestionManager', function() {
         questionManager._getQuestionByHtmlId('exam-js-2', spy);
         expect(spy.calls.count()).toBe(1);
     });
+
+    it('should return proper question', function() {
+        var clb = function(q){
+          expect(q.answer).toBe('yes');
+        };
+        questionManager._getQuestionByHtmlId('exam-js-2', clb);
+    });
   });
 });
 
