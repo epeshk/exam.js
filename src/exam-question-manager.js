@@ -24,26 +24,12 @@ var QuestionManager = (function() {
     }
   };
 
-  QuestionManager.prototype.initQuestions = function() {
-    var self = this;
-    self.expressions.forEach(function(e) {
-      if (e.questions) {
-        e.questions.forEach(function(q) {
-          var elem = document.getElementById(q.htmlID);
-          self._bindEvent(elem, q.onAnswer);
-        });
-      }
-    });
-    if (window.MathJax && window.MathJax.Hub) {
-      window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
-    }
-  };
   QuestionManager.prototype._checkInputAnswer = function(e) {
     var self = this,
       value = e.target.value;
-    self.getQuestionByHtmlID(e.target.id, function(question) {
+    self._getQuestionByHtmlId(e.target.id, function(question) {
       var answer = question.answers[0].answer,
-        answerObj = self.createAnswerObject(question, [{
+        answerObj = self._createAnswerObject(question, [{
           answer: value,
           type: 'text'
         }]);
@@ -55,18 +41,18 @@ var QuestionManager = (function() {
     var self = this,
       id = e.target.form.id,
       childNodes = e.target.form.elements;
-    self.getQuestionByHtmlID(id, function(question) {
+    self._getQuestionByHtmlId(id, function(question) {
       var tmpChildArray = Array.prototype.slice.call(childNodes);
       var answers = tmpChildArray.filter(function(elem) {
         return ((elem.type === 'checkbox' || elem.type === 'radio') && elem.checked);
       }).map(function(a) {
         return {
-          answer: self.getAnswerFromAttribute(a),
-          type: self.getMediaTypeFromAttribute(a)
+          answer: self._getAnswerFromAttribute(a),
+          type: self._getMediaTypeFromAttribute(a)
         };
       });
 
-      var answerObj = self.createAnswerObject(question, answers);
+      var answerObj = self._createAnswerObject(question, answers);
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
@@ -74,15 +60,15 @@ var QuestionManager = (function() {
     var self = this;
     var id = e.target.id;
     var answer = e.target.selectedOptions[0].value;
-    self.getQuestionByHtmlID(id, function(question) {
-      var answerObj = self.createAnswerObject(question, [{
+    self._getQuestionByHtmlId(id, function(question) {
+      var answerObj = self._createAnswerObject(question, [{
         answer: answer,
         type: 'text'
       }]);
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype.checkAnswer = function(e) {
+  QuestionManager.prototype._checkAnswer = function(e) {
     var self = this;
     var type = e.target.type;
     if (type === 'text') {
@@ -93,7 +79,7 @@ var QuestionManager = (function() {
       self._checkSelectAnswer(e);
     }
   };
-  QuestionManager.prototype.createAnswerObject = function(question, answers) {
+  QuestionManager.prototype._createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
       return a.isRight;
     });
@@ -118,13 +104,13 @@ var QuestionManager = (function() {
     };
     return obj;
   };
-  QuestionManager.prototype.getAnswerFromAttribute = function(node) {
+  QuestionManager.prototype._getAnswerFromAttribute = function(node) {
     return node.getAttribute('data-answer');
   };
-  QuestionManager.prototype.getMediaTypeFromAttribute = function(node) {
+  QuestionManager.prototype._getMediaTypeFromAttribute = function(node) {
     return node.getAttribute('data-answer-type');
   };
-  QuestionManager.prototype.getQuestionByHtmlID = function(htmlID, callback) {
+  QuestionManager.prototype._getQuestionByHtmlId = function(htmlID, callback) {
     var self = this,
       result = null;
     var tmpExp = self.expressions.forEach(function(e) {
@@ -134,6 +120,24 @@ var QuestionManager = (function() {
         }
       });
     });
+  };
+
+  /**
+   * Bind callbasck of answers to answers' html nodes
+   */
+  QuestionManager.prototype.initQuestions = function() {
+    var self = this;
+    self.expressions.forEach(function(e) {
+      if (e.questions) {
+        e.questions.forEach(function(q) {
+          var elem = document.getElementById(q.htmlID);
+          self._bindEvent(elem, q.onAnswer);
+        });
+      }
+    });
+    if (window.MathJax && window.MathJax.Hub) {
+      window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+    }
   };
 
   /**

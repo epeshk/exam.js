@@ -33,7 +33,7 @@ describe('QuestionManager', function() {
 
   describe('getResults()', function() {
     it('should return an answer object', function() {
-      var result = questionManager.createAnswerObject({
+      var result = questionManager._createAnswerObject({
         question: 'q?',
         htmlID: '',
         answers: [{
@@ -50,7 +50,7 @@ describe('QuestionManager', function() {
     });
 
     it('should return an right answer object', function() {
-      var result = questionManager.createAnswerObject({
+      var result = questionManager._createAnswerObject({
         question: 'q?',
         htmlID: '',
         answers: [{
@@ -67,7 +67,7 @@ describe('QuestionManager', function() {
     });
 
     it('should return an false answer object', function() {
-      var result = questionManager.createAnswerObject({
+      var result = questionManager._createAnswerObject({
         question: 'q?',
         htmlID: '',
         answers: [{
@@ -93,32 +93,32 @@ describe('QuestionManager', function() {
     });
   });
 
-  describe('checkAnswer()', function() {
+  describe('_checkAnswer()', function() {
     it('should call _checkInputAnswer() if type of html event target is text', function() {
         spyOn(questionManager, '_checkInputAnswer');
 
-        questionManager.checkAnswer({target: {type: 'text'}});
+        questionManager._checkAnswer({target: {type: 'text'}});
         expect(questionManager._checkInputAnswer.calls.count()).toBe(1);
     });
 
     it('should call _checkComplexAnswer() if type of html event target is checkbox', function() {
         spyOn(questionManager, '_checkComplexAnswer');
 
-        questionManager.checkAnswer({target: {type: 'checkbox'}});
+        questionManager._checkAnswer({target: {type: 'checkbox'}});
         expect(questionManager._checkComplexAnswer.calls.count()).toBe(1);
     });
 
     it('should call _checkComplexAnswer() if type of html event target is radio', function() {
         spyOn(questionManager, '_checkComplexAnswer');
 
-        questionManager.checkAnswer({target: {type: 'radio'}});
+        questionManager._checkAnswer({target: {type: 'radio'}});
         expect(questionManager._checkComplexAnswer.calls.count()).toBe(1);
     });
 
     it('should call _checkSelectAnswer() if type of html event target is select-one', function() {
         spyOn(questionManager, '_checkSelectAnswer');
 
-        questionManager.checkAnswer({target: {type: 'select-one'}});
+        questionManager._checkAnswer({target: {type: 'select-one'}});
         expect(questionManager._checkSelectAnswer.calls.count()).toBe(1);
     });
   });
