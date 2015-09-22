@@ -6,7 +6,8 @@ describe('QuestionManager', function() {
       expressions: [{
         questions: [{
           answer: 'yes',
-          isRight: true
+          isRight: true,
+          htmlID: 'exam-js-2'
         }],
         html: '<form class="exam-js-question">test?<input id="exam-js-78" type="text" class="exam-js-input"/></form>',
         htmlID: 'exam-js-1',
@@ -120,6 +121,15 @@ describe('QuestionManager', function() {
 
         questionManager._checkAnswer({target: {type: 'select-one'}});
         expect(questionManager._checkSelectAnswer.calls.count()).toBe(1);
+    });
+  });
+
+  describe('_getQuestionByHtmlId()', function() {
+    it('should call callback', function() {
+        var spy = jasmine.createSpy('spy');
+
+        questionManager._getQuestionByHtmlId('exam-js-2', spy);
+        expect(spy.calls.count()).toBe(1);
     });
   });
 });

@@ -25,6 +25,7 @@
     "ExamJS": true,
     "parser": true,
     "beforeEach": true,
+    "jasmine": true,
     "describe": true,
     "ExamjsTranslator": true,
     "QuestionManager": true
