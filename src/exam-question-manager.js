@@ -25,8 +25,9 @@ var QuestionManager = (function() {
   };
 
   QuestionManager.prototype._checkInputAnswer = function(e) {
-    var self = this,
-      value = e.target.value;
+    var self = this;
+    var value = e.target.value;
+
     self._getQuestionByHtmlId(e.target.id, function(question) {
       var answer = question.answers[0].answer,
         answerObj = self._createAnswerObject(question, [{
@@ -38,9 +39,10 @@ var QuestionManager = (function() {
     });
   };
   QuestionManager.prototype._checkComplexAnswer = function(e) {
-    var self = this,
-      id = e.target.form.id,
-      childNodes = e.target.form.elements;
+    var self = this;
+    var id = e.target.form.id;
+    var childNodes = e.target.form.elements;
+
     self._getQuestionByHtmlId(id, function(question) {
       var tmpChildArray = Array.prototype.slice.call(childNodes);
       var answers = tmpChildArray.filter(function(elem) {
@@ -60,6 +62,7 @@ var QuestionManager = (function() {
     var self = this;
     var id = e.target.id;
     var answer = e.target.selectedOptions[0].value;
+
     self._getQuestionByHtmlId(id, function(question) {
       var answerObj = self._createAnswerObject(question, [{
         answer: answer,
@@ -71,6 +74,7 @@ var QuestionManager = (function() {
   QuestionManager.prototype._checkAnswer = function(e) {
     var self = this;
     var type = e.target.type;
+
     if (type === 'text') {
       self._checkInputAnswer(e);
     } else if (type === 'checkbox' || type === 'radio') {
@@ -111,8 +115,9 @@ var QuestionManager = (function() {
     return node.getAttribute('data-answer-type');
   };
   QuestionManager.prototype._getQuestionByHtmlId = function(htmlID, callback) {
-    var self = this,
-      result = null;
+    var self = this;
+    var result = null;
+
     var tmpExp = self.expressions.forEach(function(e) {
       e.questions.forEach(function(q) {
         if (q.htmlID === htmlID) {
@@ -144,9 +149,9 @@ var QuestionManager = (function() {
    * Returns an answers' results
    */
   QuestionManager.prototype.getResults = function() {
-    var self = this,
-      answers = [],
-      rightAnswersCount = 0;
+    var self = this;
+    var answers = [];
+    var rightAnswersCount = 0;
 
     for (var i in self.answers) {
       if (self.answers.hasOwnProperty(i)) {
