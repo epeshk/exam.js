@@ -229,7 +229,7 @@ describe('QuestionManager', function() {
 
   describe('_checkComplexAnswer()', function() {
     it('should create answer obj', function() {
-      questionManager._checkInputAnswer({
+      questionManager._checkComplexAnswer({
         target: {
           value: 'yes',
           id: 'exam-js-2',
@@ -243,6 +243,20 @@ describe('QuestionManager', function() {
       });
 
       expect(questionManager.answers['exam-js-2']).not.toBe(null);
+    });
+  });
+
+  describe('getResults()', function() {
+    it('should return results', function() {
+      questionManager._checkInputAnswer({
+        target: {
+          value: 'yes',
+          id: 'exam-js-2'
+        }
+      });
+      var result = questionManager.getResults();
+
+      expect(result.rightAnswersCount).toBe(1);
     });
   });
 });
