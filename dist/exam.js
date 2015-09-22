@@ -1750,26 +1750,13 @@ var QuestionManager = (function() {
     }
   };
 
-  QuestionManager.prototype.initQuestions = function() {
-    var self = this;
-    self.expressions.forEach(function(e) {
-      if (e.questions) {
-        e.questions.forEach(function(q) {
-          var elem = document.getElementById(q.htmlID);
-          self._bindEvent(elem, q.onAnswer);
-        });
-      }
-    });
-    if (window.MathJax && window.MathJax.Hub) {
-      window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
-    }
-  };
   QuestionManager.prototype._checkInputAnswer = function(e) {
-    var self = this,
-      value = e.target.value;
-    self.getQuestionByHtmlID(e.target.id, function(question) {
+    var self = this;
+    var value = e.target.value;
+
+    self._getQuestionByHtmlId(e.target.id, function(question) {
       var answer = question.answers[0].answer,
-        answerObj = self.createAnswerObject(question, [{
+        answerObj = self._createAnswerObject(question, [{
           answer: value,
           type: 'text'
         }]);
@@ -1777,49 +1764,29 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
+
   QuestionManager.prototype._checkComplexAnswer = function(e) {
-    var self = this,
-      id = e.target.form.id,
-      childNodes = e.target.form.elements;
-    self.getQuestionByHtmlID(id, function(question) {
+    var self = this;
+    var id = e.target.form.id;
+    var childNodes = e.target.form.elements;
+
+    self._getQuestionByHtmlId(id, function(question) {
       var tmpChildArray = Array.prototype.slice.call(childNodes);
       var answers = tmpChildArray.filter(function(elem) {
         return ((elem.type === 'checkbox' || elem.type === 'radio') && elem.checked);
       }).map(function(a) {
         return {
-          answer: self.getAnswerFromAttribute(a),
-          type: self.getMediaTypeFromAttribute(a)
+          answer: self._getAnswerFromAttribute(a),
+          type: self._getMediaTypeFromAttribute(a)
         };
       });
 
-      var answerObj = self.createAnswerObject(question, answers);
+      var answerObj = self._createAnswerObject(question, answers);
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
-  QuestionManager.prototype._checkSelectAnswer = function(e) {
-    var self = this;
-    var id = e.target.id;
-    var answer = e.target.selectedOptions[0].value;
-    self.getQuestionByHtmlID(id, function(question) {
-      var answerObj = self.createAnswerObject(question, [{
-        answer: answer,
-        type: 'text'
-      }]);
-      self.answers[answerObj.htmlID] = answerObj;
-    });
-  };
-  QuestionManager.prototype.checkAnswer = function(e) {
-    var self = this;
-    var type = e.target.type;
-    if (type === 'text') {
-      self._checkInputAnswer(e);
-    } else if (type === 'checkbox' || type === 'radio') {
-      self._checkComplexAnswer(e);
-    } else if (type === 'select-one') {
-      self._checkSelectAnswer(e);
-    }
-  };
-  QuestionManager.prototype.createAnswerObject = function(question, answers) {
+
+  QuestionManager.prototype._createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
       return a.isRight;
     });
@@ -1844,15 +1811,19 @@ var QuestionManager = (function() {
     };
     return obj;
   };
-  QuestionManager.prototype.getAnswerFromAttribute = function(node) {
+
+  QuestionManager.prototype._getAnswerFromAttribute = function(node) {
     return node.getAttribute('data-answer');
   };
-  QuestionManager.prototype.getMediaTypeFromAttribute = function(node) {
+
+  QuestionManager.prototype._getMediaTypeFromAttribute = function(node) {
     return node.getAttribute('data-answer-type');
   };
-  QuestionManager.prototype.getQuestionByHtmlID = function(htmlID, callback) {
-    var self = this,
-      result = null;
+
+  QuestionManager.prototype._getQuestionByHtmlId = function(htmlID, callback) {
+    var self = this;
+    var result = null;
+
     var tmpExp = self.expressions.forEach(function(e) {
       e.questions.forEach(function(q) {
         if (q.htmlID === htmlID) {
@@ -1863,12 +1834,46 @@ var QuestionManager = (function() {
   };
 
   /**
+   * Check answer typed or selected in html and then create answer object
+   * in the asnwers array of QuestionManager instance
+   * @param {html event} e - event emitted by typing or selecting an answer
+   */
+  QuestionManager.prototype.checkAnswer = function(e) {
+    var self = this;
+    var type = e.target.type;
+
+    if (type === 'text') {
+      self._checkInputAnswer(e);
+    } else if (type === 'checkbox' || type === 'radio') {
+      self._checkComplexAnswer(e);
+    }
+  };
+
+  /**
+   * Bind callbasck of answers to answers' html nodes
+   */
+  QuestionManager.prototype.initQuestions = function() {
+    var self = this;
+    self.expressions.forEach(function(e) {
+      if (e.questions) {
+        e.questions.forEach(function(q) {
+          var elem = document.getElementById(q.htmlID);
+          self._bindEvent(elem, q.onAnswer);
+        });
+      }
+    });
+    if (window.MathJax && window.MathJax.Hub) {
+      window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+    }
+  };
+
+  /**
    * Returns an answers' results
    */
   QuestionManager.prototype.getResults = function() {
-    var self = this,
-      answers = [],
-      rightAnswersCount = 0;
+    var self = this;
+    var answers = [];
+    var rightAnswersCount = 0;
 
     for (var i in self.answers) {
       if (self.answers.hasOwnProperty(i)) {
