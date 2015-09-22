@@ -38,6 +38,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
+
   QuestionManager.prototype._checkComplexAnswer = function(e) {
     var self = this;
     var id = e.target.form.id;
@@ -58,6 +59,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
+
   QuestionManager.prototype._checkSelectAnswer = function(e) {
     var self = this;
     var id = e.target.id;
@@ -71,6 +73,7 @@ var QuestionManager = (function() {
       self.answers[answerObj.htmlID] = answerObj;
     });
   };
+
   QuestionManager.prototype._checkAnswer = function(e) {
     var self = this;
     var type = e.target.type;
@@ -83,6 +86,7 @@ var QuestionManager = (function() {
       self._checkSelectAnswer(e);
     }
   };
+
   QuestionManager.prototype._createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
       return a.isRight;
@@ -108,12 +112,15 @@ var QuestionManager = (function() {
     };
     return obj;
   };
+
   QuestionManager.prototype._getAnswerFromAttribute = function(node) {
     return node.getAttribute('data-answer');
   };
+
   QuestionManager.prototype._getMediaTypeFromAttribute = function(node) {
     return node.getAttribute('data-answer-type');
   };
+
   QuestionManager.prototype._getQuestionByHtmlId = function(htmlID, callback) {
     var self = this;
     var result = null;
