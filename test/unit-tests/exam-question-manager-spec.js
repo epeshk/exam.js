@@ -95,11 +95,11 @@ describe('QuestionManager', function() {
     });
   });
 
-  describe('_checkAnswer()', function() {
+  describe('checkAnswer()', function() {
     it('should call _checkInputAnswer() if type of html event target is text', function() {
       spyOn(questionManager, '_checkInputAnswer');
 
-      questionManager._checkAnswer({
+      questionManager.checkAnswer({
         target: {
           type: 'text'
         }
@@ -110,7 +110,7 @@ describe('QuestionManager', function() {
     it('should call _checkComplexAnswer() if type of html event target is checkbox', function() {
       spyOn(questionManager, '_checkComplexAnswer');
 
-      questionManager._checkAnswer({
+      questionManager.checkAnswer({
         target: {
           type: 'checkbox'
         }
@@ -121,23 +121,12 @@ describe('QuestionManager', function() {
     it('should call _checkComplexAnswer() if type of html event target is radio', function() {
       spyOn(questionManager, '_checkComplexAnswer');
 
-      questionManager._checkAnswer({
+      questionManager.checkAnswer({
         target: {
           type: 'radio'
         }
       });
       expect(questionManager._checkComplexAnswer.calls.count()).toBe(1);
-    });
-
-    it('should call _checkSelectAnswer() if type of html event target is select-one', function() {
-      spyOn(questionManager, '_checkSelectAnswer');
-
-      questionManager._checkAnswer({
-        target: {
-          type: 'select-one'
-        }
-      });
-      expect(questionManager._checkSelectAnswer.calls.count()).toBe(1);
     });
   });
 
@@ -226,7 +215,7 @@ describe('QuestionManager', function() {
   });
 
   describe('_checkInputAnswer()', function() {
-    it('create answer obj', function() {
+    it('should create answer obj', function() {
       questionManager._checkInputAnswer({
         target: {
           value: 'yes',

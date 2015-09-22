@@ -60,33 +60,6 @@ var QuestionManager = (function() {
     });
   };
 
-  QuestionManager.prototype._checkSelectAnswer = function(e) {
-    var self = this;
-    var id = e.target.id;
-    var answer = e.target.selectedOptions[0].value;
-
-    self._getQuestionByHtmlId(id, function(question) {
-      var answerObj = self._createAnswerObject(question, [{
-        answer: answer,
-        type: 'text'
-      }]);
-      self.answers[answerObj.htmlID] = answerObj;
-    });
-  };
-
-  QuestionManager.prototype._checkAnswer = function(e) {
-    var self = this;
-    var type = e.target.type;
-
-    if (type === 'text') {
-      self._checkInputAnswer(e);
-    } else if (type === 'checkbox' || type === 'radio') {
-      self._checkComplexAnswer(e);
-    } else if (type === 'select-one') {
-      self._checkSelectAnswer(e);
-    }
-  };
-
   QuestionManager.prototype._createAnswerObject = function(question, answers) {
     var rightAnswers = question.answers.filter(function(a) {
       return a.isRight;
@@ -132,6 +105,22 @@ var QuestionManager = (function() {
         }
       });
     });
+  };
+
+  /**
+   * Check answer typed or selected in html and then create answer object
+   * in the asnwers array of QuestionManager instance
+   * @param {html event} e - event emitted by typing or selecting an answer
+   */
+  QuestionManager.prototype.checkAnswer = function(e) {
+    var self = this;
+    var type = e.target.type;
+
+    if (type === 'text') {
+      self._checkInputAnswer(e);
+    } else if (type === 'checkbox' || type === 'radio') {
+      self._checkComplexAnswer(e);
+    }
   };
 
   /**
