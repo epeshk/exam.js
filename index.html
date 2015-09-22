@@ -123,6 +123,7 @@ rel='stylesheet' type='text/css'>
     <div id="result" class="text-pane text-pane-right"></div>
   </div>
   <script type="text/javascript" src="dist/exam.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
   <script type="text/javascript">
     var resultDiv = document.getElementById('result');
     var editor = document.getElementById('editor');
@@ -130,6 +131,10 @@ rel='stylesheet' type='text/css'>
     var testsDiv = document.getElementById('tests');
     var errorBox = document.getElementById('error-box');
     var exam;
+
+    $('.text-pane').on('scroll', function () {
+     $('body').scrollTop($(this).scrollTop());
+    });
 
     var updateAnswers = function()
     {
