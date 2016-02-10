@@ -2,6 +2,8 @@
 [![Code Climate](https://codeclimate.com/github/NightingaleStudio/exam.js/badges/gpa.svg)](https://codeclimate.com/github/NightingaleStudio/exam.js)
 [![Test Coverage](https://codeclimate.com/github/NightingaleStudio/exam.js/badges/coverage.svg)](https://codeclimate.com/github/NightingaleStudio/exam.js/coverage)
 [![npm version](https://badge.fury.io/js/exam.js.svg)](http://badge.fury.io/js/exam.js)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/NightingaleStudio/exam.js.svg)](http://isitmaintained.com/project/NightingaleStudio/exam.js "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/NightingaleStudio/exam.js.svg)](http://isitmaintained.com/project/NightingaleStudio/exam.js "Percentage of issues still open")
 
 ###Exam.js - библиотека для написания интерактивных вопросов (тестов)
 
