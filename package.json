@@ -3,8 +3,10 @@
   "version": "0.4.2",
   "description": "Exam.js is simple markup language library for creating an interactive questions with markdown and mathjax support",
   "main": "exam.js",
+  "author": "Sergey Golovin <golovim@gmail.com> (http://github.com/daynin)",
   "directories": {
-    "test": "test"
+    "dist": "./dist",
+    "css": "./css"
   },
   "scripts": {
     "test": "grunt test"
