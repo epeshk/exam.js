@@ -1,6 +1,6 @@
 {
   "name": "exam-js",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Exam.js is simple markup language library for creating an interactive questions with markdown and mathjax support",
   "author": "Nightingale Studio",
   "directories": {
