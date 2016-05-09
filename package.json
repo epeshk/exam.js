@@ -1,8 +1,8 @@
 {
   "name": "exam-js",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Exam.js is simple markup language library for creating an interactive questions with markdown and mathjax support",
-  "author": "Sergey Golovin <golovim@gmail.com> (http://github.com/daynin)",
+  "author": "Nightingale Studio",
   "directories": {
     "dist": "./dist",
     "css": "./css"
@@ -14,7 +14,6 @@
     "type": "git",
     "url": "git://github.com/NightingaleStudio/exam.js.git"
   },
-  "author": "Nightingale Studio",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/NightingaleStudio/exam.js/issues"
